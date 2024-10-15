@@ -16,52 +16,53 @@
     
    
     <Grid>
-        <Border x:Name="OutlineBorder" BorderThickness="2" BorderBrush="#32666666" CornerRadius="2" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="26"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <!--Custom Title Bar-->
-                <Grid Background="#4D202222">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Image Height="15" Margin="6,0,4,0" Source="Images/NotepadEx.png"></Image>
-                    <TextBlock Name="txtTitleBar" Grid.Column="1" Text="NotepadEx" Foreground="AliceBlue" FontFamily="Arial" FontWeight="ExtraLight" FontSize="15"  VerticalAlignment="Center" MouseDown="txtTitleBar_MouseDown"/>
-                    <Button Name="btnMinimize" Background="Transparent" Foreground="AliceBlue" Grid.Column="1" HorizontalAlignment="Right" Content="_" FontFamily="Verdana" Width="30" Click="btnMinimize_Click"></Button>
-                    <Button Name="btnMaximize" Background="Transparent" Foreground="AliceBlue" Grid.Column="2" HorizontalAlignment="Right" Content="🗗" FontFamily="Verdana" Width="30" Click="btnMaximize_Click"></Button>
-                    <Button Name="btnExit" Background="Transparent" Foreground="AliceBlue" Grid.Column="3" HorizontalAlignment="Right" Content="X" FontFamily="Verdana" Width="30" Click="btnExit_Click"></Button>
-                </Grid>
-
-                <Grid Grid.Row="1">
+        <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="2" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
+            <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="#32666666" CornerRadius="2" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition x:Name="Row_MainMenuBar" Height="18"/>
+                        <RowDefinition Height="26"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition x:Name="Row_InfoBar" Height="18"/>
                     </Grid.RowDefinitions>
 
-                    <Menu Name="MainMenuBar" IsMainMenu="True" Background="{StaticResource MenuBarBackground}">
-                        <MenuItem Name="DropDown_File" Header="File" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
-                            <MenuItem Header="New" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
-                            <MenuItem Header="New Window..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>
-                            <MenuItem Header="Open..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpen_Click"></MenuItem>
-                            <MenuItem Name="MenuItem_OpenRecent"  Header="Open Recent" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpenRecent_Click">
-                                <MenuItem Header="..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" ></MenuItem>
-                            </MenuItem>
-                            <MenuItem Header="Open Multiple Files As One..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemMultiOpen_Click"/>
-                            <MenuItem Header="Print..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPrint_Click"/>
-                            <MenuItem Header="Save" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"/>
-                            <MenuItem Header="Save as..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSaveAs_Click"/>
-                            <MenuItem Header="Exit" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemExit_Click"/>
-                        </MenuItem>
+                    <!--Custom Title Bar-->
+                    <Grid Background="#4D202222">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
 
-                        <MenuItem Header="Edit" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
+                        <Image Height="15" Margin="6,0,4,0" Source="Images/NotepadEx.png"></Image>
+                        <TextBlock Name="txtTitleBar" Grid.Column="1" Text="NotepadEx" Foreground="AliceBlue" FontFamily="Arial" FontWeight="ExtraLight" FontSize="15"  VerticalAlignment="Center" MouseDown="txtTitleBar_MouseDown"/>
+                        <Button Name="btnMinimize" Background="Transparent" Foreground="AliceBlue" Grid.Column="1" HorizontalAlignment="Right" Content="_" FontFamily="Verdana" Width="30" Click="btnMinimize_Click"></Button>
+                        <Button Name="btnMaximize" Background="Transparent" Foreground="AliceBlue" Grid.Column="2" HorizontalAlignment="Right" Content="🗗" FontFamily="Verdana" Width="30" Click="btnMaximize_Click"></Button>
+                        <Button Name="btnExit" Background="Transparent" Foreground="AliceBlue" Grid.Column="3" HorizontalAlignment="Right" Content="X" FontFamily="Verdana" Width="30" Click="btnExit_Click"></Button>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="Row_MainMenuBar" Height="18"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition x:Name="Row_InfoBar" Height="18"/>
+                        </Grid.RowDefinitions>
+
+                        <Menu Name="MainMenuBar" IsMainMenu="True" Background="{StaticResource MenuBarBackground}">
+                            <MenuItem Name="DropDown_File" Header="File" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
+                                <MenuItem Header="New" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
+                                <MenuItem Header="New Window..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>
+                                <MenuItem Header="Open..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpen_Click"></MenuItem>
+                                <MenuItem Name="MenuItem_OpenRecent"  Header="Open Recent" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpenRecent_Click">
+                                    <MenuItem Header="..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" ></MenuItem>
+                                </MenuItem>
+                                <MenuItem Header="Open Multiple Files As One..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemMultiOpen_Click"/>
+                                <MenuItem Header="Print..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPrint_Click"/>
+                                <MenuItem Header="Save" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"/>
+                                <MenuItem Header="Save as..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSaveAs_Click"/>
+                                <MenuItem Header="Exit" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemExit_Click"/>
+                            </MenuItem>
+
+                            <MenuItem Header="Edit" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                             <MenuItem Header="Undo" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemUndo_Click"/>
                             <MenuItem Header="Redo" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemRedo_Click"/>
                             <MenuItem Header="Copy" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemCopy_Click"/>
@@ -73,39 +74,40 @@
                             <MenuItem Header="Insert Time/Date" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTimeDate_Click"/>
                         </MenuItem>
 
-                        <MenuItem Header="Preferences" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
+                            <MenuItem Header="Preferences" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                             <MenuItem Header="Font..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFont_Click"/>
                             <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemWordWrap_Click"/>
                             <MenuItem Name="MenuItem_AutoHideMenuBar" Header="Auto Hide Menu Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
                             <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
                         </MenuItem>
 
-                        <MenuItem Header="Theme" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
+                            <MenuItem Header="Theme" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
                             <MenuItem Header="Test Theme 1" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" />
                         </MenuItem>
-                    </Menu>
+                        </Menu>
 
-                    <TextBox x:Name="txtEditor"
-                             Grid.Row="1"
-                             Background="Transparent"
-                             Foreground="#FFFFFF"
-                             AcceptsReturn="True"
-                             FontSize="18"
-                             FontFamily="Segoe UI"
-                             TextOptions.TextRenderingMode="ClearType"
-                             Margin="2 2 2 2"
-                             BorderBrush="Transparent"
-                             BorderThickness="0"
-                             VerticalScrollBarVisibility="Auto"
-                             HorizontalScrollBarVisibility="Auto"
-                             MouseMove="txtEditor_MouseMove"
-                             CaretBrush="AliceBlue"></TextBox>
+                        <TextBox x:Name="txtEditor"
+                                 Grid.Row="1"
+                                 Background="Transparent"
+                                 Foreground="#FFFFFF"
+                                 AcceptsReturn="True"
+                                 FontSize="18"
+                                 FontFamily="Segoe UI"
+                                 TextOptions.TextRenderingMode="ClearType"
+                                 Margin="2 2 2 2"
+                                 BorderBrush="Transparent"
+                                 BorderThickness="0"
+                                 VerticalScrollBarVisibility="Auto"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 MouseMove="txtEditor_MouseMove"
+                                 CaretBrush="AliceBlue"></TextBox>
 
-                    <TextBlock Background="#FF8A8A5D" Grid.Row="2">
-                        <TextBlock x:Name="txtStatus" Margin="4,2,4,0" FontFamily="Verdana" FontSize="12" Foreground="White" FontWeight="SemiBold" Text="Lines"/>
-                    </TextBlock>
+                        <TextBlock Background="#FF8A8A5D" Grid.Row="2">
+                            <TextBlock x:Name="txtStatus" Margin="4,2,4,0" FontFamily="Verdana" FontSize="12" Foreground="White" FontWeight="SemiBold" Text="Lines"/>
+                        </TextBlock>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Border>
         </Border>
     </Grid>
 </Window>

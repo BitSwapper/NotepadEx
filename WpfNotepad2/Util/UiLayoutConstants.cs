@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace WpfNotepad2.Util;
 public static class UiLayoutConstants
 {
-    public static readonly int ResizeBorderWidth = 3;
+    public static readonly int ResizeBorderWidth = 12;
 }

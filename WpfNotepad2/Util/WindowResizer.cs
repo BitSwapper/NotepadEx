@@ -11,6 +11,7 @@ internal class WindowResizer
     static double oldTop;
     static double oldWidth;
     static double oldHeight;
+
     public static void DoWindowMaximizedStateChange(Window window, WindowState prevWindowState)
     {
         if(prevWindowState == WindowState.Minimized) return;
@@ -48,52 +49,35 @@ internal class WindowResizer
         double windowHeight = window.ActualHeight;
 
         if(position.X <= edgeThreshold && position.Y <= edgeThreshold)
-        {
-            window.Cursor = Cursors.SizeNWSE;
-            ResizeWindowInternal(ResizeDirection.TopLeft);
-        }
-        else if(position.X >= windowWidth - edgeThreshold && position.Y <= edgeThreshold)
-        {
-            window.Cursor = Cursors.SizeNESW;
-            ResizeWindowInternal(ResizeDirection.TopRight);
-        }
-        else if(position.X <= edgeThreshold && position.Y >= windowHeight - edgeThreshold)
-        {
-            window.Cursor = Cursors.SizeNESW;
-            ResizeWindowInternal(ResizeDirection.BottomLeft);
-        }
-        else if(position.X >= windowWidth - edgeThreshold && position.Y >= windowHeight - edgeThreshold)
-        {
-            window.Cursor = Cursors.SizeNWSE;
-            ResizeWindowInternal(ResizeDirection.BottomRight);
-        }
-        else if(position.X <= edgeThreshold)
-        {
-            window.Cursor = Cursors.SizeWE;
-            ResizeWindowInternal(ResizeDirection.Left);
-        }
-        else if(position.X >= windowWidth - edgeThreshold)
-        {
-            window.Cursor = Cursors.SizeWE;
-            ResizeWindowInternal(ResizeDirection.Right);
-        }
-        else if(position.Y <= edgeThreshold)
-        {
-            window.Cursor = Cursors.SizeNS;
-            ResizeWindowInternal(ResizeDirection.Top);
-        }
-        else if(position.Y >= windowHeight - edgeThreshold)
-        {
-            window.Cursor = Cursors.SizeNS;
-            ResizeWindowInternal(ResizeDirection.Bottom);
-        }
-        else
-        {
-            window.Cursor = Cursors.Arrow;
-        }
+            ResizeWindowInternal(ResizeDirection.TopLeft, Cursors.SizeNWSE);
 
-        void ResizeWindowInternal(ResizeDirection direction)
+        else if(position.X >= windowWidth - edgeThreshold && position.Y <= edgeThreshold)
+            ResizeWindowInternal(ResizeDirection.TopRight, Cursors.SizeNESW);
+
+        else if(position.X <= edgeThreshold && position.Y >= windowHeight - edgeThreshold)
+            ResizeWindowInternal(ResizeDirection.BottomLeft, Cursors.SizeNESW);
+
+        else if(position.X >= windowWidth - edgeThreshold && position.Y >= windowHeight - edgeThreshold)
+            ResizeWindowInternal(ResizeDirection.BottomRight, Cursors.SizeNWSE);
+
+        else if(position.X <= edgeThreshold)
+            ResizeWindowInternal(ResizeDirection.Left, Cursors.SizeWE);
+
+        else if(position.X >= windowWidth - edgeThreshold)
+            ResizeWindowInternal(ResizeDirection.Right, Cursors.SizeWE);
+
+        else if(position.Y <= edgeThreshold)
+            ResizeWindowInternal(ResizeDirection.Top, Cursors.SizeNS);
+
+        else if(position.Y >= windowHeight - edgeThreshold)
+            ResizeWindowInternal(ResizeDirection.Bottom, Cursors.SizeNS);
+
+        else
+            window.Cursor = Cursors.Arrow;
+
+        void ResizeWindowInternal(ResizeDirection direction, Cursor cursor)
         {
+            window.Cursor = cursor;
             if(Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(window).Handle);

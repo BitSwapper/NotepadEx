@@ -12,8 +12,11 @@ namespace WpfNotepad2;
 public partial class MainWindow : Window
 {
     const string appName = "NotepadEx";
+
     string currentFileName = string.Empty;
     bool hasTextChangedSinceSave = false;
+    WindowState prevWindowState;
+
     public int InfoBarSize { get; init; } = 18;
 
     public MainWindow()
@@ -28,8 +31,6 @@ public partial class MainWindow : Window
 
     void InitUI()
     {
-
-
         txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
         MenuItem_ToggleWrapping.IsChecked = Settings.Default.TextWrapping;
 
@@ -38,8 +39,6 @@ public partial class MainWindow : Window
 
         SetupInfoBar();
     }
-
-
 
     void txtTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
     {
@@ -56,7 +55,7 @@ public partial class MainWindow : Window
     void Border_MouseMove(object sender, MouseEventArgs e)
     {
         var position = e.GetPosition(this);
-        WindowResizer.ResizeWindow(this, position, UiLayoutConstants.ResizeBorderWidth * 5);
+        WindowResizer.ResizeWindow(this, position, UiLayoutConstants.ResizeBorderWidth);
     }
 
     void MenuItemNew_Click(object sender, RoutedEventArgs e)
@@ -282,7 +281,6 @@ public partial class MainWindow : Window
 
 
 
-    WindowState prevWindowState;
 
     void Window_StateChanged(object sender, EventArgs e)
     {
@@ -290,35 +288,4 @@ public partial class MainWindow : Window
             WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
         prevWindowState = WindowState;
     }
-
-    //void DoWindowMaximizedStateChange()
-    //{
-    //    if(prevWindowState == WindowState.Minimized) return;
-    //    if(!isManuallyMaximized)
-    //    {
-    //        var screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)this.Left, (int)this.Top)); //get the screen where the window is currently located
-    //        var workingArea = screen.WorkingArea;
-
-    //        oldLeft = Left;
-    //        oldTop = Top;
-    //        oldWidth = Width;
-    //        oldHeight = Height;
-
-    //        this.Left = workingArea.Left;
-    //        this.Top = workingArea.Top;
-    //        this.Width = workingArea.Width;
-    //        this.Height = workingArea.Height;
-
-    //        isManuallyMaximized = true;
-    //    }
-    //    else if(isManuallyMaximized)
-    //    {
-    //        Left = oldLeft;
-    //        Top = oldTop;
-    //        Width = oldWidth;
-    //        Height = oldHeight;
-
-    //        isManuallyMaximized = false;
-    //    }
-    //}
 }
