@@ -14,11 +14,6 @@ public partial class ColorPickerLine : UserControl
     public void SetText(string text) => txtThemeName.Text = text;
     public void SetPath(string path) => this.path = path;
 
-    void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-    {
-        //begin editing
-    }
-
     void ButtonRandomize_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -32,5 +27,15 @@ public partial class ColorPickerLine : UserControl
     private void ColorPicker_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         e.Handled = true;
+    }
+
+    private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
+    {
+        try
+        {
+            Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(e.NewValue.Value);
+
+        }
+        catch(Exception ex) { MessageBox.Show(ex.Message); }
     }
 }
