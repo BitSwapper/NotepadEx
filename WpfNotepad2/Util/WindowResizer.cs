@@ -25,10 +25,10 @@ internal class WindowResizer
             oldWidth = window.Width;
             oldHeight = window.Height;
 
-            window.Left = workingArea.Left - resizableBorderSize;
-            window.Top = workingArea.Top - 1;
-            window.Width = workingArea.Width + resizableBorderSize * 2;
-            window.Height = workingArea.Height + resizableBorderSize - 1;
+            window.Left = workingArea.Left;
+            window.Top = workingArea.Top;
+            window.Width = workingArea.Width;
+            window.Height = workingArea.Height;
 
             isManuallyMaximized = true;
         }
