@@ -53,6 +53,8 @@
                         <MenuItem Header="Exit" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemExit_Click"/>
                     </MenuItem>
                 </Menu>
+
+                <TextBox x:Name="txtEditor" Grid.Row="2" AcceptsReturn="True"></TextBox>
         </Grid>
             </Border>
         </Grid>
