@@ -11,13 +11,13 @@
         ResizeMode="NoResize"
         ShowInTaskbar="True"
         Closing="Window_Closing"
-        Background="#ED202020"
+        Background="Transparent"
         StateChanged="Window_StateChanged">
     
    
     <Grid>
-        <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="2" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
-            <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="#32666666" CornerRadius="2" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
+        <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
+            <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="#32666666" CornerRadius="3" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26"/>
@@ -25,7 +25,7 @@
                     </Grid.RowDefinitions>
 
                     <!--Custom Title Bar-->
-                    <Grid Background="#4D202222">
+                    <Grid Background="#F4202222">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
@@ -86,6 +86,7 @@
                         </MenuItem>
                         </Menu>
 
+                        <Grid Grid.Row="1" Background="#ED202020">
                         <TextBox x:Name="txtEditor"
                                  Grid.Row="1"
                                  Background="Transparent"
@@ -101,6 +102,7 @@
                                  HorizontalScrollBarVisibility="Auto"
                                  MouseMove="txtEditor_MouseMove"
                                  CaretBrush="AliceBlue"></TextBox>
+                        </Grid>
 
                         <TextBlock Background="#FF8A8A5D" Grid.Row="2">
                             <TextBlock x:Name="txtStatus" Margin="4,2,4,0" FontFamily="Verdana" FontSize="12" Foreground="White" FontWeight="SemiBold" Text="Lines"/>

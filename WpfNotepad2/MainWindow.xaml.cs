@@ -18,12 +18,14 @@ public partial class MainWindow : Window
     WindowState prevWindowState;
 
     public int InfoBarSize { get; init; } = 18;
+    double ResizeableBorderSize => OutlineBorder.BorderThickness.Left + OutlineBorderColored.BorderThickness.Left;
 
     public MainWindow()
     {
         InitializeComponent();
         DataContext = this;
         InitUI();
+
 
         RecentFileManager.LoadRecentFilesFromSettings();
         RecentFileManager.PopulateRecentFilesMenu(DropDown_File);
@@ -49,7 +51,7 @@ public partial class MainWindow : Window
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if(e.ClickCount == 2)
-            WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
+            WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState, ResizeableBorderSize);
     }
 
     void Border_MouseMove(object sender, MouseEventArgs e)
@@ -275,7 +277,7 @@ public partial class MainWindow : Window
 
     void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
-    void btnMaximize_Click(object sender, RoutedEventArgs e) => WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
+    void btnMaximize_Click(object sender, RoutedEventArgs e) => WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState, ResizeableBorderSize);
 
     void btnExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
@@ -285,7 +287,7 @@ public partial class MainWindow : Window
     void Window_StateChanged(object sender, EventArgs e)
     {
         if(WindowState != WindowState.Minimized)
-            WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
+            WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState, ResizeableBorderSize);
         prevWindowState = WindowState;
     }
 }
