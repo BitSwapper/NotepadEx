@@ -94,5 +94,17 @@ namespace WpfNotepad2.Properties {
                 this["InfoBarAutoHide"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StatusBarVisible {
+            get {
+                return ((bool)(this["StatusBarVisible"]));
+            }
+            set {
+                this["StatusBarVisible"] = value;
+            }
+        }
     }
 }

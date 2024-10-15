@@ -37,8 +37,9 @@
                     <Button Name="btnMinimize" Background="Transparent" Foreground="AliceBlue" Grid.Column="1" HorizontalAlignment="Right" Content="-" Width="30" Click="btnMinimize_Click"></Button>
                     <Button Name="btnExit" Background="Transparent" Foreground="AliceBlue" Grid.Column="2" HorizontalAlignment="Right" Content="X" Width="30" Click="btnExit_Click"></Button>
                 </Grid>
+                
+                
                 <Menu Name="MainMenuBar" IsMainMenu="True" Grid.Row="1" Background="#FF343738">
-
                     <MenuItem Name="DropDown_File" Header="File" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                         <MenuItem Header="New" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
                         <MenuItem Header="New Window..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>
@@ -77,9 +78,11 @@
                 </Menu>
 
                 <TextBox x:Name="txtEditor" Grid.Row="2" AcceptsReturn="True"></TextBox>
+                
                 <StatusBar Name="MainStatusBar" Grid.Row="3" DockPanel.Dock="Bottom" FontSize="10" FontFamily="Verdana" FontWeight ="SemiBold" Height="20" Background="#00F1EDED">
                     <TextBlock x:Name="lblStatus" Text="Lines" />
                 </StatusBar>
+            
             </Grid>
             </Border>
         </Grid>

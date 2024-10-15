@@ -27,9 +27,11 @@ public partial class MainWindow : Window
 
     void InitUI()
     {
-        txtEditor.TextWrapping = Properties.Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
-        MenuItem_ToggleWrapping.IsChecked = Properties.Settings.Default.TextWrapping;
+        txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
+        MenuItem_ToggleWrapping.IsChecked = Settings.Default.TextWrapping;
 
+        MenuItem_ToggleMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
+        MenuItem_ToggleInfoBar.IsChecked = Settings.Default.StatusBarVisible;
     }
 
     void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
@@ -115,7 +117,11 @@ public partial class MainWindow : Window
     void MenuItemToggleInfoBar_Click(object sender, RoutedEventArgs e)
     {
         var menuItem = sender as MenuItem;
-        menuItem.IsChecked = !menuItem.IsChecked;
+
+        Settings.Default.StatusBarVisible = !Settings.Default.StatusBarVisible;
+        MainStatusBar.Visibility = Settings.Default.StatusBarVisible ? Visibility.Visible : Visibility.Collapsed;
+        Settings.Default.Save();
+        menuItem.IsChecked = Settings.Default.StatusBarVisible;
     }
 
     void MenuItemFindReplace_Click(object sender, RoutedEventArgs e)
