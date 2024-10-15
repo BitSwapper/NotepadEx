@@ -10,10 +10,11 @@
         AllowsTransparency="True"
         ResizeMode="CanResize"
         ShowInTaskbar="True"
-        Closing="Window_Closing">
+        Closing="Window_Closing"
+        Background="#ED202020">
 
     <Grid>
-        <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Gray" CornerRadius="0" Background="White" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
+        <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Gray" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="26"/>
@@ -35,11 +36,11 @@
 
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition x:Name="Row_MainMenuBar" Height="20"/>
+                        <RowDefinition x:Name="Row_MainMenuBar" Height="18"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition x:Name="Row_InfoBar" Height="20"/>
+                        <RowDefinition x:Name="Row_InfoBar" Height="18"/>
                     </Grid.RowDefinitions>
-                    
+
                     <Menu Name="MainMenuBar" IsMainMenu="True" Background="#FF343738">
                         <MenuItem Name="DropDown_File" Header="File" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                             <MenuItem Header="New" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
@@ -54,7 +55,7 @@
                             <MenuItem Header="Save as..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSaveAs_Click"/>
                             <MenuItem Header="Exit" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemExit_Click"/>
                         </MenuItem>
-                        
+
                         <MenuItem Header="Edit" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                             <MenuItem Header="Undo" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemUndo_Click"/>
                             <MenuItem Header="Redo" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemRedo_Click"/>
@@ -66,14 +67,14 @@
                             <MenuItem Header="Select All" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSelectAll_Click"/>
                             <MenuItem Header="Insert Time/Date" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTimeDate_Click"/>
                         </MenuItem>
-                        
+
                         <MenuItem Header="Preferences" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                             <MenuItem Header="Font..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFont_Click"/>
                             <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemWordWrap_Click"/>
                             <MenuItem Name="MenuItem_AutoHideMenuBar" Header="Auto Hide Menu Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
                             <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
                         </MenuItem>
-                        
+
                         <MenuItem Header="Theme" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
                             <MenuItem Header="Test Theme 1" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" />
                         </MenuItem>
@@ -81,6 +82,8 @@
 
                     <TextBox x:Name="txtEditor"
                              Grid.Row="1"
+                             Background="Transparent"
+                             Foreground="#FFFFFF"
                              AcceptsReturn="True"
                              FontSize="18"
                              FontFamily="Segoe UI"
@@ -91,8 +94,10 @@
                              VerticalScrollBarVisibility="Auto"
                              HorizontalScrollBarVisibility="Auto"
                              MouseMove="txtEditor_MouseMove"></TextBox>
-                    
-                    <TextBlock x:Name="txtStatus" Margin="4 0" FontFamily="Verdana" FontSize="12" FontWeight="SemiBold" Text="Lines" VerticalAlignment="Center" Grid.Row="2"/>
+
+                    <TextBlock Background="#FF8A8A5D" Grid.Row="2">
+                        <TextBlock x:Name="txtStatus" Margin="4,2,4,0" FontFamily="Verdana" FontSize="12" Foreground="White" FontWeight="SemiBold" Text="Lines"/>
+                    </TextBlock>
                 </Grid>
             </Grid>
         </Border>

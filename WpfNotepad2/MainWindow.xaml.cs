@@ -16,7 +16,7 @@ public partial class MainWindow : Window
     string currentFileName = "";
     bool hasTextChangedSinceSave = false;
 
-    public int InfoBarSize { get; init; } = 20;
+    public int InfoBarSize { get; init; } = 18;
 
     public MainWindow()
     {
