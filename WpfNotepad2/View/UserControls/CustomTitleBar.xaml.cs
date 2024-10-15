@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using WpfNotepad2.Util;
 
 namespace WpfNotepad2.View.UserControls;
@@ -12,19 +13,48 @@ public partial class CustomTitleBar : UserControl
     Action<object, RoutedEventArgs> Maximize;
     Action<object, RoutedEventArgs> Close;
 
-    public CustomTitleBar() => InitializeComponent();
 
-    public void Init(Window window, Action<object, RoutedEventArgs> Minimize, Action<object, RoutedEventArgs> Maximize, Action<object, RoutedEventArgs> Close)
+
+    public static readonly DependencyProperty TextValProperty =
+        DependencyProperty.Register("TextVal", typeof(string), typeof(CustomTitleBar), new PropertyMetadata(default(string)));
+
+    public string TextVal
+    {
+        get => (string)GetValue(TextValProperty);
+        set => SetValue(TextValProperty, value);
+    }
+
+    public static readonly DependencyProperty ImageSourceProperty =
+        DependencyProperty.Register("ImageSource", typeof(BitmapImage), typeof(CustomTitleBar), new PropertyMetadata(default(BitmapImage)));
+
+    public BitmapImage ImageSource
+    {
+        get => (BitmapImage)GetValue(ImageSourceProperty);
+        set => SetValue(ImageSourceProperty, value);
+    }
+
+    public CustomTitleBar()
+    {
+        InitializeComponent();
+        DataContext = this;
+    }
+
+    public void Init(Window window, string windowTitleText, Action<object, RoutedEventArgs> Minimize = null, Action<object, RoutedEventArgs> Maximize = null, Action<object, RoutedEventArgs> Close = null)
     {
         WindowRef = window;
+        TextVal = windowTitleText;
         this.Minimize = Minimize;
         this.Maximize = Maximize;
         this.Close = Close;
+
+        if(Minimize == null) btnMinimize.Visibility = Visibility.Collapsed;
+        if(Maximize == null) btnMaximize.Visibility = Visibility.Collapsed;
+        if(Close == null) btnExit.Visibility = Visibility.Collapsed;
     }
 
     void txtTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
     {
-        if(e.GetPosition(this).Y > UiLayoutConstants.ResizeBorderWidth)
+        if(e.GetPosition(this).Y > Constants.ResizeBorderWidth / 2)
             WindowRef?.DragMove();
     }
 

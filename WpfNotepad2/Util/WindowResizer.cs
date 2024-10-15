@@ -4,15 +4,15 @@ using System.Windows.Interop;
 using Point = System.Windows.Point;
 
 namespace WpfNotepad2.Util;
-internal class WindowResizer
+public class WindowResizer
 {
-    static bool isManuallyMaximized = false;
-    static double oldLeft;
-    static double oldTop;
-    static double oldWidth;
-    static double oldHeight;
+    bool isManuallyMaximized = false;
+    double oldLeft;
+    double oldTop;
+    double oldWidth;
+    double oldHeight;
 
-    public static void DoWindowMaximizedStateChange(Window window, WindowState prevWindowState)
+    public void DoWindowMaximizedStateChange(Window window, WindowState prevWindowState)
     {
         if(prevWindowState == WindowState.Minimized) return;
         if(!isManuallyMaximized)

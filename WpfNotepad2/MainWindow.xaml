@@ -18,7 +18,7 @@
    
     <Grid>
         <!--<Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">-->
-            <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="{DynamicResource BorderColor}" CornerRadius="1" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
+            <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="{DynamicResource Color_BorderColor}" CornerRadius="1" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26"/>
@@ -26,16 +26,7 @@
                     </Grid.RowDefinitions>
 
                     <!--Custom Title Bar-->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Background="{DynamicResource Color_TitleBarBg}">
-                        <Image Height="15" Source="Images/NotepadEx.png"></Image>
-                    </Grid>
-                        <UserControls:CustomTitleBar x:Name="MainWindowTitleBar" Grid.Column="1"></UserControls:CustomTitleBar>
-                </Grid>
+                    <UserControls:CustomTitleBar x:Name="MainWindowTitleBar" Grid.Column="1"></UserControls:CustomTitleBar>
 
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>

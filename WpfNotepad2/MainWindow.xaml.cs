@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using WpfNotepad2.Extensions;
 using WpfNotepad2.Properties;
 using WpfNotepad2.Util;
 using WpfNotepad2.Windows;
@@ -14,13 +15,10 @@ namespace WpfNotepad2;
 
 public partial class MainWindow : Window
 {
-    const string appName = "NotepadEx";
-
     string currentFileName = string.Empty;
     bool hasTextChangedSinceSave = false;
     WindowState prevWindowState;
-
-    public int InfoBarSize { get; init; } = 18;
+    WindowResizer resizer;
 
     public MainWindow()
     {
@@ -28,14 +26,17 @@ public partial class MainWindow : Window
         DataContext = this;
         InitUI();
 
-
         RecentFileManager.LoadRecentFilesFromSettings();
         RecentFileManager.PopulateRecentFilesMenu(DropDown_File);
     }
 
     void InitUI()
     {
-        MainWindowTitleBar.Init(this, Minimize_Click, Maximize_Click, Exit_Click);
+        resizer = new();
+        MainWindowTitleBar.Init(this, Constants.AppName, Minimize_Click, Maximize_Click, Exit_Click);
+        string imagePath = Constants.ImagePath_MainIcon.ToUriPath();
+        var v = new BitmapImage(new Uri(imagePath));
+        MainWindowTitleBar.ImageSource = v;
 
         txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
         MenuItem_ToggleWrapping.IsChecked = Settings.Default.TextWrapping;
@@ -55,13 +56,13 @@ public partial class MainWindow : Window
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if(e.ClickCount == 2)
-            WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
+            resizer.DoWindowMaximizedStateChange(this, prevWindowState);
     }
 
     void Border_MouseMove(object sender, MouseEventArgs e)
     {
         var position = e.GetPosition(this);
-        WindowResizer.ResizeWindow(this, position, UiLayoutConstants.ResizeBorderWidth);
+        WindowResizer.ResizeWindow(this, position, Constants.ResizeBorderWidth);
     }
 
     void MenuItemNew_Click(object sender, RoutedEventArgs e)
@@ -78,13 +79,13 @@ public partial class MainWindow : Window
 
     void MenuItemNewWindow_Click(object sender, RoutedEventArgs e) => AdditionalWindowManager.TryCreateNewNotepadWindow();
 
-    void MenuItemOpen_Click(object sender, RoutedEventArgs e) => DocumentHelper.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, appName);
+    void MenuItemOpen_Click(object sender, RoutedEventArgs e) => DocumentHelper.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName);
 
     void MenuItemOpenRecent_Click(object sender, RoutedEventArgs e)
     {
         MenuItem menuItem = (MenuItem)sender;
         MenuItem subMenuItem = (MenuItem)e.OriginalSource;
-        DocumentHelper.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, appName, (string)subMenuItem.Header);
+        DocumentHelper.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName, (string)subMenuItem.Header);
     }
 
     void MenuItemMultiOpen_Click(object sender, RoutedEventArgs e)
@@ -209,7 +210,7 @@ public partial class MainWindow : Window
         AddRecentFile(fileName);
     }
 
-    void UpdateTitleText(string fileName)  {}// Title = txtTitleBar.Text = fileName == string.Empty ? appName : $"{appName}  |  " + Path.GetFileName(fileName);
+    void UpdateTitleText(string fileName) { }// Title = txtTitleBar.Text = fileName == string.Empty ? appName : $"{appName}  |  " + Path.GetFileName(fileName);
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SaveSettings);
 
@@ -254,7 +255,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            Row_MainMenuBar.Height = new(InfoBarSize, GridUnitType.Pixel);
+            Row_MainMenuBar.Height = new(Constants.InfoBarSize, GridUnitType.Pixel);
             Row_MainMenuBar.IsEnabled = true;
             MainMenuBar.IsEnabled = true;
         }
@@ -269,7 +270,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            Row_InfoBar.Height = new(InfoBarSize, GridUnitType.Pixel);
+            Row_InfoBar.Height = new(Constants.InfoBarSize, GridUnitType.Pixel);
             Row_InfoBar.IsEnabled = true;
         }
 
@@ -278,14 +279,14 @@ public partial class MainWindow : Window
 
     void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
-    void Maximize_Click(object sender, RoutedEventArgs e) => WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
+    void Maximize_Click(object sender, RoutedEventArgs e) => resizer.DoWindowMaximizedStateChange(this, prevWindowState);
 
     void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
     void Window_StateChanged(object sender, EventArgs e)
     {
         if(WindowState != WindowState.Minimized)
-            WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
+            resizer.DoWindowMaximizedStateChange(this, prevWindowState);
         prevWindowState = WindowState;
     }
 
@@ -321,9 +322,9 @@ public partial class MainWindow : Window
         //Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);
         //Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
 
-        SolidColorBrush GetRandomColorBrush(byte minAlpha = 0, byte maxAlpha = 255) => new SolidColorBrush(System.Windows.Media.Color.FromArgb((byte)Random.Shared.Next(minAlpha, maxAlpha + 1), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        static SolidColorBrush GetRandomColorBrush(byte minAlpha = 0, byte maxAlpha = 255) => new SolidColorBrush(System.Windows.Media.Color.FromArgb((byte)Random.Shared.Next(minAlpha, maxAlpha + 1), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
 
-        LinearGradientBrush GetRandomLinearGradientBrush(byte minAlpha = 0, byte maxAlpha = 255)
+        static LinearGradientBrush GetRandomLinearGradientBrush(byte minAlpha = 0, byte maxAlpha = 255)
         {
             LinearGradientBrush linearGradientBrush = new ();
 
@@ -340,7 +341,7 @@ public partial class MainWindow : Window
 
                 gradientStops.Add(new GradientStop(randomColor, offset));
             }
-        
+
             foreach(var stop in gradientStops.OrderBy(gs => gs.Offset))    // Sort the gradient stops by offset and add them to the brush
                 linearGradientBrush.GradientStops.Add(stop);
 
@@ -348,15 +349,11 @@ public partial class MainWindow : Window
         }
     }
 
-    void MenuItemTheme_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show("Theme General");
-    }
+    void MenuItemTheme_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Theme General");
 
     void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)
     {
         e.Handled = true;
-
         ThemeEditorWindow themeEditorWindow = new();
         themeEditorWindow.ShowDialog();
     }
