@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using WpfNotepad2.Properties;
 using WpfNotepad2.Util;
@@ -34,6 +35,8 @@ public partial class MainWindow : Window
 
     void InitUI()
     {
+        MainWindowTitleBar.Init(this, Minimize_Click, Maximize_Click, Exit_Click);
+
         txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
         MenuItem_ToggleWrapping.IsChecked = Settings.Default.TextWrapping;
 
@@ -45,8 +48,8 @@ public partial class MainWindow : Window
 
     void txtTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
     {
-        if(e.GetPosition(this).Y > UiLayoutConstants.ResizeBorderWidth)
-            DragMove();
+        //if(e.GetPosition(this).Y > UiLayoutConstants.ResizeBorderWidth)
+        //    DragMove();
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -206,7 +209,7 @@ public partial class MainWindow : Window
         AddRecentFile(fileName);
     }
 
-    void UpdateTitleText(string fileName) => Title = txtTitleBar.Text = fileName == string.Empty ? appName : $"{appName}  |  " + Path.GetFileName(fileName);
+    void UpdateTitleText(string fileName)  {}// Title = txtTitleBar.Text = fileName == string.Empty ? appName : $"{appName}  |  " + Path.GetFileName(fileName);
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SaveSettings);
 
@@ -273,11 +276,11 @@ public partial class MainWindow : Window
         MenuItem_ToggleInfoBar.IsChecked = Settings.Default.InfoBarVisible;
     }
 
-    void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+    void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
-    void btnMaximize_Click(object sender, RoutedEventArgs e) => WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
+    void Maximize_Click(object sender, RoutedEventArgs e) => WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
 
-    void btnExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+    void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
     void Window_StateChanged(object sender, EventArgs e)
     {
