@@ -16,8 +16,8 @@
     
    
     <Grid>
-        <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
-            <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="#F266F666" CornerRadius="3" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
+        <!--<Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">-->
+            <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="#92666666" CornerRadius="1" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26"/>
@@ -110,6 +110,6 @@
                     </Grid>
                 </Grid>
             </Border>
-        </Border>
+        <!--</Border>-->
     </Grid>
 </Window>

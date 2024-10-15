@@ -12,7 +12,7 @@ internal class WindowResizer
     static double oldWidth;
     static double oldHeight;
 
-    public static void DoWindowMaximizedStateChange(Window window, WindowState prevWindowState, double resizableBorderSize)
+    public static void DoWindowMaximizedStateChange(Window window, WindowState prevWindowState)
     {
         if(prevWindowState == WindowState.Minimized) return;
         if(!isManuallyMaximized)
