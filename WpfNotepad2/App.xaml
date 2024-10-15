@@ -12,6 +12,12 @@
             <SolidColorBrush x:Key="Color_TextEditorBg" Color="#ED202020"/>
             <SolidColorBrush x:Key="Color_TextEditorFg" Color="AliceBlue"/>
 
+            <!--<LinearGradientBrush x:Key="Color_TitleBarBg" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#DF4B5080" Offset="0.0"/>
+                <GradientStop Color="#DF122327" Offset="0.6"/>
+                <GradientStop Color="#DFA5547D" Offset="1.0"/>
+            </LinearGradientBrush>-->
+
             <SolidColorBrush x:Key="Color_TitleBarBg" Color="#F4202222"/>
             <SolidColorBrush x:Key="Color_TitleBarFont" Color="DarkGoldenrod"/>
             <SolidColorBrush x:Key="Color_SystemButtons" Color="Cyan"/>

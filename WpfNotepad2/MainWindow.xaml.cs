@@ -157,29 +157,7 @@ public partial class MainWindow : Window
 
     void MenuItemTimeDate_Click(object sender, RoutedEventArgs e)
     {
-        Application.Current.Resources["Color_TextEditorBg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_TextEditorFg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        
-        Application.Current.Resources["Color_TitleBarFont"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_SystemButtons"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        
-        Application.Current.Resources["Color_BorderColor"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_InfoBarBg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_InfoBarFg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        
-        Application.Current.Resources["Color_MenuItemFg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuBarBg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuBg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuBorder"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuFg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuSeperator"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuDisabledFg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuItemSelectedBg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuItemSelectedBorder"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuItemHighlightBg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuItemHighlightBorder"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-        Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+
     }
 
     void MenuItemTheme_Click(object sender, RoutedEventArgs e)
@@ -303,13 +281,87 @@ public partial class MainWindow : Window
 
     void btnExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
-
-
-
     void Window_StateChanged(object sender, EventArgs e)
     {
         if(WindowState != WindowState.Minimized)
             WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
         prevWindowState = WindowState;
+    }
+
+    void MenuItem_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e)
+    {
+        //Application.Current.Resources["Color_TextEditorBg"] = GetRandomLinearGradientBrush(180);
+        Application.Current.Resources["Color_TextEditorFg"] = GetRandomLinearGradientBrush(180);
+
+        //Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);
+        //Application.Current.Resources["Color_SystemButtons"] = GetRandomColorBrush(180);
+
+        //Application.Current.Resources["Color_BorderColor"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_InfoBarBg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_InfoBarFg"] = GetRandomColorBrush(180);
+
+        //Application.Current.Resources["Color_MenuItemFg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuBarBg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuBg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuBorder"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuFg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuSeperator"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuDisabledFg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuItemSelectedBg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuItemSelectedBorder"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuItemHighlightBg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);
+        //Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
+
+        SolidColorBrush GetRandomColorBrush(byte minAlpha = 0, byte maxAlpha = 255) => new SolidColorBrush(System.Windows.Media.Color.FromArgb((byte)Random.Shared.Next(minAlpha, maxAlpha + 1), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+
+
+
+        LinearGradientBrush GetRandomLinearGradientBrush(byte minAlpha = 0, byte maxAlpha = 255)
+        {
+            LinearGradientBrush linearGradientBrush = new ();
+
+            linearGradientBrush.StartPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
+            linearGradientBrush.EndPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
+
+
+            // Define how many gradient stops you want (minimum 2 for a basic gradient)
+            int gradientStopCount = Random.Shared.Next(2, 5);
+
+            // Temporary list to hold the gradient stops
+            var gradientStops = new List<GradientStop>();
+
+            for(int i = 0; i < gradientStopCount; i++)
+            {
+                // Calculate a random offset for each stop between 0 and 1
+                double offset = i == 0 ? 0.0 : (i == gradientStopCount - 1 ? 1.0 : Random.Shared.NextDouble());
+
+                // Generate a random color for the gradient stop
+                System.Windows.Media.Color randomColor = System.Windows.Media.Color.FromArgb(
+            (byte)Random.Shared.Next(minAlpha, maxAlpha + 1),
+            (byte)Random.Shared.Next(256),
+            (byte)Random.Shared.Next(256),
+            (byte)Random.Shared.Next(256)
+        );
+
+                // Add the gradient stop to the list
+                gradientStops.Add(new GradientStop(randomColor, offset));
+            }
+
+            // Sort the gradient stops by offset and add them to the brush
+            foreach(var stop in gradientStops.OrderBy(gs => gs.Offset))
+            {
+                linearGradientBrush.GradientStops.Add(stop);
+            }
+
+            return linearGradientBrush;
+        }
     }
 }

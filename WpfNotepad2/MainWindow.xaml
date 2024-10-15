@@ -72,6 +72,7 @@
                             <MenuItem Header="Find and Replace..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFindReplace_Click"/>
                             <MenuItem Header="Select All" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSelectAll_Click"/>
                             <MenuItem Header="Insert Time/Date" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTimeDate_Click"/>
+                            <MenuItem Header="Test Random Theme" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTestTheme_Click"/>
                         </MenuItem>
 
                             <MenuItem Header="Preferences" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}">
