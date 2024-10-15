@@ -25,7 +25,7 @@
                     </Grid.RowDefinitions>
 
                     <!--Custom Title Bar-->
-                    <Grid Background="#F4202222">
+                    <Grid Background="{DynamicResource Color_TitleBarBg}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
@@ -34,10 +34,10 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Height="15" Margin="6,0,4,0" Source="Images/NotepadEx.png"></Image>
-                    <TextBlock Name="txtTitleBar" Grid.Column="1" Text="NotepadEx" Foreground="{DynamicResource TitleBarFont}" FontFamily="Arial" FontWeight="ExtraLight" FontSize="15"  VerticalAlignment="Center" MouseDown="txtTitleBar_MouseDown"/>
-                    <Button Name="btnMinimize" Background="Transparent" Foreground="{DynamicResource SystemButtons}" Grid.Column="1" HorizontalAlignment="Right" Content="_" FontFamily="Verdana" Width="30" Click="btnMinimize_Click"></Button>
-                    <Button Name="btnMaximize" Background="Transparent" Foreground="{DynamicResource SystemButtons}" Grid.Column="2" HorizontalAlignment="Right" Content="🗗" FontFamily="Verdana" Width="30" Click="btnMaximize_Click"></Button>
-                    <Button Name="btnExit" Background="Transparent" Foreground="{DynamicResource SystemButtons}" Grid.Column="3" HorizontalAlignment="Right" Content="X" FontFamily="Verdana" Width="30" Click="btnExit_Click"></Button>
+                    <TextBlock Name="txtTitleBar" Grid.Column="1" Text="NotepadEx" Foreground="{DynamicResource Color_TitleBarFont}" FontFamily="Arial" FontWeight="ExtraLight" FontSize="15"  VerticalAlignment="Center" MouseDown="txtTitleBar_MouseDown"/>
+                    <Button Name="btnMinimize" Background="Transparent" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="1" HorizontalAlignment="Right" Content="_" FontFamily="Verdana" Width="30" Click="btnMinimize_Click"></Button>
+                    <Button Name="btnMaximize" Background="Transparent" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="2" HorizontalAlignment="Right" Content="🗗" FontFamily="Verdana" Width="30" Click="btnMaximize_Click"></Button>
+                    <Button Name="btnExit" Background="Transparent" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="3" HorizontalAlignment="Right" Content="X" FontFamily="Verdana" Width="30" Click="btnExit_Click"></Button>
                     </Grid>
 
                     <Grid Grid.Row="1">
@@ -47,50 +47,50 @@
                             <RowDefinition x:Name="Row_InfoBar" Height="18"/>
                         </Grid.RowDefinitions>
 
-                        <Menu Name="MainMenuBar" IsMainMenu="True" Background="{DynamicResource MenuBarBackground}">
-                            <MenuItem Name="DropDown_File" Header="File" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
-                                <MenuItem Header="New" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
-                                <MenuItem Header="New Window..." Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>
-                                <MenuItem Header="Open..." Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpen_Click"></MenuItem>
-                                <MenuItem Name="MenuItem_OpenRecent"  Header="Open Recent" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpenRecent_Click">
-                                    <MenuItem Header="..." Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" ></MenuItem>
+                        <Menu Name="MainMenuBar" IsMainMenu="True" Background="{DynamicResource Color_MenuBarBackground}">
+                            <MenuItem Name="DropDown_File" Header="File" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
+                                <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
+                                <MenuItem Header="New Window..." Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>
+                                <MenuItem Header="Open..." Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpen_Click"></MenuItem>
+                                <MenuItem Name="MenuItem_OpenRecent"  Header="Open Recent" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpenRecent_Click">
+                                    <MenuItem Header="..." Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" ></MenuItem>
                                 </MenuItem>
-                                <MenuItem Header="Open Multiple Files As One..." Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemMultiOpen_Click"/>
-                                <MenuItem Header="Print..." Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPrint_Click"/>
-                                <MenuItem Header="Save" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"/>
-                                <MenuItem Header="Save as..." Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSaveAs_Click"/>
-                                <MenuItem Header="Exit" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemExit_Click"/>
+                                <MenuItem Header="Open Multiple Files As One..." Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemMultiOpen_Click"/>
+                                <MenuItem Header="Print..." Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPrint_Click"/>
+                                <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"/>
+                                <MenuItem Header="Save as..." Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSaveAs_Click"/>
+                                <MenuItem Header="Exit" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemExit_Click"/>
                             </MenuItem>
 
-                            <MenuItem Header="Edit" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
-                            <MenuItem Header="Undo" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemUndo_Click"/>
-                            <MenuItem Header="Redo" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemRedo_Click"/>
-                            <MenuItem Header="Copy" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemCopy_Click"/>
-                            <MenuItem Header="Cut" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemCut_Click"/>
-                            <MenuItem Header="Paste" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPaste_Click"/>
-                            <MenuItem Header="Delete" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemDelete_Click"/>
-                            <MenuItem Header="Find and Replace..." Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFindReplace_Click"/>
-                            <MenuItem Header="Select All" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSelectAll_Click"/>
-                            <MenuItem Header="Insert Time/Date" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTimeDate_Click"/>
+                            <MenuItem Header="Edit" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
+                            <MenuItem Header="Undo" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemUndo_Click"/>
+                            <MenuItem Header="Redo" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemRedo_Click"/>
+                            <MenuItem Header="Copy" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemCopy_Click"/>
+                            <MenuItem Header="Cut" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemCut_Click"/>
+                            <MenuItem Header="Paste" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPaste_Click"/>
+                            <MenuItem Header="Delete" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemDelete_Click"/>
+                            <MenuItem Header="Find and Replace..." Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFindReplace_Click"/>
+                            <MenuItem Header="Select All" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSelectAll_Click"/>
+                            <MenuItem Header="Insert Time/Date" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTimeDate_Click"/>
                         </MenuItem>
 
-                            <MenuItem Header="Preferences" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
-                            <MenuItem Header="Font..." Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFont_Click"/>
-                            <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemWordWrap_Click"/>
-                            <MenuItem Name="MenuItem_AutoHideMenuBar" Header="Auto Hide Menu Bar" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
-                            <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
+                            <MenuItem Header="Preferences" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
+                            <MenuItem Header="Font..." Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFont_Click"/>
+                            <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemWordWrap_Click"/>
+                            <MenuItem Name="MenuItem_AutoHideMenuBar" Header="Auto Hide Menu Bar" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
+                            <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
                         </MenuItem>
 
-                            <MenuItem Header="Theme" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
-                            <MenuItem Header="Test Theme 1" Foreground="{DynamicResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" />
+                            <MenuItem Header="Theme" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
+                            <MenuItem Header="Test Theme 1" Foreground="{DynamicResource Color_MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" />
                         </MenuItem>
                         </Menu>
 
-                        <Grid Grid.Row="1" Background="#ED202020">
+                    <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
                         <TextBox x:Name="txtEditor"
                                  Grid.Row="1"
                                  Background="Transparent"
-                                 Foreground="#FFFFFF"
+                                 Foreground="{DynamicResource Color_TextEditorFg}"
                                  AcceptsReturn="True"
                                  FontSize="18"
                                  FontFamily="Segoe UI"
@@ -104,8 +104,8 @@
                                  CaretBrush="AliceBlue"></TextBox>
                         </Grid>
 
-                        <TextBlock Background="#FF8A8A5D" Grid.Row="2">
-                            <TextBlock x:Name="txtStatus" Margin="4,2,4,0" FontFamily="Verdana" FontSize="12" Foreground="White" FontWeight="SemiBold" Text="Lines"/>
+                    <TextBlock Background="{DynamicResource Color_InfoBarBackground}" Grid.Row="2">
+                            <TextBlock x:Name="txtStatus" Margin="4,2,4,0" FontFamily="Verdana" FontSize="12" Foreground="{DynamicResource Color_InfoBarForeground}" FontWeight="SemiBold" Text="Lines"/>
                         </TextBlock>
                     </Grid>
                 </Grid>

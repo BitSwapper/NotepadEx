@@ -157,7 +157,29 @@ public partial class MainWindow : Window
 
     void MenuItemTimeDate_Click(object sender, RoutedEventArgs e)
     {
-        Application.Current.Resources["TitleBarFont"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_TextEditorBg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_TextEditorFg"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        
+        Application.Current.Resources["Color_TitleBarFontColor"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_SystemButtons"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        
+        Application.Current.Resources["Color_BorderColor"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_InfoBarBackground"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_InfoBarForeground"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        
+        Application.Current.Resources["Color_MenuItemForeground"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_MenuBarBackground"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_Menu.Static.Background"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_Menu.Static.Border"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_Menu.Static.Foreground"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_Menu.Static.Separator"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_Menu.Disabled.Foreground"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_MenuItem.Selected.Background"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_MenuItem.Selected.Border"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_MenuItem.Highlight.Background"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_MenuItem.Highlight.Border"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_MenuItem.Highlight.Disabled.Background"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
+        Application.Current.Resources["Color_MenuItem.Highlight.Disabled.Border"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
     }
 
     void MenuItemTheme_Click(object sender, RoutedEventArgs e)
