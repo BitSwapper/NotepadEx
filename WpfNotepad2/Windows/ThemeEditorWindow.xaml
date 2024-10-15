@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NotepadEx.Windows"        
         xmlns:UserControls="clr-namespace:NotepadEx.View.UserControls"
         mc:Ignorable="d"
-        Title="ThemeEditorWindow" Height="450" Width="300"
+        Title="ThemeEditorWindow" Height="450" Width="400"
         WindowStyle="None"
         AllowsTransparency="True">
     <Grid>

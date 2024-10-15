@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Drawing.Drawing2D;
+using System.Windows;
 using System.Windows.Controls;
 using NotepadEx.Util;
 
@@ -7,6 +8,7 @@ namespace NotepadEx.View.UserControls;
 public partial class ColorPickerLine : UserControl
 {
     string path;
+    Color themeColor;
     public ColorPickerLine() => InitializeComponent();
 
     public void SetText(string text) => txtThemeName.Text = text;
@@ -22,7 +24,13 @@ public partial class ColorPickerLine : UserControl
         try
         {
             Application.Current.Resources[path] = ColorUtil.GetRandomLinearGradientBrush(180);
+            
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
+    }
+
+    private void ColorPicker_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        e.Handled = true;
     }
 }

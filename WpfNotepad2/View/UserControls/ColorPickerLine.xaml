@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotepadEx.View.UserControls"
-             mc:Ignorable="d" d:DesignWidth="260" Height="52">
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             
+             mc:Ignorable="d" d:DesignWidth="360" Height="52">
     <Border BorderBrush="Gray" BorderThickness="1">
         <Grid>
              <Grid.RowDefinitions>
@@ -14,9 +16,35 @@
 
             <TextBlock Name="txtThemeName" Margin="10,0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
             <WrapPanel Orientation="Horizontal" Grid.Row="1">
-                <RadioButton GroupName="Options" FontFamily="Verdana" Content="Color" Margin="5"/>
-                <RadioButton GroupName="Options" FontFamily="Verdana" Content="Gradient" Margin="5"/>
-                <Button Height="24" Width="115" Margin="0" Background="Aqua" VerticalContentAlignment="Top" Click="Button_Click"/>
+                
+                <RadioButton Name="rdBtnColor" IsChecked="True" FontFamily="Verdana" Content="Color" Margin="5"/>
+                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5"/>
+                
+                <xctk:ColorPicker Name="ColorPicker" Width="111" SelectedColor="{Binding themeColor}">
+                    <xctk:ColorPicker.Style>
+                        <Style TargetType="xctk:ColorPicker">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChecked, ElementName=rdBtnColor}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </xctk:ColorPicker.Style>
+                </xctk:ColorPicker>
+                <Button Width="111" Content="Edit Gradient">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChecked, ElementName=rdBtnGradient}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Height="24" Width="70" Margin="10 0" Content="Randomize"  VerticalContentAlignment="Top" Click="ButtonRandomize_Click"/>
             </WrapPanel>
         </Grid>
     </Border>
