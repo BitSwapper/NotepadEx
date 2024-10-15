@@ -66,9 +66,9 @@
                     </MenuItem>
                     <MenuItem Header="Preferences" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                         <MenuItem Header="Font..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFont_Click"/>
-                        <MenuItem Header="Toggle Word Wrapping" IsChecked="True" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemWordWrap_Click"/>
-                        <MenuItem Header="Autohide Menu Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
-                        <MenuItem Header="Toggle Info Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
+                        <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemWordWrap_Click"/>
+                        <MenuItem Name="MenuItem_ToggleMenuBar" Header="Autohide Menu Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
+                        <MenuItem Name="MenuItem_ToggleInfoBar" Header="Toggle Info Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
                     </MenuItem>
                     <MenuItem Header="Theme" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
                         <MenuItem Header="Test Theme 1" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" />

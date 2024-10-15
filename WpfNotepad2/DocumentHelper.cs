@@ -1,4 +1,5 @@
-﻿using System.Drawing.Printing;
+﻿using System.Diagnostics;
+using System.Drawing.Printing;
 using System.Printing;
 using System.Windows;
 using System.Windows.Controls;
@@ -74,5 +75,4 @@ internal class DocumentHelper
         }
         return true;
     }
-
 }

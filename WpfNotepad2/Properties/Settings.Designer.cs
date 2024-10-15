@@ -58,5 +58,41 @@ namespace WpfNotepad2.Properties {
                 this["WindowSizeY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TextWrapping {
+            get {
+                return ((bool)(this["TextWrapping"]));
+            }
+            set {
+                this["TextWrapping"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MenuBarAutoHide {
+            get {
+                return ((bool)(this["MenuBarAutoHide"]));
+            }
+            set {
+                this["MenuBarAutoHide"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InfoBarAutoHide {
+            get {
+                return ((bool)(this["InfoBarAutoHide"]));
+            }
+            set {
+                this["InfoBarAutoHide"] = value;
+            }
+        }
     }
 }

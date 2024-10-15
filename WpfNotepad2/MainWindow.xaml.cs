@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Win32;
+using WpfNotepad2.Properties;
 using WpfNotepad2.Util;
 
 namespace WpfNotepad2;
@@ -17,13 +18,23 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        InitUI();
 
         RecentFileManager.LoadRecentFilesFromSettings();
         RecentFileManager.PopulateRecentFilesMenu(DropDown_File);
+
     }
+
+    void InitUI()
+    {
+        txtEditor.TextWrapping = Properties.Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
+        MenuItem_ToggleWrapping.IsChecked = Properties.Settings.Default.TextWrapping;
+
+    }
+
     void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
-    void btnExit_Click(object sender, RoutedEventArgs e) => Close();
+    void btnExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
     void txtTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
     {
@@ -47,13 +58,15 @@ public partial class MainWindow : Window
 
     void MenuItemNew_Click(object sender, RoutedEventArgs e)
     {
-
+        if(DocumentHelper.PromptToSaveChanges(hasTextChangedSinceSave, SaveDocument))
+        {
+            txtEditor.Text = "";
+            //isTextChanged = false;
+            //UpdateStatusBarInfo();
+        }
     }
 
-    void MenuItemNewWindow_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
+    void MenuItemNewWindow_Click(object sender, RoutedEventArgs e) => AdditionalWindowManager.TryCreateNewNotepadWindow();
 
     void MenuItemOpen_Click(object sender, RoutedEventArgs e) => DocumentHelper.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, appName);
 
@@ -66,7 +79,7 @@ public partial class MainWindow : Window
 
     void MenuItemMultiOpen_Click(object sender, RoutedEventArgs e)
     {
-
+        //
     }
 
     void MenuItemSave_Click(object sender, RoutedEventArgs e) => SaveDocument();
@@ -75,26 +88,28 @@ public partial class MainWindow : Window
 
     void MenuItemPrint_Click(object sender, RoutedEventArgs e) => DocumentHelper.PrintDocument(txtEditor);
 
-    void MenuItemExit_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
+    void MenuItemExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
     void MenuItemFont_Click(object sender, RoutedEventArgs e)
     {
-
+        //
     }
 
     void MenuItemWordWrap_Click(object sender, RoutedEventArgs e)
     {
         var menuItem = sender as MenuItem;
-        menuItem.IsChecked = !menuItem.IsChecked;
+        txtEditor.TextWrapping = txtEditor.TextWrapping == TextWrapping.NoWrap ? TextWrapping.Wrap : TextWrapping.NoWrap;
+        SaveSettings();
+        menuItem.IsChecked = Settings.Default.TextWrapping;
     }
 
     void MenuItemAutohideMenuBar_Click(object sender, RoutedEventArgs e)
     {
         var menuItem = sender as MenuItem;
-        menuItem.IsChecked = !menuItem.IsChecked;
+        Settings.Default.MenuBarAutoHide = !Settings.Default.MenuBarAutoHide;
+        Settings.Default.Save();
+        MainMenuBar.Visibility = Settings.Default.MenuBarAutoHide ? Visibility.Collapsed : Visibility.Visible;
+        menuItem.IsChecked = Settings.Default.MenuBarAutoHide;
     }
 
     void MenuItemToggleInfoBar_Click(object sender, RoutedEventArgs e)
@@ -189,10 +204,9 @@ public partial class MainWindow : Window
 
     void UpdateTitleText(string fileName) => Title = $"{appName} | " + Path.GetFileName(fileName);
 
-    void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SettingsManager.SaveSettings);
+    void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SaveSettings);
 
-    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-    {
-        SettingsManager.SaveSettings();
-    }
+    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) => SaveSettings();
+
+    void SaveSettings() => SettingsManager.SaveSettings(txtEditor);
 }

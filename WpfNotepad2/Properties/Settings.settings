@@ -11,5 +11,14 @@
     <Setting Name="WindowSizeY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">450</Value>
     </Setting>
+    <Setting Name="TextWrapping" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MenuBarAutoHide" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="InfoBarAutoHide" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
