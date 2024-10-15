@@ -16,7 +16,7 @@ public partial class MainWindow : Window
     string currentFileName = "";
     bool hasTextChangedSinceSave = false;
 
-    public int InfoBarSize { get; set; } = 20;
+    public int InfoBarSize { get; init; } = 20;
 
     public MainWindow()
     {
@@ -60,8 +60,6 @@ public partial class MainWindow : Window
         var position = e.GetPosition(this);
         WindowResizer.ResizeWindow(this, position, UiLayoutConstants.ResizeBorderWidth);
     }
-
-
 
     void MenuItemNew_Click(object sender, RoutedEventArgs e)
     {
@@ -123,40 +121,6 @@ public partial class MainWindow : Window
         Settings.Default.InfoBarVisible = !Settings.Default.InfoBarVisible;
         Settings.Default.Save();
         SetupInfoBar();
-    }
-
-
-    void SetupMainMenuBar(bool showMenuBar)
-    {
-        if(!showMenuBar)
-        {
-            Row_MainMenuBar.Height = new(0, GridUnitType.Pixel);
-            Row_MainMenuBar.IsEnabled = false;
-            MainMenuBar.IsEnabled = false;
-        }
-        else
-        {
-            Row_MainMenuBar.Height = new(InfoBarSize, GridUnitType.Pixel);
-            Row_MainMenuBar.IsEnabled = true;
-            MainMenuBar.IsEnabled = true;
-        }
-
-    }
-
-    void SetupInfoBar()
-    {
-        if(!Settings.Default.InfoBarVisible)
-        {
-            Row_InfoBar.Height = new(0, GridUnitType.Pixel);
-            Row_InfoBar.IsEnabled = false;
-        }
-        else
-        {
-            Row_InfoBar.Height = new(InfoBarSize, GridUnitType.Pixel);
-            Row_InfoBar.IsEnabled = true;
-        }
-       
-        MenuItem_ToggleInfoBar.IsChecked = Settings.Default.InfoBarVisible;
     }
 
     void MenuItemFindReplace_Click(object sender, RoutedEventArgs e)
@@ -276,5 +240,37 @@ public partial class MainWindow : Window
                 }
             }
         }
+    }
+
+    void SetupMainMenuBar(bool showMenuBar)
+    {
+        if(!showMenuBar)
+        {
+            Row_MainMenuBar.Height = new(0, GridUnitType.Pixel);
+            Row_MainMenuBar.IsEnabled = false;
+            MainMenuBar.IsEnabled = false;
+        }
+        else
+        {
+            Row_MainMenuBar.Height = new(InfoBarSize, GridUnitType.Pixel);
+            Row_MainMenuBar.IsEnabled = true;
+            MainMenuBar.IsEnabled = true;
+        }
+    }
+
+    void SetupInfoBar()
+    {
+        if(!Settings.Default.InfoBarVisible)
+        {
+            Row_InfoBar.Height = new(0, GridUnitType.Pixel);
+            Row_InfoBar.IsEnabled = false;
+        }
+        else
+        {
+            Row_InfoBar.Height = new(InfoBarSize, GridUnitType.Pixel);
+            Row_InfoBar.IsEnabled = true;
+        }
+
+        MenuItem_ToggleInfoBar.IsChecked = Settings.Default.InfoBarVisible;
     }
 }
