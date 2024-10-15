@@ -16,7 +16,7 @@
     
    
     <Grid>
-        <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Gray" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
+        <Border x:Name="OutlineBorder" BorderThickness="2" BorderBrush="#32666666" CornerRadius="2" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="26"/>
