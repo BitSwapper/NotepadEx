@@ -83,7 +83,7 @@
                         </MenuItem>
 
                             <MenuItem Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
-                            <MenuItem Header="Test Theme 1" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" />
+                            <MenuItem Header="Theme Editor" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemThemeEditor_Click"/>
                         </MenuItem>
                         </Menu>
 

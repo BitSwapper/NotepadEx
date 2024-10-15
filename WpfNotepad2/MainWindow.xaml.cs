@@ -6,6 +6,7 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using WpfNotepad2.Properties;
 using WpfNotepad2.Util;
+using WpfNotepad2.Windows;
 using Point = System.Windows.Point;
 
 namespace WpfNotepad2;
@@ -160,10 +161,7 @@ public partial class MainWindow : Window
 
     }
 
-    void MenuItemTheme_Click(object sender, RoutedEventArgs e)
-    {
 
-    }
 
     bool SaveDocumentAs() => SaveFile(false);
 
@@ -322,8 +320,6 @@ public partial class MainWindow : Window
 
         SolidColorBrush GetRandomColorBrush(byte minAlpha = 0, byte maxAlpha = 255) => new SolidColorBrush(System.Windows.Media.Color.FromArgb((byte)Random.Shared.Next(minAlpha, maxAlpha + 1), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
 
-
-
         LinearGradientBrush GetRandomLinearGradientBrush(byte minAlpha = 0, byte maxAlpha = 255)
         {
             LinearGradientBrush linearGradientBrush = new ();
@@ -331,37 +327,34 @@ public partial class MainWindow : Window
             linearGradientBrush.StartPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
             linearGradientBrush.EndPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
 
-
-            // Define how many gradient stops you want (minimum 2 for a basic gradient)
             int gradientStopCount = Random.Shared.Next(2, 5);
-
-            // Temporary list to hold the gradient stops
             var gradientStops = new List<GradientStop>();
-
             for(int i = 0; i < gradientStopCount; i++)
             {
-                // Calculate a random offset for each stop between 0 and 1
                 double offset = i == 0 ? 0.0 : (i == gradientStopCount - 1 ? 1.0 : Random.Shared.NextDouble());
 
-                // Generate a random color for the gradient stop
-                System.Windows.Media.Color randomColor = System.Windows.Media.Color.FromArgb(
-            (byte)Random.Shared.Next(minAlpha, maxAlpha + 1),
-            (byte)Random.Shared.Next(256),
-            (byte)Random.Shared.Next(256),
-            (byte)Random.Shared.Next(256)
-        );
+                System.Windows.Media.Color randomColor = System.Windows.Media.Color.FromArgb((byte)Random.Shared.Next(minAlpha, maxAlpha + 1), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256));
 
-                // Add the gradient stop to the list
                 gradientStops.Add(new GradientStop(randomColor, offset));
             }
-
-            // Sort the gradient stops by offset and add them to the brush
-            foreach(var stop in gradientStops.OrderBy(gs => gs.Offset))
-            {
+        
+            foreach(var stop in gradientStops.OrderBy(gs => gs.Offset))    // Sort the gradient stops by offset and add them to the brush
                 linearGradientBrush.GradientStops.Add(stop);
-            }
 
             return linearGradientBrush;
         }
+    }
+
+    void MenuItemTheme_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("Theme General");
+    }
+
+    void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true;
+
+        ThemeEditorWindow themeEditorWindow = new();
+        themeEditorWindow.ShowDialog();
     }
 }
