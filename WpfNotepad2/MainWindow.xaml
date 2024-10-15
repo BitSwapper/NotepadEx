@@ -1,0 +1,59 @@
+﻿<Window x:Class="WpfNotepad2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfNotepad2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResize"
+        ShowInTaskbar="True">
+
+    <Grid>
+        <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Gray" CornerRadius="0" Background="White" 
+                MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                MouseMove="Border_MouseMove">
+
+            <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <!--Custom Title Bar-->
+                <Grid Background="#202222">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Name="txtTitleBar" Text="NotepadEx" Foreground="AliceBlue" FontFamily="Consolas" FontSize="20" Margin="4 0 0 0" MouseDown="txtTitleBar_MouseDown"/>
+                    <Button Name="btnMinimize" Background="Transparent" Foreground="AliceBlue" Grid.Column="1" HorizontalAlignment="Right" Content="-" Width="30" Click="btnMinimize_Click"></Button>
+                    <Button Name="btnExit" Background="Transparent" Foreground="AliceBlue" Grid.Column="2" HorizontalAlignment="Right" Content="X" Width="30" Click="btnExit_Click"></Button>
+                </Grid>
+                <Menu Name="MainMenuBar" IsMainMenu="True" Grid.Row="1" Background="#FF343738">
+
+                    <MenuItem Header="File" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
+                        <MenuItem Header="New" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
+                        <MenuItem Header="New Window" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>
+                        <MenuItem Header="Open" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpen_Click"></MenuItem>
+                        <MenuItem Header="Open Recent" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpenRecent_Click">
+                            <MenuItem Header="..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" ></MenuItem>
+                            <MenuItem Header="..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" ></MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="Open Multiple Files As One" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemMultiOpen_Click"/>
+                        <MenuItem Header="Print" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPrint_Click"/>
+                        <MenuItem Header="Save" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"/>
+                        <MenuItem Header="Save as" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSaveAs_Click"/>
+                        <MenuItem Header="Exit" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemExit_Click"/>
+                    </MenuItem>
+                </Menu>
+        </Grid>
+            </Border>
+        </Grid>
+</Window>
