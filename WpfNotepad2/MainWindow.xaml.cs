@@ -158,8 +158,6 @@ public partial class MainWindow : Window
     void MenuItemTimeDate_Click(object sender, RoutedEventArgs e)
     {
         Application.Current.Resources["TitleBarFont"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-
-        
     }
 
     void MenuItemTheme_Click(object sender, RoutedEventArgs e)
