@@ -12,10 +12,10 @@
             <SolidColorBrush x:Key="MenuItemForeground" Color="#CCCCCC"/>
             <SolidColorBrush x:Key="Menu.Static.Background" Color="#DF333B3E"/>
             <SolidColorBrush x:Key="Menu.Static.Border" Color="#FF999999"/>
-            <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#FFFFAF00"/>
-            <SolidColorBrush x:Key="Menu.Static.Separator" Color="#FFFFAF00"/>
+            <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#FF00E2FF"/>
+            <SolidColorBrush x:Key="Menu.Static.Separator" Color="#00000000"/>
             <SolidColorBrush x:Key="Menu.Disabled.Foreground" Color="Cyan"/>
-            <SolidColorBrush x:Key="MenuItem.Selected.Background" Color="Purple"/>
+            <SolidColorBrush x:Key="MenuItem.Selected.Background" Color="#FF0A0080"/>
             <SolidColorBrush x:Key="MenuItem.Selected.Border" Color="#FF26A0DA"/>
             <SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#FF333E3C"/>
             <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FFFFE9F6"/>

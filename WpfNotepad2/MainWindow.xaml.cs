@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using WpfNotepad2.Util;
@@ -76,5 +77,28 @@ public partial class MainWindow : Window
     void MenuItemExit_Click(object sender, RoutedEventArgs e)
     {
 
+    }
+
+    private void MenuItemFont_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void MenuItemWordWrap_Click(object sender, RoutedEventArgs e)
+    {
+        var v = sender as MenuItem;
+        v.IsChecked = !v.IsChecked;
+    }
+
+    private void MenuItemAutohideMenuBar_Click(object sender, RoutedEventArgs e)
+    {
+        var v = sender as MenuItem;
+        v.IsChecked = !v.IsChecked;
+    }
+
+    private void MenuItemToggleInfoBar_Click(object sender, RoutedEventArgs e)
+    {
+        var v = sender as MenuItem;
+        v.IsChecked = !v.IsChecked;
     }
 }
