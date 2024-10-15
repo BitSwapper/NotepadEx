@@ -9,6 +9,9 @@
 
 
 
+            <SolidColorBrush x:Key="TitleBarFont" Color="DarkGoldenrod"/>
+            <SolidColorBrush x:Key="SystemButtons" Color="Cyan"/>
+            <SolidColorBrush x:Key="BorderColor" Color="#92666666"/>
             <SolidColorBrush x:Key="MenuItemForeground" Color="#CCCCCC"/>
             <SolidColorBrush x:Key="MenuBarBackground" Color="#FA343738"/>
             <SolidColorBrush x:Key="Menu.Static.Background" Color="#C7333B3E"/>

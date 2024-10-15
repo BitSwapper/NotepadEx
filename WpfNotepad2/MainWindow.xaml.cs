@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Microsoft.Win32;
 using WpfNotepad2.Properties;
 using WpfNotepad2.Util;
@@ -156,7 +157,9 @@ public partial class MainWindow : Window
 
     void MenuItemTimeDate_Click(object sender, RoutedEventArgs e)
     {
+        Application.Current.Resources["TitleBarFont"] = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
 
+        
     }
 
     void MenuItemTheme_Click(object sender, RoutedEventArgs e)
