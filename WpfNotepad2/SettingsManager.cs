@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using WpfNotepad2.Properties;
-using WpfNotepad2.Util;
+using NotepadEx.Properties;
+using NotepadEx.Util;
 
-namespace WpfNotepad2;
+namespace NotepadEx;
 public static class SettingsManager
 {
     public static void SaveSettings(TextBox txtEditor)

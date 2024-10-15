@@ -1,11 +1,10 @@
-﻿using System.Diagnostics;
-using System.Drawing.Printing;
+﻿using System.Drawing.Printing;
 using System.Printing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using Microsoft.Win32;
-namespace WpfNotepad2;
+namespace NotepadEx;
 internal class DocumentHelper
 {
     public static void OpenDocument(Func<bool> SaveDocument, Action<string> LoadDocument, bool isTextChanged, string appName, string fileName = "")

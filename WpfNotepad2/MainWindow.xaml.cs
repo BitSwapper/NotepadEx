@@ -5,13 +5,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using WpfNotepad2.Extensions;
-using WpfNotepad2.Properties;
-using WpfNotepad2.Util;
-using WpfNotepad2.Windows;
+using NotepadEx.Extensions;
+using NotepadEx.Properties;
+using NotepadEx.Util;
+using NotepadEx.Windows;
 using Point = System.Windows.Point;
 
-namespace WpfNotepad2;
+namespace NotepadEx;
 
 public partial class MainWindow : Window
 {
@@ -45,12 +45,6 @@ public partial class MainWindow : Window
         MenuItem_AutoHideMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
 
         SetupInfoBar();
-    }
-
-    void txtTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        //if(e.GetPosition(this).Y > UiLayoutConstants.ResizeBorderWidth)
-        //    DragMove();
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -88,10 +82,7 @@ public partial class MainWindow : Window
         DocumentHelper.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName, (string)subMenuItem.Header);
     }
 
-    void MenuItemMultiOpen_Click(object sender, RoutedEventArgs e)
-    {
-        //
-    }
+    void MenuItemMultiOpen_Click(object sender, RoutedEventArgs e) { }
 
     void MenuItemSave_Click(object sender, RoutedEventArgs e) => SaveDocument();
 
@@ -101,10 +92,7 @@ public partial class MainWindow : Window
 
     void MenuItemExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
-    void MenuItemFont_Click(object sender, RoutedEventArgs e)
-    {
-        //
-    }
+    void MenuItemFont_Click(object sender, RoutedEventArgs e) { }
 
     void MenuItemWordWrap_Click(object sender, RoutedEventArgs e)
     {
@@ -129,10 +117,7 @@ public partial class MainWindow : Window
         SetupInfoBar();
     }
 
-    void MenuItemFindReplace_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
+    void MenuItemFindReplace_Click(object sender, RoutedEventArgs e) { }
 
     void MenuItemCopy_Click(object sender, RoutedEventArgs e) => txtEditor.Copy();
 
@@ -140,32 +125,15 @@ public partial class MainWindow : Window
 
     void MenuItemPaste_Click(object sender, RoutedEventArgs e) => txtEditor.Paste();
 
-    void MenuItemUndo_Click(object sender, RoutedEventArgs e)
-    {
+    void MenuItemUndo_Click(object sender, RoutedEventArgs e) { }
 
-    }
+    void MenuItemRedo_Click(object sender, RoutedEventArgs e) { }
 
-    void MenuItemRedo_Click(object sender, RoutedEventArgs e)
-    {
+    void MenuItemDelete_Click(object sender, RoutedEventArgs e) { }
 
-    }
+    void MenuItemSelectAll_Click(object sender, RoutedEventArgs e) { }
 
-    void MenuItemDelete_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    void MenuItemSelectAll_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    void MenuItemTimeDate_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-
+    void MenuItemTimeDate_Click(object sender, RoutedEventArgs e) { }
 
     bool SaveDocumentAs() => SaveFile(false);
 
@@ -210,7 +178,7 @@ public partial class MainWindow : Window
         AddRecentFile(fileName);
     }
 
-    void UpdateTitleText(string fileName) { }// Title = txtTitleBar.Text = fileName == string.Empty ? appName : $"{appName}  |  " + Path.GetFileName(fileName);
+    void UpdateTitleText(string fileName) => MainWindowTitleBar.txtTitleBar.Text = fileName == string.Empty ? Constants.AppName : $"{Constants.AppName}  |  " + Path.GetFileName(fileName);
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SaveSettings);
 

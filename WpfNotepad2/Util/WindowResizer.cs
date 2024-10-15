@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using Point = System.Windows.Point;
 
-namespace WpfNotepad2.Util;
+namespace NotepadEx.Util;
 public class WindowResizer
 {
     bool isManuallyMaximized = false;

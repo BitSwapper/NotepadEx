@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 
-namespace WpfNotepad2;
+namespace NotepadEx;
 internal class AdditionalWindowManager
 {
     public static void TryCreateNewNotepadWindow()

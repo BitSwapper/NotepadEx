@@ -2,9 +2,9 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using WpfNotepad2.Util;
+using NotepadEx.Util;
 
-namespace WpfNotepad2.View.UserControls;
+namespace NotepadEx.View.UserControls;
 
 public partial class CustomTitleBar : UserControl
 {

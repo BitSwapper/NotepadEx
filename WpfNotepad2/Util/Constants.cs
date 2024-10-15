@@ -1,4 +1,4 @@
-﻿namespace WpfNotepad2.Util;
+﻿namespace NotepadEx.Util;
 
 public static class Constants
 {

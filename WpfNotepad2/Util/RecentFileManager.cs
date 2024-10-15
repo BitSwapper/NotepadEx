@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace WpfNotepad2.Util;
+namespace NotepadEx.Util;
 
 public static class RecentFileManager
 {

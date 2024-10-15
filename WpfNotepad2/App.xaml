@@ -1,13 +1,11 @@
-﻿<Application x:Class="WpfNotepad2.App"
+﻿<Application x:Class="NotepadEx.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfNotepad2"
+             xmlns:local="clr-namespace:NotepadEx"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-
 
             <SolidColorBrush x:Key="Color_TextEditorBg" Color="#ED202020"/>
             <SolidColorBrush x:Key="Color_TextEditorFg" Color="AliceBlue"/>
