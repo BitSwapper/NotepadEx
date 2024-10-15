@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using Point = System.Windows.Point;
 
 namespace WpfNotepad2.Util;
 internal class WindowResizer
