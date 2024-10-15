@@ -15,14 +15,14 @@ public partial class CustomTitleBar : UserControl
 
 
 
-    public static readonly DependencyProperty TextValProperty =
-        DependencyProperty.Register("TextVal", typeof(string), typeof(CustomTitleBar), new PropertyMetadata(default(string)));
+    //public static readonly DependencyProperty TextValProperty =
+    //    DependencyProperty.Register("TextVal", typeof(string), typeof(CustomTitleBar), new PropertyMetadata(default(string)));
 
-    public string TextVal
-    {
-        get => (string)GetValue(TextValProperty);
-        set => SetValue(TextValProperty, value);
-    }
+    //public string TextVal
+    //{
+    //    get => (string)GetValue(TextValProperty);
+    //    set => SetValue(TextValProperty, value);
+    //}
 
     public static readonly DependencyProperty ImageSourceProperty =
         DependencyProperty.Register("ImageSource", typeof(BitmapImage), typeof(CustomTitleBar), new PropertyMetadata(default(BitmapImage)));
@@ -42,7 +42,7 @@ public partial class CustomTitleBar : UserControl
     public void Init(Window window, string windowTitleText, Action<object, RoutedEventArgs> Minimize = null, Action<object, RoutedEventArgs> Maximize = null, Action<object, RoutedEventArgs> Close = null)
     {
         WindowRef = window;
-        TextVal = windowTitleText;
+        SetText(windowTitleText);
         this.Minimize = Minimize;
         this.Maximize = Maximize;
         this.Close = Close;
@@ -63,4 +63,9 @@ public partial class CustomTitleBar : UserControl
     void btnMaximize_Click(object sender, RoutedEventArgs e) => Maximize.Invoke(sender, e);
 
     void btnExit_Click(object sender, RoutedEventArgs e) => Close.Invoke(sender, e);
+
+    public void SetText(string text)
+    {
+        txtTitleBar.Text = text;
+    }
 }

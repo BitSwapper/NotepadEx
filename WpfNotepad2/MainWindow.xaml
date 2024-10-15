@@ -14,8 +14,6 @@
         Closing="Window_Closing"
         Background="Transparent"
         StateChanged="Window_StateChanged">
-    
-   
     <Grid>
         <!--<Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">-->
             <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="{DynamicResource Color_BorderColor}" CornerRadius="1" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">

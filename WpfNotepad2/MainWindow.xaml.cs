@@ -266,7 +266,7 @@ public partial class MainWindow : Window
     void MenuItemTestTheme_Click(object sender, RoutedEventArgs e)
     {
         //Application.Current.Resources["Color_TextEditorBg"] = GetRandomLinearGradientBrush(180);
-        Application.Current.Resources["Color_TextEditorFg"] = GetRandomLinearGradientBrush(180);
+        Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);
 
         //Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);
         //Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);
@@ -289,32 +289,6 @@ public partial class MainWindow : Window
         //Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);
         //Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);
         //Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
-
-        static SolidColorBrush GetRandomColorBrush(byte minAlpha = 0, byte maxAlpha = 255) => new SolidColorBrush(System.Windows.Media.Color.FromArgb((byte)Random.Shared.Next(minAlpha, maxAlpha + 1), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256)));
-
-        static LinearGradientBrush GetRandomLinearGradientBrush(byte minAlpha = 0, byte maxAlpha = 255)
-        {
-            LinearGradientBrush linearGradientBrush = new ();
-
-            linearGradientBrush.StartPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
-            linearGradientBrush.EndPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
-
-            int gradientStopCount = Random.Shared.Next(2, 5);
-            var gradientStops = new List<GradientStop>();
-            for(int i = 0; i < gradientStopCount; i++)
-            {
-                double offset = i == 0 ? 0.0 : (i == gradientStopCount - 1 ? 1.0 : Random.Shared.NextDouble());
-
-                System.Windows.Media.Color randomColor = System.Windows.Media.Color.FromArgb((byte)Random.Shared.Next(minAlpha, maxAlpha + 1), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256), (byte)Random.Shared.Next(256));
-
-                gradientStops.Add(new GradientStop(randomColor, offset));
-            }
-
-            foreach(var stop in gradientStops.OrderBy(gs => gs.Offset))    // Sort the gradient stops by offset and add them to the brush
-                linearGradientBrush.GradientStops.Add(stop);
-
-            return linearGradientBrush;
-        }
     }
 
     void MenuItemTheme_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Theme General");

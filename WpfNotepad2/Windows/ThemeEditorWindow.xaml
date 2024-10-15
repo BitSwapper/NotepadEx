@@ -6,15 +6,29 @@
         xmlns:local="clr-namespace:NotepadEx.Windows"        
         xmlns:UserControls="clr-namespace:NotepadEx.View.UserControls"
         mc:Ignorable="d"
-        Title="ThemeEditorWindow" Height="450" Width="800"
+        Title="ThemeEditorWindow" Height="450" Width="300"
         WindowStyle="None"
         AllowsTransparency="True">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="26"/>
+            <RowDefinition Height="18"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        
+        
         <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar"></UserControls:CustomTitleBar>
+        <Menu Grid.Row="1">
+            <MenuItem Name="MenuItem_File" Header="File">
+                <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Name="MenuItem_CopyFrom" Header="Copy From"></MenuItem>
+        </Menu>
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Name="stackPanelMain">
+      
+                </StackPanel>
+            </ScrollViewer>
     </Grid>
 </Window>

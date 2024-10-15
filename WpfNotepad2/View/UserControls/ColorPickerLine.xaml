@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="NotepadEx.View.UserControls.ColorPickerLine"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NotepadEx.View.UserControls"
+             mc:Ignorable="d" d:DesignWidth="260" Height="52">
+    <Border BorderBrush="Gray" BorderThickness="1">
+        <Grid>
+             <Grid.RowDefinitions>
+                <RowDefinition Height="22"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Name="txtThemeName" Margin="10,0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
+            <WrapPanel Orientation="Horizontal" Grid.Row="1">
+                <RadioButton GroupName="Options" FontFamily="Verdana" Content="Color" Margin="5"/>
+                <RadioButton GroupName="Options" FontFamily="Verdana" Content="Gradient" Margin="5"/>
+                <Button Height="24" Width="115" Margin="0" Background="Aqua" VerticalContentAlignment="Top" Click="Button_Click"/>
+            </WrapPanel>
+        </Grid>
+    </Border>
+</UserControl>
