@@ -98,12 +98,12 @@ namespace WpfNotepad2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool StatusBarVisible {
+        public bool InfoBarVisible {
             get {
-                return ((bool)(this["StatusBarVisible"]));
+                return ((bool)(this["InfoBarVisible"]));
             }
             set {
-                this["StatusBarVisible"] = value;
+                this["InfoBarVisible"] = value;
             }
         }
     }

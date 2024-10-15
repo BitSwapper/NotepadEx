@@ -20,7 +20,7 @@
     <Setting Name="InfoBarAutoHide" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="StatusBarVisible" Type="System.Boolean" Scope="User">
+    <Setting Name="InfoBarVisible" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

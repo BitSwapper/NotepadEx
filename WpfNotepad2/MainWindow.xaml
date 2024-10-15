@@ -20,9 +20,7 @@
             <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="26"/>
-                <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
             <!--Custom Title Bar-->
@@ -37,9 +35,16 @@
                     <Button Name="btnMinimize" Background="Transparent" Foreground="AliceBlue" Grid.Column="1" HorizontalAlignment="Right" Content="-" Width="30" Click="btnMinimize_Click"></Button>
                     <Button Name="btnExit" Background="Transparent" Foreground="AliceBlue" Grid.Column="2" HorizontalAlignment="Right" Content="X" Width="30" Click="btnExit_Click"></Button>
                 </Grid>
-                
-                
-                <Menu Name="MainMenuBar" IsMainMenu="True" Grid.Row="1" Background="#FF343738">
+
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="Row_MainMenuBar" Height="20"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition x:Name="Row_InfoBar" Height="20"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Menu Name="MainMenuBar" IsMainMenu="True" Background="#FF343738">
                     <MenuItem Name="DropDown_File" Header="File" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                         <MenuItem Header="New" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
                         <MenuItem Header="New Window..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>
@@ -68,8 +73,8 @@
                     <MenuItem Header="Preferences" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                         <MenuItem Header="Font..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFont_Click"/>
                         <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemWordWrap_Click"/>
-                        <MenuItem Name="MenuItem_ToggleMenuBar" Header="Autohide Menu Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
-                        <MenuItem Name="MenuItem_ToggleInfoBar" Header="Toggle Info Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
+                        <MenuItem Name="MenuItem_AutoHideMenuBar" Header="Auto Hide Menu Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
+                        <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
                     </MenuItem>
                     <MenuItem Header="Theme" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
                         <MenuItem Header="Test Theme 1" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" />
@@ -77,12 +82,11 @@
                     </MenuItem>
                 </Menu>
 
-                <TextBox x:Name="txtEditor" Grid.Row="2" AcceptsReturn="True"></TextBox>
-                
-                <StatusBar Name="MainStatusBar" Grid.Row="3" DockPanel.Dock="Bottom" FontSize="10" FontFamily="Verdana" FontWeight ="SemiBold" Height="20" Background="#00F1EDED">
-                    <TextBlock x:Name="lblStatus" Text="Lines" />
-                </StatusBar>
-            
+                    <TextBox x:Name="txtEditor" Grid.Row="1" AcceptsReturn="True" MouseMove="txtEditor_MouseMove"></TextBox>
+                    
+                    <TextBlock x:Name="txtStatus" Margin="5 0" FontFamily="Verdana" FontSize="12" FontWeight="SemiBold" Text="Lines" VerticalAlignment="Center" Grid.Row="2"/>
+                </Grid>
+
             </Grid>
             </Border>
         </Grid>

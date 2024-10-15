@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using WpfNotepad2.Properties;
 using WpfNotepad2.Util;
+using Point = System.Windows.Point;
 
 namespace WpfNotepad2;
 
@@ -14,6 +15,8 @@ public partial class MainWindow : Window
 
     string currentFileName = "";
     bool hasTextChangedSinceSave = false;
+
+    public int InfoBarSize { get; set; } = 20;
 
     public MainWindow()
     {
@@ -30,8 +33,10 @@ public partial class MainWindow : Window
         txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
         MenuItem_ToggleWrapping.IsChecked = Settings.Default.TextWrapping;
 
-        MenuItem_ToggleMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
-        MenuItem_ToggleInfoBar.IsChecked = Settings.Default.StatusBarVisible;
+        SetupMainMenuBar(!Settings.Default.MenuBarAutoHide);
+        MenuItem_AutoHideMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
+
+        SetupInfoBar();
     }
 
     void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
@@ -107,21 +112,51 @@ public partial class MainWindow : Window
 
     void MenuItemAutohideMenuBar_Click(object sender, RoutedEventArgs e)
     {
-        var menuItem = sender as MenuItem;
         Settings.Default.MenuBarAutoHide = !Settings.Default.MenuBarAutoHide;
         Settings.Default.Save();
-        MainMenuBar.Visibility = Settings.Default.MenuBarAutoHide ? Visibility.Collapsed : Visibility.Visible;
-        menuItem.IsChecked = Settings.Default.MenuBarAutoHide;
+        SetupMainMenuBar(!Settings.Default.MenuBarAutoHide);
+        MenuItem_AutoHideMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
     }
 
     void MenuItemToggleInfoBar_Click(object sender, RoutedEventArgs e)
     {
-        var menuItem = sender as MenuItem;
-
-        Settings.Default.StatusBarVisible = !Settings.Default.StatusBarVisible;
-        MainStatusBar.Visibility = Settings.Default.StatusBarVisible ? Visibility.Visible : Visibility.Collapsed;
+        Settings.Default.InfoBarVisible = !Settings.Default.InfoBarVisible;
         Settings.Default.Save();
-        menuItem.IsChecked = Settings.Default.StatusBarVisible;
+        SetupInfoBar();
+    }
+
+
+    void SetupMainMenuBar(bool showMenuBar)
+    {
+        if(!showMenuBar)
+        {
+            Row_MainMenuBar.Height = new(0, GridUnitType.Pixel);
+            Row_MainMenuBar.IsEnabled = false;
+            MainMenuBar.IsEnabled = false;
+        }
+        else
+        {
+            Row_MainMenuBar.Height = new(InfoBarSize, GridUnitType.Pixel);
+            Row_MainMenuBar.IsEnabled = true;
+            MainMenuBar.IsEnabled = true;
+        }
+
+    }
+
+    void SetupInfoBar()
+    {
+        if(!Settings.Default.InfoBarVisible)
+        {
+            Row_InfoBar.Height = new(0, GridUnitType.Pixel);
+            Row_InfoBar.IsEnabled = false;
+        }
+        else
+        {
+            Row_InfoBar.Height = new(InfoBarSize, GridUnitType.Pixel);
+            Row_InfoBar.IsEnabled = true;
+        }
+       
+        MenuItem_ToggleInfoBar.IsChecked = Settings.Default.InfoBarVisible;
     }
 
     void MenuItemFindReplace_Click(object sender, RoutedEventArgs e)
@@ -215,4 +250,31 @@ public partial class MainWindow : Window
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) => SaveSettings();
 
     void SaveSettings() => SettingsManager.SaveSettings(txtEditor);
+
+    void txtEditor_MouseMove(object sender, MouseEventArgs e) => ShowMenuBarIfMouseInRange(e);
+
+    void ShowMenuBarIfMouseInRange(MouseEventArgs e)
+    {
+        if(Settings.Default.MenuBarAutoHide == false && MainMenuBar.IsEnabled) return;
+
+        Point mousePosition = e.GetPosition(txtEditor);
+        if(mousePosition.Y < 2)
+        {
+            if(!MainMenuBar.IsEnabled)
+            {
+                SetupMainMenuBar(true);
+            }
+        }
+        else
+        {
+            if(MainMenuBar.IsEnabled)
+            {
+                Point menuPosition = e.GetPosition(MainMenuBar);
+                if(menuPosition.X < 0 || menuPosition.X > MainMenuBar.ActualWidth || menuPosition.Y < 0 || menuPosition.Y > MainMenuBar.ActualHeight)
+                {
+                    SetupMainMenuBar(false);
+                }
+            }
+        }
+    }
 }
