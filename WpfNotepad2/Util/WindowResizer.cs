@@ -6,6 +6,42 @@ using Point = System.Windows.Point;
 namespace WpfNotepad2.Util;
 internal class WindowResizer
 {
+    static bool isManuallyMaximized = false;
+    static double oldLeft;
+    static double oldTop;
+    static double oldWidth;
+    static double oldHeight;
+    public static void DoWindowMaximizedStateChange(Window window, WindowState prevWindowState)
+    {
+        if(prevWindowState == WindowState.Minimized) return;
+        if(!isManuallyMaximized)
+        {
+            var screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)window.Left, (int)window.Top)); //get the screen where the window is currently located
+            var workingArea = screen.WorkingArea;
+
+            oldLeft = window.Left;
+            oldTop = window.Top;
+            oldWidth = window.Width;
+            oldHeight = window.Height;
+
+            window.Left = workingArea.Left;
+            window.Top = workingArea.Top;
+            window.Width = workingArea.Width;
+            window.Height = workingArea.Height;
+
+            isManuallyMaximized = true;
+        }
+        else if(isManuallyMaximized)
+        {
+            window.Left = oldLeft;
+            window.Top = oldTop;
+            window.Width = oldWidth;
+            window.Height = oldHeight;
+
+            isManuallyMaximized = false;
+        }
+    }
+
     public static void ResizeWindow(Window window, Point position, int edgeThreshold)
     {
         double windowWidth = window.ActualWidth;

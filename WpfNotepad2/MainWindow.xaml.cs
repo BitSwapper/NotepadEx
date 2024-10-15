@@ -28,7 +28,7 @@ public partial class MainWindow : Window
 
     void InitUI()
     {
-       
+
 
         txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
         MenuItem_ToggleWrapping.IsChecked = Settings.Default.TextWrapping;
@@ -39,9 +39,7 @@ public partial class MainWindow : Window
         SetupInfoBar();
     }
 
-    void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
-    void btnExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
     void txtTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
     {
@@ -52,7 +50,7 @@ public partial class MainWindow : Window
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if(e.ClickCount == 2)
-            DoWindowMaximizedStateChange();
+            WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
     }
 
     void Border_MouseMove(object sender, MouseEventArgs e)
@@ -276,54 +274,51 @@ public partial class MainWindow : Window
         MenuItem_ToggleInfoBar.IsChecked = Settings.Default.InfoBarVisible;
     }
 
-    void btnMaximize_Click(object sender, RoutedEventArgs e)
-    {
-        DoWindowMaximizedStateChange();
-    }
+    void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+    void btnMaximize_Click(object sender, RoutedEventArgs e) => WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
+
+    void btnExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
 
-    bool isManuallyMaximized = false;
-    double oldLeft;
-    double oldTop;
-    double oldWidth;
-    double oldHeight;
+
     WindowState prevWindowState;
 
-    private void Window_StateChanged(object sender, EventArgs e)
+    void Window_StateChanged(object sender, EventArgs e)
     {
-        if(WindowState != WindowState.Minimized) 
-            DoWindowMaximizedStateChange();
+        if(WindowState != WindowState.Minimized)
+            WindowResizer.DoWindowMaximizedStateChange(this, prevWindowState);
         prevWindowState = WindowState;
     }
-    void DoWindowMaximizedStateChange()
-    {
-        if(prevWindowState == WindowState.Minimized) return;
-        if(!isManuallyMaximized)
-        {
-            isManuallyMaximized = true;
 
-            // Get the screen where the window is currently located
-            var screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)this.Left, (int)this.Top));
-            var workingArea = screen.WorkingArea;
+    //void DoWindowMaximizedStateChange()
+    //{
+    //    if(prevWindowState == WindowState.Minimized) return;
+    //    if(!isManuallyMaximized)
+    //    {
+    //        var screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)this.Left, (int)this.Top)); //get the screen where the window is currently located
+    //        var workingArea = screen.WorkingArea;
 
+    //        oldLeft = Left;
+    //        oldTop = Top;
+    //        oldWidth = Width;
+    //        oldHeight = Height;
 
-            oldLeft = Left;
-            oldTop = Top;
-            oldWidth = Width;
-            oldHeight = Height;
+    //        this.Left = workingArea.Left;
+    //        this.Top = workingArea.Top;
+    //        this.Width = workingArea.Width;
+    //        this.Height = workingArea.Height;
 
-            this.Left = workingArea.Left;
-            this.Top = workingArea.Top;
-            this.Width = workingArea.Width;
-            this.Height = workingArea.Height;
-        }
-        else if(isManuallyMaximized)
-        {
-            Left = oldLeft;
-            Top = oldTop;
-            Width = oldWidth;
-            Height = oldHeight;
-            isManuallyMaximized = false;
-        }
-    }
+    //        isManuallyMaximized = true;
+    //    }
+    //    else if(isManuallyMaximized)
+    //    {
+    //        Left = oldLeft;
+    //        Top = oldTop;
+    //        Width = oldWidth;
+    //        Height = oldHeight;
+
+    //        isManuallyMaximized = false;
+    //    }
+    //}
 }
