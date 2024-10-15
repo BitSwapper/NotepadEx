@@ -12,20 +12,18 @@ namespace WpfNotepad2;
 public partial class MainWindow : Window
 {
     const string appName = "NotepadEx";
-
-    string currentFileName = "";
+    string currentFileName = string.Empty;
     bool hasTextChangedSinceSave = false;
-
     public int InfoBarSize { get; init; } = 18;
 
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = this;
         InitUI();
 
         RecentFileManager.LoadRecentFilesFromSettings();
         RecentFileManager.PopulateRecentFilesMenu(DropDown_File);
-
     }
 
     void InitUI()
@@ -65,7 +63,9 @@ public partial class MainWindow : Window
     {
         if(DocumentHelper.PromptToSaveChanges(hasTextChangedSinceSave, SaveDocument))
         {
-            txtEditor.Text = "";
+            txtEditor.Text = string.Empty;
+            currentFileName = string.Empty;
+            UpdateTitleText(currentFileName);
             //isTextChanged = false;
             //UpdateStatusBarInfo();
         }
@@ -207,11 +207,11 @@ public partial class MainWindow : Window
         AddRecentFile(fileName);
     }
 
-    void UpdateTitleText(string fileName) => Title = $"{appName} | " + Path.GetFileName(fileName);
+    void UpdateTitleText(string fileName) => Title = txtTitleBar.Text = fileName == string.Empty ? appName : $"{appName}  |  " + Path.GetFileName(fileName);
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SaveSettings);
 
-    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) => SaveSettings();
+    void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) => SaveSettings();
 
     void SaveSettings() => SettingsManager.SaveSettings(txtEditor);
 
@@ -272,5 +272,10 @@ public partial class MainWindow : Window
         }
 
         MenuItem_ToggleInfoBar.IsChecked = Settings.Default.InfoBarVisible;
+    }
+
+    void btnMaximize_Click(object sender, RoutedEventArgs e)
+    {
+        WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
     }
 }

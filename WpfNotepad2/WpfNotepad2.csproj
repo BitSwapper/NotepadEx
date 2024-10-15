@@ -9,8 +9,18 @@
     <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\NotepadEx.ico" />
+    <None Remove="Images\NotepadEx.png" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<Using Remove="System.Windows.Forms" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Images\NotepadEx.ico" />
+	  <Resource Include="Images\NotepadEx.png" />
 	</ItemGroup>
 
 	<ItemGroup>
