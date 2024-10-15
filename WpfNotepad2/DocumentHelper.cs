@@ -31,8 +31,6 @@ internal class DocumentHelper
         LoadDocument(fileName);
     }
 
-
-
     public static void PrintDocument(TextBox txtEditor)
     {
         PrintDialog printDialog = new PrintDialog();

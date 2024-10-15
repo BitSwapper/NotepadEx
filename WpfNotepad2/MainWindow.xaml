@@ -8,11 +8,13 @@
         Title="NotepadEx" Height="450" Width="800"
         WindowStyle="None"
         AllowsTransparency="True"
-        ResizeMode="CanResize"
+        ResizeMode="NoResize"
         ShowInTaskbar="True"
         Closing="Window_Closing"
-        Background="#ED202020">
-
+        Background="#ED202020"
+        StateChanged="Window_StateChanged">
+    
+   
     <Grid>
         <Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Gray" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
             <Grid>
@@ -22,7 +24,7 @@
                 </Grid.RowDefinitions>
 
                 <!--Custom Title Bar-->
-                <Grid Background="#202222">
+                <Grid Background="#4D202222">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -33,7 +35,7 @@
                     <Image Height="15" Margin="6,0,4,0" Source="Images/NotepadEx.png"></Image>
                     <TextBlock Name="txtTitleBar" Grid.Column="1" Text="NotepadEx" Foreground="AliceBlue" FontFamily="Arial" FontWeight="ExtraLight" FontSize="15"  VerticalAlignment="Center" MouseDown="txtTitleBar_MouseDown"/>
                     <Button Name="btnMinimize" Background="Transparent" Foreground="AliceBlue" Grid.Column="1" HorizontalAlignment="Right" Content="_" FontFamily="Verdana" Width="30" Click="btnMinimize_Click"></Button>
-                    <Button Name="btnMaximize" Background="Transparent" Foreground="AliceBlue" Grid.Column="2" HorizontalAlignment="Right" Content="🗖" FontFamily="Verdana" Width="30" Click="btnMaximize_Click"></Button>
+                    <Button Name="btnMaximize" Background="Transparent" Foreground="AliceBlue" Grid.Column="2" HorizontalAlignment="Right" Content="🗗" FontFamily="Verdana" Width="30" Click="btnMaximize_Click"></Button>
                     <Button Name="btnExit" Background="Transparent" Foreground="AliceBlue" Grid.Column="3" HorizontalAlignment="Right" Content="X" FontFamily="Verdana" Width="30" Click="btnExit_Click"></Button>
                 </Grid>
 
@@ -44,7 +46,7 @@
                         <RowDefinition x:Name="Row_InfoBar" Height="18"/>
                     </Grid.RowDefinitions>
 
-                    <Menu Name="MainMenuBar" IsMainMenu="True" Background="#FF343738">
+                    <Menu Name="MainMenuBar" IsMainMenu="True" Background="{StaticResource MenuBarBackground}">
                         <MenuItem Name="DropDown_File" Header="File" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}">
                             <MenuItem Header="New" Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
                             <MenuItem Header="New Window..." Foreground="{StaticResource MenuItemForeground}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>

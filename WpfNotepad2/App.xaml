@@ -10,7 +10,8 @@
 
 
             <SolidColorBrush x:Key="MenuItemForeground" Color="#CCCCCC"/>
-            <SolidColorBrush x:Key="Menu.Static.Background" Color="#DF333B3E"/>
+            <SolidColorBrush x:Key="MenuBarBackground" Color="#8A343738"/>
+            <SolidColorBrush x:Key="Menu.Static.Background" Color="#B7333B3E"/>
             <SolidColorBrush x:Key="Menu.Static.Border" Color="#FF999999"/>
             <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#FF00E2FF"/>
             <SolidColorBrush x:Key="Menu.Static.Separator" Color="#00000000"/>
