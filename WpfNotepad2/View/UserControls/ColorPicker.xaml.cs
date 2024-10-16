@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using NotepadEx.Util;
 using Color = System.Windows.Media.Color;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
+using UserControl = System.Windows.Controls.UserControl;
 namespace NotepadEx.View.UserControls;
 
 public partial class ColorPicker : UserControl, INotifyPropertyChanged
@@ -13,6 +16,9 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     public static readonly DependencyProperty SelectedColorProperty =
         DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker),
             new PropertyMetadata(Colors.Red, OnColorChanged));
+
+    public event Action OnWindowConfirm;
+    public event Action OnWindowCancel;
 
     public Color SelectedColor
     {
@@ -70,6 +76,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     }
 
 
+    Color ogColor;
     private bool _isUpdating = false;
     private bool _isColorPlaneDragging;
     private bool _isHueDragging;
@@ -80,6 +87,10 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     public ColorPicker()
     {
         InitializeComponent();
+
+        if(SelectedColor != null)
+            ogColor = SelectedColor;
+
         DataContext = this;
         _currentHue = 0;
         _currentSaturation = 1;
@@ -281,6 +292,17 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         return Color.FromArgb(a, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
     }
 
+    void ButtonConfirm_Click(object sender, RoutedEventArgs e)
+    {
+        ogColor = SelectedColor;
+        OnWindowConfirm.Invoke();
+    }
+
+    void ButtonCancel_Click(object sender, RoutedEventArgs e)
+    {
+        SelectedColor = ogColor;
+        OnWindowCancel.Invoke();
+    }
 }
 
 

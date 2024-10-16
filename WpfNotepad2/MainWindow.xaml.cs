@@ -305,5 +305,6 @@ public partial class MainWindow : Window
         e.Handled = true;
         ColorPickerWindow colorPickerWindow = new();
         colorPickerWindow.ShowDialog();
+        MessageBox.Show(colorPickerWindow.SelectedColor.ToString());
     }
 }

@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using Color = System.Windows.Media.Color;
 
-namespace NotepadEx.Windows
+namespace NotepadEx.Windows;
+
+public partial class ColorPickerWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for ColorPickerWindow.xaml
-    /// </summary>
-    public partial class ColorPickerWindow : Window
+    public Color SelectedColor => myColorPicker.SelectedColor;
+    public ColorPickerWindow()
     {
-        public ColorPickerWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        myColorPicker.OnWindowCancel += OnClose;
+        myColorPicker.OnWindowConfirm += OnClose;
+    }
+
+    public void OnClose()
+    {
+        Close();
     }
 }

@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="ColorPickerWindow" Height="600" Width="600">
     <Grid>
-        <UserControls:ColorPicker></UserControls:ColorPicker>
+        <UserControls:ColorPicker x:Name="myColorPicker"></UserControls:ColorPicker>
     </Grid>
 </Window>
