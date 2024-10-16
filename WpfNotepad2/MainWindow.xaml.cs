@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -6,6 +7,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using NotepadEx.Extensions;
 using NotepadEx.Properties;
+using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
 using Point = System.Windows.Point;
@@ -44,7 +46,32 @@ public partial class MainWindow : Window
         MenuItem_AutoHideMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
 
         SetupInfoBar();
+        SetupThemes();
     }
+
+    void SetupThemes()
+    {
+        MenuItem themeMenuItem = MenuItem_Theme;
+        //themeMenuItem.Items.Clear();
+
+        AddCustomThemes(themeMenuItem);
+    }
+
+    void AddCustomThemes(MenuItem themeMenuItem)
+    {
+        var customThemes = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
+        foreach(var customTheme in customThemes)
+            AddThemeMenuItem(themeMenuItem, Path.GetFileName(customTheme));
+
+        void AddThemeMenuItem(MenuItem menuItem, string header)
+        {
+            MenuItem item = new MenuItem { Header = header };
+            item.Click += ThemeItem_Click;
+            menuItem.Items.Add(item);
+        }
+    }
+
+    void ThemeItem_Click(object sender, RoutedEventArgs e) { }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -266,7 +293,22 @@ public partial class MainWindow : Window
         //Application.Current.Resources["Color_TextEditorBg"] = GetRandomLinearGradientBrush(180);
         Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);//Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);//Application.Current.Resources["Color_SystemButtons"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_BorderColor"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_InfoBarBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_InfoBarFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBarBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuSeperator"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuDisabledFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemSelectedBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemSelectedBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
 
-    void MenuItemTheme_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Theme General");
+    void MenuItemTheme_Click(object sender, RoutedEventArgs e)
+    {
+        var menuItem = e.OriginalSource as MenuItem;
+        var themeName = menuItem.Header.ToString();
+
+        var fileData = File.ReadAllText(DirectoryUtil.NotepadExThemesPath + themeName);
+        var themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
+        var theme = themeSerialized.ToColorTheme();
+        ApplyTheme(theme);
+    }
+
+    void ApplyTheme(ColorTheme theme)
+    {
+        Application.Current.Resources["Color_TextEditorBg"] = new System.Windows.Media.SolidColorBrush(theme.Color_TextEditorBg);
+        Application.Current.Resources["Color_TextEditorFg"] = new System.Windows.Media.SolidColorBrush(theme.Color_TextEditorFg);
+    }
 
     void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)
     {

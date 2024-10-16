@@ -16,7 +16,7 @@ public partial class ThemeEditorWindow : Window
     WindowState prevWindowState;
     WindowResizer resizer;
     string currentThemeName;
-    public Dictionary<string, Color> pathToColors = new();
+    //public Dictionary<string, Color> pathToColors = new();
 
     public ThemeEditorWindow()
     {
@@ -28,7 +28,7 @@ public partial class ThemeEditorWindow : Window
 
     void InitThemeData()
     {
-        pathToColors.Clear();
+        //pathToColors.Clear();
         AddColorLine("Color_TextEditorBg", "Main Background");
         AddColorLine("Color_TextEditorFg", "Font Foreground");
 
@@ -64,8 +64,8 @@ public partial class ThemeEditorWindow : Window
         line.SetPath(path);
         line.SetText(themeName);
         stackPanelMain.Children.Add(line);
-        pathToColors.Add(path, (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush).Color);
-        line.GridForImg.Background = new SolidColorBrush(pathToColors[path]);
+        //pathToColors.Add(path, (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush).Color);
+        line.GridForImg.Background = (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush);
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -104,7 +104,6 @@ public partial class ThemeEditorWindow : Window
             saveFileDialog.InitialDirectory = DirectoryUtil.NotepadExThemesPath;
             saveFileDialog.Filter = "Theme Files (*.custom)|*.custom|All Files (*.*)|*.*";
             saveFileDialog.DefaultExt = ".custom";
-
 
             if(saveFileDialog.ShowDialog() == true)
                 fileName = saveFileDialog.FileName;

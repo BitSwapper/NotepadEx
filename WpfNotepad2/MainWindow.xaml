@@ -68,7 +68,7 @@
                             <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
                         </MenuItem>
 
-                            <MenuItem Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
+                            <MenuItem Name="MenuItem_Theme" Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
                             <MenuItem Header="Theme Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemThemeEditor_Click"/>
                             <MenuItem Header="Color Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemColorEditor_Click"/>
                         </MenuItem>
