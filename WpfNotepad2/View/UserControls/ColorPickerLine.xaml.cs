@@ -4,6 +4,7 @@ using System.Windows.Media;
 using NotepadEx.Util;
 using NotepadEx.Windows;
 using Color = System.Windows.Media.Color;
+using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 namespace NotepadEx.View.UserControls;
 
 public partial class ColorPickerLine : UserControl
@@ -21,7 +22,8 @@ public partial class ColorPickerLine : UserControl
         try
         {
             var brush =  ColorUtil.GetRandomColorBrush(180);
-            Application.Current.Resources[path] = brush;
+            //Application.Current.Resources[path] = brush;
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, brush);
             gridForImage.Background = brush;
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
@@ -37,7 +39,8 @@ public partial class ColorPickerLine : UserControl
 
             colorPickerWindow.myColorPicker.OnSelectedColorChanged += () =>
             {
-                Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(colorPickerWindow.SelectedColor);
+                //Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(colorPickerWindow.SelectedColor);
+                AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, new SolidColorBrush(colorPickerWindow.SelectedColor));
             };
 
             themeColor = colorPickerWindow.SelectedColor = (gridForImage.Background as SolidColorBrush).Color;

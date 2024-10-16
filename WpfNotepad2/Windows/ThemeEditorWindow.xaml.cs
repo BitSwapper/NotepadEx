@@ -116,8 +116,11 @@ public partial class ThemeEditorWindow : Window
         var theme = new ColorTheme();
         //theme.Color_TextEditorBg = pathToColors["Color_TextEditorBg"];
         //theme.Color_TextEditorFg = pathToColors["Color_TextEditorFg"];
-        theme.Color_TextEditorBg = (Application.Current.Resources["Color_TextEditorBg"] as SolidColorBrush).Color;
-        theme.Color_TextEditorFg = (Application.Current.Resources["Color_TextEditorFg"] as SolidColorBrush).Color;
+
+        //theme.Color_TextEditorBg = (Application.Current.Resources["Color_TextEditorBg"] as SolidColorBrush).Color;
+        //theme.Color_TextEditorFg = (Application.Current.Resources["Color_TextEditorFg"] as SolidColorBrush).Color;
+        theme.Color_TextEditorBg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorBg").Color;
+        theme.Color_TextEditorFg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorFg").Color;
         var serializedTheme = theme.ToSerializable();
 
         File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme));
