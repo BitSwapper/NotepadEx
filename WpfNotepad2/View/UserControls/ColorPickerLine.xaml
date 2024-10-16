@@ -6,17 +6,22 @@
              xmlns:local="clr-namespace:NotepadEx.View.UserControls"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              Margin="0 0 0 10"
-             mc:Ignorable="d" d:DesignWidth="360" Height="52">
+             mc:Ignorable="d" d:DesignWidth="360" Height="74">
     <Border BorderBrush="Gray" BorderThickness="0">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="22"></RowDefinition>
                 <RowDefinition Height="22"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
 
             <TextBlock Name="txtThemeName" Margin="5,0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
-            <Grid Name="gridForImage" HorizontalAlignment="Left" Width="147" Background="#FF54799B" Margin="211,2,0,2"></Grid>
-            <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Border BorderBrush="Wheat" Grid.Row="1" BorderThickness="1">
+                <Grid Name="gridForImage"  HorizontalAlignment="Stretch" Background="#FF54799B" Margin="2"></Grid>
+                
+            </Border>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="2">
                 <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="5" Checked="rdBtnColor_Checked"/>
                 <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5 5 75 0" Checked="rdBtnGradient_Checked"/>
 

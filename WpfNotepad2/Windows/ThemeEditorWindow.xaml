@@ -24,7 +24,14 @@
                 <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
                 <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Name="MenuItem_CopyFrom" Header="Copy From" Foreground="{DynamicResource Color_MenuItemFg}"></MenuItem>
+            <MenuItem Name="MenuItem_CopyFrom" Header="Copy From" Foreground="{DynamicResource Color_MenuItemFg}">
+                <MenuItem Header="Test Checked" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}">
+                    <MenuItem Header="Test CheckedChild" Foreground="{DynamicResource Color_MenuItemFg}"/>
+                    <MenuItem Header="Test CheckedChild2" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
+                    <MenuItem Header="Test CheckedChild2" IsEnabled="False" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
+
+                </MenuItem>
+            </MenuItem>
         </Menu>
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Name="stackPanelMain">

@@ -25,16 +25,51 @@ public partial class ThemeEditorWindow : Window
 
     void InitThemeData()
     {
-        AddColorLine("Color_TextEditorBg", "Main Background", ThemeManager.CurrentTheme.themeObj_TextEditorBg);
-        AddColorLine("Color_TextEditorFg", "Font Foreground", ThemeManager.CurrentTheme.themeObj_TextEditorFg);
-        AddColorLine("Color_TitleBarBg", "Title Bar Background", ThemeManager.CurrentTheme.themeObj_TitleBarBg);
+        AddNewColorLineSafe("Color_TextEditorBg", "Text Editor Background", ref ThemeManager.CurrentTheme.themeObj_TextEditorBg!);
+        AddNewColorLineSafe("Color_TextEditorFg", "Text Editor Font", ref ThemeManager.CurrentTheme.themeObj_TextEditorFg!);
+
+        AddNewColorLineSafe("Color_TitleBarBg", "Title Bar Background", ref ThemeManager.CurrentTheme.themeObj_TitleBarBg!);
+        AddNewColorLineSafe("Color_TitleBarFont", "Title Bar Font", ref ThemeManager.CurrentTheme.themeObj_TitleBarFont!);
+
+        AddNewColorLineSafe("Color_SystemButtons", "System Buttons", ref ThemeManager.CurrentTheme.themeObj_SystemButtons!);
+        AddNewColorLineSafe("Color_BorderColor", "Border Color", ref ThemeManager.CurrentTheme.themeObj_BorderColor!);
+
+        AddNewColorLineSafe("Color_MenuBarBg", "Menu Bar Background", ref ThemeManager.CurrentTheme.themeObj_MenuBarBg!);
+        AddNewColorLineSafe("Color_MenuItemFg", "Menu Item Font", ref ThemeManager.CurrentTheme.themeObj_MenuItemFg!);
+
+        AddNewColorLineSafe("Color_InfoBarBg", "Info Bar Background", ref ThemeManager.CurrentTheme.themeObj_InfoBarBg!);
+        AddNewColorLineSafe("Color_InfoBarFg", "Info Bar Font", ref ThemeManager.CurrentTheme.themeObj_InfoBarFg!);
+
+
+        //AddNewColorLineSafe("Color_MenuBgColor_MenuBg", "Menu BG", ref ThemeManager.CurrentTheme.themeObj_MenuBgThemeObj_MenuBg!);
+        AddNewColorLineSafe("Color_MenuBorder", "Menu Border", ref ThemeManager.CurrentTheme.themeObj_MenuBorder!);
+        AddNewColorLineSafe("Color_MenuBg", "Menu Bg2", ref ThemeManager.CurrentTheme.themeObj_MenuBg!);
+        AddNewColorLineSafe("Color_MenuItemHighlightBg", "Menu Item Highlight Bg", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBg!);
+        AddNewColorLineSafe("Color_MenuItemHighlightBorder", "Selected Menu Item Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBorder!);
+        AddNewColorLineSafe("Color_MenuSeperator", "Menu Seperator", ref ThemeManager.CurrentTheme.themeObj_MenuSeperator!);
+        AddNewColorLineSafe("Color_MenuDisabledFg", "Menu Disabled Font", ref ThemeManager.CurrentTheme.themeObj_MenuDisabledFg!);
+
+        AddNewColorLineSafe("Color_MenuItemSelectedBg", "Checkbox Bg", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBg!);
+        AddNewColorLineSafe("Color_MenuItemSelectedBorder", "Checkbox Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBorder!);
+        AddNewColorLineSafe("Color_MenuFg", "Checkmark / Arrow", ref ThemeManager.CurrentTheme.themeObj_MenuFg!);
+
+        //AddNewColorLineSafe("Color_MenuItemHighlightDisabledBg", "Menu Item Highlight Disabled Bg", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightDisabledBg!);
+        //AddNewColorLineSafe("Color_MenuItemHighlightDisabledBorder", "Menu Item Highlight Disabled Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightDisabledBorder!);
+
     }
 
-    private void AddColorLine(string themePath, string friendlyThemeName, ThemeObject themeObj)
+    void AddNewColorLineSafe(string resourceKey, string friendlyThemeName, ref ThemeObject themeObj)
     {
-        ColorPickerLine line = new();
-        line.SetupThemeObj(themeObj, themePath, friendlyThemeName);
-        stackPanelMain.Children.Add(line);
+        if(themeObj == null)
+            themeObj = new(AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, resourceKey).Color);
+        AddColorLine(resourceKey, friendlyThemeName, themeObj ?? new());
+
+        void AddColorLine(string themePath, string friendlyThemeName, ThemeObject themeObj)
+        {
+            ColorPickerLine line = new();
+            line.SetupThemeObj(themeObj, themePath, friendlyThemeName);
+            stackPanelMain.Children.Add(line);
+        }
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

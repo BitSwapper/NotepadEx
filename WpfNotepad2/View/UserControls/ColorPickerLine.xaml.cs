@@ -71,6 +71,17 @@ public partial class ColorPickerLine : UserControl
         else
         {
             GradientPickerWindow gradientPickerWindow = new();
+
+            //      **This code shows our current gradient but breaks our sliders afterward..
+
+            //if(gridForImage.Background is LinearGradientBrush gradientBrush)
+            //{
+            //    gradientPickerWindow.GradientStops.Clear();
+
+            //    foreach(var stop in  gradientBrush.GradientStops)
+            //        gradientPickerWindow.GradientStops.Add(stop);
+            //}
+
             if(gradientPickerWindow.ShowDialog() == true)
             {
                 gridForImage.Background = gradientPickerWindow.GradientBrush;

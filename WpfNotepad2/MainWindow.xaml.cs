@@ -336,6 +336,29 @@ public partial class MainWindow : Window
         ApplyThemeObject(theme.themeObj_TextEditorBg, "Color_TextEditorBg");
         ApplyThemeObject(theme.themeObj_TextEditorFg, "Color_TextEditorFg");
         ApplyThemeObject(theme.themeObj_TitleBarBg, "Color_TitleBarBg");
+        ApplyThemeObject(theme.themeObj_TitleBarFont, "Color_TitleBarFont");
+
+        ApplyThemeObject(theme.themeObj_SystemButtons, "Color_SystemButtons");
+        ApplyThemeObject(theme.themeObj_BorderColor, "Color_BorderColor");
+        ApplyThemeObject(theme.themeObj_MenuBarBg, "Color_MenuBarBg");
+        ApplyThemeObject(theme.themeObj_MenuItemFg, "Color_MenuItemFg");
+        ApplyThemeObject(theme.themeObj_InfoBarBg, "Color_InfoBarBg");
+        ApplyThemeObject(theme.themeObj_InfoBarFg, "Color_InfoBarFg");
+
+        ApplyThemeObject(theme.themeObj_MenuBorder, "Color_MenuBorder");
+        ApplyThemeObject(theme.themeObj_MenuBg, "Color_MenuBg");
+        ApplyThemeObject(theme.themeObj_MenuFg, "Color_MenuFg");
+        ApplyThemeObject(theme.themeObj_MenuSeperator, "Color_MenuSeperator");
+        ApplyThemeObject(theme.themeObj_MenuDisabledFg, "Color_MenuDisabledFg");
+        ApplyThemeObject(theme.themeObj_MenuItemSelectedBg, "Color_MenuItemSelectedBg");
+        ApplyThemeObject(theme.themeObj_MenuItemSelectedBorder, "Color_MenuItemSelectedBorder");
+        ApplyThemeObject(theme.themeObj_MenuItemHighlightBg, "Color_MenuItemHighlightBg");
+        ApplyThemeObject(theme.themeObj_MenuItemHighlightBorder, "Color_MenuItemHighlightBorder");
+        //ApplyThemeObject(theme.themeObj_MenuItemHighlightDisabledBg, "Color_MenuItemHighlightDisabledBg");
+        //ApplyThemeObject(theme.themeObj_MenuItemHighlightDisabledBorder, "Color_MenuItemHighlightDisabledBorder");
+
+        
+
         //if(theme.themeObj_TitleBarBg != null)
         //{
         //    if(theme.themeObj_TitleBarBg.isGradient)
