@@ -8,7 +8,7 @@ using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.View.UserControls;
 using Color = System.Windows.Media.Color;
-
+using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 namespace NotepadEx.Windows;
 
 public partial class ThemeEditorWindow : Window
@@ -63,9 +63,11 @@ public partial class ThemeEditorWindow : Window
         ColorPickerLine line = new();
         line.SetPath(path);
         line.SetText(themeName);
+
         stackPanelMain.Children.Add(line);
         //pathToColors.Add(path, (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush).Color);
-        line.GridForImg.Background = (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush);
+        //line.GridForImg.Background = (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush);
+        line.GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -112,9 +114,10 @@ public partial class ThemeEditorWindow : Window
         }
 
         var theme = new ColorTheme();
-        theme.Color_TextEditorBg = pathToColors["Color_TextEditorBg"];
-        theme.Color_TextEditorFg = pathToColors["Color_TextEditorFg"];
-
+        //theme.Color_TextEditorBg = pathToColors["Color_TextEditorBg"];
+        //theme.Color_TextEditorFg = pathToColors["Color_TextEditorFg"];
+        theme.Color_TextEditorBg = (Application.Current.Resources["Color_TextEditorBg"] as SolidColorBrush).Color;
+        theme.Color_TextEditorFg = (Application.Current.Resources["Color_TextEditorFg"] as SolidColorBrush).Color;
         var serializedTheme = theme.ToSerializable();
 
         File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme));
