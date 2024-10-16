@@ -65,12 +65,18 @@ public partial class ColorPickerLine : UserControl
                 themeObj.color = colorPickerWindow.SelectedColor;
             };
 
-            colorPickerWindow.ShowDialog();
-            gridForImage.Background = new SolidColorBrush(colorPickerWindow.SelectedColor);
+            if(colorPickerWindow.ShowDialog() == true)
+                gridForImage.Background = new SolidColorBrush(colorPickerWindow.SelectedColor);
         }
         else
         {
-
+            GradientPickerWindow gradientPickerWindow = new();
+            if(gradientPickerWindow.ShowDialog() == true)
+            {
+                gridForImage.Background = gradientPickerWindow.GradientBrush;
+                AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, gradientPickerWindow.GradientBrush);
+                themeObj.gradient = gradientPickerWindow.GradientBrush;
+            }
         }
     }
 

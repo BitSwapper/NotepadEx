@@ -14,9 +14,19 @@ public partial class ColorPickerWindow : Window
     {
         InitializeComponent();
         TitleBar.Init(this, "RGBA Color Picker");
-        myColorPicker.OnWindowCancel += OnClose;
-        myColorPicker.OnWindowConfirm += OnClose;
+        myColorPicker.OnWindowCancel += OnCancel;
+        myColorPicker.OnWindowConfirm += OnConfirm;
     }
 
-    public void OnClose() => Close();
+    private void OnCancel()
+    {
+        DialogResult = false;
+        Close();
+    }
+
+    private void OnConfirm()
+    {
+        DialogResult = true;
+        Close();
+    }
 }
