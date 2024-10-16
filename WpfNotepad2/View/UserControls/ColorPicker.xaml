@@ -18,27 +18,35 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Color Plane -->
         <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5 0 16 0">
             <Canvas x:Name="ColorPlane" MouseLeftButtonDown="ColorPlane_MouseLeftButtonDown" MouseMove="ColorPlane_MouseMove" MouseLeave="ColorPlane_MouseLeave" MouseLeftButtonUp="ColorPlane_MouseLeftButtonUp">
-                <Canvas.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                        <GradientStop Color="#FFFFFFFF" Offset="0"/>
-                        <GradientStop Color="#00FFFFFF" Offset="1"/>
-                    </LinearGradientBrush>
-                </Canvas.Background>
                 <Rectangle Width="{Binding ActualWidth, ElementName=ColorPlane}" 
-                           Height="{Binding ActualHeight, ElementName=ColorPlane}">
+                   Height="{Binding ActualHeight, ElementName=ColorPlane}">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <!-- Horizontal gradient from white to transparent -->
+                            <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle Width="{Binding ActualWidth, ElementName=ColorPlane}" 
+                   Height="{Binding ActualHeight, ElementName=ColorPlane}">
                     <Rectangle.Fill>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Color="#00000000" Offset="0"/>
+                            <!-- Vertical gradient from transparent to black -->
+                            <GradientStop Color="#00FFFFFF" Offset="0"/>
                             <GradientStop Color="#FF000000" Offset="1"/>
                         </LinearGradientBrush>
                     </Rectangle.Fill>
                 </Rectangle>
-                <Ellipse x:Name="ColorSelector" Width="12" Height="12" Stroke="White" StrokeThickness="1.66"/>
+                <Grid x:Name="ColorSelector" Width="12" Height="12">
+                    <Ellipse Stroke="White" StrokeThickness="1.66"></Ellipse>
+                    <Ellipse Stroke="Black" Width="9" Height="9" StrokeThickness="1.66"></Ellipse>
+                </Grid>
             </Canvas>
         </Border>
+
 
         <!-- Hue Slider -->
         <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Width="32" Margin="5,5,0,5">
