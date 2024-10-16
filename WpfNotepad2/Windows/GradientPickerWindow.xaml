@@ -31,7 +31,7 @@
                                 <SolidColorBrush Color="{Binding Color}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBlock Text="{Binding Offset, StringFormat=P0}"/>
+                        <Slider Width="300" Maximum="1" Value="{Binding Offset, Mode=TwoWay}"/>
                         <Button Content="Edit" Margin="5,0,0,0" Click="EditStop_Click"/>
                     </StackPanel>
                 </DataTemplate>
