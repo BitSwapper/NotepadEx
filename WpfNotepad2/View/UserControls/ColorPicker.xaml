@@ -86,7 +86,7 @@
             <TextBlock Text="A:" VerticalAlignment="Center"/>
             <TextBox Text="{Binding Alpha, UpdateSourceTrigger=PropertyChanged}" Width="90" Margin="2 0 10 0"/>
             <TextBlock Text="Hex:" VerticalAlignment="Center"/>
-            <TextBox Name="txtHexColor" Text="#FFFF0000" Width="90" Margin="2"/>
+            <TextBox Name="txtHexColor" Text="#FFFF0000" Width="90" Margin="2" TextChanged="txtHexColor_TextChanged"/>
         </StackPanel>
         <StackPanel Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal" Width="999">
             <Slider Width="100" Value="{Binding Red, Mode=TwoWay}" Maximum="255" Margin="13 0 4 0"></Slider>

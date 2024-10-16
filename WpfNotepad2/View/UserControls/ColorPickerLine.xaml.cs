@@ -13,7 +13,6 @@ namespace NotepadEx.View.UserControls;
 public partial class ColorPickerLine : UserControl
 {
     string path;
-    Color themeColor;
     ThemeObject themeObj;
     public Grid GridForImg => gridForImage;
     public ColorPickerLine() => InitializeComponent();
@@ -63,12 +62,11 @@ public partial class ColorPickerLine : UserControl
             colorPickerWindow.myColorPicker.OnSelectedColorChanged += () =>
             {
                 AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, new SolidColorBrush(colorPickerWindow.SelectedColor));
+                themeObj.color = colorPickerWindow.SelectedColor;
             };
 
-            themeColor = colorPickerWindow.SelectedColor = (gridForImage.Background as SolidColorBrush).Color;
             colorPickerWindow.ShowDialog();
             gridForImage.Background = new SolidColorBrush(colorPickerWindow.SelectedColor);
-            themeObj.color = themeColor;
         }
         else
         {

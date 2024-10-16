@@ -19,6 +19,30 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     public event Action OnSelectedColorChanged;
     public event PropertyChangedEventHandler PropertyChanged;
 
+    protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+    Color ogColor;
+    bool _isUpdating = false;
+    bool _isColorPlaneDragging;
+    bool _isHueDragging;
+    double _currentHue;
+    double _currentSaturation;
+    double _currentValue;
+
+    public ColorPicker()
+    {
+        InitializeComponent();
+
+        DataContext = this;
+        _currentHue = 0;
+        _currentSaturation = 1;
+        _currentValue = 1;
+        UpdateColorFromSelectedColor();
+        UpdateColorPlane();
+        UpdateColorSelector();
+        UpdateHueSelector();
+    }
+
     public Color SelectedColor
     {
         get => (Color)GetValue(SelectedColorProperty);
@@ -74,36 +98,11 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         }
     }
 
-
-    Color ogColor;
-    bool _isUpdating = false;
-    bool _isColorPlaneDragging;
-    bool _isHueDragging;
-    double _currentHue;
-    double _currentSaturation;
-    double _currentValue;
-
-    public ColorPicker()
-    {
-        InitializeComponent();
-
-        DataContext = this;
-        _currentHue = 0;
-        _currentSaturation = 1;
-        _currentValue = 1;
-        UpdateColorFromSelectedColor();
-        UpdateColorPlane();
-        UpdateColorSelector();
-        UpdateHueSelector();
-    }
-
     static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         ColorPicker colorPicker = d as ColorPicker;
         if(colorPicker != null && !colorPicker._isUpdating)
-        {
             colorPicker.UpdateColorFromSelectedColor();
-        }
     }
 
     void UpdateColorFromSelectedColor()
@@ -118,7 +117,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         UpdateColorSelector();
         UpdateHueSelector();
 
-        // Update RGBA properties
         OnPropertyChanged(nameof(Red));
         OnPropertyChanged(nameof(Green));
         OnPropertyChanged(nameof(Blue));
@@ -174,9 +172,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         _isUpdating = false;
     }
 
-
-    protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
     void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(ColorUtil.HsvToRgb(_currentHue, 1, 1));
 
     void UpdateColorSelector()
@@ -192,18 +187,16 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         _isColorPlaneDragging = true;
         UpdateColorFromColorPlane(e.GetPosition(ColorPlane));
     }
+
     void ColorPlane_MouseLeave(object sender, MouseEventArgs e) => _isColorPlaneDragging = false;
 
     void ColorPlane_MouseMove(object sender, MouseEventArgs e)
     {
         if(e.LeftButton == MouseButtonState.Pressed)
-        {
             _isColorPlaneDragging = true;
-        }
+
         if(_isColorPlaneDragging)
-        {
             UpdateColorFromColorPlane(e.GetPosition(ColorPlane));
-        }
     }
 
     void ColorPlane_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isColorPlaneDragging = false;
@@ -217,13 +210,10 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     void HueSlider_MouseMove(object sender, MouseEventArgs e)
     {
         if(e.LeftButton == MouseButtonState.Pressed)
-        {
             _isHueDragging = true;
-        }
+
         if(_isHueDragging)
-        {
             UpdateColorFromHueSlider(e.GetPosition(HueSlider));
-        }
     }
 
     void HueSlider_MouseLeave(object sender, MouseEventArgs e) => _isHueDragging = false;
@@ -242,6 +232,16 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
         SelectedColor = ogColor;
         OnWindowCancel.Invoke();
+    }
+
+    void txtHexColor_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var text = txtHexColor.Text;
+        if(text.StartsWith("#"))
+            text = text.Substring(1);
+
+        if(text.Length == 8)
+            SelectedColor = ColorUtil.GetColorFromHex(txtHexColor.Text).GetValueOrDefault();
     }
 }
 

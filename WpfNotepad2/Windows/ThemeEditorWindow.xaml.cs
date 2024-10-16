@@ -35,11 +35,6 @@ public partial class ThemeEditorWindow : Window
         ColorPickerLine line = new();
         line.SetupThemeObj(themeObj, themePath, friendlyThemeName);
         stackPanelMain.Children.Add(line);
-
-        //if(isGradient)
-        //    line.GridForImg.Background = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
-        //else
-        //    line.GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -80,12 +75,6 @@ public partial class ThemeEditorWindow : Window
             return false;
 
         var theme = ThemeManager.CurrentTheme;
-        //var theme = new ColorTheme();
-        //theme.themeObj_TextEditorBg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorBg").Color;
-        //theme.themeObj_TextEditorFg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorFg").Color;
-
-        //theme.themeObj_TitleBarBg = new(AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, "TestGradient"));
-
         var serializedTheme = theme.ToSerializable();
 
         var options = new JsonSerializerOptions
