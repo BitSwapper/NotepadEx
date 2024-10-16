@@ -89,9 +89,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
         InitializeComponent();
 
-        if(SelectedColor != null)
-            ogColor = SelectedColor;
-
         DataContext = this;
         _currentHue = 0;
         _currentSaturation = 1;
@@ -244,6 +241,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     private void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isHueDragging = false;
 
+    public void SetInitialColor(Color color) => ogColor = color;
 
     void ButtonConfirm_Click(object sender, RoutedEventArgs e)
     {

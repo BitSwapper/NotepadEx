@@ -21,7 +21,9 @@ public partial class ColorPickerLine : UserControl
     {
         try
         {
-            Application.Current.Resources[path] = ColorUtil.GetRandomLinearGradientBrush(180);
+            var brush =  ColorUtil.GetRandomColorBrush(180);
+            Application.Current.Resources[path] = brush;
+            gridForImage.Background = brush;
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
     }
@@ -32,15 +34,16 @@ public partial class ColorPickerLine : UserControl
         if(rdBtnColor.IsChecked == true)
         {
             ColorPickerWindow colorPickerWindow = new();
+            colorPickerWindow.myColorPicker.SetInitialColor((gridForImage.Background as SolidColorBrush).Color);
+
+            colorPickerWindow.myColorPicker.OnSelectedColorChanged += () =>
+            {
+                Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(colorPickerWindow.SelectedColor);
+            };
+
             themeColor = colorPickerWindow.SelectedColor = (gridForImage.Background as SolidColorBrush).Color;
             colorPickerWindow.ShowDialog();
             gridForImage.Background = new SolidColorBrush(colorPickerWindow.SelectedColor);
-
-            try
-            {
-                Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(colorPickerWindow.SelectedColor);
-            }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
         else
         {
