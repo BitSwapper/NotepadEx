@@ -50,26 +50,21 @@ public class ThemeObjectSerializable
     public ThemeObjectSerializable(ThemeObject themeObject)
     {
         IsGradient = themeObject.isGradient;
+
         if(themeObject.color.HasValue)
-        {
             Color = ColorUtil.ColorToHexString(themeObject.color.Value);
-        }
+
         if(themeObject.gradient != null)
-        {
             Gradient = SerializeGradient(themeObject.gradient);
-        }
     }
 
     public ThemeObject ToThemeObject()
     {
         if(IsGradient)
-        {
             return new ThemeObject(DeserializeGradient(Gradient));
-        }
+        
         else
-        {
             return new ThemeObject(ColorUtil.GetColorFromHex(Color).Value);
-        }
     }
 
     private string SerializeGradient(LinearGradientBrush gradient)
@@ -136,14 +131,10 @@ public class ThemeObjectSerializable
 }
 
 
-
-
-
-
 public class ColorTheme
 {
-    public Color? color_TextEditorBg;
-    public Color? color_TextEditorFg;
+    public ThemeObject? themeObj_TextEditorBg;
+    public ThemeObject? themeObj_TextEditorFg;
     public ThemeObject? themeObj_TitleBarBg;
 
 
@@ -153,32 +144,25 @@ public class ColorTheme
 [Serializable]
 public class ColorThemeSerializable
 {
-    [JsonPropertyName("color_TextEditorBg")]
-    public string Color_TextEditorBg { get; set; }
+    [JsonPropertyName("themeObj_TextEditorBg")]
+    public ThemeObjectSerializable ThemeObj_TextEditorBg { get; set; }
 
-    [JsonPropertyName("color_TextEditorFg")]
-    public string Color_TextEditorFg { get; set; }
+    [JsonPropertyName("themeObj_TextEditorFg")]
+    public ThemeObjectSerializable ThemeObj_TextEditorFg { get; set; }
 
     [JsonPropertyName("themeObj_TitleBarBg")]
     public ThemeObjectSerializable ThemeObj_TitleBarBg { get; set; }
 
+
     public ColorThemeSerializable() { } //needs empty constructor
-
-    public ColorThemeSerializable(
-        Color color_TextEditorBg,
-        Color color_TextEditorFg,
-        ThemeObject color_TitleBarBg)
-    {
-
-        Color_TextEditorBg = ColorUtil.ColorToHexString(color_TextEditorBg);
-        Color_TextEditorFg = ColorUtil.ColorToHexString(color_TextEditorFg);
-
-    }
 
     public ColorThemeSerializable(ColorTheme colorTheme)
     {
-        if(colorTheme.color_TextEditorBg.HasValue) Color_TextEditorBg = ColorUtil.ColorToHexString(colorTheme.color_TextEditorBg.Value);
-        if(colorTheme.color_TextEditorFg.HasValue) Color_TextEditorFg = ColorUtil.ColorToHexString(colorTheme.color_TextEditorFg.Value);
+        if(colorTheme.themeObj_TextEditorBg != null)
+            ThemeObj_TextEditorBg = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorBg);
+
+        if(colorTheme.themeObj_TextEditorFg != null)
+            ThemeObj_TextEditorFg = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorFg);
 
         if(colorTheme.themeObj_TitleBarBg != null)
             ThemeObj_TitleBarBg = new ThemeObjectSerializable(colorTheme.themeObj_TitleBarBg);
@@ -186,8 +170,9 @@ public class ColorThemeSerializable
 
     public ColorTheme ToColorTheme() => new ColorTheme
     {
-        color_TextEditorBg = ColorUtil.GetColorFromHex(Color_TextEditorBg),
-        color_TextEditorFg = ColorUtil.GetColorFromHex(Color_TextEditorFg),
+        themeObj_TextEditorBg = ThemeObj_TextEditorBg?.ToThemeObject(),
+        themeObj_TextEditorFg = ThemeObj_TextEditorFg?.ToThemeObject(),
+
         themeObj_TitleBarBg = ThemeObj_TitleBarBg?.ToThemeObject(),
     };
 }
@@ -205,27 +190,27 @@ public class ThemeObject
 
 public class ColorTheme
 {
-    public Color? Color_TextEditorBg;
-    public Color? Color_TextEditorFg;
-    public ThemeObject? Color_TitleBarBg;
-    public Color? Color_TitleBarFont;
-    public Color? Color_SystemButtons;
-    public Color? Color_BorderColor;
-    public Color? Color_MenuBarBg;
-    public Color? Color_MenuItemFg;
-    public Color? Color_InfoBarBg;
-    public Color? Color_InfoBarFg;
-    public Color? Color_MenuBgColor_MenuBg;
-    public Color? Color_MenuBorder;
-    public Color? Color_MenuFg;
-    public Color? Color_MenuSeperator;
-    public Color? Color_MenuDisabledFg;
-    public Color? Color_MenuItemSelectedBg;
-    public Color? Color_MenuItemSelectedBorder;
-    public Color? Color_MenuItemHighlightBg;
-    public Color? Color_MenuItemHighlightBorder;
-    public Color? Color_MenuItemHighlightDisabledBg;
-    public Color? Color_MenuItemHighlightDisabledBorder;
+    public Color? ThemeObj_TextEditorBg;
+    public Color? ThemeObj_TextEditorFg;
+    public ThemeObject? ThemeObj_TitleBarBg;
+    public Color? ThemeObj_TitleBarFont;
+    public Color? ThemeObj_SystemButtons;
+    public Color? ThemeObj_BorderColor;
+    public Color? ThemeObj_MenuBarBg;
+    public Color? ThemeObj_MenuItemFg;
+    public Color? ThemeObj_InfoBarBg;
+    public Color? ThemeObj_InfoBarFg;
+    public Color? ThemeObj_MenuBgThemeObj_MenuBg;
+    public Color? ThemeObj_MenuBorder;
+    public Color? ThemeObj_MenuFg;
+    public Color? ThemeObj_MenuSeperator;
+    public Color? ThemeObj_MenuDisabledFg;
+    public Color? ThemeObj_MenuItemSelectedBg;
+    public Color? ThemeObj_MenuItemSelectedBorder;
+    public Color? ThemeObj_MenuItemHighlightBg;
+    public Color? ThemeObj_MenuItemHighlightBorder;
+    public Color? ThemeObj_MenuItemHighlightDisabledBg;
+    public Color? ThemeObj_MenuItemHighlightDisabledBorder;
     public float GradientAngle;
     public float GradientAngleDif;
     public float GradientScale = 1.0f;
@@ -236,27 +221,27 @@ public class ColorTheme
 [Serializable]
 public class ColorThemeSerializable
 {
-    public string Color_TextEditorBg { get; set; }
-    public string Color_TextEditorFg { get; set; }
-    public string Color_TitleBarBg { get; set; }
-    public string Color_TitleBarFont { get; set; }
-    public string Color_SystemButtons { get; set; }
-    public string Color_BorderColor { get; set; }
-    public string Color_MenuBarBg { get; set; }
-    public string Color_MenuItemFg { get; set; }
-    public string Color_InfoBarBg { get; set; }
-    public string Color_InfoBarFg { get; set; }
-    public string Color_MenuBgColor_MenuBg { get; set; }
-    public string Color_MenuBorder { get; set; }
-    public string Color_MenuFg { get; set; }
-    public string Color_MenuSeperator { get; set; }
-    public string Color_MenuDisabledFg { get; set; }
-    public string Color_MenuItemSelectedBg { get; set; }
-    public string Color_MenuItemSelectedBorder { get; set; }
-    public string Color_MenuItemHighlightBg { get; set; }
-    public string Color_MenuItemHighlightBorder { get; set; }
-    public string Color_MenuItemHighlightDisabledBg { get; set; }
-    public string Color_MenuItemHighlightDisabledBorder { get; set; }
+    public string ThemeObj_TextEditorBg { get; set; }
+    public string ThemeObj_TextEditorFg { get; set; }
+    public string ThemeObj_TitleBarBg { get; set; }
+    public string ThemeObj_TitleBarFont { get; set; }
+    public string ThemeObj_SystemButtons { get; set; }
+    public string ThemeObj_BorderColor { get; set; }
+    public string ThemeObj_MenuBarBg { get; set; }
+    public string ThemeObj_MenuItemFg { get; set; }
+    public string ThemeObj_InfoBarBg { get; set; }
+    public string ThemeObj_InfoBarFg { get; set; }
+    public string ThemeObj_MenuBgThemeObj_MenuBg { get; set; }
+    public string ThemeObj_MenuBorder { get; set; }
+    public string ThemeObj_MenuFg { get; set; }
+    public string ThemeObj_MenuSeperator { get; set; }
+    public string ThemeObj_MenuDisabledFg { get; set; }
+    public string ThemeObj_MenuItemSelectedBg { get; set; }
+    public string ThemeObj_MenuItemSelectedBorder { get; set; }
+    public string ThemeObj_MenuItemHighlightBg { get; set; }
+    public string ThemeObj_MenuItemHighlightBorder { get; set; }
+    public string ThemeObj_MenuItemHighlightDisabledBg { get; set; }
+    public string ThemeObj_MenuItemHighlightDisabledBorder { get; set; }
     public float GradientAngle { get; set; }
     public float GradientAngleDif { get; set; }
     public float GradientScale { get; set; } = 1.0f;
@@ -264,53 +249,53 @@ public class ColorThemeSerializable
     public ColorThemeSerializable() { } //needs empty constructor
 
     public ColorThemeSerializable(
-        Color color_TextEditorBg,
-        Color color_TextEditorFg,
-        ThemeObject color_TitleBarBg,
-        Color color_TitleBarFont,
-        Color color_SystemButtons,
-        Color color_BorderColor,
-        Color color_MenuBarBg,
-        Color color_MenuItemFg,
-        Color color_InfoBarBg,
-        Color color_InfoBarFg,
-        Color color_MenuBgColor_MenuBg,
-        Color color_MenuBorder,
-        Color color_MenuFg,
-        Color color_MenuSeperator,
-        Color color_MenuDisabledFg,
-        Color color_MenuItemSelectedBg,
-        Color color_MenuItemSelectedBorder,
-        Color color_MenuItemHighlightBg,
-        Color color_MenuItemHighlightBorder,
-        Color color_MenuItemHighlightDisabledBg,
-        Color color_MenuItemHighlightDisabledBorder,
+        Color themeObj_TextEditorBg,
+        Color themeObj_TextEditorFg,
+        ThemeObject themeObj_TitleBarBg,
+        Color themeObj_TitleBarFont,
+        Color themeObj_SystemButtons,
+        Color themeObj_BorderColor,
+        Color themeObj_MenuBarBg,
+        Color themeObj_MenuItemFg,
+        Color themeObj_InfoBarBg,
+        Color themeObj_InfoBarFg,
+        Color themeObj_MenuBgThemeObj_MenuBg,
+        Color themeObj_MenuBorder,
+        Color themeObj_MenuFg,
+        Color themeObj_MenuSeperator,
+        Color themeObj_MenuDisabledFg,
+        Color themeObj_MenuItemSelectedBg,
+        Color themeObj_MenuItemSelectedBorder,
+        Color themeObj_MenuItemHighlightBg,
+        Color themeObj_MenuItemHighlightBorder,
+        Color themeObj_MenuItemHighlightDisabledBg,
+        Color themeObj_MenuItemHighlightDisabledBorder,
         float gradientAngle,
         float gradientAngleDif,
         float gradientScale)
     {
 
-        Color_TextEditorBg = ColorUtil.ColorToHexString(color_TextEditorBg);
-        Color_TextEditorFg = ColorUtil.ColorToHexString(color_TextEditorFg);
-        Color_TitleBarBg = color_TitleBarBg;
-        //Color_TitleBarFont = ColorUtil.ColorToHexString(color_TitleBarFont);
-        //Color_SystemButtons = ColorUtil.ColorToHexString(color_SystemButtons);
-        //Color_BorderColor = ColorUtil.ColorToHexString(color_BorderColor);
-        //Color_MenuBarBg = ColorUtil.ColorToHexString(color_MenuBarBg);
-        //Color_MenuItemFg = ColorUtil.ColorToHexString(color_MenuItemFg);
-        //Color_InfoBarBg = ColorUtil.ColorToHexString(color_InfoBarBg);
-        //Color_InfoBarFg = ColorUtil.ColorToHexString(color_InfoBarFg);
-        //Color_MenuBgColor_MenuBg = ColorUtil.ColorToHexString(color_MenuBgColor_MenuBg);
-        //Color_MenuBorder = ColorUtil.ColorToHexString(color_MenuBorder);
-        //Color_MenuFg = ColorUtil.ColorToHexString(color_MenuFg);
-        //Color_MenuSeperator = ColorUtil.ColorToHexString(color_MenuSeperator);
-        //Color_MenuDisabledFg = ColorUtil.ColorToHexString(color_MenuDisabledFg);
-        //Color_MenuItemSelectedBg = ColorUtil.ColorToHexString(color_MenuItemSelectedBg);
-        //Color_MenuItemSelectedBorder = ColorUtil.ColorToHexString(color_MenuItemSelectedBorder);
-        //Color_MenuItemHighlightBg = ColorUtil.ColorToHexString(color_MenuItemHighlightBg);
-        //Color_MenuItemHighlightBorder = ColorUtil.ColorToHexString(color_MenuItemHighlightBorder);
-        //Color_MenuItemHighlightDisabledBg = ColorUtil.ColorToHexString(color_MenuItemHighlightDisabledBg);
-        //Color_MenuItemHighlightDisabledBorder = ColorUtil.ColorToHexString(color_MenuItemHighlightDisabledBorder);
+        ThemeObj_TextEditorBg = ColorUtil.ColorToHexString(themeObj_TextEditorBg);
+        ThemeObj_TextEditorFg = ColorUtil.ColorToHexString(themeObj_TextEditorFg);
+        ThemeObj_TitleBarBg = themeObj_TitleBarBg;
+        //ThemeObj_TitleBarFont = ColorUtil.ColorToHexString(themeObj_TitleBarFont);
+        //ThemeObj_SystemButtons = ColorUtil.ColorToHexString(themeObj_SystemButtons);
+        //ThemeObj_BorderColor = ColorUtil.ColorToHexString(themeObj_BorderColor);
+        //ThemeObj_MenuBarBg = ColorUtil.ColorToHexString(themeObj_MenuBarBg);
+        //ThemeObj_MenuItemFg = ColorUtil.ColorToHexString(themeObj_MenuItemFg);
+        //ThemeObj_InfoBarBg = ColorUtil.ColorToHexString(themeObj_InfoBarBg);
+        //ThemeObj_InfoBarFg = ColorUtil.ColorToHexString(themeObj_InfoBarFg);
+        //ThemeObj_MenuBgThemeObj_MenuBg = ColorUtil.ColorToHexString(themeObj_MenuBgThemeObj_MenuBg);
+        //ThemeObj_MenuBorder = ColorUtil.ColorToHexString(themeObj_MenuBorder);
+        //ThemeObj_MenuFg = ColorUtil.ColorToHexString(themeObj_MenuFg);
+        //ThemeObj_MenuSeperator = ColorUtil.ColorToHexString(themeObj_MenuSeperator);
+        //ThemeObj_MenuDisabledFg = ColorUtil.ColorToHexString(themeObj_MenuDisabledFg);
+        //ThemeObj_MenuItemSelectedBg = ColorUtil.ColorToHexString(themeObj_MenuItemSelectedBg);
+        //ThemeObj_MenuItemSelectedBorder = ColorUtil.ColorToHexString(themeObj_MenuItemSelectedBorder);
+        //ThemeObj_MenuItemHighlightBg = ColorUtil.ColorToHexString(themeObj_MenuItemHighlightBg);
+        //ThemeObj_MenuItemHighlightBorder = ColorUtil.ColorToHexString(themeObj_MenuItemHighlightBorder);
+        //ThemeObj_MenuItemHighlightDisabledBg = ColorUtil.ColorToHexString(themeObj_MenuItemHighlightDisabledBg);
+        //ThemeObj_MenuItemHighlightDisabledBorder = ColorUtil.ColorToHexString(themeObj_MenuItemHighlightDisabledBorder);
         GradientAngle = gradientAngle;
         GradientAngleDif = gradientAngleDif;
         GradientScale = gradientScale;
@@ -318,27 +303,27 @@ public class ColorThemeSerializable
 
     public ColorThemeSerializable(ColorTheme colorTheme)
     {
-        if(colorTheme.Color_TextEditorBg.HasValue) Color_TextEditorBg = ColorUtil.ColorToHexString(colorTheme.Color_TextEditorBg.Value);
-        if(colorTheme.Color_TextEditorFg.HasValue) Color_TextEditorFg = ColorUtil.ColorToHexString(colorTheme.Color_TextEditorFg.Value);
-        if(colorTheme.Color_TitleBarBg.HasValue) Color_TitleBarBg = ColorUtil.ColorToHexString(colorTheme.Color_TitleBarBg.Value);
-        //Color_TitleBarFont = ColorUtil.ColorToHexString(colorTheme.Color_TitleBarFont);
-        //Color_SystemButtons = ColorUtil.ColorToHexString(colorTheme.Color_SystemButtons);
-        //Color_BorderColor = ColorUtil.ColorToHexString(colorTheme.Color_BorderColor);
-        //Color_MenuBarBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuBarBg);
-        //Color_MenuItemFg = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemFg);
-        //Color_InfoBarBg = ColorUtil.ColorToHexString(colorTheme.Color_InfoBarBg);
-        //Color_InfoBarFg = ColorUtil.ColorToHexString(colorTheme.Color_InfoBarFg);
-        //Color_MenuBgColor_MenuBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuBgColor_MenuBg);
-        //Color_MenuBorder = ColorUtil.ColorToHexString(colorTheme.Color_MenuBorder);
-        //Color_MenuFg = ColorUtil.ColorToHexString(colorTheme.Color_MenuFg);
-        //Color_MenuSeperator = ColorUtil.ColorToHexString(colorTheme.Color_MenuSeperator);
-        //Color_MenuDisabledFg = ColorUtil.ColorToHexString(colorTheme.Color_MenuDisabledFg);
-        //Color_MenuItemSelectedBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemSelectedBg);
-        //Color_MenuItemSelectedBorder = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemSelectedBorder);
-        //Color_MenuItemHighlightBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemHighlightBg);
-        //Color_MenuItemHighlightBorder = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemHighlightBorder);
-        //Color_MenuItemHighlightDisabledBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemHighlightDisabledBg);
-        //Color_MenuItemHighlightDisabledBorder = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemHighlightDisabledBorder);
+        if(colorTheme.ThemeObj_TextEditorBg.HasValue) ThemeObj_TextEditorBg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_TextEditorBg.Value);
+        if(colorTheme.ThemeObj_TextEditorFg.HasValue) ThemeObj_TextEditorFg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_TextEditorFg.Value);
+        if(colorTheme.ThemeObj_TitleBarBg.HasValue) ThemeObj_TitleBarBg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_TitleBarBg.Value);
+        //ThemeObj_TitleBarFont = ColorUtil.ColorToHexString(colorTheme.ThemeObj_TitleBarFont);
+        //ThemeObj_SystemButtons = ColorUtil.ColorToHexString(colorTheme.ThemeObj_SystemButtons);
+        //ThemeObj_BorderColor = ColorUtil.ColorToHexString(colorTheme.ThemeObj_BorderColor);
+        //ThemeObj_MenuBarBg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuBarBg);
+        //ThemeObj_MenuItemFg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuItemFg);
+        //ThemeObj_InfoBarBg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_InfoBarBg);
+        //ThemeObj_InfoBarFg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_InfoBarFg);
+        //ThemeObj_MenuBgThemeObj_MenuBg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuBgThemeObj_MenuBg);
+        //ThemeObj_MenuBorder = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuBorder);
+        //ThemeObj_MenuFg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuFg);
+        //ThemeObj_MenuSeperator = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuSeperator);
+        //ThemeObj_MenuDisabledFg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuDisabledFg);
+        //ThemeObj_MenuItemSelectedBg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuItemSelectedBg);
+        //ThemeObj_MenuItemSelectedBorder = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuItemSelectedBorder);
+        //ThemeObj_MenuItemHighlightBg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuItemHighlightBg);
+        //ThemeObj_MenuItemHighlightBorder = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuItemHighlightBorder);
+        //ThemeObj_MenuItemHighlightDisabledBg = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuItemHighlightDisabledBg);
+        //ThemeObj_MenuItemHighlightDisabledBorder = ColorUtil.ColorToHexString(colorTheme.ThemeObj_MenuItemHighlightDisabledBorder);
         GradientAngle = colorTheme.GradientAngle;
         GradientAngleDif = colorTheme.GradientAngleDif;
         GradientScale = colorTheme.GradientScale;
@@ -346,27 +331,27 @@ public class ColorThemeSerializable
 
     public ColorTheme ToColorTheme() => new ColorTheme
     {
-        Color_TextEditorBg = ColorUtil.GetColorFromHex(Color_TextEditorBg),
-        Color_TextEditorFg = ColorUtil.GetColorFromHex(Color_TextEditorFg),
-        Color_TitleBarBg = ColorUtil.GetColorFromHex(Color_TitleBarBg),
-        //Color_TitleBarFont = GetColorFromHex(Color_TitleBarFont),
-        //Color_SystemButtons = GetColorFromHex(Color_SystemButtons),
-        //Color_BorderColor = GetColorFromHex(Color_BorderColor),
-        //Color_MenuBarBg = GetColorFromHex(Color_MenuBarBg),
-        //Color_MenuItemFg = GetColorFromHex(Color_MenuItemFg),
-        //Color_InfoBarBg = GetColorFromHex(Color_InfoBarBg),
-        //Color_InfoBarFg = GetColorFromHex(Color_InfoBarFg),
-        //Color_MenuBgColor_MenuBg = GetColorFromHex(Color_MenuBgColor_MenuBg),
-        //Color_MenuBorder = GetColorFromHex(Color_MenuBorder),
-        //Color_MenuFg = GetColorFromHex(Color_MenuFg),
-        //Color_MenuSeperator = GetColorFromHex(Color_MenuSeperator),
-        //Color_MenuDisabledFg = GetColorFromHex(Color_MenuDisabledFg),
-        //Color_MenuItemSelectedBg = GetColorFromHex(Color_MenuItemSelectedBg),
-        //Color_MenuItemSelectedBorder = GetColorFromHex(Color_MenuItemSelectedBorder),
-        //Color_MenuItemHighlightBg = GetColorFromHex(Color_MenuItemHighlightBg),
-        //Color_MenuItemHighlightBorder = GetColorFromHex(Color_MenuItemHighlightBorder),
-        //Color_MenuItemHighlightDisabledBg = GetColorFromHex(Color_MenuItemHighlightDisabledBg),
-        //Color_MenuItemHighlightDisabledBorder = GetColorFromHex(Color_MenuItemHighlightDisabledBorder),
+        ThemeObj_TextEditorBg = ColorUtil.GetColorFromHex(ThemeObj_TextEditorBg),
+        ThemeObj_TextEditorFg = ColorUtil.GetColorFromHex(ThemeObj_TextEditorFg),
+        ThemeObj_TitleBarBg = ColorUtil.GetColorFromHex(ThemeObj_TitleBarBg),
+        //ThemeObj_TitleBarFont = GetColorFromHex(ThemeObj_TitleBarFont),
+        //ThemeObj_SystemButtons = GetColorFromHex(ThemeObj_SystemButtons),
+        //ThemeObj_BorderColor = GetColorFromHex(ThemeObj_BorderColor),
+        //ThemeObj_MenuBarBg = GetColorFromHex(ThemeObj_MenuBarBg),
+        //ThemeObj_MenuItemFg = GetColorFromHex(ThemeObj_MenuItemFg),
+        //ThemeObj_InfoBarBg = GetColorFromHex(ThemeObj_InfoBarBg),
+        //ThemeObj_InfoBarFg = GetColorFromHex(ThemeObj_InfoBarFg),
+        //ThemeObj_MenuBgThemeObj_MenuBg = GetColorFromHex(ThemeObj_MenuBgThemeObj_MenuBg),
+        //ThemeObj_MenuBorder = GetColorFromHex(ThemeObj_MenuBorder),
+        //ThemeObj_MenuFg = GetColorFromHex(ThemeObj_MenuFg),
+        //ThemeObj_MenuSeperator = GetColorFromHex(ThemeObj_MenuSeperator),
+        //ThemeObj_MenuDisabledFg = GetColorFromHex(ThemeObj_MenuDisabledFg),
+        //ThemeObj_MenuItemSelectedBg = GetColorFromHex(ThemeObj_MenuItemSelectedBg),
+        //ThemeObj_MenuItemSelectedBorder = GetColorFromHex(ThemeObj_MenuItemSelectedBorder),
+        //ThemeObj_MenuItemHighlightBg = GetColorFromHex(ThemeObj_MenuItemHighlightBg),
+        //ThemeObj_MenuItemHighlightBorder = GetColorFromHex(ThemeObj_MenuItemHighlightBorder),
+        //ThemeObj_MenuItemHighlightDisabledBg = GetColorFromHex(ThemeObj_MenuItemHighlightDisabledBg),
+        //ThemeObj_MenuItemHighlightDisabledBorder = GetColorFromHex(ThemeObj_MenuItemHighlightDisabledBorder),
         GradientAngle = GradientAngle,
         GradientAngleDif = GradientAngleDif,
         GradientScale = GradientScale

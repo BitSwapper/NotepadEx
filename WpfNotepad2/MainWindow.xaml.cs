@@ -333,12 +333,8 @@ public partial class MainWindow : Window
     {
         ThemeManager.CurrentTheme = theme;
 
-        if(theme.color_TextEditorBg.HasValue)
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.color_TextEditorBg.Value));
-
-        if(theme.color_TextEditorFg.HasValue)
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", new SolidColorBrush(theme.color_TextEditorFg.Value));
-
+        ApplyThemeObject(theme.themeObj_TextEditorBg, "Color_TextEditorBg");
+        ApplyThemeObject(theme.themeObj_TextEditorFg, "Color_TextEditorFg");
         ApplyThemeObject(theme.themeObj_TitleBarBg, "Color_TitleBarBg");
         //if(theme.themeObj_TitleBarBg != null)
         //{

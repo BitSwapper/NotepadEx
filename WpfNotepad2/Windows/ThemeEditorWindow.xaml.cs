@@ -1,5 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
@@ -8,7 +7,6 @@ using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.View.UserControls;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
-using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
 namespace NotepadEx.Windows;
 
 public partial class ThemeEditorWindow : Window
@@ -27,24 +25,21 @@ public partial class ThemeEditorWindow : Window
 
     void InitThemeData()
     {
-        AddColorLine("Color_TextEditorBg", "Main Background", false);
-        AddColorLine("Color_TextEditorFg", "Font Foreground", false);
-        AddColorLine("Color_TitleBarBg", "Title Bar Background", ThemeManager.CurrentTheme.themeObj_TitleBarBg.isGradient);
-
+        AddColorLine("Color_TextEditorBg", "Main Background", ThemeManager.CurrentTheme.themeObj_TextEditorBg);
+        AddColorLine("Color_TextEditorFg", "Font Foreground", ThemeManager.CurrentTheme.themeObj_TextEditorFg);
+        AddColorLine("Color_TitleBarBg", "Title Bar Background", ThemeManager.CurrentTheme.themeObj_TitleBarBg);
     }
 
-    private void AddColorLine(string path, string themeName, bool isGradient)
+    private void AddColorLine(string themePath, string friendlyThemeName, ThemeObject themeObj)
     {
         ColorPickerLine line = new();
-        line.SetPath(path);
-        line.SetText(themeName);
-        line.SetColorOrGradientType(isGradient);
+        line.SetupThemeObj(themeObj, themePath, friendlyThemeName);
         stackPanelMain.Children.Add(line);
 
-        if(isGradient)
-            line.GridForImg.Background = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
-        else
-            line.GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
+        //if(isGradient)
+        //    line.GridForImg.Background = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
+        //else
+        //    line.GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -84,9 +79,10 @@ public partial class ThemeEditorWindow : Window
         else
             return false;
 
-        var theme = new ColorTheme();
-        theme.color_TextEditorBg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorBg").Color;
-        theme.color_TextEditorFg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorFg").Color;
+        var theme = ThemeManager.CurrentTheme;
+        //var theme = new ColorTheme();
+        //theme.themeObj_TextEditorBg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorBg").Color;
+        //theme.themeObj_TextEditorFg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorFg").Color;
 
         //theme.themeObj_TitleBarBg = new(AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, "TestGradient"));
 

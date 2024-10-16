@@ -17,8 +17,8 @@
             <TextBlock Name="txtThemeName" Margin="10,0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
             <Grid Name="gridForImage" HorizontalAlignment="Left" Width="129" Background="#FF54799B" Margin="229,0,0,0"></Grid>
             <WrapPanel Orientation="Horizontal" Grid.Row="1">
-                <RadioButton Name="rdBtnColor" IsChecked="True" FontFamily="Verdana" Content="Color" Margin="5"/>
-                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5"/>
+                <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="5" Checked="rdBtnColor_Checked"/>
+                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5" Checked="rdBtnGradient_Checked"/>
 
                 <!--<xctk:ColorPicker Name="ColorPicker" Width="111" SelectedColor="{Binding themeColor}" SelectedColorChanged="ColorPicker_SelectedColorChanged">
                     <xctk:ColorPicker.Style>
