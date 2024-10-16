@@ -7,9 +7,6 @@ using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
 namespace NotepadEx.View.UserControls;
 
-/// <summary>
-/// Interaction logic for ColorPicker.xaml
-/// </summary>
 public partial class ColorPicker : UserControl, INotifyPropertyChanged
 {
     public static readonly DependencyProperty SelectedColorProperty =
@@ -18,13 +15,13 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     public Color SelectedColor
     {
-        get { return (Color)GetValue(SelectedColorProperty); }
-        set { SetValue(SelectedColorProperty, value); }
+        get => (Color)GetValue(SelectedColorProperty);
+        set => SetValue(SelectedColorProperty, value);
     }
 
     public byte Red
     {
-        get { return SelectedColor.R; }
+        get => SelectedColor.R;
         set
         {
             Color newColor = Color.FromArgb(SelectedColor.A, value, SelectedColor.G, SelectedColor.B);
@@ -35,7 +32,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     public byte Green
     {
-        get { return SelectedColor.G; }
+        get => SelectedColor.G;
         set
         {
             Color newColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, value, SelectedColor.B);
@@ -46,7 +43,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     public byte Blue
     {
-        get { return SelectedColor.B; }
+        get => SelectedColor.B;
         set
         {
             Color newColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, value);
@@ -57,7 +54,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     public byte Alpha
     {
-        get { return SelectedColor.A; }
+        get => SelectedColor.A;
         set
         {
             Color newColor = Color.FromArgb(value, SelectedColor.R, SelectedColor.G, SelectedColor.B);
@@ -170,10 +167,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     // Implement INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+    protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 
 
@@ -184,10 +178,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
 
 
-    private void UpdateColorPlane()
-    {
-        ColorPlane.Background = new SolidColorBrush(HsvToRgb(_currentHue, 1, 1));
-    }
+    private void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(HsvToRgb(_currentHue, 1, 1));
 
     private void UpdateColorSelector()
     {
@@ -195,10 +186,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         Canvas.SetTop(ColorSelector, (1 - _currentValue) * ColorPlane.ActualHeight);
     }
 
-    private void UpdateHueSelector()
-    {
-        Canvas.SetTop(HueSelector, _currentHue * HueSlider.ActualHeight);
-    }
+    private void UpdateHueSelector() => Canvas.SetTop(HueSelector, _currentHue * HueSlider.ActualHeight);
 
     private void ColorPlane_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -214,10 +202,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         }
     }
 
-    private void ColorPlane_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-        _isColorPlaneDragging = false;
-    }
+    private void ColorPlane_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isColorPlaneDragging = false;
 
     private void HueSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -233,10 +218,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         }
     }
 
-    private void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-        _isHueDragging = false;
-    }
+    private void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isHueDragging = false;
 
     private (double H, double S, double V) RgbToHsv(Color color)
     {

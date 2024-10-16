@@ -6,15 +6,16 @@
              xmlns:local="clr-namespace:NotepadEx.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="6, 6, 6, 6">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <!-- Color Plane -->
@@ -40,9 +41,9 @@
         </Border>
 
         <!-- Hue Slider -->
-        <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Width="20" Margin="5,5,0,5">
+        <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Width="32" Margin="5,5,0,5">
             <Canvas x:Name="HueSlider" MouseLeftButtonDown="HueSlider_MouseLeftButtonDown" MouseMove="HueSlider_MouseMove" MouseLeftButtonUp="HueSlider_MouseLeftButtonUp">
-                <Rectangle Width="20" Height="{Binding ActualHeight, ElementName=HueSlider}">
+                <Rectangle Width="32" Height="{Binding ActualHeight, ElementName=HueSlider}">
                     <Rectangle.Fill>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                             <GradientStop Color="#FFFF0000" Offset="0.00"/>
@@ -69,13 +70,19 @@
         <!-- RGBA Values -->
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5">
             <TextBlock Text="R:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding Red, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="2"/>
+            <TextBox Text="{Binding Red, UpdateSourceTrigger=PropertyChanged}" Width="90" Margin="2"></TextBox>
             <TextBlock Text="G:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding Green, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="2"/>
+            <TextBox Text="{Binding Green, UpdateSourceTrigger=PropertyChanged}" Width="90" Margin="2"/>
             <TextBlock Text="B:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding Blue, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="2"/>
+            <TextBox Text="{Binding Blue, UpdateSourceTrigger=PropertyChanged}" Width="90" Margin="2"/>
             <TextBlock Text="A:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding Alpha, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="2"/>
+            <TextBox Text="{Binding Alpha, UpdateSourceTrigger=PropertyChanged}" Width="90" Margin="2"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Slider Width="100" Value="{Binding Red, Mode=TwoWay}" Maximum="255" Margin="13 0 4 0"></Slider>
+            <Slider Width="100" Value="{Binding Green, Mode=TwoWay}" Maximum="255" Margin="0 0 4 0"></Slider>
+            <Slider Width="100" Value="{Binding Blue, Mode=TwoWay}" Maximum="255" Margin="0 0 4 0"></Slider>
+            <Slider Width="100" Value="{Binding Alpha, Mode=TwoWay}" Maximum="255" Margin="0 0 4 0"></Slider>
         </StackPanel>
     </Grid>
 </UserControl>

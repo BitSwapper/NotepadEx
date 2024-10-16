@@ -20,7 +20,7 @@
                 <RadioButton Name="rdBtnColor" IsChecked="True" FontFamily="Verdana" Content="Color" Margin="5"/>
                 <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5"/>
                 
-                <xctk:ColorPicker Name="ColorPicker" Width="111" SelectedColor="{Binding themeColor}" SelectedColorChanged="ColorPicker_SelectedColorChanged">
+                <!--<xctk:ColorPicker Name="ColorPicker" Width="111" SelectedColor="{Binding themeColor}" SelectedColorChanged="ColorPicker_SelectedColorChanged">
                     <xctk:ColorPicker.Style>
                         <Style TargetType="xctk:ColorPicker">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -31,7 +31,7 @@
                             </Style.Triggers>
                         </Style>
                     </xctk:ColorPicker.Style>
-                </xctk:ColorPicker>
+                </xctk:ColorPicker>-->
                 
                 <Button Width="111" Content="Edit Gradient">
                     <Button.Style>

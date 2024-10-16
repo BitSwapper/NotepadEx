@@ -64,7 +64,7 @@ public partial class ThemeEditorWindow : Window
         line.SetText(themeName);
         stackPanelMain.Children.Add(line);
         pathToColors.Add(path, (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush).Color);
-        line.ColorPicker.SelectedColor = new Color?(Color.FromArgb(255, 255, 0, 0));
+        //line.ColorPicker.SelectedColor = new Color?(Color.FromArgb(255, 255, 0, 0));
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
