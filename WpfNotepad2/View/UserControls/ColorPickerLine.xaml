@@ -5,50 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotepadEx.View.UserControls"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             
+             Margin="0 0 0 10"
              mc:Ignorable="d" d:DesignWidth="360" Height="52">
-    <Border BorderBrush="Gray" BorderThickness="1">
+    <Border BorderBrush="Gray" BorderThickness="0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="22"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Name="txtThemeName" Margin="10,0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
-            <Grid Name="gridForImage" HorizontalAlignment="Left" Width="129" Background="#FF54799B" Margin="229,0,0,0"></Grid>
-            <WrapPanel Orientation="Horizontal" Grid.Row="1">
+            <TextBlock Name="txtThemeName" Margin="5,0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
+            <Grid Name="gridForImage" HorizontalAlignment="Left" Width="147" Background="#FF54799B" Margin="211,2,0,2"></Grid>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="5" Checked="rdBtnColor_Checked"/>
-                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5" Checked="rdBtnGradient_Checked"/>
+                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5 5 75 0" Checked="rdBtnGradient_Checked"/>
 
-                <!--<xctk:ColorPicker Name="ColorPicker" Width="111" SelectedColor="{Binding themeColor}" SelectedColorChanged="ColorPicker_SelectedColorChanged">
-                    <xctk:ColorPicker.Style>
-                        <Style TargetType="xctk:ColorPicker">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsChecked, ElementName=rdBtnColor}" Value="True">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </xctk:ColorPicker.Style>
-                </xctk:ColorPicker>-->
-
-                <!--<Button Width="111" Content="Edit Gradient">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsChecked, ElementName=rdBtnGradient}" Value="True">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>-->
-
-                <Button Name="btnEdit"  Height="24" Width="70" Margin="10 0" Content="Edit"  VerticalContentAlignment="Top" Click="ButtonEdit_Click"/>
-                <Button Height="24" Width="70" Margin="10 0" Content="Randomize"  VerticalContentAlignment="Top" Click="ButtonRandomize_Click"/>
-            </WrapPanel>
+                <Button Name="btnEdit" Width="70" Content="Edit" Margin="0 0 7 0" Click="ButtonEdit_Click"></Button>
+                <Button Width="70" Content="Randomize" Click="ButtonRandomize_Click"></Button>
+                <!--<Button Name="btnEdit"  Height="24" Width="70" Margin="35 0" Content="Edit"  VerticalContentAlignment="Top" Click="ButtonEdit_Click"/>
+                <Button Height="24" Width="70" Content="Randomize"  VerticalContentAlignment="Top" Click="ButtonRandomize_Click"/>-->
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>
