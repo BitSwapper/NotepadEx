@@ -19,14 +19,8 @@ public partial class ColorPickerLine : UserControl
         try
         {
             Application.Current.Resources[path] = ColorUtil.GetRandomLinearGradientBrush(180);
-            
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
-    }
-
-    private void ColorPicker_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-        e.Handled = true;
     }
 
     private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
@@ -34,7 +28,6 @@ public partial class ColorPickerLine : UserControl
         try
         {
             Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(e.NewValue.Value);
-
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
     }

@@ -299,4 +299,11 @@ public partial class MainWindow : Window
         ThemeEditorWindow themeEditorWindow = new();
         themeEditorWindow.ShowDialog();
     }
+
+    private void MenuItemColorEditor_Click(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true;
+        ColorPickerWindow colorPickerWindow = new();
+        colorPickerWindow.ShowDialog();
+    }
 }

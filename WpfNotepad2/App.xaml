@@ -27,7 +27,7 @@
             <SolidColorBrush x:Key="Color_InfoBarBg" Color="#FF8A8A5D"/>
             <SolidColorBrush x:Key="Color_InfoBarFg" Color="White"/>
             
-            <SolidColorBrush x:Key="Color_MenuBg" Color="#C7333B3E"/>
+            <SolidColorBrush x:Key="Color_MenuBgColor_MenuBg" Color="#C7333B3E"/>
             <SolidColorBrush x:Key="Color_MenuBorder" Color="#FF999999"/>
             <SolidColorBrush x:Key="Color_MenuFg" Color="#FF00E2FF"/>
             <SolidColorBrush x:Key="Color_MenuSeperator" Color="#00000000"/>

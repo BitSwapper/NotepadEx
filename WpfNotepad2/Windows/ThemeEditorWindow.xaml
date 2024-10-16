@@ -22,6 +22,7 @@
         <Menu Grid.Row="1">
             <MenuItem Name="MenuItem_File" Header="File">
                 <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
+                <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"></MenuItem>
             </MenuItem>
             <MenuItem Name="MenuItem_CopyFrom" Header="Copy From"></MenuItem>
         </Menu>

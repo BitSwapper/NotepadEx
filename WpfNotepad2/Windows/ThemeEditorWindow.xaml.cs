@@ -1,7 +1,12 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Text.Json;
+using System.Windows;
 using System.Windows.Input;
+using Microsoft.Win32;
+using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.View.UserControls;
+using Color = System.Windows.Media.Color;
 
 namespace NotepadEx.Windows;
 
@@ -9,6 +14,8 @@ public partial class ThemeEditorWindow : Window
 {
     WindowState prevWindowState;
     WindowResizer resizer;
+    string currentThemeName;
+    public Dictionary<string, Color> pathToColors = new();
 
     public ThemeEditorWindow()
     {
@@ -20,8 +27,9 @@ public partial class ThemeEditorWindow : Window
 
     void InitThemeData()
     {
+        pathToColors.Clear();
         AddColorLine("Color_TextEditorBg", "Main Background");
-        AddColorLine("Color_TextEditorFg", "Font Foreground");
+        //AddColorLine("Color_TextEditorFg", "Font Foreground");
 
         //Application.Current.Resources["Color_TextEditorBg"]
         //Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);
@@ -55,6 +63,8 @@ public partial class ThemeEditorWindow : Window
         line.SetPath(path);
         line.SetText(themeName);
         stackPanelMain.Children.Add(line);
+        pathToColors.Add(path, (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush).Color);
+        line.ColorPicker.SelectedColor = new Color?(Color.FromArgb(255, 255, 0, 0));
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -76,5 +86,39 @@ public partial class ThemeEditorWindow : Window
     private void MenuItemNew_Click(object sender, RoutedEventArgs e)
     {
 
+    }
+
+    private void MenuItemSave_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    bool SaveFile()
+    {
+        string fileName = currentThemeName;
+
+        if(string.IsNullOrEmpty(fileName))
+        {
+            SaveFileDialog saveFileDialog = new();
+            saveFileDialog.Filter = "Theme Files (*.theme)|*.theme|*.*";
+            saveFileDialog.DefaultExt = ".theme";
+
+            if(saveFileDialog.ShowDialog() == true)
+                fileName = saveFileDialog.FileName;
+            else
+                return false;
+        }
+
+        var theme = new ColorTheme();
+        theme.Color_TextEditorBg = pathToColors["Color_TextEditorBg"];
+
+        var serializedTheme = theme.ToSerializable();
+
+        File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme));
+        //UpdateTitleText(fileName);
+        currentThemeName = fileName;
+        //UpdateModifiedStateOfTitleBar();
+        //AddRecentFile(fileName);
+        return true;
     }
 }
