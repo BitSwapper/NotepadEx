@@ -53,12 +53,12 @@ public partial class ColorPickerLine : UserControl
     }
 
 
-    private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+    void ButtonEdit_Click(object sender, RoutedEventArgs e)
     {
-        if(rdBtnColor.IsChecked == true)
+        if(!themeObj.isGradient)
         {
             ColorPickerWindow colorPickerWindow = new();
-            colorPickerWindow.myColorPicker.SetInitialColor((gridForImage.Background as SolidColorBrush).Color);
+            colorPickerWindow.myColorPicker.SetInitialColor(themeObj.color.GetValueOrDefault());
 
             colorPickerWindow.myColorPicker.OnSelectedColorChanged += () =>
             {
@@ -68,6 +68,7 @@ public partial class ColorPickerLine : UserControl
             themeColor = colorPickerWindow.SelectedColor = (gridForImage.Background as SolidColorBrush).Color;
             colorPickerWindow.ShowDialog();
             gridForImage.Background = new SolidColorBrush(colorPickerWindow.SelectedColor);
+            themeObj.color = themeColor;
         }
         else
         {
