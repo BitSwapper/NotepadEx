@@ -106,7 +106,7 @@ public partial class ThemeEditorWindow : Window
         theme.color_TextEditorBg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorBg").Color;
         theme.color_TextEditorFg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorFg").Color;
 
-        theme.themeObj_TitleBarBg = new(AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, "TestGradient"));
+        //theme.themeObj_TitleBarBg = new(AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, "TestGradient"));
 
         var serializedTheme = theme.ToSerializable();
 

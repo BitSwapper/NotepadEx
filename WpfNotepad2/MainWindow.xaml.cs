@@ -50,38 +50,7 @@ public partial class MainWindow : Window
         SetupThemes();
     }
 
-    void SetupThemes()
-    {
-        MenuItem themeMenuItem = MenuItem_Theme;
-        //themeMenuItem.Items.Clear();
-
-        AddCustomThemes(themeMenuItem);
-        LoadCurrentThemeChoice();
-    }
-
-    void LoadCurrentThemeChoice()
-    {
-        var themeFiles = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
-        var themeFile = themeFiles.Where(themeName => Path.GetFileName(themeName) == Settings.Default.ThemeName).FirstOrDefault();
-        string themeFileData = File.ReadAllText(themeFile);
-        var serializedTheme = JsonSerializer.Deserialize<ColorThemeSerializable>(themeFileData);
-        var theme = serializedTheme.ToColorTheme();
-        ApplyTheme(theme);
-    }
-
-    void AddCustomThemes(MenuItem themeMenuItem)
-    {
-        var customThemes = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
-        foreach(var customTheme in customThemes)
-            AddThemeMenuItem(themeMenuItem, Path.GetFileName(customTheme));
-
-        static void AddThemeMenuItem(MenuItem menuItem, string header)
-        {
-            MenuItem item = new MenuItem { Header = header };
-            //item.Click += ThemeItem_Click;
-            menuItem.Items.Add(item);
-        }
-    }
+  
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -298,33 +267,8 @@ public partial class MainWindow : Window
 
     }
 
+
     void MenuItemTestTheme_Click(object sender, RoutedEventArgs e) => AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", ColorUtil.GetRandomLinearGradientBrush(180));
-
-
-    //void ThemeItem_Click(object sender, RoutedEventArgs e)
-    //{
-    //    MessageBox.Show("Clicky");
-    //}
-
-    void MenuItemTheme_Click(object sender, RoutedEventArgs e)
-    {
-        var menuItem = e.OriginalSource as MenuItem;
-        var themeName = menuItem.Header.ToString();
-        var fileData = File.ReadAllText(DirectoryUtil.NotepadExThemesPath + themeName);
-        var themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
-        var theme = themeSerialized.ToColorTheme();
-        Settings.Default.ThemeName = themeName;
-        ApplyTheme(theme);
-    }
-
-    void ApplyTheme(ColorTheme theme)
-    {
-        if(theme.color_TextEditorBg.HasValue)
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.color_TextEditorBg.Value));
-
-        if(theme.color_TextEditorFg.HasValue)
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", new SolidColorBrush(theme.color_TextEditorFg.Value));
-    }
 
     void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)
     {
@@ -339,5 +283,78 @@ public partial class MainWindow : Window
         ColorPickerWindow colorPickerWindow = new();
         colorPickerWindow.ShowDialog();
         MessageBox.Show(colorPickerWindow.SelectedColor.ToString());
+    }
+    
+    void MenuItemTheme_Click(object sender, RoutedEventArgs e)
+    {
+        var menuItem = e.OriginalSource as MenuItem;
+        var themeName = menuItem.Header.ToString();
+        var fileData = File.ReadAllText(DirectoryUtil.NotepadExThemesPath + themeName);
+        var themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
+        var theme = themeSerialized.ToColorTheme();
+        Settings.Default.ThemeName = themeName;
+        ApplyTheme(theme);
+    }
+
+    void SetupThemes()
+    {
+        MenuItem themeMenuItem = MenuItem_Theme;
+        //themeMenuItem.Items.Clear();
+
+        AddCustomThemes(themeMenuItem);
+        LoadCurrentThemeChoice();
+    }
+
+    void LoadCurrentThemeChoice()
+    {
+        var themeFiles = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
+        var themeFile = themeFiles.Where(themeName => Path.GetFileName(themeName) == Settings.Default.ThemeName).FirstOrDefault();
+        string themeFileData = File.ReadAllText(themeFile);
+        var serializedTheme = JsonSerializer.Deserialize<ColorThemeSerializable>(themeFileData);
+        var theme = serializedTheme.ToColorTheme();
+        ApplyTheme(theme);
+    }
+
+    void AddCustomThemes(MenuItem themeMenuItem)
+    {
+        var customThemes = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
+        foreach(var customTheme in customThemes)
+            AddThemeMenuItem(themeMenuItem, Path.GetFileName(customTheme));
+
+        static void AddThemeMenuItem(MenuItem menuItem, string header)
+        {
+            MenuItem item = new MenuItem { Header = header };
+            //item.Click += ThemeItem_Click;
+            menuItem.Items.Add(item);
+        }
+    }
+
+    void ApplyTheme(ColorTheme theme)
+    {
+        if(theme.color_TextEditorBg.HasValue)
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.color_TextEditorBg.Value));
+
+        if(theme.color_TextEditorFg.HasValue)
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", new SolidColorBrush(theme.color_TextEditorFg.Value));
+
+        ApplyThemeObject(theme.themeObj_TitleBarBg, "Color_TitleBarBg");
+        //if(theme.themeObj_TitleBarBg != null)
+        //{
+        //    if(theme.themeObj_TitleBarBg.isGradient)
+        //        AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, "Color_TitleBarBg", theme.themeObj_TitleBarBg.gradient);
+        //    else
+        //        AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TitleBarBg", new SolidColorBrush(theme.themeObj_TitleBarBg.color.Value));
+        //}
+
+        void ApplyThemeObject(ThemeObject themeObj, string resourceKey)
+        {
+            if(themeObj != null)
+            {
+                if(themeObj.isGradient)
+                    AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, resourceKey, themeObj.gradient);
+                else
+                    AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, resourceKey, new SolidColorBrush(themeObj.color.GetValueOrDefault()));
+            }
+        }
     }
 }

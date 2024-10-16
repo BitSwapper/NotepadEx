@@ -36,8 +36,13 @@ public class ThemeObject
 [Serializable]
 public class ThemeObjectSerializable
 {
+    [JsonPropertyName("isGradient")]
     public bool IsGradient { get; set; }
+
+    [JsonPropertyName("color")]
     public string Color { get; set; }
+
+    [JsonPropertyName("gradient")]
     public string Gradient { get; set; }
 
     public ThemeObjectSerializable() { } // Needs empty constructor
@@ -93,6 +98,8 @@ public class ThemeObjectSerializable
         foreach(var part in parts)
         {
             var keyValue = part.Split(':');
+            if(keyValue.Length < 2) continue;
+
             switch(keyValue[0])
             {
                 case "StartPoint":
@@ -113,11 +120,13 @@ public class ThemeObjectSerializable
                     brush.ColorInterpolationMode = (ColorInterpolationMode)Enum.Parse(typeof(ColorInterpolationMode), keyValue[1]);
                     break;
                 case "GradientStops":
-                    var stops = keyValue[1].Split('|').Select(stop => {
+                    var stopsData = string.Join(":", keyValue.Skip(1));  // Rejoin in case there were colons in the color data
+                    var stops = stopsData.Split('|').Select(stop => {
                         var stopParts = stop.Split(':');
+                        if (stopParts.Length != 2) throw new FormatException($"Invalid gradient stop format: {stop}");
                         return new GradientStop(ColorUtil.GetColorFromHex(stopParts[0]).Value, double.Parse(stopParts[1]));
                     });
-                    brush.GradientStops = new GradientStopCollection(stops);
+                    brush.GradientStops = new GradientStopCollection(stops.ToList());  // Convert to List before creating GradientStopCollection
                     break;
             }
         }
@@ -144,8 +153,13 @@ public class ColorTheme
 [Serializable]
 public class ColorThemeSerializable
 {
+    [JsonPropertyName("color_TextEditorBg")]
     public string Color_TextEditorBg { get; set; }
+
+    [JsonPropertyName("color_TextEditorFg")]
     public string Color_TextEditorFg { get; set; }
+
+    [JsonPropertyName("themeObj_TitleBarBg")]
     public ThemeObjectSerializable ThemeObj_TitleBarBg { get; set; }
 
     public ColorThemeSerializable() { } //needs empty constructor
