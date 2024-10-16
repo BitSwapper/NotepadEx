@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using NotepadEx.Util;
 using NotepadEx.Windows;
 using Color = System.Windows.Media.Color;
@@ -16,6 +15,11 @@ public partial class ColorPickerLine : UserControl
 
     public void SetText(string text) => txtThemeName.Text = text;
     public void SetPath(string path) => this.path = path;
+    public void SetColorOrGradientType(bool isGradient)
+    {
+        rdBtnColor.IsChecked = !isGradient;
+        rdBtnGradient.IsChecked = isGradient;
+    }
 
     void ButtonRandomize_Click(object sender, RoutedEventArgs e)
     {

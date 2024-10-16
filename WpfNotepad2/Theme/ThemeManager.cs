@@ -1,11 +1,7 @@
 ﻿namespace NotepadEx.Theme;
 
-class ThemeManager
+public static class ThemeManager
 {
-    ColorTheme curTheme;
-
-    public void LoadThemeData()
-    {
-
-    }
+    static ColorTheme curTheme;
+    public static ColorTheme CurrentTheme { get => curTheme; set => curTheme = value; }
 }

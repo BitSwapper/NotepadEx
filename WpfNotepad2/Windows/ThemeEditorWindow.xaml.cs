@@ -27,42 +27,24 @@ public partial class ThemeEditorWindow : Window
 
     void InitThemeData()
     {
-        AddColorLine("Color_TextEditorBg", "Main Background");
-        AddColorLine("Color_TextEditorFg", "Font Foreground");
+        AddColorLine("Color_TextEditorBg", "Main Background", false);
+        AddColorLine("Color_TextEditorFg", "Font Foreground", false);
+        AddColorLine("Color_TitleBarBg", "Title Bar Background", ThemeManager.CurrentTheme.themeObj_TitleBarBg.isGradient);
 
-        //Application.Current.Resources["Color_TextEditorBg"]
-        //Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);
-
-        //Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);
-        //Application.Current.Resources["Color_SystemButtons"] = GetRandomColorBrush(180);
-
-        //Application.Current.Resources["Color_BorderColor"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_InfoBarBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_InfoBarFg"] = GetRandomColorBrush(180);
-
-        //Application.Current.Resources["Color_MenuItemFg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuBarBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuBorder"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuFg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuSeperator"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuDisabledFg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemSelectedBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemSelectedBorder"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemHighlightBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
     }
 
-    private void AddColorLine(string path, string themeName)
+    private void AddColorLine(string path, string themeName, bool isGradient)
     {
         ColorPickerLine line = new();
         line.SetPath(path);
         line.SetText(themeName);
+        line.SetColorOrGradientType(isGradient);
         stackPanelMain.Children.Add(line);
-        line.GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
+
+        if(isGradient)
+            line.GridForImg.Background = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
+        else
+            line.GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -81,12 +63,12 @@ public partial class ThemeEditorWindow : Window
 
     void Close_Click(object sender, RoutedEventArgs e) => Close();
 
-    private void MenuItemNew_Click(object sender, RoutedEventArgs e)
+    void MenuItemNew_Click(object sender, RoutedEventArgs e)
     {
 
     }
 
-    private void MenuItemSave_Click(object sender, RoutedEventArgs e) => SaveFile();
+    void MenuItemSave_Click(object sender, RoutedEventArgs e) => SaveFile();
 
     bool SaveFile()
     {
@@ -124,3 +106,29 @@ public partial class ThemeEditorWindow : Window
         return true;
     }
 }
+
+
+//Application.Current.Resources["Color_TextEditorBg"]
+//Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);
+
+//Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);
+//Application.Current.Resources["Color_SystemButtons"] = GetRandomColorBrush(180);
+
+//Application.Current.Resources["Color_BorderColor"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_InfoBarBg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_InfoBarFg"] = GetRandomColorBrush(180);
+
+//Application.Current.Resources["Color_MenuItemFg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuBarBg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuBg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuBorder"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuFg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuSeperator"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuDisabledFg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuItemSelectedBg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuItemSelectedBorder"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuItemHighlightBg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);
+//Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);

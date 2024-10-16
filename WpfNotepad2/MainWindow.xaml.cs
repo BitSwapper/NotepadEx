@@ -331,6 +331,8 @@ public partial class MainWindow : Window
 
     void ApplyTheme(ColorTheme theme)
     {
+        ThemeManager.CurrentTheme = theme;
+
         if(theme.color_TextEditorBg.HasValue)
             AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.color_TextEditorBg.Value));
 
