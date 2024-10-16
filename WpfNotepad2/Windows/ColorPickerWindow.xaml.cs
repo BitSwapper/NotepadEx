@@ -9,7 +9,7 @@ public partial class ColorPickerWindow : Window
     {
         get => myColorPicker.SelectedColor; set => myColorPicker.SelectedColor = value;
     }
-    
+
     public ColorPickerWindow()
     {
         InitializeComponent();
@@ -18,8 +18,5 @@ public partial class ColorPickerWindow : Window
         myColorPicker.OnWindowConfirm += OnClose;
     }
 
-    public void OnClose()
-    {
-        Close();
-    }
+    public void OnClose() => Close();
 }

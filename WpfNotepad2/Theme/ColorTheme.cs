@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using Color = System.Windows.Media.Color;
 
 namespace NotepadEx.Theme;
@@ -181,5 +180,5 @@ public class ColorThemeSerializable
         GradientScale = GradientScale
     };
 
- 
+
 }

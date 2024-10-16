@@ -64,8 +64,5 @@ public partial class CustomTitleBar : UserControl
 
     void btnExit_Click(object sender, RoutedEventArgs e) => Close.Invoke(sender, e);
 
-    public void SetText(string text)
-    {
-        txtTitleBar.Text = text;
-    }
+    public void SetText(string text) => txtTitleBar.Text = text;
 }

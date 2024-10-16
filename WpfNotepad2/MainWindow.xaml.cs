@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using NotepadEx.Extensions;
@@ -263,33 +262,9 @@ public partial class MainWindow : Window
 
     }
 
-    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e)
-    {
+    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e) =>
         //Application.Current.Resources["Color_TextEditorBg"] = GetRandomLinearGradientBrush(180);
-        Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);
-
-        //Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);
-        //Application.Current.Resources["Color_SystemButtons"] = GetRandomColorBrush(180);
-
-        //Application.Current.Resources["Color_BorderColor"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_InfoBarBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_InfoBarFg"] = GetRandomColorBrush(180);
-
-        //Application.Current.Resources["Color_MenuItemFg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuBarBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuBorder"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuFg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuSeperator"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuDisabledFg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemSelectedBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemSelectedBorder"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemHighlightBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);
-        //Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
-    }
+        Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);//Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);//Application.Current.Resources["Color_SystemButtons"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_BorderColor"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_InfoBarBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_InfoBarFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBarBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuSeperator"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuDisabledFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemSelectedBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemSelectedBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
 
     void MenuItemTheme_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Theme General");
 

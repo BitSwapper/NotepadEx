@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace NotepadEx.Theme;
 
-namespace NotepadEx.Theme
+class ThemeManager
 {
-    class ThemeManager
+    ColorTheme curTheme;
+
+    public void LoadThemeData()
     {
-        ColorTheme curTheme;
 
-        public void LoadThemeData()
-        {
-
-        }
     }
 }
