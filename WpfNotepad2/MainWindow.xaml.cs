@@ -300,7 +300,7 @@ public partial class MainWindow : Window
         themeEditorWindow.ShowDialog();
     }
 
-    private void MenuItemColorEditor_Click(object sender, RoutedEventArgs e)
+    void MenuItemColorEditor_Click(object sender, RoutedEventArgs e)
     {
         e.Handled = true;
         ColorPickerWindow colorPickerWindow = new();

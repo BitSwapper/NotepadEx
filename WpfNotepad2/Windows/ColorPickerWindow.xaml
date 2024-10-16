@@ -6,8 +6,15 @@
         xmlns:local="clr-namespace:NotepadEx.Windows"
         xmlns:UserControls="clr-namespace:NotepadEx.View.UserControls"
         mc:Ignorable="d"
-        Title="ColorPickerWindow" Height="600" Width="600">
+        Title="ColorPickerWindow" Height="600" Width="600"
+        WindowStyle="None"
+        AllowsTransparency="True">
     <Grid>
-        <UserControls:ColorPicker x:Name="myColorPicker"></UserControls:ColorPicker>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <UserControls:CustomTitleBar x:Name="TitleBar"></UserControls:CustomTitleBar>
+        <UserControls:ColorPicker x:Name="myColorPicker" Grid.Row="1"></UserControls:ColorPicker>
     </Grid>
 </Window>

@@ -9,17 +9,17 @@
              mc:Ignorable="d" d:DesignWidth="360" Height="52">
     <Border BorderBrush="Gray" BorderThickness="1">
         <Grid>
-             <Grid.RowDefinitions>
+            <Grid.RowDefinitions>
                 <RowDefinition Height="22"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
 
             <TextBlock Name="txtThemeName" Margin="10,0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
+            <Grid Name="gridForImage" HorizontalAlignment="Left" Width="129" Background="#FF54799B" Margin="229,0,0,0"></Grid>
             <WrapPanel Orientation="Horizontal" Grid.Row="1">
-                
                 <RadioButton Name="rdBtnColor" IsChecked="True" FontFamily="Verdana" Content="Color" Margin="5"/>
                 <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5"/>
-                
+
                 <!--<xctk:ColorPicker Name="ColorPicker" Width="111" SelectedColor="{Binding themeColor}" SelectedColorChanged="ColorPicker_SelectedColorChanged">
                     <xctk:ColorPicker.Style>
                         <Style TargetType="xctk:ColorPicker">
@@ -32,8 +32,8 @@
                         </Style>
                     </xctk:ColorPicker.Style>
                 </xctk:ColorPicker>-->
-                
-                <Button Width="111" Content="Edit Gradient">
+
+                <!--<Button Width="111" Content="Edit Gradient">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -44,7 +44,9 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                </Button>
+                </Button>-->
+
+                <Button Name="btnEdit"  Height="24" Width="70" Margin="10 0" Content="Edit"  VerticalContentAlignment="Top" Click="ButtonEdit_Click"/>
                 <Button Height="24" Width="70" Margin="10 0" Content="Randomize"  VerticalContentAlignment="Top" Click="ButtonRandomize_Click"/>
             </WrapPanel>
         </Grid>

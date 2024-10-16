@@ -95,6 +95,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         _currentHue = 0;
         _currentSaturation = 1;
         _currentValue = 1;
+        UpdateColorFromSelectedColor();
         UpdateColorPlane();
         UpdateColorSelector();
         UpdateHueSelector();
@@ -119,7 +120,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     private void UpdateColorFromSelectedColor()
     {
         _isUpdating = true;
-        var hsv = RgbToHsv(SelectedColor);
+        var hsv = ColorUtil.RgbToHsv(SelectedColor);
         _currentHue = hsv.H;
         _currentSaturation = hsv.S;
         _currentValue = hsv.V;
@@ -141,7 +142,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         if(!_isUpdating)
         {
             _isUpdating = true;
-            var hsv = RgbToHsv(color);
+            var hsv = ColorUtil.RgbToHsv(color);
             _currentHue = hsv.H;
             _currentSaturation = hsv.S;
             _currentValue = hsv.V;
@@ -175,7 +176,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     private void UpdateSelectedColor()
     {
         _isUpdating = true;
-        SelectedColor = HsvToRgb(_currentHue, _currentSaturation, _currentValue, SelectedColor.A);
+        SelectedColor = ColorUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue, SelectedColor.A);
         OnPropertyChanged(nameof(Red));
         OnPropertyChanged(nameof(Green));
         OnPropertyChanged(nameof(Blue));
@@ -188,7 +189,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-    private void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(HsvToRgb(_currentHue, 1, 1));
+    private void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(ColorUtil.HsvToRgb(_currentHue, 1, 1));
 
     private void UpdateColorSelector()
     {
@@ -241,56 +242,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     private void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isHueDragging = false;
 
-    private (double H, double S, double V) RgbToHsv(Color color)
-    {
-        double r = color.R / 255.0;
-        double g = color.G / 255.0;
-        double b = color.B / 255.0;
-
-        double max = Math.Max(r, Math.Max(g, b));
-        double min = Math.Min(r, Math.Min(g, b));
-        double delta = max - min;
-
-        double h = 0;
-        if(delta != 0)
-        {
-            if(max == r)
-                h = (g - b) / delta % 6;
-            else if(max == g)
-                h = (b - r) / delta + 2;
-            else
-                h = (r - g) / delta + 4;
-        }
-        h /= 6;
-
-        double s = max == 0 ? 0 : delta / max;
-        double v = max;
-
-        return (h, s, v);
-    }
-
-    private Color HsvToRgb(double h, double s, double v, byte a = 255)
-    {
-        double r, g, b;
-
-        int hi = (int)(h * 6) % 6;
-        double f = h * 6 - hi;
-        double p = v * (1 - s);
-        double q = v * (1 - f * s);
-        double t = v * (1 - (1 - f) * s);
-
-        switch(hi)
-        {
-            case 0: r = v; g = t; b = p; break;
-            case 1: r = q; g = v; b = p; break;
-            case 2: r = p; g = v; b = t; break;
-            case 3: r = p; g = q; b = v; break;
-            case 4: r = t; g = p; b = v; break;
-            default: r = v; g = p; b = q; break;
-        }
-
-        return Color.FromArgb(a, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
-    }
 
     void ButtonConfirm_Click(object sender, RoutedEventArgs e)
     {

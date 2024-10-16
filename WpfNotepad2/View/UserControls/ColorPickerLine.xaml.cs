@@ -1,8 +1,10 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using NotepadEx.Util;
-
+using NotepadEx.Windows;
+using Color = System.Windows.Media.Color;
 namespace NotepadEx.View.UserControls;
 
 public partial class ColorPickerLine : UserControl
@@ -30,5 +32,20 @@ public partial class ColorPickerLine : UserControl
             Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(e.NewValue.Value);
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
+    }
+
+    private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+    {
+        if(rdBtnColor.IsChecked == true)
+        {
+            ColorPickerWindow colorPickerWindow = new();
+            colorPickerWindow.SelectedColor = (gridForImage.Background as SolidColorBrush).Color;
+            colorPickerWindow.ShowDialog();
+            gridForImage.Background = new SolidColorBrush(colorPickerWindow.SelectedColor);
+        }
+        else
+        {
+
+        }
     }
 }
