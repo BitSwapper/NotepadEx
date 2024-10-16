@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using NotepadEx.Util;
 using Color = System.Windows.Media.Color;
 
 namespace NotepadEx.Theme;
@@ -98,8 +99,8 @@ public class ColorThemeSerializable
         float gradientScale)
     {
 
-        //Color_TextEditorBg = ColorToHex(color_TextEditorBg);
-        //Color_TextEditorFg = ColorToHex(color_TextEditorFg);
+        Color_TextEditorBg = ColorUtil.ColorToHexString(color_TextEditorBg);
+        Color_TextEditorFg = ColorUtil.ColorToHexString(color_TextEditorFg);
         //Color_TitleBarBg = ColorToHex(color_TitleBarBg);
         //Color_TitleBarFont = ColorToHex(color_TitleBarFont);
         //Color_SystemButtons = ColorToHex(color_SystemButtons);
@@ -126,8 +127,8 @@ public class ColorThemeSerializable
 
     public ColorThemeSerializable(ColorTheme colorTheme)
     {
-        //Color_TextEditorBg = ColorToHex(colorTheme.Color_TextEditorBg);
-        //Color_TextEditorFg = ColorToHex(colorTheme.Color_TextEditorFg);
+        Color_TextEditorBg =  ColorUtil.ColorToHexString(colorTheme.Color_TextEditorBg);
+        Color_TextEditorFg = ColorUtil.ColorToHexString(colorTheme.Color_TextEditorFg);
         //Color_TitleBarBg = ColorToHex(colorTheme.Color_TitleBarBg);
         //Color_TitleBarFont = ColorToHex(colorTheme.Color_TitleBarFont);
         //Color_SystemButtons = ColorToHex(colorTheme.Color_SystemButtons);
@@ -154,8 +155,8 @@ public class ColorThemeSerializable
 
     public ColorTheme ToColorTheme() => new ColorTheme
     {
-        //Color_TextEditorBg = GetColorFromHex(Color_TextEditorBg),
-        //Color_TextEditorFg = GetColorFromHex(Color_TextEditorFg),
+        Color_TextEditorBg = ColorUtil.GetColorFromHex(Color_TextEditorBg),
+        Color_TextEditorFg = ColorUtil.GetColorFromHex(Color_TextEditorFg),
         //Color_TitleBarBg = GetColorFromHex(Color_TitleBarBg),
         //Color_TitleBarFont = GetColorFromHex(Color_TitleBarFont),
         //Color_SystemButtons = GetColorFromHex(Color_SystemButtons),

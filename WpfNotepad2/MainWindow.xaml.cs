@@ -60,7 +60,7 @@ public partial class MainWindow : Window
 
     void MenuItemNew_Click(object sender, RoutedEventArgs e)
     {
-        if(DocumentHelper.PromptToSaveChanges(hasTextChangedSinceSave, SaveDocument))
+        if(DocumentUtil.PromptToSaveChanges(hasTextChangedSinceSave, SaveDocument))
         {
             txtEditor.Text = string.Empty;
             currentFileName = string.Empty;
@@ -72,13 +72,13 @@ public partial class MainWindow : Window
 
     void MenuItemNewWindow_Click(object sender, RoutedEventArgs e) => AdditionalWindowManager.TryCreateNewNotepadWindow();
 
-    void MenuItemOpen_Click(object sender, RoutedEventArgs e) => DocumentHelper.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName);
+    void MenuItemOpen_Click(object sender, RoutedEventArgs e) => DocumentUtil.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName);
 
     void MenuItemOpenRecent_Click(object sender, RoutedEventArgs e)
     {
         MenuItem menuItem = (MenuItem)sender;
         MenuItem subMenuItem = (MenuItem)e.OriginalSource;
-        DocumentHelper.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName, (string)subMenuItem.Header);
+        DocumentUtil.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName, (string)subMenuItem.Header);
     }
 
     void MenuItemMultiOpen_Click(object sender, RoutedEventArgs e) { }
@@ -87,7 +87,7 @@ public partial class MainWindow : Window
 
     void MenuItemSaveAs_Click(object sender, RoutedEventArgs e) => SaveDocumentAs();
 
-    void MenuItemPrint_Click(object sender, RoutedEventArgs e) => DocumentHelper.PrintDocument(txtEditor);
+    void MenuItemPrint_Click(object sender, RoutedEventArgs e) => DocumentUtil.PrintDocument(txtEditor);
 
     void MenuItemExit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 

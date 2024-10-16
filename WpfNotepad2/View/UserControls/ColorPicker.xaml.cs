@@ -12,13 +12,12 @@ namespace NotepadEx.View.UserControls;
 
 public partial class ColorPicker : UserControl, INotifyPropertyChanged
 {
-    public static readonly DependencyProperty SelectedColorProperty =
-        DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker),
-            new PropertyMetadata(Colors.Red, OnColorChanged));
+    public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Red, OnColorChanged));
 
     public event Action OnWindowConfirm;
     public event Action OnWindowCancel;
     public event Action OnSelectedColorChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public Color SelectedColor
     {
@@ -98,13 +97,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         UpdateHueSelector();
     }
 
-
-
-
-
-
-
-
     static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         ColorPicker colorPicker = d as ColorPicker;
@@ -182,8 +174,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         _isUpdating = false;
     }
 
-    // Implement INotifyPropertyChanged
-    public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 

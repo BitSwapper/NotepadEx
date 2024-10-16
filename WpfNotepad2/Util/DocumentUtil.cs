@@ -4,8 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using Microsoft.Win32;
-namespace NotepadEx;
-internal class DocumentHelper
+
+namespace NotepadEx.Util;
+internal class DocumentUtil
 {
     public static void OpenDocument(Func<bool> SaveDocument, Action<string> LoadDocument, bool isTextChanged, string appName, string fileName = "")
     {

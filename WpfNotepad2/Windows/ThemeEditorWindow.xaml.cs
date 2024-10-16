@@ -91,7 +91,7 @@ public partial class ThemeEditorWindow : Window
 
     private void MenuItemSave_Click(object sender, RoutedEventArgs e)
     {
-
+        SaveFile();
     }
 
     bool SaveFile()
@@ -101,8 +101,10 @@ public partial class ThemeEditorWindow : Window
         if(string.IsNullOrEmpty(fileName))
         {
             SaveFileDialog saveFileDialog = new();
-            saveFileDialog.Filter = "Theme Files (*.theme)|*.theme|*.*";
-            saveFileDialog.DefaultExt = ".theme";
+            saveFileDialog.InitialDirectory = DirectoryUtil.NotepadExThemesPath;
+            saveFileDialog.Filter = "Theme Files (*.custom)|*.custom|All Files (*.*)|*.*";
+            saveFileDialog.DefaultExt = ".custom";
+
 
             if(saveFileDialog.ShowDialog() == true)
                 fileName = saveFileDialog.FileName;
@@ -112,6 +114,7 @@ public partial class ThemeEditorWindow : Window
 
         var theme = new ColorTheme();
         theme.Color_TextEditorBg = pathToColors["Color_TextEditorBg"];
+        theme.Color_TextEditorFg = pathToColors["Color_TextEditorFg"];
 
         var serializedTheme = theme.ToSerializable();
 
