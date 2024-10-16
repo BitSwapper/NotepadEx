@@ -30,7 +30,7 @@ public partial class ThemeEditorWindow : Window
     {
         pathToColors.Clear();
         AddColorLine("Color_TextEditorBg", "Main Background");
-        //AddColorLine("Color_TextEditorFg", "Font Foreground");
+        AddColorLine("Color_TextEditorFg", "Font Foreground");
 
         //Application.Current.Resources["Color_TextEditorBg"]
         //Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);

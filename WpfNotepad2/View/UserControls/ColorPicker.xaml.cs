@@ -78,12 +78,12 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
 
     Color ogColor;
-    private bool _isUpdating = false;
-    private bool _isColorPlaneDragging;
-    private bool _isHueDragging;
-    private double _currentHue;
-    private double _currentSaturation;
-    private double _currentValue;
+    bool _isUpdating = false;
+    bool _isColorPlaneDragging;
+    bool _isHueDragging;
+    double _currentHue;
+    double _currentSaturation;
+    double _currentValue;
 
     public ColorPicker()
     {
@@ -106,7 +106,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
 
 
-    private static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         ColorPicker colorPicker = d as ColorPicker;
         if(colorPicker != null && !colorPicker._isUpdating)
@@ -115,7 +115,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         }
     }
 
-    private void UpdateColorFromSelectedColor()
+    void UpdateColorFromSelectedColor()
     {
         _isUpdating = true;
         var hsv = ColorUtil.RgbToHsv(SelectedColor);
@@ -135,7 +135,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         _isUpdating = false;
     }
 
-    private void UpdateColorFromRgb(Color color)
+    void UpdateColorFromRgb(Color color)
     {
         if(!_isUpdating)
         {
@@ -154,7 +154,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         }
     }
 
-    private void UpdateColorFromColorPlane(Point position)
+    void UpdateColorFromColorPlane(Point position)
     {
         _currentSaturation = Math.Clamp(position.X / ColorPlane.ActualWidth, 0, 1);
         _currentValue = Math.Clamp(1 - (position.Y / ColorPlane.ActualHeight), 0, 1);
@@ -163,7 +163,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         UpdateSelectedColor();
     }
 
-    private void UpdateColorFromHueSlider(Point position)
+    void UpdateColorFromHueSlider(Point position)
     {
         _currentHue = Math.Clamp(position.Y / HueSlider.ActualHeight, 0, 1);
 
@@ -172,7 +172,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         UpdateSelectedColor();
     }
 
-    private void UpdateSelectedColor()
+    void UpdateSelectedColor()
     {
         _isUpdating = true;
         SelectedColor = ColorUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue, SelectedColor.A);
@@ -188,24 +188,24 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-    private void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(ColorUtil.HsvToRgb(_currentHue, 1, 1));
+    void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(ColorUtil.HsvToRgb(_currentHue, 1, 1));
 
-    private void UpdateColorSelector()
+    void UpdateColorSelector()
     {
         Canvas.SetLeft(ColorSelector, _currentSaturation * ColorPlane.ActualWidth);
         Canvas.SetTop(ColorSelector, (1 - _currentValue) * ColorPlane.ActualHeight);
     }
 
-    private void UpdateHueSelector() => Canvas.SetTop(HueSelector, _currentHue * HueSlider.ActualHeight);
+    void UpdateHueSelector() => Canvas.SetTop(HueSelector, _currentHue * HueSlider.ActualHeight);
 
-    private void ColorPlane_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    void ColorPlane_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         _isColorPlaneDragging = true;
         UpdateColorFromColorPlane(e.GetPosition(ColorPlane));
     }
-    private void ColorPlane_MouseLeave(object sender, MouseEventArgs e) => _isColorPlaneDragging = false;
+    void ColorPlane_MouseLeave(object sender, MouseEventArgs e) => _isColorPlaneDragging = false;
 
-    private void ColorPlane_MouseMove(object sender, MouseEventArgs e)
+    void ColorPlane_MouseMove(object sender, MouseEventArgs e)
     {
         if(e.LeftButton == MouseButtonState.Pressed)
         {
@@ -217,15 +217,15 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         }
     }
 
-    private void ColorPlane_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isColorPlaneDragging = false;
+    void ColorPlane_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isColorPlaneDragging = false;
 
-    private void HueSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    void HueSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         _isHueDragging = true;
         UpdateColorFromHueSlider(e.GetPosition(HueSlider));
     }
 
-    private void HueSlider_MouseMove(object sender, MouseEventArgs e)
+    void HueSlider_MouseMove(object sender, MouseEventArgs e)
     {
         if(e.LeftButton == MouseButtonState.Pressed)
         {
@@ -237,9 +237,9 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         }
     }
 
-    private void HueSlider_MouseLeave(object sender, MouseEventArgs e) => _isHueDragging = false;
+    void HueSlider_MouseLeave(object sender, MouseEventArgs e) => _isHueDragging = false;
 
-    private void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isHueDragging = false;
+    void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isHueDragging = false;
 
     public void SetInitialColor(Color color) => ogColor = color;
 
