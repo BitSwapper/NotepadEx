@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing.Drawing2D;
+using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
@@ -7,6 +8,7 @@ using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.View.UserControls;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
+using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
 namespace NotepadEx.Windows;
 
 public partial class ThemeEditorWindow : Window
@@ -101,11 +103,20 @@ public partial class ThemeEditorWindow : Window
             return false;
 
         var theme = new ColorTheme();
-        theme.Color_TextEditorBg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorBg").Color;
-        theme.Color_TextEditorFg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorFg").Color;
+        theme.color_TextEditorBg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorBg").Color;
+        theme.color_TextEditorFg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorFg").Color;
+
+        theme.themeObj_TitleBarBg = new(AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, "TestGradient"));
+
         var serializedTheme = theme.ToSerializable();
 
-        File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme));
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true, // Optional: Makes JSON human-readable
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Ensures consistency with camelCase
+        };
+
+        File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
         //UpdateTitleText(fileName);
         currentThemeName = fileName;
         //UpdateModifiedStateOfTitleBar();

@@ -83,8 +83,6 @@ public partial class MainWindow : Window
         }
     }
 
-
-
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if(e.ClickCount == 2)
@@ -321,11 +319,11 @@ public partial class MainWindow : Window
 
     void ApplyTheme(ColorTheme theme)
     {
-        if(theme.Color_TextEditorBg.HasValue)
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.Color_TextEditorBg.Value));
+        if(theme.color_TextEditorBg.HasValue)
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.color_TextEditorBg.Value));
 
-        if(theme.Color_TextEditorFg.HasValue)
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", new SolidColorBrush(theme.Color_TextEditorFg.Value));
+        if(theme.color_TextEditorFg.HasValue)
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", new SolidColorBrush(theme.color_TextEditorFg.Value));
     }
 
     void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)

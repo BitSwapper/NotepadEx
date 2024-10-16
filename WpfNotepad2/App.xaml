@@ -8,11 +8,11 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
-            <!--<LinearGradientBrush x:Key="Color_TitleBarBg" StartPoint="0,0" EndPoint="0,1">
+            <LinearGradientBrush x:Key="TestGradient" StartPoint="0,0" EndPoint="0,1">
       <GradientStop Color="#DF4B5080" Offset="0.0"/>
-      <GradientStop Color="#DF122327" Offset="0.6"/>
+      <GradientStop Color="#DF026367" Offset="0.6"/>
       <GradientStop Color="#DFA5547D" Offset="1.0"/>
-  </LinearGradientBrush>-->
+  </LinearGradientBrush>
 
             <SolidColorBrush x:Key="Color_TextEditorBg" Color="#ED202020"/>
             <SolidColorBrush x:Key="Color_TextEditorFg" Color="AliceBlue"/>

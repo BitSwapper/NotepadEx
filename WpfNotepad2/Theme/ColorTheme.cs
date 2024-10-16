@@ -1,22 +1,199 @@
-﻿using System.Windows.Media;
+﻿using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Windows.Media;
 using NotepadEx.Util;
 using Color = System.Windows.Media.Color;
+using Point = System.Windows.Point;
+using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
 
 namespace NotepadEx.Theme;
 
+public class ThemeObject
+{
+    public bool isGradient;
+    public Color? color;
+    public LinearGradientBrush? gradient;
+
+    public ThemeObject() { }
+
+    public ThemeObject(Color Color)
+    {
+        color = Color;
+        isGradient = false;
+    }
+
+    public ThemeObject(LinearGradientBrush Gradient)
+    {
+        gradient = Gradient;
+        isGradient = true;
+    }
+
+
+    public ThemeObjectSerializable ToSerializable() => new ThemeObjectSerializable(this);
+}
+
+[Serializable]
+public class ThemeObjectSerializable
+{
+    public bool IsGradient { get; set; }
+    public string Color { get; set; }
+    public string Gradient { get; set; }
+
+    public ThemeObjectSerializable() { } // Needs empty constructor
+
+    public ThemeObjectSerializable(ThemeObject themeObject)
+    {
+        IsGradient = themeObject.isGradient;
+        if(themeObject.color.HasValue)
+        {
+            Color = ColorUtil.ColorToHexString(themeObject.color.Value);
+        }
+        if(themeObject.gradient != null)
+        {
+            Gradient = SerializeGradient(themeObject.gradient);
+        }
+    }
+
+    public ThemeObject ToThemeObject()
+    {
+        if(IsGradient)
+        {
+            return new ThemeObject(DeserializeGradient(Gradient));
+        }
+        else
+        {
+            return new ThemeObject(ColorUtil.GetColorFromHex(Color).Value);
+        }
+    }
+
+    private string SerializeGradient(LinearGradientBrush gradient)
+    {
+        var serializedData = new List<string>
+        {
+            $"StartPoint:{gradient.StartPoint.X},{gradient.StartPoint.Y}",
+            $"EndPoint:{gradient.EndPoint.X},{gradient.EndPoint.Y}",
+            $"SpreadMethod:{gradient.SpreadMethod}",
+            $"MappingMode:{gradient.MappingMode}",
+            $"ColorInterpolationMode:{gradient.ColorInterpolationMode}"
+        };
+
+        var stops = gradient.GradientStops.Select(stop =>
+            $"{ColorUtil.ColorToHexString(stop.Color)}:{stop.Offset}");
+        serializedData.Add($"GradientStops:{string.Join("|", stops)}");
+
+        return string.Join(";", serializedData);
+    }
+
+    private LinearGradientBrush DeserializeGradient(string gradientString)
+    {
+        var parts = gradientString.Split(';');
+        var brush = new LinearGradientBrush();
+
+        foreach(var part in parts)
+        {
+            var keyValue = part.Split(':');
+            switch(keyValue[0])
+            {
+                case "StartPoint":
+                    var startPoint = keyValue[1].Split(',');
+                    brush.StartPoint = new Point(double.Parse(startPoint[0]), double.Parse(startPoint[1]));
+                    break;
+                case "EndPoint":
+                    var endPoint = keyValue[1].Split(',');
+                    brush.EndPoint = new Point(double.Parse(endPoint[0]), double.Parse(endPoint[1]));
+                    break;
+                case "SpreadMethod":
+                    brush.SpreadMethod = (GradientSpreadMethod)Enum.Parse(typeof(GradientSpreadMethod), keyValue[1]);
+                    break;
+                case "MappingMode":
+                    brush.MappingMode = (BrushMappingMode)Enum.Parse(typeof(BrushMappingMode), keyValue[1]);
+                    break;
+                case "ColorInterpolationMode":
+                    brush.ColorInterpolationMode = (ColorInterpolationMode)Enum.Parse(typeof(ColorInterpolationMode), keyValue[1]);
+                    break;
+                case "GradientStops":
+                    var stops = keyValue[1].Split('|').Select(stop => {
+                        var stopParts = stop.Split(':');
+                        return new GradientStop(ColorUtil.GetColorFromHex(stopParts[0]).Value, double.Parse(stopParts[1]));
+                    });
+                    brush.GradientStops = new GradientStopCollection(stops);
+                    break;
+            }
+        }
+
+        return brush;
+    }
+}
+
+
+
+
+
+
+public class ColorTheme
+{
+    public Color? color_TextEditorBg;
+    public Color? color_TextEditorFg;
+    public ThemeObject? themeObj_TitleBarBg;
+
+
+    public ColorThemeSerializable ToSerializable() => new ColorThemeSerializable(this);
+}
+
+[Serializable]
+public class ColorThemeSerializable
+{
+    public string Color_TextEditorBg { get; set; }
+    public string Color_TextEditorFg { get; set; }
+    public ThemeObjectSerializable ThemeObj_TitleBarBg { get; set; }
+
+    public ColorThemeSerializable() { } //needs empty constructor
+
+    public ColorThemeSerializable(
+        Color color_TextEditorBg,
+        Color color_TextEditorFg,
+        ThemeObject color_TitleBarBg)
+    {
+
+        Color_TextEditorBg = ColorUtil.ColorToHexString(color_TextEditorBg);
+        Color_TextEditorFg = ColorUtil.ColorToHexString(color_TextEditorFg);
+
+    }
+
+    public ColorThemeSerializable(ColorTheme colorTheme)
+    {
+        if(colorTheme.color_TextEditorBg.HasValue) Color_TextEditorBg = ColorUtil.ColorToHexString(colorTheme.color_TextEditorBg.Value);
+        if(colorTheme.color_TextEditorFg.HasValue) Color_TextEditorFg = ColorUtil.ColorToHexString(colorTheme.color_TextEditorFg.Value);
+
+        if(colorTheme.themeObj_TitleBarBg != null)
+            ThemeObj_TitleBarBg = new ThemeObjectSerializable(colorTheme.themeObj_TitleBarBg);
+    }
+
+    public ColorTheme ToColorTheme() => new ColorTheme
+    {
+        color_TextEditorBg = ColorUtil.GetColorFromHex(Color_TextEditorBg),
+        color_TextEditorFg = ColorUtil.GetColorFromHex(Color_TextEditorFg),
+        themeObj_TitleBarBg = ThemeObj_TitleBarBg?.ToThemeObject(),
+    };
+}
+
+
+/*
+ * 
 [Serializable]
 public class ThemeObject
 {
     public bool isGradient;
-    public Color color;
-    public LinearGradientBrush gradient;
+    public Color? color;
+    public LinearGradientBrush? gradient;
 }
 
 public class ColorTheme
 {
     public Color? Color_TextEditorBg;
     public Color? Color_TextEditorFg;
-    public Color? Color_TitleBarBg;
+    public ThemeObject? Color_TitleBarBg;
     public Color? Color_TitleBarFont;
     public Color? Color_SystemButtons;
     public Color? Color_BorderColor;
@@ -75,7 +252,7 @@ public class ColorThemeSerializable
     public ColorThemeSerializable(
         Color color_TextEditorBg,
         Color color_TextEditorFg,
-        Color color_TitleBarBg,
+        ThemeObject color_TitleBarBg,
         Color color_TitleBarFont,
         Color color_SystemButtons,
         Color color_BorderColor,
@@ -101,7 +278,7 @@ public class ColorThemeSerializable
 
         Color_TextEditorBg = ColorUtil.ColorToHexString(color_TextEditorBg);
         Color_TextEditorFg = ColorUtil.ColorToHexString(color_TextEditorFg);
-        Color_TitleBarBg = ColorUtil.ColorToHexString(color_TitleBarBg);
+        Color_TitleBarBg = color_TitleBarBg;
         //Color_TitleBarFont = ColorUtil.ColorToHexString(color_TitleBarFont);
         //Color_SystemButtons = ColorUtil.ColorToHexString(color_SystemButtons);
         //Color_BorderColor = ColorUtil.ColorToHexString(color_BorderColor);
@@ -180,4 +357,4 @@ public class ColorThemeSerializable
         GradientAngleDif = GradientAngleDif,
         GradientScale = GradientScale
     };
-}
+}*/
