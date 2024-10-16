@@ -14,27 +14,27 @@ public class ThemeObject
 
 public class ColorTheme
 {
-    public Color Color_TextEditorBg;
-    public Color Color_TextEditorFg;
-    public Color Color_TitleBarBg;
-    public Color Color_TitleBarFont;
-    public Color Color_SystemButtons;
-    public Color Color_BorderColor;
-    public Color Color_MenuBarBg;
-    public Color Color_MenuItemFg;
-    public Color Color_InfoBarBg;
-    public Color Color_InfoBarFg;
-    public Color Color_MenuBgColor_MenuBg;
-    public Color Color_MenuBorder;
-    public Color Color_MenuFg;
-    public Color Color_MenuSeperator;
-    public Color Color_MenuDisabledFg;
-    public Color Color_MenuItemSelectedBg;
-    public Color Color_MenuItemSelectedBorder;
-    public Color Color_MenuItemHighlightBg;
-    public Color Color_MenuItemHighlightBorder;
-    public Color Color_MenuItemHighlightDisabledBg;
-    public Color Color_MenuItemHighlightDisabledBorder;
+    public Color? Color_TextEditorBg;
+    public Color? Color_TextEditorFg;
+    public Color? Color_TitleBarBg;
+    public Color? Color_TitleBarFont;
+    public Color? Color_SystemButtons;
+    public Color? Color_BorderColor;
+    public Color? Color_MenuBarBg;
+    public Color? Color_MenuItemFg;
+    public Color? Color_InfoBarBg;
+    public Color? Color_InfoBarFg;
+    public Color? Color_MenuBgColor_MenuBg;
+    public Color? Color_MenuBorder;
+    public Color? Color_MenuFg;
+    public Color? Color_MenuSeperator;
+    public Color? Color_MenuDisabledFg;
+    public Color? Color_MenuItemSelectedBg;
+    public Color? Color_MenuItemSelectedBorder;
+    public Color? Color_MenuItemHighlightBg;
+    public Color? Color_MenuItemHighlightBorder;
+    public Color? Color_MenuItemHighlightDisabledBg;
+    public Color? Color_MenuItemHighlightDisabledBorder;
     public float GradientAngle;
     public float GradientAngleDif;
     public float GradientScale = 1.0f;
@@ -101,25 +101,25 @@ public class ColorThemeSerializable
 
         Color_TextEditorBg = ColorUtil.ColorToHexString(color_TextEditorBg);
         Color_TextEditorFg = ColorUtil.ColorToHexString(color_TextEditorFg);
-        //Color_TitleBarBg = ColorToHex(color_TitleBarBg);
-        //Color_TitleBarFont = ColorToHex(color_TitleBarFont);
-        //Color_SystemButtons = ColorToHex(color_SystemButtons);
-        //Color_BorderColor = ColorToHex(color_BorderColor);
-        //Color_MenuBarBg = ColorToHex(color_MenuBarBg);
-        //Color_MenuItemFg = ColorToHex(color_MenuItemFg);
-        //Color_InfoBarBg = ColorToHex(color_InfoBarBg);
-        //Color_InfoBarFg = ColorToHex(color_InfoBarFg);
-        //Color_MenuBgColor_MenuBg = ColorToHex(color_MenuBgColor_MenuBg);
-        //Color_MenuBorder = ColorToHex(color_MenuBorder);
-        //Color_MenuFg = ColorToHex(color_MenuFg);
-        //Color_MenuSeperator = ColorToHex(color_MenuSeperator);
-        //Color_MenuDisabledFg = ColorToHex(color_MenuDisabledFg);
-        //Color_MenuItemSelectedBg = ColorToHex(color_MenuItemSelectedBg);
-        //Color_MenuItemSelectedBorder = ColorToHex(color_MenuItemSelectedBorder);
-        //Color_MenuItemHighlightBg = ColorToHex(color_MenuItemHighlightBg);
-        //Color_MenuItemHighlightBorder = ColorToHex(color_MenuItemHighlightBorder);
-        //Color_MenuItemHighlightDisabledBg = ColorToHex(color_MenuItemHighlightDisabledBg);
-        //Color_MenuItemHighlightDisabledBorder = ColorToHex(color_MenuItemHighlightDisabledBorder);
+        Color_TitleBarBg = ColorUtil.ColorToHexString(color_TitleBarBg);
+        //Color_TitleBarFont = ColorUtil.ColorToHexString(color_TitleBarFont);
+        //Color_SystemButtons = ColorUtil.ColorToHexString(color_SystemButtons);
+        //Color_BorderColor = ColorUtil.ColorToHexString(color_BorderColor);
+        //Color_MenuBarBg = ColorUtil.ColorToHexString(color_MenuBarBg);
+        //Color_MenuItemFg = ColorUtil.ColorToHexString(color_MenuItemFg);
+        //Color_InfoBarBg = ColorUtil.ColorToHexString(color_InfoBarBg);
+        //Color_InfoBarFg = ColorUtil.ColorToHexString(color_InfoBarFg);
+        //Color_MenuBgColor_MenuBg = ColorUtil.ColorToHexString(color_MenuBgColor_MenuBg);
+        //Color_MenuBorder = ColorUtil.ColorToHexString(color_MenuBorder);
+        //Color_MenuFg = ColorUtil.ColorToHexString(color_MenuFg);
+        //Color_MenuSeperator = ColorUtil.ColorToHexString(color_MenuSeperator);
+        //Color_MenuDisabledFg = ColorUtil.ColorToHexString(color_MenuDisabledFg);
+        //Color_MenuItemSelectedBg = ColorUtil.ColorToHexString(color_MenuItemSelectedBg);
+        //Color_MenuItemSelectedBorder = ColorUtil.ColorToHexString(color_MenuItemSelectedBorder);
+        //Color_MenuItemHighlightBg = ColorUtil.ColorToHexString(color_MenuItemHighlightBg);
+        //Color_MenuItemHighlightBorder = ColorUtil.ColorToHexString(color_MenuItemHighlightBorder);
+        //Color_MenuItemHighlightDisabledBg = ColorUtil.ColorToHexString(color_MenuItemHighlightDisabledBg);
+        //Color_MenuItemHighlightDisabledBorder = ColorUtil.ColorToHexString(color_MenuItemHighlightDisabledBorder);
         GradientAngle = gradientAngle;
         GradientAngleDif = gradientAngleDif;
         GradientScale = gradientScale;
@@ -127,27 +127,27 @@ public class ColorThemeSerializable
 
     public ColorThemeSerializable(ColorTheme colorTheme)
     {
-        Color_TextEditorBg =  ColorUtil.ColorToHexString(colorTheme.Color_TextEditorBg);
-        Color_TextEditorFg = ColorUtil.ColorToHexString(colorTheme.Color_TextEditorFg);
-        //Color_TitleBarBg = ColorToHex(colorTheme.Color_TitleBarBg);
-        //Color_TitleBarFont = ColorToHex(colorTheme.Color_TitleBarFont);
-        //Color_SystemButtons = ColorToHex(colorTheme.Color_SystemButtons);
-        //Color_BorderColor = ColorToHex(colorTheme.Color_BorderColor);
-        //Color_MenuBarBg = ColorToHex(colorTheme.Color_MenuBarBg);
-        //Color_MenuItemFg = ColorToHex(colorTheme.Color_MenuItemFg);
-        //Color_InfoBarBg = ColorToHex(colorTheme.Color_InfoBarBg);
-        //Color_InfoBarFg = ColorToHex(colorTheme.Color_InfoBarFg);
-        //Color_MenuBgColor_MenuBg = ColorToHex(colorTheme.Color_MenuBgColor_MenuBg);
-        //Color_MenuBorder = ColorToHex(colorTheme.Color_MenuBorder);
-        //Color_MenuFg = ColorToHex(colorTheme.Color_MenuFg);
-        //Color_MenuSeperator = ColorToHex(colorTheme.Color_MenuSeperator);
-        //Color_MenuDisabledFg = ColorToHex(colorTheme.Color_MenuDisabledFg);
-        //Color_MenuItemSelectedBg = ColorToHex(colorTheme.Color_MenuItemSelectedBg);
-        //Color_MenuItemSelectedBorder = ColorToHex(colorTheme.Color_MenuItemSelectedBorder);
-        //Color_MenuItemHighlightBg = ColorToHex(colorTheme.Color_MenuItemHighlightBg);
-        //Color_MenuItemHighlightBorder = ColorToHex(colorTheme.Color_MenuItemHighlightBorder);
-        //Color_MenuItemHighlightDisabledBg = ColorToHex(colorTheme.Color_MenuItemHighlightDisabledBg);
-        //Color_MenuItemHighlightDisabledBorder = ColorToHex(colorTheme.Color_MenuItemHighlightDisabledBorder);
+        if(colorTheme.Color_TextEditorBg.HasValue) Color_TextEditorBg = ColorUtil.ColorToHexString(colorTheme.Color_TextEditorBg.Value);
+        if(colorTheme.Color_TextEditorFg.HasValue) Color_TextEditorFg = ColorUtil.ColorToHexString(colorTheme.Color_TextEditorFg.Value);
+        if(colorTheme.Color_TitleBarBg.HasValue) Color_TitleBarBg = ColorUtil.ColorToHexString(colorTheme.Color_TitleBarBg.Value);
+        //Color_TitleBarFont = ColorUtil.ColorToHexString(colorTheme.Color_TitleBarFont);
+        //Color_SystemButtons = ColorUtil.ColorToHexString(colorTheme.Color_SystemButtons);
+        //Color_BorderColor = ColorUtil.ColorToHexString(colorTheme.Color_BorderColor);
+        //Color_MenuBarBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuBarBg);
+        //Color_MenuItemFg = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemFg);
+        //Color_InfoBarBg = ColorUtil.ColorToHexString(colorTheme.Color_InfoBarBg);
+        //Color_InfoBarFg = ColorUtil.ColorToHexString(colorTheme.Color_InfoBarFg);
+        //Color_MenuBgColor_MenuBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuBgColor_MenuBg);
+        //Color_MenuBorder = ColorUtil.ColorToHexString(colorTheme.Color_MenuBorder);
+        //Color_MenuFg = ColorUtil.ColorToHexString(colorTheme.Color_MenuFg);
+        //Color_MenuSeperator = ColorUtil.ColorToHexString(colorTheme.Color_MenuSeperator);
+        //Color_MenuDisabledFg = ColorUtil.ColorToHexString(colorTheme.Color_MenuDisabledFg);
+        //Color_MenuItemSelectedBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemSelectedBg);
+        //Color_MenuItemSelectedBorder = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemSelectedBorder);
+        //Color_MenuItemHighlightBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemHighlightBg);
+        //Color_MenuItemHighlightBorder = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemHighlightBorder);
+        //Color_MenuItemHighlightDisabledBg = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemHighlightDisabledBg);
+        //Color_MenuItemHighlightDisabledBorder = ColorUtil.ColorToHexString(colorTheme.Color_MenuItemHighlightDisabledBorder);
         GradientAngle = colorTheme.GradientAngle;
         GradientAngleDif = colorTheme.GradientAngleDif;
         GradientScale = colorTheme.GradientScale;
@@ -157,7 +157,7 @@ public class ColorThemeSerializable
     {
         Color_TextEditorBg = ColorUtil.GetColorFromHex(Color_TextEditorBg),
         Color_TextEditorFg = ColorUtil.GetColorFromHex(Color_TextEditorFg),
-        //Color_TitleBarBg = GetColorFromHex(Color_TitleBarBg),
+        Color_TitleBarBg = ColorUtil.GetColorFromHex(Color_TitleBarBg),
         //Color_TitleBarFont = GetColorFromHex(Color_TitleBarFont),
         //Color_SystemButtons = GetColorFromHex(Color_SystemButtons),
         //Color_BorderColor = GetColorFromHex(Color_BorderColor),
@@ -180,6 +180,4 @@ public class ColorThemeSerializable
         GradientAngleDif = GradientAngleDif,
         GradientScale = GradientScale
     };
-
-
 }

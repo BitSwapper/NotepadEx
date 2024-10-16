@@ -64,7 +64,8 @@ public partial class MainWindow : Window
         var themeFiles = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
         var themeFile = themeFiles.Where(themeName => Path.GetFileName(themeName) == Settings.Default.ThemeName).FirstOrDefault();
         string themeFileData = File.ReadAllText(themeFile);
-        var theme = JsonSerializer.Deserialize<ColorThemeSerializable>(themeFileData).ToColorTheme();
+        var serializedTheme = JsonSerializer.Deserialize<ColorThemeSerializable>(themeFileData);
+        var theme = serializedTheme.ToColorTheme();
         ApplyTheme(theme);
     }
 
@@ -74,7 +75,7 @@ public partial class MainWindow : Window
         foreach(var customTheme in customThemes)
             AddThemeMenuItem(themeMenuItem, Path.GetFileName(customTheme));
 
-        void AddThemeMenuItem(MenuItem menuItem, string header)
+        static void AddThemeMenuItem(MenuItem menuItem, string header)
         {
             MenuItem item = new MenuItem { Header = header };
             //item.Click += ThemeItem_Click;
@@ -286,10 +287,7 @@ public partial class MainWindow : Window
 
     void Maximize_Click(object sender, RoutedEventArgs e) => resizer.DoWindowMaximizedStateChange(this, prevWindowState);
 
-    void Exit_Click(object sender, RoutedEventArgs e)
-    {
-        Application.Current.Shutdown();
-    }
+    void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
     void Window_StateChanged(object sender, EventArgs e)
     {
         if(WindowState != WindowState.Minimized)
@@ -323,8 +321,11 @@ public partial class MainWindow : Window
 
     void ApplyTheme(ColorTheme theme)
     {
-        AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.Color_TextEditorBg));
-        AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", new SolidColorBrush(theme.Color_TextEditorFg));
+        if(theme.Color_TextEditorBg.HasValue)
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.Color_TextEditorBg.Value));
+
+        if(theme.Color_TextEditorFg.HasValue)
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", new SolidColorBrush(theme.Color_TextEditorFg.Value));
     }
 
     void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)

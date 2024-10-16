@@ -33,8 +33,9 @@ public static class ColorUtil
         return linearGradientBrush;
     }
 
-    public static Color GetColorFromHex(string hex)
+    public static Color? GetColorFromHex(string hex)
     {
+        if(hex == null) return null;
         if(hex.StartsWith("#"))
             hex = hex.Substring(1); // Remove the #
 
