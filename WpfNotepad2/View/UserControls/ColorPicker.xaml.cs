@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using NotepadEx.Util;
 using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
 namespace NotepadEx.View.UserControls;
@@ -16,7 +17,12 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     public Color SelectedColor
     {
         get => (Color)GetValue(SelectedColorProperty);
-        set => SetValue(SelectedColorProperty, value);
+        set
+        {
+            SetValue(SelectedColorProperty, value);
+            txtHexColor.Text = ColorUtil.ColorToHexString(value);//why tf can't i just bind
+
+        }
     }
 
     public byte Red
@@ -62,6 +68,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
             UpdateColorFromRgb(newColor);
         }
     }
+
 
     private bool _isUpdating = false;
     private bool _isColorPlaneDragging;
@@ -131,6 +138,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
             UpdateColorPlane();
             UpdateColorSelector();
             UpdateHueSelector();
+            //HexColor = ColorUtil.ColorToHexString(color);
             _isUpdating = false;
         }
     }
@@ -169,15 +177,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-
-
-
-
-
-
-
-
-
     private void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(HsvToRgb(_currentHue, 1, 1));
 
     private void UpdateColorSelector()
@@ -193,9 +192,14 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         _isColorPlaneDragging = true;
         UpdateColorFromColorPlane(e.GetPosition(ColorPlane));
     }
+    private void ColorPlane_MouseLeave(object sender, MouseEventArgs e) => _isColorPlaneDragging = false;
 
     private void ColorPlane_MouseMove(object sender, MouseEventArgs e)
     {
+        if(e.LeftButton == MouseButtonState.Pressed)
+        {
+            _isColorPlaneDragging = true;
+        }
         if(_isColorPlaneDragging)
         {
             UpdateColorFromColorPlane(e.GetPosition(ColorPlane));
@@ -212,11 +216,17 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     private void HueSlider_MouseMove(object sender, MouseEventArgs e)
     {
+        if(e.LeftButton == MouseButtonState.Pressed)
+        {
+            _isHueDragging = true;
+        }
         if(_isHueDragging)
         {
             UpdateColorFromHueSlider(e.GetPosition(HueSlider));
         }
     }
+
+    private void HueSlider_MouseLeave(object sender, MouseEventArgs e) => _isHueDragging = false;
 
     private void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isHueDragging = false;
 
@@ -270,6 +280,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
         return Color.FromArgb(a, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
     }
+
 }
 
 

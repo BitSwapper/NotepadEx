@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Globalization;
+using System.Windows.Media;
 using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
 
@@ -31,4 +32,22 @@ public static class ColorUtil
 
         return linearGradientBrush;
     }
+
+    public static Color GetColorFromHex(string hex)
+    {
+        if(hex.StartsWith("#"))
+            hex = hex.Substring(1); // Remove the #
+
+        if(hex.Length == 6)
+            hex = "FF" + hex; // Add alpha if missing
+
+        byte a = byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
+        byte r = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
+        byte g = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
+        byte b = byte.Parse(hex.Substring(6, 2), NumberStyles.HexNumber);
+
+        return Color.FromArgb(a, r, g, b);
+    }
+
+    public static string ColorToHexString(Color color) => $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
 }
