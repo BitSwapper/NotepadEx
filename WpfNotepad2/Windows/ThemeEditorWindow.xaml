@@ -19,12 +19,12 @@
         
         
         <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar"></UserControls:CustomTitleBar>
-        <Menu Grid.Row="1">
-            <MenuItem Name="MenuItem_File" Header="File">
+        <Menu Grid.Row="1" Background="{DynamicResource Color_MenuBarBg}">
+            <MenuItem Name="MenuItem_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
                 <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
                 <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Name="MenuItem_CopyFrom" Header="Copy From"></MenuItem>
+            <MenuItem Name="MenuItem_CopyFrom" Header="Copy From" Foreground="{DynamicResource Color_MenuItemFg}"></MenuItem>
         </Menu>
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Name="stackPanelMain">

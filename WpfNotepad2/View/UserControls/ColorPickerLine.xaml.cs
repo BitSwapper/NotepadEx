@@ -22,7 +22,6 @@ public partial class ColorPickerLine : UserControl
         try
         {
             var brush =  ColorUtil.GetRandomColorBrush(180);
-            //Application.Current.Resources[path] = brush;
             AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, brush);
             gridForImage.Background = brush;
         }
@@ -39,7 +38,6 @@ public partial class ColorPickerLine : UserControl
 
             colorPickerWindow.myColorPicker.OnSelectedColorChanged += () =>
             {
-                //Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(colorPickerWindow.SelectedColor);
                 AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, new SolidColorBrush(colorPickerWindow.SelectedColor));
             };
 

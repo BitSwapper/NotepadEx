@@ -20,6 +20,7 @@ public static class SettingsManager
         //Settings.Default.WindowSizeY = this.Height;
         Settings.Default.RecentFiles = string.Join(",", RecentFileManager.RecentFiles);
         //Settings.Default.CustomThemeName = customThemeName;
+        
         Settings.Default.Save();
     }
 }

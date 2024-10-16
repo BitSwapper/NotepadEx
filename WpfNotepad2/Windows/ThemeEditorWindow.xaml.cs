@@ -2,12 +2,10 @@
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using Microsoft.Win32;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.View.UserControls;
-using Color = System.Windows.Media.Color;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 namespace NotepadEx.Windows;
 
@@ -16,7 +14,6 @@ public partial class ThemeEditorWindow : Window
     WindowState prevWindowState;
     WindowResizer resizer;
     string currentThemeName;
-    //public Dictionary<string, Color> pathToColors = new();
 
     public ThemeEditorWindow()
     {
@@ -28,7 +25,6 @@ public partial class ThemeEditorWindow : Window
 
     void InitThemeData()
     {
-        //pathToColors.Clear();
         AddColorLine("Color_TextEditorBg", "Main Background");
         AddColorLine("Color_TextEditorFg", "Font Foreground");
 
@@ -63,10 +59,7 @@ public partial class ThemeEditorWindow : Window
         ColorPickerLine line = new();
         line.SetPath(path);
         line.SetText(themeName);
-
         stackPanelMain.Children.Add(line);
-        //pathToColors.Add(path, (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush).Color);
-        //line.GridForImg.Background = (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush);
         line.GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
     }
 
@@ -91,34 +84,23 @@ public partial class ThemeEditorWindow : Window
 
     }
 
-    private void MenuItemSave_Click(object sender, RoutedEventArgs e)
-    {
-        SaveFile();
-    }
+    private void MenuItemSave_Click(object sender, RoutedEventArgs e) => SaveFile();
 
     bool SaveFile()
     {
-        string fileName = currentThemeName;
+        string fileName;
 
-        if(string.IsNullOrEmpty(fileName))
-        {
-            SaveFileDialog saveFileDialog = new();
-            saveFileDialog.InitialDirectory = DirectoryUtil.NotepadExThemesPath;
-            saveFileDialog.Filter = "Theme Files (*.custom)|*.custom|All Files (*.*)|*.*";
-            saveFileDialog.DefaultExt = ".custom";
+        SaveFileDialog saveFileDialog = new();
+        saveFileDialog.InitialDirectory = DirectoryUtil.NotepadExThemesPath;
+        saveFileDialog.Filter = "Theme Files (*.custom)|*.custom|All Files (*.*)|*.*";
+        saveFileDialog.DefaultExt = ".custom";
 
-            if(saveFileDialog.ShowDialog() == true)
-                fileName = saveFileDialog.FileName;
-            else
-                return false;
-        }
+        if(saveFileDialog.ShowDialog() == true)
+            fileName = saveFileDialog.FileName;
+        else
+            return false;
 
         var theme = new ColorTheme();
-        //theme.Color_TextEditorBg = pathToColors["Color_TextEditorBg"];
-        //theme.Color_TextEditorFg = pathToColors["Color_TextEditorFg"];
-
-        //theme.Color_TextEditorBg = (Application.Current.Resources["Color_TextEditorBg"] as SolidColorBrush).Color;
-        //theme.Color_TextEditorFg = (Application.Current.Resources["Color_TextEditorFg"] as SolidColorBrush).Color;
         theme.Color_TextEditorBg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorBg").Color;
         theme.Color_TextEditorFg = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, "Color_TextEditorFg").Color;
         var serializedTheme = theme.ToSerializable();

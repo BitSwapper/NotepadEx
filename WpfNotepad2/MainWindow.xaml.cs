@@ -1,5 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,8 +11,8 @@ using NotepadEx.Properties;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
-using Point = System.Windows.Point;
 using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
+using Point = System.Windows.Point;
 namespace NotepadEx;
 
 public partial class MainWindow : Window
@@ -57,6 +56,16 @@ public partial class MainWindow : Window
         //themeMenuItem.Items.Clear();
 
         AddCustomThemes(themeMenuItem);
+        LoadCurrentThemeChoice();
+    }
+
+    void LoadCurrentThemeChoice()
+    {
+        var themeFiles = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
+        var themeFile = themeFiles.Where(themeName => Path.GetFileName(themeName) == Settings.Default.ThemeName).FirstOrDefault();
+        string themeFileData = File.ReadAllText(themeFile);
+        var theme = JsonSerializer.Deserialize<ColorThemeSerializable>(themeFileData).ToColorTheme();
+        ApplyTheme(theme);
     }
 
     void AddCustomThemes(MenuItem themeMenuItem)
@@ -68,12 +77,12 @@ public partial class MainWindow : Window
         void AddThemeMenuItem(MenuItem menuItem, string header)
         {
             MenuItem item = new MenuItem { Header = header };
-            item.Click += ThemeItem_Click;
+            //item.Click += ThemeItem_Click;
             menuItem.Items.Add(item);
         }
     }
 
-    void ThemeItem_Click(object sender, RoutedEventArgs e) { }
+
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -277,8 +286,10 @@ public partial class MainWindow : Window
 
     void Maximize_Click(object sender, RoutedEventArgs e) => resizer.DoWindowMaximizedStateChange(this, prevWindowState);
 
-    void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
-
+    void Exit_Click(object sender, RoutedEventArgs e)
+    {
+        Application.Current.Shutdown();
+    }
     void Window_StateChanged(object sender, EventArgs e)
     {
         if(WindowState != WindowState.Minimized)
@@ -291,30 +302,27 @@ public partial class MainWindow : Window
 
     }
 
-    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e)
-    {
+    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e) => AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", ColorUtil.GetRandomLinearGradientBrush(180));
 
 
-        //Application.Current.Resources["Color_TextEditorBg"] = GetRandomLinearGradientBrush(180);
-        //Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);//Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);//Application.Current.Resources["Color_SystemButtons"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_BorderColor"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_InfoBarBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_InfoBarFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBarBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuSeperator"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuDisabledFg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemSelectedBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemSelectedBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);//Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
-        AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", ColorUtil.GetRandomLinearGradientBrush(180));
-    }
+    //void ThemeItem_Click(object sender, RoutedEventArgs e)
+    //{
+    //    MessageBox.Show("Clicky");
+    //}
+
     void MenuItemTheme_Click(object sender, RoutedEventArgs e)
     {
         var menuItem = e.OriginalSource as MenuItem;
         var themeName = menuItem.Header.ToString();
-
         var fileData = File.ReadAllText(DirectoryUtil.NotepadExThemesPath + themeName);
         var themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
         var theme = themeSerialized.ToColorTheme();
+        Settings.Default.ThemeName = themeName;
         ApplyTheme(theme);
     }
 
     void ApplyTheme(ColorTheme theme)
     {
-        //Application.Current.Resources["Color_TextEditorBg"] = new SolidColorBrush(theme.Color_TextEditorBg);
-        //Application.Current.Resources["Color_TextEditorFg"] = new SolidColorBrush(theme.Color_TextEditorFg);
-
         AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorBg", new SolidColorBrush(theme.Color_TextEditorBg));
         AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", new SolidColorBrush(theme.Color_TextEditorFg));
     }
