@@ -19,6 +19,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     public event Action OnWindowConfirm;
     public event Action OnWindowCancel;
+    public event Action OnSelectedColorChanged;
 
     public Color SelectedColor
     {
@@ -27,7 +28,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         {
             SetValue(SelectedColorProperty, value);
             txtHexColor.Text = ColorUtil.ColorToHexString(value);//why tf can't i just bind
-
+            OnSelectedColorChanged?.Invoke();
         }
     }
 
@@ -152,6 +153,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
             UpdateHueSelector();
             //HexColor = ColorUtil.ColorToHexString(color);
             _isUpdating = false;
+            OnSelectedColorChanged?.Invoke();
         }
     }
 

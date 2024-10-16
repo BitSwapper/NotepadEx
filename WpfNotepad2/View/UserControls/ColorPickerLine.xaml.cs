@@ -11,6 +11,7 @@ public partial class ColorPickerLine : UserControl
 {
     string path;
     Color themeColor;
+    public Grid GridForImg => gridForImage;
     public ColorPickerLine() => InitializeComponent();
 
     public void SetText(string text) => txtThemeName.Text = text;
@@ -25,23 +26,21 @@ public partial class ColorPickerLine : UserControl
         catch(Exception ex) { MessageBox.Show(ex.Message); }
     }
 
-    private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
-    {
-        try
-        {
-            Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(e.NewValue.Value);
-        }
-        catch(Exception ex) { MessageBox.Show(ex.Message); }
-    }
 
     private void ButtonEdit_Click(object sender, RoutedEventArgs e)
     {
         if(rdBtnColor.IsChecked == true)
         {
             ColorPickerWindow colorPickerWindow = new();
-            colorPickerWindow.SelectedColor = (gridForImage.Background as SolidColorBrush).Color;
+            themeColor = colorPickerWindow.SelectedColor = (gridForImage.Background as SolidColorBrush).Color;
             colorPickerWindow.ShowDialog();
             gridForImage.Background = new SolidColorBrush(colorPickerWindow.SelectedColor);
+
+            try
+            {
+                Application.Current.Resources[path] = new System.Windows.Media.SolidColorBrush(colorPickerWindow.SelectedColor);
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
         else
         {

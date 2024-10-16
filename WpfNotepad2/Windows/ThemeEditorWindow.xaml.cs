@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Microsoft.Win32;
 using NotepadEx.Theme;
 using NotepadEx.Util;
@@ -64,7 +65,7 @@ public partial class ThemeEditorWindow : Window
         line.SetText(themeName);
         stackPanelMain.Children.Add(line);
         pathToColors.Add(path, (Application.Current.Resources[path] as System.Windows.Media.SolidColorBrush).Color);
-        //line.ColorPicker.SelectedColor = new Color?(Color.FromArgb(255, 255, 0, 0));
+        line.GridForImg.Background = new SolidColorBrush(pathToColors[path]);
     }
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

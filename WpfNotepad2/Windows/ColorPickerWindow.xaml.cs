@@ -8,7 +8,8 @@ public partial class ColorPickerWindow : Window
     public Color SelectedColor
     {
         get => myColorPicker.SelectedColor; set => myColorPicker.SelectedColor = value;
-    } 
+    }
+    
     public ColorPickerWindow()
     {
         InitializeComponent();
