@@ -85,7 +85,7 @@
             </StackPanel>
         </Grid>
         <!-- Gradient Stops -->
-        <ListBox Grid.Row="4" x:Name="StopsListBox" Margin="10" d:ItemsSource="{d:SampleData ItemCount=99}">
+        <ListBox Grid.Row="4" x:Name="StopsListBox" Margin="10" d:ItemsSource="{d:SampleData ItemCount=9}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

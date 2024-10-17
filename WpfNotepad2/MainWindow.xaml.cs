@@ -3,7 +3,6 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using NotepadEx.Extensions;
@@ -47,10 +46,8 @@ public partial class MainWindow : Window
         MenuItem_AutoHideMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
 
         SetupInfoBar();
-        SetupThemes();
+        ThemeManager.SetupThemes(MenuItem_Theme);
     }
-
-
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -288,82 +285,7 @@ public partial class MainWindow : Window
     {
         var menuItem = e.OriginalSource as MenuItem;
         var themeName = menuItem.Header.ToString();
-        var fileData = File.ReadAllText(DirectoryUtil.NotepadExThemesPath + themeName);
-        var themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
-        var theme = themeSerialized.ToColorTheme();
-        Settings.Default.ThemeName = themeName;
-        ApplyTheme(theme);
-    }
-
-    void SetupThemes()
-    {
-        MenuItem themeMenuItem = MenuItem_Theme;
-        //themeMenuItem.Items.Clear();
-
-        AddCustomThemes(themeMenuItem);
-        LoadCurrentThemeChoice();
-    }
-
-    void LoadCurrentThemeChoice()
-    {
-        var themeFiles = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
-        var themeFile = themeFiles.Where(themeName => Path.GetFileName(themeName) == Settings.Default.ThemeName).FirstOrDefault();
-        string themeFileData = File.ReadAllText(themeFile);
-        var serializedTheme = JsonSerializer.Deserialize<ColorThemeSerializable>(themeFileData);
-        var theme = serializedTheme.ToColorTheme();
-        ApplyTheme(theme);
-    }
-
-    void AddCustomThemes(MenuItem themeMenuItem)
-    {
-        var customThemes = Directory.GetFiles(DirectoryUtil.NotepadExThemesPath);
-        foreach(var customTheme in customThemes)
-            AddThemeMenuItem(themeMenuItem, Path.GetFileName(customTheme));
-
-        static void AddThemeMenuItem(MenuItem menuItem, string header)
-        {
-            MenuItem item = new MenuItem { Header = header };
-            //item.Click += ThemeItem_Click;
-            menuItem.Items.Add(item);
-        }
-    }
-
-    void ApplyTheme(ColorTheme theme)
-    {
-        ThemeManager.CurrentTheme = theme;
-
-        ApplyThemeObject(theme.themeObj_TextEditorBg, UIConstants.Color_TextEditorBg);
-        ApplyThemeObject(theme.themeObj_TextEditorFg, UIConstants.Color_TextEditorFg);
-        ApplyThemeObject(theme.themeObj_TitleBarBg, UIConstants.Color_TitleBarBg);
-        ApplyThemeObject(theme.themeObj_TitleBarFont, UIConstants.Color_TitleBarFont);
-
-        ApplyThemeObject(theme.themeObj_SystemButtons, UIConstants.Color_SystemButtons);
-        ApplyThemeObject(theme.themeObj_BorderColor, UIConstants.Color_BorderColor);
-        ApplyThemeObject(theme.themeObj_MenuBarBg, UIConstants.Color_MenuBarBg);
-        ApplyThemeObject(theme.themeObj_MenuItemFg, UIConstants.Color_MenuItemFg);
-        ApplyThemeObject(theme.themeObj_InfoBarBg, UIConstants.Color_InfoBarBg);
-        ApplyThemeObject(theme.themeObj_InfoBarFg, UIConstants.Color_InfoBarFg);
-
-        ApplyThemeObject(theme.themeObj_MenuBorder, UIConstants.Color_MenuBorder);
-        ApplyThemeObject(theme.themeObj_MenuBg, UIConstants.Color_MenuBg);
-        ApplyThemeObject(theme.themeObj_MenuFg, UIConstants.Color_MenuFg);
-        ApplyThemeObject(theme.themeObj_MenuSeperator, UIConstants.Color_MenuSeperator);
-        ApplyThemeObject(theme.themeObj_MenuDisabledFg, UIConstants.Color_MenuDisabledFg);
-        ApplyThemeObject(theme.themeObj_MenuItemSelectedBg, UIConstants.Color_MenuItemSelectedBg);
-        ApplyThemeObject(theme.themeObj_MenuItemSelectedBorder, UIConstants.Color_MenuItemSelectedBorder);
-        ApplyThemeObject(theme.themeObj_MenuItemHighlightBg, UIConstants.Color_MenuItemHighlightBg);
-        ApplyThemeObject(theme.themeObj_MenuItemHighlightBorder, UIConstants.Color_MenuItemHighlightBorder);
-
-
-        static void ApplyThemeObject(ThemeObject themeObj, string resourceKey)
-        {
-            if(themeObj != null)
-            {
-                if(themeObj.isGradient)
-                    AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, resourceKey, themeObj.gradient);
-                else
-                    AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, resourceKey, new SolidColorBrush(themeObj.color.GetValueOrDefault()));
-            }
-        }
+        
+        ThemeManager.ApplyTheme(themeName, Application.Current);
     }
 }

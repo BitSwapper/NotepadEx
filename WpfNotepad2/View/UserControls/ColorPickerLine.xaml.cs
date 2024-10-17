@@ -52,6 +52,7 @@ public partial class ColorPickerLine : UserControl
         }
     }
 
+
     void ButtonEdit_Click(object sender, RoutedEventArgs e)
     {
         if(!themeObj.isGradient)
@@ -72,6 +73,7 @@ public partial class ColorPickerLine : UserControl
         {
             GradientPickerWindow gradientPickerWindow = new();
 
+            //      **This code shows our current gradient but breaks our sliders afterward..
             if(gridForImage.Background is LinearGradientBrush gradientBrush)
             {
                 gradientPickerWindow.GradientStops.Clear();
