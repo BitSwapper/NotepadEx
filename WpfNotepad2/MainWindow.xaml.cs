@@ -215,6 +215,44 @@ public partial class MainWindow : Window
         }
     }
 
+    void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+    void Maximize_Click(object sender, RoutedEventArgs e) => resizer.DoWindowMaximizedStateChange(this, prevWindowState);
+
+    void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+
+    void Window_StateChanged(object sender, EventArgs e)
+    {
+        if(WindowState != WindowState.Minimized)
+            resizer.DoWindowMaximizedStateChange(this, prevWindowState);
+        prevWindowState = WindowState;
+    }
+
+    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e) => AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, UIConstants.Color_TextEditorFg, ColorUtil.GetRandomLinearGradientBrush(180));
+
+    void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true;
+        ThemeEditorWindow themeEditorWindow = new();
+        themeEditorWindow.ShowDialog();
+    }
+
+    void MenuItemColorEditor_Click(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true;
+        ColorPickerWindow colorPickerWindow = new();
+        colorPickerWindow.ShowDialog();
+        MessageBox.Show(colorPickerWindow.SelectedColor.ToString());
+    }
+
+    void MenuItemTheme_Click(object sender, RoutedEventArgs e)
+    {
+        var menuItem = e.OriginalSource as MenuItem;
+        var themeName = menuItem.Header.ToString();
+        
+        ThemeManager.ApplyTheme(themeName, Application.Current);
+    }
+
     void SetupMainMenuBar(bool showMenuBar)
     {
         if(!showMenuBar)
@@ -245,47 +283,5 @@ public partial class MainWindow : Window
         }
 
         MenuItem_ToggleInfoBar.IsChecked = Settings.Default.InfoBarVisible;
-    }
-
-    void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-
-    void Maximize_Click(object sender, RoutedEventArgs e) => resizer.DoWindowMaximizedStateChange(this, prevWindowState);
-
-    void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
-    void Window_StateChanged(object sender, EventArgs e)
-    {
-        if(WindowState != WindowState.Minimized)
-            resizer.DoWindowMaximizedStateChange(this, prevWindowState);
-        prevWindowState = WindowState;
-    }
-
-    void MenuItem_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e) => AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, UIConstants.Color_TextEditorFg, ColorUtil.GetRandomLinearGradientBrush(180));
-
-    void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)
-    {
-        e.Handled = true;
-        ThemeEditorWindow themeEditorWindow = new();
-        themeEditorWindow.ShowDialog();
-    }
-
-    void MenuItemColorEditor_Click(object sender, RoutedEventArgs e)
-    {
-        e.Handled = true;
-        ColorPickerWindow colorPickerWindow = new();
-        colorPickerWindow.ShowDialog();
-        MessageBox.Show(colorPickerWindow.SelectedColor.ToString());
-    }
-
-    void MenuItemTheme_Click(object sender, RoutedEventArgs e)
-    {
-        var menuItem = e.OriginalSource as MenuItem;
-        var themeName = menuItem.Header.ToString();
-        
-        ThemeManager.ApplyTheme(themeName, Application.Current);
     }
 }
