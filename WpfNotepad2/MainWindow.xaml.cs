@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -190,31 +189,6 @@ public partial class MainWindow : Window
 
     void txtEditor_MouseMove(object sender, MouseEventArgs e) => ShowMenuBarIfMouseInRange(e);
 
-    void ShowMenuBarIfMouseInRange(MouseEventArgs e)
-    {
-        if(Settings.Default.MenuBarAutoHide == false && MainMenuBar.IsEnabled) return;
-
-        Point mousePosition = e.GetPosition(txtEditor);
-        if(mousePosition.Y < 2)
-        {
-            if(!MainMenuBar.IsEnabled)
-            {
-                SetupMainMenuBar(true);
-            }
-        }
-        else
-        {
-            if(MainMenuBar.IsEnabled)
-            {
-                Point menuPosition = e.GetPosition(MainMenuBar);
-                if(menuPosition.X < 0 || menuPosition.X > MainMenuBar.ActualWidth || menuPosition.Y < 0 || menuPosition.Y > MainMenuBar.ActualHeight)
-                {
-                    SetupMainMenuBar(false);
-                }
-            }
-        }
-    }
-
     void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
     void Maximize_Click(object sender, RoutedEventArgs e) => resizer.DoWindowMaximizedStateChange(this, prevWindowState);
@@ -249,7 +223,6 @@ public partial class MainWindow : Window
     {
         var menuItem = e.OriginalSource as MenuItem;
         var themeName = menuItem.Header.ToString();
-        
         ThemeManager.ApplyTheme(themeName, Application.Current);
     }
 
@@ -283,5 +256,30 @@ public partial class MainWindow : Window
         }
 
         MenuItem_ToggleInfoBar.IsChecked = Settings.Default.InfoBarVisible;
+    }
+
+    void ShowMenuBarIfMouseInRange(MouseEventArgs e)
+    {
+        if(Settings.Default.MenuBarAutoHide == false && MainMenuBar.IsEnabled) return;
+
+        Point mousePosition = e.GetPosition(txtEditor);
+        if(mousePosition.Y < 2)
+        {
+            if(!MainMenuBar.IsEnabled)
+            {
+                SetupMainMenuBar(true);
+            }
+        }
+        else
+        {
+            if(MainMenuBar.IsEnabled)
+            {
+                Point menuPosition = e.GetPosition(MainMenuBar);
+                if(menuPosition.X < 0 || menuPosition.X > MainMenuBar.ActualWidth || menuPosition.Y < 0 || menuPosition.Y > MainMenuBar.ActualHeight)
+                {
+                    SetupMainMenuBar(false);
+                }
+            }
+        }
     }
 }

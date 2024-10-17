@@ -26,7 +26,7 @@ public class ColorTheme
     public ThemeObject? themeObj_MenuItemSelectedBorder;
     public ThemeObject? themeObj_MenuItemHighlightBg;
     public ThemeObject? themeObj_MenuItemHighlightBorder;
- 
+
     public ColorThemeSerializable ToSerializable() => new ColorThemeSerializable(this);
 }
 
@@ -82,7 +82,7 @@ public class ColorThemeSerializable
         if(colorTheme.themeObj_MenuItemSelectedBorder != null) ThemeObj_MenuItemSelectedBorder = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemSelectedBorder);
         if(colorTheme.themeObj_MenuItemHighlightBg != null) ThemeObj_MenuItemHighlightBg = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightBg);
         if(colorTheme.themeObj_MenuItemHighlightBorder != null) ThemeObj_MenuItemHighlightBorder = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightBorder);
-     }
+    }
 
     public ColorTheme ToColorTheme() => new ColorTheme
     {

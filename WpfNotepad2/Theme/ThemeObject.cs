@@ -1,6 +1,6 @@
-﻿using NotepadEx.Util;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using System.Windows.Media;
+using NotepadEx.Util;
 using Color = System.Windows.Media.Color;
 using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
 using Point = System.Windows.Point;
