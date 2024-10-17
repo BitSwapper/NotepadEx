@@ -24,9 +24,7 @@ public partial class GradientPickerWindow : Window
         GradientPreview.GradientStops.Clear();
 
         foreach(var stop in GradientStops)
-        {
             GradientPreview.GradientStops.Add(stop);
-        }
 
         if(StartXSlider != null && StartYSlider != null && EndXSlider != null && EndYSlider != null)
         {
