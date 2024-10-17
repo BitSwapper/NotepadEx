@@ -20,43 +20,6 @@ public partial class ThemeEditorWindow : Window
     SolidColorBrush brushWhite = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
     SolidColorBrush brushGray = new SolidColorBrush(Color.FromArgb(255, 188, 188, 188));
 
-    List<string> keysMain = new()
-            {
-                UIConstants.Color_TextEditorBg,
-                UIConstants.Color_TextEditorFg,
-                UIConstants.Color_TitleBarBg,
-                UIConstants.Color_TitleBarFont,
-                UIConstants.Color_SystemButtons,
-                UIConstants.Color_BorderColor,
-            };
-
-
-    List<string> keysMenuBar = new()
-            {
-                UIConstants.Color_MenuBarBg,
-                UIConstants.Color_MenuItemFg,
-            };
-
-
-    List<string> keysInfoBar = new()
-            {
-                UIConstants.Color_InfoBarBg,
-                UIConstants.Color_InfoBarFg,
-            };
-
-    List<string> keysMenuItem = new()
-            {
-                UIConstants.Color_MenuBorder,
-                UIConstants.Color_MenuBg,
-                UIConstants.Color_MenuFg,
-                UIConstants.Color_MenuSeperator,
-                UIConstants.Color_MenuDisabledFg,
-                UIConstants.Color_MenuItemSelectedBg,
-                UIConstants.Color_MenuItemSelectedBorder,
-                UIConstants.Color_MenuItemHighlightBg,
-                UIConstants.Color_MenuItemHighlightBorder,
-            };
-
 
     public ThemeEditorWindow()
     {
@@ -105,16 +68,16 @@ public partial class ThemeEditorWindow : Window
 
             line.ViewModel.BackgroundColor = ++lineCt % 2 == 0 ? brushWhite : brushGray;
 
-            if(keysMain.Contains(resourceKey))
+            if(UIConstants.UIColorKeysMain.Contains(resourceKey))
                 StackPanelMain.Children.Add(line);
 
-            else if(keysMenuBar.Contains(resourceKey))
+            else if(UIConstants.UIColorKeysMenuBar.Contains(resourceKey))
                 StackPanelMenuBar.Children.Add(line);
 
-            else if(keysInfoBar.Contains(resourceKey))
+            else if(UIConstants.UIColorKeysInfoBar.Contains(resourceKey))
                 StackPanelInfoBar.Children.Add(line);
 
-            else if(keysMenuItem.Contains(resourceKey))
+            else if(UIConstants.UIColorKeysMenuItem.Contains(resourceKey))
                 StackPanelMenuItem.Children.Add(line);
         }
     }

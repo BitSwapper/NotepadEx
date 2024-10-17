@@ -211,14 +211,6 @@ public partial class MainWindow : Window
         themeEditorWindow.ShowDialog();
     }
 
-    void MenuItemColorEditor_Click(object sender, RoutedEventArgs e)
-    {
-        e.Handled = true;
-        ColorPickerWindow colorPickerWindow = new();
-        colorPickerWindow.ShowDialog();
-        MessageBox.Show(colorPickerWindow.SelectedColor.ToString());
-    }
-
     void MenuItemTheme_Click(object sender, RoutedEventArgs e)
     {
         var menuItem = e.OriginalSource as MenuItem;

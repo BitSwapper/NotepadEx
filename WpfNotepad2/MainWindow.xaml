@@ -70,7 +70,6 @@
 
                             <MenuItem Name="MenuItem_Theme" Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemTheme_Click">
                             <MenuItem Header="Theme Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemThemeEditor_Click"/>
-                            <MenuItem Header="Color Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemColorEditor_Click"/>
                         </MenuItem>
                         </Menu>
 
