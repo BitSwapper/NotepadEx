@@ -34,43 +34,43 @@
                         </Grid.RowDefinitions>
 
                         <Menu Name="MainMenuBar" IsMainMenu="True" Background="{DynamicResource Color_MenuBarBg}">
-                            <MenuItem Name="DropDown_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}">
-                                <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
-                                <MenuItem Header="New Window..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNewWindow_Click"></MenuItem>
-                                <MenuItem Header="Open..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpen_Click"></MenuItem>
-                                <MenuItem Name="MenuItem_OpenRecent"  Header="Open Recent" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemOpenRecent_Click">
-                                    <MenuItem Header="..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" ></MenuItem>
+                            <MenuItem Name="DropDown_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
+                                <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemNew_Click"></MenuItem>
+                                <MenuItem Header="New Window..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemNewWindow_Click"></MenuItem>
+                                <MenuItem Header="Open..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemOpen_Click"></MenuItem>
+                                <MenuItem Name="MenuItem_OpenRecent"  Header="Open Recent" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemOpenRecent_Click">
+                                    <MenuItem Header="..." Foreground="{DynamicResource Color_MenuItemFg}" ></MenuItem>
                                 </MenuItem>
-                                <MenuItem Header="Open Multiple Files As One..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemMultiOpen_Click"/>
-                                <MenuItem Header="Print..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPrint_Click"/>
-                                <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"/>
-                                <MenuItem Header="Save as..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSaveAs_Click"/>
-                                <MenuItem Header="Exit" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemExit_Click"/>
+                                <MenuItem Header="Open Multiple Files As One..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemMultiOpen_Click"/>
+                                <MenuItem Header="Print..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemPrint_Click"/>
+                                <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSave_Click"/>
+                                <MenuItem Header="Save as..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSaveAs_Click"/>
+                                <MenuItem Header="Exit" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemExit_Click"/>
                             </MenuItem>
 
-                            <MenuItem Header="Edit" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}">
-                            <MenuItem Header="Undo" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemUndo_Click"/>
-                            <MenuItem Header="Redo" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemRedo_Click"/>
-                            <MenuItem Header="Copy" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemCopy_Click"/>
-                            <MenuItem Header="Cut" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemCut_Click"/>
-                            <MenuItem Header="Paste" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemPaste_Click"/>
-                            <MenuItem Header="Delete" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemDelete_Click"/>
-                            <MenuItem Header="Find and Replace..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFindReplace_Click"/>
-                            <MenuItem Header="Select All" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSelectAll_Click"/>
-                            <MenuItem Header="Insert Time/Date" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTimeDate_Click"/>
-                            <MenuItem Header="Test Random Theme" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTestTheme_Click"/>
+                            <MenuItem Header="Edit" Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem Header="Undo" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemUndo_Click"/>
+                            <MenuItem Header="Redo" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemRedo_Click"/>
+                            <MenuItem Header="Copy" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemCopy_Click"/>
+                            <MenuItem Header="Cut" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemCut_Click"/>
+                            <MenuItem Header="Paste" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemPaste_Click"/>
+                            <MenuItem Header="Delete" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemDelete_Click"/>
+                            <MenuItem Header="Find and Replace..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemFindReplace_Click"/>
+                            <MenuItem Header="Select All" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSelectAll_Click"/>
+                            <MenuItem Header="Insert Time/Date" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemTimeDate_Click"/>
+                            <MenuItem Header="Test Random Theme" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemTestTheme_Click"/>
                         </MenuItem>
 
-                            <MenuItem Header="Preferences" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}">
-                            <MenuItem Header="Font..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemFont_Click"/>
-                            <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemWordWrap_Click"/>
-                            <MenuItem Name="MenuItem_AutoHideMenuBar" Header="Auto Hide Menu Bar" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemAutohideMenuBar_Click"/>
-                            <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemToggleInfoBar_Click"/>
+                            <MenuItem Header="Preferences" Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem Header="Font..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemFont_Click"/>
+                            <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemWordWrap_Click"/>
+                            <MenuItem Name="MenuItem_AutoHideMenuBar" Header="Auto Hide Menu Bar" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemAutohideMenuBar_Click"/>
+                            <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemToggleInfoBar_Click"/>
                         </MenuItem>
 
-                            <MenuItem Name="MenuItem_Theme" Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemTheme_Click">
-                            <MenuItem Header="Theme Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemThemeEditor_Click"/>
-                            <MenuItem Header="Color Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemColorEditor_Click"/>
+                            <MenuItem Name="MenuItem_Theme" Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemTheme_Click">
+                            <MenuItem Header="Theme Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemThemeEditor_Click"/>
+                            <MenuItem Header="Color Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemColorEditor_Click"/>
                         </MenuItem>
                         </Menu>
 

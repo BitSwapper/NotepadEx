@@ -21,8 +21,8 @@
         <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar"></UserControls:CustomTitleBar>
         <Menu Grid.Row="1" Background="{DynamicResource Color_MenuBarBg}">
             <MenuItem Name="MenuItem_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
-                <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemNew_Click"></MenuItem>
-                <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Style="{Binding SubmenuItemTemplateKey}" Click="MenuItemSave_Click"></MenuItem>
+                <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemNew_Click"></MenuItem>
+                <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSave_Click"></MenuItem>
             </MenuItem>
             <MenuItem Name="MenuItem_CopyFrom" Header="Copy From" Foreground="{DynamicResource Color_MenuItemFg}">
                 <MenuItem Header="Test Checked" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}">

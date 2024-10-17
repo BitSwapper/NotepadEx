@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotepadEx.Windows"
         mc:Ignorable="d"
-        Title="GradientPickerWindow" Height="450" Width="720"
+        Title="GradientPickerWindow" Height="650" Width="720"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -21,6 +23,34 @@
                 <LinearGradientBrush x:Name="GradientPreview"/>
             </Rectangle.Fill>
         </Rectangle>
+        
+        <!-- Angle Slider -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+            
+            <TextBlock Text="Angle:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderAngle" Width="160" Minimum="0" Maximum="360" Value="0" Margin="0,0,5,0" ValueChanged="SliderAngle_ValueChanged"/>
+            <TextBlock Text="{Binding ElementName=SliderAngle, Path=Value, StringFormat={}{0:F0}°}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+            
+            <TextBlock Text="Offset X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderOffsetX" Width="160" Minimum="-2" Maximum="2" Value="0" Margin="0,0,5,0" ValueChanged="SliderOffsetX_ValueChanged"/>
+
+            <TextBlock Text="Offset Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderOffsetY" Width="160" Minimum="-2" Maximum="2" Value="0" ValueChanged="SliderOffsetY_ValueChanged"/>
+        </StackPanel>
+
+
+        <!-- Scale Slider -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
+
+   
+            <TextBlock Text="Scale X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderScaleX" Width="180" Minimum="-3" Maximum="3" Value="0" Margin="0,0,5,0" ValueChanged="SliderScaleX_ValueChanged"/>
+
+            <TextBlock Text="Scale Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderScaleY" Width="180" Minimum="-3" Maximum="3" Value="0" ValueChanged="SliderScaleY_ValueChanged"/>
+        </StackPanel>
+
+
         <!-- Start and End Position Controls -->
         <Grid Grid.Row="1" Margin="10">
             <Grid.RowDefinitions>
@@ -55,36 +85,39 @@
             </StackPanel>
         </Grid>
         <!-- Gradient Stops -->
-        <ListBox Grid.Row="2" x:Name="StopsListBox" Margin="10">
+        <ListBox Grid.Row="4" x:Name="StopsListBox" Margin="10" d:ItemsSource="{d:SampleData ItemCount=99}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
                         </Grid.ColumnDefinitions>
+                   
 
-                        <Rectangle Width="20" Height="20" Margin="0,0,5,0">
+                        <Slider Maximum="1" Width="490" Grid.Column="1" Value="{Binding Offset, Mode=TwoWay}" ValueChanged="StopSlider_ValueChanged"/>
+                        <Rectangle x:Name="ColorPreviewForStop" Width="20" Height="20" Margin="0,0,5,0">
                             <Rectangle.Fill>
-                                <SolidColorBrush Color="{Binding Color}"/>
+                                <SolidColorBrush x:Name="ColorPreviewForStopBrush" Color="{Binding Color}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-
-                        <Slider Maximum="1" Width="600" Grid.Column="1" Value="{Binding Offset, Mode=TwoWay}" ValueChanged="StopSlider_ValueChanged"/>
-
                         <Button Content="Edit" Grid.Column="2" Margin="5,0,0,0" Click="EditStop_Click"/>
+                        <Button Content="Copy" Grid.Column="3" Margin="5,0,0,0" Click="CopyStop_Click"/>
+                        <Button Content="Paste" Grid.Column="4" Margin="5,0,0,0" Click="PasteStop_Click"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <!-- Controls -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Add Stop" Click="AddStop_Click" Margin="0,0,5,0"/>
             <Button Content="Remove Stop" Click="RemoveStop_Click" Margin="5,0,0,0"/>
         </StackPanel>
         <!-- Confirm and Cancel buttons -->
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Cancel" Click="CancelButton_Click" Margin="5,0,0,0"/>
             <Button Content="Confirm" Click="ConfirmButton_Click" Margin="5,0,0,0"/>
         </StackPanel>

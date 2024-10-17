@@ -17,9 +17,9 @@
 
             <Image Height="15" Margin="6,0,4,0" Source="{Binding ImageSource}"/>
             <TextBlock Name="txtTitleBar" Grid.Column="1" Text="Title" Foreground="{DynamicResource Color_TitleBarFont}" FontFamily="Arial" FontWeight="ExtraLight" FontSize="15"  VerticalAlignment="Center" MouseDown="txtTitleBar_MouseDown"/>
-            <Button Name="btnMinimize" Background="Transparent" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="1" HorizontalAlignment="Right" Content="_" FontFamily="Verdana" Width="30" Click="btnMinimize_Click"></Button>
-            <Button Name="btnMaximize" Background="Transparent" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="2" HorizontalAlignment="Right" Content="🗗" FontFamily="Verdana" Width="30" Click="btnMaximize_Click"></Button>
-            <Button Name="btnExit" Background="Transparent" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="3" HorizontalAlignment="Right" Content="X" FontFamily="Verdana" Width="30" Click="btnExit_Click"></Button>
+            <Button Name="btnMinimize" Background="Transparent" BorderThickness="0" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="1" HorizontalAlignment="Right" Content="_" FontFamily="Verdana" Width="30" Click="btnMinimize_Click"></Button>
+            <Button Name="btnMaximize" Background="Transparent" BorderThickness="0" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="2" HorizontalAlignment="Right" Content="🗗" FontFamily="Verdana" Width="30" Click="btnMaximize_Click"></Button>
+            <Button Name="btnExit" Background="Transparent" BorderThickness="0" Foreground="{DynamicResource Color_SystemButtons}" Grid.Column="3" HorizontalAlignment="Right" Content="X" FontFamily="Verdana" Width="30" Click="btnExit_Click"></Button>
         </Grid>
     </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
@@ -74,14 +75,12 @@ public partial class ColorPickerLine : UserControl
             GradientPickerWindow gradientPickerWindow = new();
 
             //      **This code shows our current gradient but breaks our sliders afterward..
-
-            //if(gridForImage.Background is LinearGradientBrush gradientBrush)
-            //{
-            //    gradientPickerWindow.GradientStops.Clear();
-
-            //    foreach(var stop in  gradientBrush.GradientStops)
-            //        gradientPickerWindow.GradientStops.Add(stop);
-            //}
+            if(gridForImage.Background is LinearGradientBrush gradientBrush)
+            {
+                gradientPickerWindow.GradientStops.Clear();
+                gradientPickerWindow.SetGradient(gradientBrush.GradientStops);
+            }
+          
 
             if(gradientPickerWindow.ShowDialog() == true)
             {
