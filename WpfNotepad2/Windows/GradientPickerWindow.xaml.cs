@@ -33,12 +33,6 @@ public partial class GradientPickerWindow : Window
             GradientPreview.StartPoint = new Point(StartXSlider.Value, StartYSlider.Value);
             GradientPreview.EndPoint = new Point(EndXSlider.Value, EndYSlider.Value);
         }
-        else
-        {
-            System.Diagnostics.Debug.WriteLine("One or more sliders are null");
-            System.Diagnostics.Debug.WriteLine($"StartXSlider: {StartXSlider?.Value}, StartYSlider: {StartYSlider?.Value}");
-            System.Diagnostics.Debug.WriteLine($"EndXSlider: {EndXSlider?.Value}, EndYSlider: {EndYSlider?.Value}");
-        }
     }
 
     void AddStop_Click(object sender, RoutedEventArgs e)
@@ -94,5 +88,10 @@ public partial class GradientPickerWindow : Window
         var startPoint = GradientPreview.StartPoint;
         var endPoint = GradientPreview.EndPoint;
         return $"StartPoint:{startPoint.X:F2},{startPoint.Y:F2};EndPoint:{endPoint.X:F2},{endPoint.Y:F2};";
+    }
+
+    private void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+
     }
 }
