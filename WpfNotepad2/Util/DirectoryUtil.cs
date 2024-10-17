@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace NotepadEx.Util;
+﻿namespace NotepadEx.Util;
 
 public static class DirectoryUtil
 {

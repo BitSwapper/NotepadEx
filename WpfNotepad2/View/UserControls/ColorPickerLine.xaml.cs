@@ -3,9 +3,7 @@ using System.Windows.Controls;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
-using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
-using Color = System.Windows.Media.Color;
 using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 namespace NotepadEx.View.UserControls;
@@ -15,10 +13,13 @@ public partial class ColorPickerLine : UserControl
     string path;
     ThemeObject themeObj;
     public Grid GridForImg => gridForImage;
-    public ColorPickerLine() => InitializeComponent();
+    public ColorPickerViewModel ViewModel {  get; set; }
+    public ColorPickerLine()
+    {
+        DataContext = ViewModel = new ColorPickerViewModel();
+        InitializeComponent();
+    }
 
-    //public void aSetText(string text) => txtThemeName.Text = text;
-    //public void aSetPath(string path) => this.path = path;
     public void SetupThemeObj(ThemeObject obj, string themePath, string friendlyThemeName)
     {
         txtThemeName.Text = friendlyThemeName;

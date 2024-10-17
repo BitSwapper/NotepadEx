@@ -5,28 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotepadEx.View.UserControls"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             Margin="0 0 0 10"
-             mc:Ignorable="d" d:DesignWidth="360" Height="74">
-    <Border BorderBrush="Gray" BorderThickness="0">
-        <Grid>
+             mc:Ignorable="d" d:DesignWidth="360" Height="125">
+    <Border BorderBrush="Black" BorderThickness="0">
+        <Grid Background="{Binding BackgroundColor}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="48"></RowDefinition>
                 <RowDefinition Height="22"></RowDefinition>
-                <RowDefinition Height="22"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Name="txtThemeName" Margin="5,0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
-            <Border BorderBrush="Wheat" Grid.Row="1" BorderThickness="1">
-                <Grid Name="gridForImage"  HorizontalAlignment="Stretch" Background="#FF54799B" Margin="2"></Grid>
+            <TextBlock Name="txtThemeName" Margin="5 26 0 0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
+            <Border BorderBrush="#FF74BEF7" Grid.Row="1" BorderThickness="1" Margin="32 0 32 0">
+                
+                <Grid Name="gridForImage"  HorizontalAlignment="Stretch" Background="#FF54799B" Margin="0"></Grid>
                 
             </Border>
             
-            <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2">
                 <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="5" Checked="rdBtnColor_Checked"/>
                 <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="5 5 75 0" Checked="rdBtnGradient_Checked"/>
 
-                <Button Name="btnEdit" Width="70" Content="Edit" Margin="0 0 7 0" Click="ButtonEdit_Click"></Button>
-                <Button Width="70" Content="Randomize" Click="ButtonRandomize_Click"></Button>
+                <Button Name="btnEdit" Width="70" Height="30" Content="Edit" Margin="0 0 7 0" Click="ButtonEdit_Click"></Button>
+                <Button Width="70" Content="Randomize" Height="30" Click="ButtonRandomize_Click"></Button>
                 <!--<Button Name="btnEdit"  Height="24" Width="70" Margin="35 0" Content="Edit"  VerticalContentAlignment="Top" Click="ButtonEdit_Click"/>
                 <Button Height="24" Width="70" Content="Randomize"  VerticalContentAlignment="Top" Click="ButtonRandomize_Click"/>-->
             </StackPanel>

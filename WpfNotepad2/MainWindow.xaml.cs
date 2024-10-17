@@ -50,7 +50,7 @@ public partial class MainWindow : Window
         SetupThemes();
     }
 
-  
+
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -284,7 +284,7 @@ public partial class MainWindow : Window
         colorPickerWindow.ShowDialog();
         MessageBox.Show(colorPickerWindow.SelectedColor.ToString());
     }
-    
+
     void MenuItemTheme_Click(object sender, RoutedEventArgs e)
     {
         var menuItem = e.OriginalSource as MenuItem;
@@ -357,7 +357,7 @@ public partial class MainWindow : Window
         //ApplyThemeObject(theme.themeObj_MenuItemHighlightDisabledBg, "Color_MenuItemHighlightDisabledBg");
         //ApplyThemeObject(theme.themeObj_MenuItemHighlightDisabledBorder, "Color_MenuItemHighlightDisabledBorder");
 
-        
+
 
         //if(theme.themeObj_TitleBarBg != null)
         //{
@@ -367,7 +367,7 @@ public partial class MainWindow : Window
         //        AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TitleBarBg", new SolidColorBrush(theme.themeObj_TitleBarBg.color.Value));
         //}
 
-        void ApplyThemeObject(ThemeObject themeObj, string resourceKey)
+        static void ApplyThemeObject(ThemeObject themeObj, string resourceKey)
         {
             if(themeObj != null)
             {

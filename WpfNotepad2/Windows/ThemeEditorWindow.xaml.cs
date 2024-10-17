@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Win32;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.View.UserControls;
+using Color = System.Windows.Media.Color;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 namespace NotepadEx.Windows;
 
@@ -14,6 +16,45 @@ public partial class ThemeEditorWindow : Window
     WindowState prevWindowState;
     WindowResizer resizer;
     string currentThemeName;
+    int lineCt = 0;
+
+    List<string> keysMain = new()
+            {
+                "Color_TextEditorBg",
+                "Color_TextEditorFg",
+                "Color_TitleBarBg",
+                "Color_TitleBarFont",
+                "Color_SystemButtons",
+                "Color_BorderColor",
+            };
+
+
+    List<string> keysMenuBar = new()
+            {
+                "Color_MenuBarBg",
+                "Color_MenuItemFg",
+            };
+
+
+    List<string> keysInfoBar = new()
+            {
+                "Color_InfoBarBg",
+                "Color_InfoBarFg",
+            };
+
+    List<string> keysMenuItem = new()
+            {
+                "Color_MenuBorder",
+                "Color_MenuBg",
+                "Color_MenuFg",
+                "Color_MenuSeperator",
+                "Color_MenuDisabledFg",
+                "Color_MenuItemSelectedBg",
+                "Color_MenuItemSelectedBorder",
+                "Color_MenuItemHighlightBg",
+                "Color_MenuItemHighlightBorder",
+            };
+
 
     public ThemeEditorWindow()
     {
@@ -42,14 +83,14 @@ public partial class ThemeEditorWindow : Window
 
 
         //AddNewColorLineSafe("Color_MenuBgColor_MenuBg", "Menu BG", ref ThemeManager.CurrentTheme.themeObj_MenuBgThemeObj_MenuBg!);
+        AddNewColorLineSafe("Color_MenuBg", "Menu Background", ref ThemeManager.CurrentTheme.themeObj_MenuBg!);
         AddNewColorLineSafe("Color_MenuBorder", "Menu Border", ref ThemeManager.CurrentTheme.themeObj_MenuBorder!);
-        AddNewColorLineSafe("Color_MenuBg", "Menu Bg2", ref ThemeManager.CurrentTheme.themeObj_MenuBg!);
-        AddNewColorLineSafe("Color_MenuItemHighlightBg", "Menu Item Highlight Bg", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBg!);
+        AddNewColorLineSafe("Color_MenuItemHighlightBg", "Menu Item Highlight Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBg!);
         AddNewColorLineSafe("Color_MenuItemHighlightBorder", "Selected Menu Item Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBorder!);
         AddNewColorLineSafe("Color_MenuSeperator", "Menu Seperator", ref ThemeManager.CurrentTheme.themeObj_MenuSeperator!);
         AddNewColorLineSafe("Color_MenuDisabledFg", "Menu Disabled Font", ref ThemeManager.CurrentTheme.themeObj_MenuDisabledFg!);
 
-        AddNewColorLineSafe("Color_MenuItemSelectedBg", "Checkbox Bg", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBg!);
+        AddNewColorLineSafe("Color_MenuItemSelectedBg", "Checkbox Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBg!);
         AddNewColorLineSafe("Color_MenuItemSelectedBorder", "Checkbox Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBorder!);
         AddNewColorLineSafe("Color_MenuFg", "Checkmark / Arrow", ref ThemeManager.CurrentTheme.themeObj_MenuFg!);
 
@@ -64,13 +105,34 @@ public partial class ThemeEditorWindow : Window
             themeObj = new(AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, resourceKey).Color);
         AddColorLine(resourceKey, friendlyThemeName, themeObj ?? new());
 
-        void AddColorLine(string themePath, string friendlyThemeName, ThemeObject themeObj)
+        void AddColorLine(string resourceKey, string friendlyThemeName, ThemeObject themeObj)
         {
             ColorPickerLine line = new();
-            line.SetupThemeObj(themeObj, themePath, friendlyThemeName);
-            stackPanelMain.Children.Add(line);
+            line.SetupThemeObj(themeObj, resourceKey, friendlyThemeName);
+            if(++lineCt % 2 == 0)
+                line.ViewModel.BackgroundColor = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+            else
+                line.ViewModel.BackgroundColor = new SolidColorBrush(Color.FromArgb(255, 188, 188, 188));
+
+
+
+            if(keysMain.Contains(resourceKey))
+                StackMain.Children.Add(line);
+
+            else if(keysMenuBar.Contains(resourceKey))
+                StackMenuBar.Children.Add(line);
+
+
+            else if(keysInfoBar.Contains(resourceKey))
+                StackInfoBar.Children.Add(line);
+
+
+            else if(keysMenuItem.Contains(resourceKey))
+                StackMenuItem.Children.Add(line);
         }
     }
+
+
 
     void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {

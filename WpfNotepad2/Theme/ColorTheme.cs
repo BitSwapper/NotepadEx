@@ -163,7 +163,7 @@ public class ColorTheme
 [Serializable]
 public class ColorThemeSerializable
 {
-  
+
 
     [JsonPropertyName("themeObj_TextEditorBg")] public ThemeObjectSerializable ThemeObj_TextEditorBg { get; set; }
     [JsonPropertyName("themeObj_TextEditorFg")] public ThemeObjectSerializable ThemeObj_TextEditorFg { get; set; }
@@ -223,8 +223,8 @@ public class ColorThemeSerializable
         if(colorTheme.themeObj_MenuItemSelectedBorder != null) ThemeObj_MenuItemSelectedBorder = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemSelectedBorder);
         if(colorTheme.themeObj_MenuItemHighlightBg != null) ThemeObj_MenuItemHighlightBg = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightBg);
         if(colorTheme.themeObj_MenuItemHighlightBorder != null) ThemeObj_MenuItemHighlightBorder = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightBorder);
-    //    if(colorTheme.themeObj_MenuItemHighlightDisabledBg != null) ThemeObj_MenuItemHighlightDisabledBg = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightDisabledBg);
-    //    if(colorTheme.themeObj_MenuItemHighlightDisabledBorder != null) ThemeObj_MenuItemHighlightDisabledBorder = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightDisabledBorder);
+        //    if(colorTheme.themeObj_MenuItemHighlightDisabledBg != null) ThemeObj_MenuItemHighlightDisabledBg = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightDisabledBg);
+        //    if(colorTheme.themeObj_MenuItemHighlightDisabledBorder != null) ThemeObj_MenuItemHighlightDisabledBorder = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightDisabledBorder);
     }
 
     public ColorTheme ToColorTheme() => new ColorTheme
