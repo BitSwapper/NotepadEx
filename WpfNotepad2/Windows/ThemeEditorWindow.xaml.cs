@@ -119,32 +119,13 @@ public partial class ThemeEditorWindow : Window
         }
     }
 
-
-
-    void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        if(e.ClickCount == 2)
-            resizer.DoWindowMaximizedStateChange(this, prevWindowState);
-    }
-
-    void Border_MouseMove(object sender, MouseEventArgs e)
-    {
-        var position = e.GetPosition(this);
-        WindowResizer.ResizeWindow(this, position, UIConstants.ResizeBorderWidth);
-    }
-
     void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
     void Close_Click(object sender, RoutedEventArgs e) => Close();
 
-    void MenuItemNew_Click(object sender, RoutedEventArgs e)
-    {
+    void MenuItemSave_Click(object sender, RoutedEventArgs e) => SaveThemeFile();
 
-    }
-
-    void MenuItemSave_Click(object sender, RoutedEventArgs e) => SaveFile();
-
-    bool SaveFile()
+    bool SaveThemeFile()
     {
         string fileName;
 
@@ -163,8 +144,8 @@ public partial class ThemeEditorWindow : Window
 
         var options = new JsonSerializerOptions
         {
-            WriteIndented = true, // Optional: Makes JSON human-readable
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Ensures consistency with camelCase
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
         File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
