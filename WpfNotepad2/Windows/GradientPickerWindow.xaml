@@ -10,51 +10,81 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <!-- Gradient Preview -->
         <Rectangle Grid.Row="0" Height="100" Margin="10">
             <Rectangle.Fill>
                 <LinearGradientBrush x:Name="GradientPreview"/>
             </Rectangle.Fill>
         </Rectangle>
+        <!-- Start and End Position Controls -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <TextBlock Text="Start:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock Text="X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <Slider x:Name="StartXSlider" Width="100" Minimum="0" Maximum="1" Value="0" ValueChanged="PositionSlider_ValueChanged"/>
+                <TextBlock Text="{Binding ElementName=StartXSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                <TextBlock Text="Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <Slider x:Name="StartYSlider" Width="100" Minimum="0" Maximum="1" Value="1" ValueChanged="PositionSlider_ValueChanged"/>
+                <TextBlock Text="{Binding ElementName=StartYSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            </StackPanel>
+
+            <TextBlock Text="End:" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
+                <TextBlock Text="X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <Slider x:Name="EndXSlider" Width="100" Minimum="0" Maximum="1" Value="1" ValueChanged="PositionSlider_ValueChanged"/>
+                <TextBlock Text="{Binding ElementName=EndXSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                <TextBlock Text="Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <Slider x:Name="EndYSlider" Width="100" Minimum="0" Maximum="1" Value="0" ValueChanged="PositionSlider_ValueChanged"/>
+                <TextBlock Text="{Binding ElementName=EndYSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            </StackPanel>
+        </Grid>
         <!-- Gradient Stops -->
-        <ListBox Grid.Row="1" x:Name="StopsListBox" Margin="10">
+        <ListBox Grid.Row="2" x:Name="StopsListBox" Margin="10">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Rectangle Width="20" Height="20" Margin="0,0,5,0">
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding Color}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        
-                        <Slider Maximum="1" Width="600" Grid.Column="1" Value="{Binding Offset, Mode=TwoWay}"/>
-                        
+
+                        <!--<Slider Maximum="1" Width="600" Grid.Column="1" Value="{Binding Offset, Mode=TwoWay}" ValueChanged="StopSlider_ValueChanged"/>-->
+
                         <Button Content="Edit" Grid.Column="2" Margin="5,0,0,0" Click="EditStop_Click"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
         <!-- Controls -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Add Stop" Click="AddStop_Click" Margin="0,0,5,0"/>
             <Button Content="Remove Stop" Click="RemoveStop_Click" Margin="5,0,0,0"/>
         </StackPanel>
-
         <!-- Confirm and Cancel buttons -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Cancel" Click="CancelButton_Click" Margin="5,0,0,0"/>
             <Button Content="Confirm" Click="ConfirmButton_Click" Margin="5,0,0,0"/>
         </StackPanel>

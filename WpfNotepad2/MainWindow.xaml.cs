@@ -267,7 +267,6 @@ public partial class MainWindow : Window
 
     }
 
-
     void MenuItemTestTheme_Click(object sender, RoutedEventArgs e) => AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", ColorUtil.GetRandomLinearGradientBrush(180));
 
     void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)
@@ -356,16 +355,6 @@ public partial class MainWindow : Window
         ApplyThemeObject(theme.themeObj_MenuItemHighlightBorder, "Color_MenuItemHighlightBorder");
         //ApplyThemeObject(theme.themeObj_MenuItemHighlightDisabledBg, "Color_MenuItemHighlightDisabledBg");
         //ApplyThemeObject(theme.themeObj_MenuItemHighlightDisabledBorder, "Color_MenuItemHighlightDisabledBorder");
-
-
-
-        //if(theme.themeObj_TitleBarBg != null)
-        //{
-        //    if(theme.themeObj_TitleBarBg.isGradient)
-        //        AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, "Color_TitleBarBg", theme.themeObj_TitleBarBg.gradient);
-        //    else
-        //        AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, "Color_TitleBarBg", new SolidColorBrush(theme.themeObj_TitleBarBg.color.Value));
-        //}
 
         static void ApplyThemeObject(ThemeObject themeObj, string resourceKey)
         {

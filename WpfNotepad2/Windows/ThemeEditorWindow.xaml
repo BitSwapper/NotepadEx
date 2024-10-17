@@ -34,21 +34,21 @@
             </MenuItem>
         </Menu>
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <StackPanel Name="stackPanelMain">
-                    <Expander Name="ExpanderMain" Header="Main">
-                        <StackPanel Name="StackMain"></StackPanel>
+            <StackPanel Name="stackPanelMain">
+                <Expander Name="ExpanderMain" Header="Main">
+                        <StackPanel Name="StackMain" HorizontalAlignment="Center" Width="280"></StackPanel>
                     </Expander>
                     
                     <Expander Name="ExpanderMenuBar" Header="Menu Bar">
-                        <StackPanel Name="StackMenuBar"></StackPanel>
+                    <StackPanel Name="StackMenuBar" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
                     
                     <Expander Name="ExpanderInfoBar" Header="Info Bar">
-                        <StackPanel Name="StackInfoBar"></StackPanel>
+                    <StackPanel Name="StackInfoBar" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
                     
                     <Expander Name="ExpanderMenuItem" Header="Menu Item">
-                        <StackPanel Name="StackMenuItem"></StackPanel>
+                    <StackPanel Name="StackMenuItem" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
                 </StackPanel>
             </ScrollViewer>
