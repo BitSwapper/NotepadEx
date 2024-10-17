@@ -18,13 +18,13 @@ public partial class ColorPickerWindow : Window
         myColorPicker.OnWindowConfirm += OnConfirm;
     }
 
-    private void OnCancel()
+    void OnCancel()
     {
         DialogResult = false;
         Close();
     }
 
-    private void OnConfirm()
+    void OnConfirm()
     {
         DialogResult = true;
         Close();

@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Win32;
 using NotepadEx.Theme;
@@ -71,35 +70,26 @@ public partial class ThemeEditorWindow : Window
     {
         AddNewColorLineSafe(UIConstants.Color_TextEditorBg, "Text Editor Background", ref ThemeManager.CurrentTheme.themeObj_TextEditorBg!);
         AddNewColorLineSafe(UIConstants.Color_TextEditorFg, "Text Editor Font", ref ThemeManager.CurrentTheme.themeObj_TextEditorFg!);
-
         AddNewColorLineSafe(UIConstants.Color_TitleBarBg, "Title Bar Background", ref ThemeManager.CurrentTheme.themeObj_TitleBarBg!);
         AddNewColorLineSafe(UIConstants.Color_TitleBarFont, "Title Bar Font", ref ThemeManager.CurrentTheme.themeObj_TitleBarFont!);
-
         AddNewColorLineSafe(UIConstants.Color_SystemButtons, "System Buttons", ref ThemeManager.CurrentTheme.themeObj_SystemButtons!);
         AddNewColorLineSafe(UIConstants.Color_BorderColor, "Border Color", ref ThemeManager.CurrentTheme.themeObj_BorderColor!);
 
         AddNewColorLineSafe(UIConstants.Color_MenuBarBg, "Menu Bar Background", ref ThemeManager.CurrentTheme.themeObj_MenuBarBg!);
         AddNewColorLineSafe(UIConstants.Color_MenuItemFg, "Menu Item Font", ref ThemeManager.CurrentTheme.themeObj_MenuItemFg!);
-
         AddNewColorLineSafe(UIConstants.Color_InfoBarBg, "Info Bar Background", ref ThemeManager.CurrentTheme.themeObj_InfoBarBg!);
         AddNewColorLineSafe(UIConstants.Color_InfoBarFg, "Info Bar Font", ref ThemeManager.CurrentTheme.themeObj_InfoBarFg!);
 
 
-        //AddNewColorLineSafe("Color_MenuBgColor_MenuBg", "Menu BG", ref ThemeManager.CurrentTheme.themeObj_MenuBgThemeObj_MenuBg!);
         AddNewColorLineSafe(UIConstants.Color_MenuBg, "Menu Background", ref ThemeManager.CurrentTheme.themeObj_MenuBg!);
         AddNewColorLineSafe(UIConstants.Color_MenuBorder, "Menu Border", ref ThemeManager.CurrentTheme.themeObj_MenuBorder!);
         AddNewColorLineSafe(UIConstants.Color_MenuItemHighlightBg, "Menu Item Highlight Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBg!);
         AddNewColorLineSafe(UIConstants.Color_MenuItemHighlightBorder, "Selected Menu Item Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBorder!);
         AddNewColorLineSafe(UIConstants.Color_MenuSeperator, "Menu Seperator", ref ThemeManager.CurrentTheme.themeObj_MenuSeperator!);
         AddNewColorLineSafe(UIConstants.Color_MenuDisabledFg, "Menu Disabled Font", ref ThemeManager.CurrentTheme.themeObj_MenuDisabledFg!);
-
         AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBg, "Checkbox Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBg!);
         AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBorder, "Checkbox Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBorder!);
         AddNewColorLineSafe(UIConstants.Color_MenuFg, "Checkmark / Arrow", ref ThemeManager.CurrentTheme.themeObj_MenuFg!);
-
-        //AddNewColorLineSafe("Color_MenuItemHighlightDisabledBg", "Menu Item Highlight Disabled Bg", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightDisabledBg!);
-        //AddNewColorLineSafe("Color_MenuItemHighlightDisabledBorder", "Menu Item Highlight Disabled Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightDisabledBorder!);
-
     }
 
     void AddNewColorLineSafe(string resourceKey, string friendlyThemeName, ref ThemeObject themeObj)
@@ -116,16 +106,16 @@ public partial class ThemeEditorWindow : Window
             line.ViewModel.BackgroundColor = ++lineCt % 2 == 0 ? brushWhite : brushGray;
 
             if(keysMain.Contains(resourceKey))
-                StackMain.Children.Add(line);
+                StackPanelMain.Children.Add(line);
 
             else if(keysMenuBar.Contains(resourceKey))
-                StackMenuBar.Children.Add(line);
+                StackPanelMenuBar.Children.Add(line);
 
             else if(keysInfoBar.Contains(resourceKey))
-                StackInfoBar.Children.Add(line);
+                StackPanelInfoBar.Children.Add(line);
 
             else if(keysMenuItem.Contains(resourceKey))
-                StackMenuItem.Children.Add(line);
+                StackPanelMenuItem.Children.Add(line);
         }
     }
 

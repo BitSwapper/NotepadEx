@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace NotepadEx.View.UserControls;
 /// <summary>
@@ -19,27 +7,24 @@ namespace NotepadEx.View.UserControls;
 /// </summary>
 public partial class GradientStopLine : UserControl
 {
-    public GradientStopLine()
-    {
-        InitializeComponent();
-    }
+    public GradientStopLine() => InitializeComponent();
 
-    private void PasteStop_Click(object sender, RoutedEventArgs e)
+    void PasteStop_Click(object sender, RoutedEventArgs e)
     {
 
     }
 
-    private void CopyStop_Click(object sender, RoutedEventArgs e)
+    void CopyStop_Click(object sender, RoutedEventArgs e)
     {
 
     }
 
-    private void EditStop_Click(object sender, RoutedEventArgs e)
+    void EditStop_Click(object sender, RoutedEventArgs e)
     {
 
     }
 
-    private void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
 
     }

@@ -8,11 +8,11 @@ public partial class GradientPickerWindow : Window
 {
     public ObservableCollection<GradientStop> GradientStops { get; set; } = new();
     public LinearGradientBrush GradientBrush => GradientPreview;
-    private bool _updatingFromAngle = false;
-    private bool _updatingFromOffset = false;
-    private bool _updatingFromScale = false;
-    private double ScaleX { get; set; } = 1.0;
-    private double ScaleY { get; set; } = 1.0;
+    bool _updatingFromAngle = false;
+    bool _updatingFromOffset = false;
+    bool _updatingFromScale = false;
+    double ScaleX { get; set; } = 1.0;
+    double ScaleY { get; set; } = 1.0;
     public GradientPickerWindow()
     {
         InitializeComponent();
@@ -169,7 +169,7 @@ public partial class GradientPickerWindow : Window
 
     void CopyStop_Click(object sender, RoutedEventArgs e)
     {
-        
+
     }
     void PasteStop_Click(object sender, RoutedEventArgs e)
     {
@@ -195,7 +195,7 @@ public partial class GradientPickerWindow : Window
         return $"StartPoint:{startPoint.X:F2},{startPoint.Y:F2};EndPoint:{endPoint.X:F2},{endPoint.Y:F2};";
     }
 
-    private void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => UpdateGradientPreview();
+    void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => UpdateGradientPreview();
 
     void SliderScaleX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
@@ -215,24 +215,16 @@ public partial class GradientPickerWindow : Window
         _updatingFromScale = false;
     }
 
-    private void StopsListBox_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    void StopsListBox_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
     {
 
     }
 
-    private void StopsListBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    void StopsListBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
     }
 
-    private void StopsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-    {
-        MessageBox.Show("");
+    void StopsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) => MessageBox.Show("");
 
-    }
-
-    private void StopsListBox_Selected(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show("1");
-
-    }
+    void StopsListBox_Selected(object sender, RoutedEventArgs e) => MessageBox.Show("1");
 }

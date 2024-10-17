@@ -65,7 +65,7 @@ public class ThemeObjectSerializable
             return new ThemeObject(ColorUtil.GetColorFromHex(Color).Value);
     }
 
-    private string SerializeGradient(LinearGradientBrush gradient)
+    string SerializeGradient(LinearGradientBrush gradient)
     {
         var serializedData = new List<string>
         {
@@ -83,7 +83,7 @@ public class ThemeObjectSerializable
         return string.Join(";", serializedData);
     }
 
-    private LinearGradientBrush DeserializeGradient(string gradientString)
+    LinearGradientBrush DeserializeGradient(string gradientString)
     {
         var parts = gradientString.Split(';');
         var brush = new LinearGradientBrush();

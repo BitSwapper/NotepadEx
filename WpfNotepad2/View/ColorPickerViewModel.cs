@@ -5,7 +5,7 @@ namespace NotepadEx.View;
 
 public class ColorPickerViewModel : ViewModelBase
 {
-    private Brush _backgroundColor = new SolidColorBrush(Color.FromArgb(255, 0, 255, 255));
+    Brush _backgroundColor = new SolidColorBrush(Color.FromArgb(255, 0, 255, 255));
     public Brush BackgroundColor
     {
         get => _backgroundColor;

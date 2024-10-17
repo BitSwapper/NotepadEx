@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
@@ -14,7 +13,7 @@ public partial class ColorPickerLine : UserControl
     string path;
     ThemeObject themeObj;
     public Grid GridForImg => gridForImage;
-    public ColorPickerViewModel ViewModel {  get; set; }
+    public ColorPickerViewModel ViewModel { get; set; }
     public ColorPickerLine()
     {
         DataContext = ViewModel = new ColorPickerViewModel();
@@ -80,7 +79,7 @@ public partial class ColorPickerLine : UserControl
                 gradientPickerWindow.GradientStops.Clear();
                 gradientPickerWindow.SetGradient(gradientBrush.GradientStops);
             }
-          
+
 
             if(gradientPickerWindow.ShowDialog() == true)
             {
@@ -91,7 +90,7 @@ public partial class ColorPickerLine : UserControl
         }
     }
 
-    private void rdBtnColor_Checked(object sender, RoutedEventArgs e)
+    void rdBtnColor_Checked(object sender, RoutedEventArgs e)
     {
         if(path != null)
             GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
@@ -100,7 +99,7 @@ public partial class ColorPickerLine : UserControl
             themeObj.isGradient = false;
     }
 
-    private void rdBtnGradient_Checked(object sender, RoutedEventArgs e)
+    void rdBtnGradient_Checked(object sender, RoutedEventArgs e)
     {
         if(path != null)
             GridForImg.Background = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
