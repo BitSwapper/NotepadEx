@@ -42,10 +42,15 @@ public static class ColorUtil
         if(hex.Length == 6)
             hex = "FF" + hex; // Add alpha if missing
 
-        byte a = byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
-        byte r = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
-        byte g = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
-        byte b = byte.Parse(hex.Substring(6, 2), NumberStyles.HexNumber);
+        if(!(hex.Length == 6 || hex.Length == 8))
+            return Color.FromArgb(128, 0, 0, 0);
+
+        byte a, r, g, b;
+
+        if(!byte.TryParse(hex.Substring(0, 2), NumberStyles.HexNumber, null, out a)) a = 0;
+        if(!byte.TryParse(hex.Substring(2, 2), NumberStyles.HexNumber, null, out r)) r = 0;
+        if(!byte.TryParse(hex.Substring(4, 2), NumberStyles.HexNumber, null, out g)) g = 0;
+        if(!byte.TryParse(hex.Substring(6, 2), NumberStyles.HexNumber, null, out b)) b = 0;
 
         return Color.FromArgb(a, r, g, b);
     }

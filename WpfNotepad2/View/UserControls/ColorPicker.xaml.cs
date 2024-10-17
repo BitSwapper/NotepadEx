@@ -143,10 +143,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => isHueDragging = false;
 
-    public void SetInitialColor(Color color)
-    {
-        SelectedColor = ogColor = color;
-    }
+    public void SetInitialColor(Color color) => SelectedColor = ogColor = color;
 
     void ButtonConfirm_Click(object sender, RoutedEventArgs e)
     {
@@ -162,14 +159,11 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     void txtHexColor_TextChanged(object sender, TextChangedEventArgs e)
     {
-        var text = txtHexColor.Text;
-        if(text.StartsWith("#"))
-            text = text.Substring(1);
+        var text = txtHexColor.Text.Replace("#",string.Empty);
 
         if(text.Length == 8)
             SelectedColor = ColorUtil.GetColorFromHex(txtHexColor.Text).GetValueOrDefault();
     }
-
 
     void UpdateColorFromSelectedColor()
     {
@@ -203,7 +197,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
             UpdateColorPlane();
             UpdateColorSelector();
             UpdateHueSelector();
-            //HexColor = ColorUtil.ColorToHexString(color);
             isUpdating = false;
             OnSelectedColorChanged?.Invoke();
         }
@@ -242,16 +235,13 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     void UpdateColorSelector()
     {
-        Canvas.SetLeft(ColorSelector, currentSaturation * ColorPlane.ActualWidth - ColorSelector.Width/2);
+        Canvas.SetLeft(ColorSelector, currentSaturation * ColorPlane.ActualWidth - ColorSelector.Width / 2);
         Canvas.SetTop(ColorSelector, (1 - currentValue) * ColorPlane.ActualHeight - ColorSelector.Height / 2);
     }
 
     void UpdateHueSelector() => Canvas.SetTop(HueSelector, currentHue * HueSlider.ActualHeight);
 
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        UpdateColorFromSelectedColor();
-    }
+    void UserControl_Loaded(object sender, RoutedEventArgs e) => UpdateColorFromSelectedColor();
 }
 
 
