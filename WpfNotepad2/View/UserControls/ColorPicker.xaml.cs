@@ -22,21 +22,21 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
     Color ogColor;
-    bool _isUpdating = false;
-    bool _isColorPlaneDragging;
-    bool _isHueDragging;
-    double _currentHue;
-    double _currentSaturation;
-    double _currentValue;
+    bool isUpdating = false;
+    bool isColorPlaneDragging;
+    bool isHueDragging;
+    double currentHue;
+    double currentSaturation;
+    double currentValue;
 
     public ColorPicker()
     {
         InitializeComponent();
 
         DataContext = this;
-        _currentHue = 0;
-        _currentSaturation = 1;
-        _currentValue = 1;
+        currentHue = 0;
+        currentSaturation = 1;
+        currentValue = 1;
         UpdateColorFromSelectedColor();
         UpdateColorPlane();
         UpdateColorSelector();
@@ -101,126 +101,52 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         ColorPicker colorPicker = d as ColorPicker;
-        if(colorPicker != null && !colorPicker._isUpdating)
+        if(colorPicker != null && !colorPicker.isUpdating)
             colorPicker.UpdateColorFromSelectedColor();
     }
 
-    void UpdateColorFromSelectedColor()
-    {
-        _isUpdating = true;
-        var hsv = ColorUtil.RgbToHsv(SelectedColor);
-        _currentHue = hsv.H;
-        _currentSaturation = hsv.S;
-        _currentValue = hsv.V;
-
-        UpdateColorPlane();
-        UpdateColorSelector();
-        UpdateHueSelector();
-
-        OnPropertyChanged(nameof(Red));
-        OnPropertyChanged(nameof(Green));
-        OnPropertyChanged(nameof(Blue));
-        OnPropertyChanged(nameof(Alpha));
-        _isUpdating = false;
-    }
-
-    void UpdateColorFromRgb(Color color)
-    {
-        if(!_isUpdating)
-        {
-            _isUpdating = true;
-            var hsv = ColorUtil.RgbToHsv(color);
-            _currentHue = hsv.H;
-            _currentSaturation = hsv.S;
-            _currentValue = hsv.V;
-
-            UpdateColorPlane();
-            UpdateColorSelector();
-            UpdateHueSelector();
-            //HexColor = ColorUtil.ColorToHexString(color);
-            _isUpdating = false;
-            OnSelectedColorChanged?.Invoke();
-        }
-    }
-
-    void UpdateColorFromColorPlane(Point position)
-    {
-        _currentSaturation = Math.Clamp(position.X / ColorPlane.ActualWidth, 0, 1);
-        _currentValue = Math.Clamp(1 - (position.Y / ColorPlane.ActualHeight), 0, 1);
-
-        UpdateColorSelector();
-        UpdateSelectedColor();
-    }
-
-    void UpdateColorFromHueSlider(Point position)
-    {
-        _currentHue = Math.Clamp(position.Y / HueSlider.ActualHeight, 0, 1);
-
-        UpdateHueSelector();
-        UpdateColorPlane();
-        UpdateSelectedColor();
-    }
-
-    void UpdateSelectedColor()
-    {
-        _isUpdating = true;
-        SelectedColor = ColorUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue, SelectedColor.A);
-        OnPropertyChanged(nameof(Red));
-        OnPropertyChanged(nameof(Green));
-        OnPropertyChanged(nameof(Blue));
-        OnPropertyChanged(nameof(Alpha));
-        _isUpdating = false;
-    }
-
-    void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(ColorUtil.HsvToRgb(_currentHue, 1, 1));
-
-    void UpdateColorSelector()
-    {
-        Canvas.SetLeft(ColorSelector, _currentSaturation * ColorPlane.ActualWidth);
-        Canvas.SetTop(ColorSelector, (1 - _currentValue) * ColorPlane.ActualHeight);
-    }
-
-    void UpdateHueSelector() => Canvas.SetTop(HueSelector, _currentHue * HueSlider.ActualHeight);
-
     void ColorPlane_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        _isColorPlaneDragging = true;
+        isColorPlaneDragging = true;
         UpdateColorFromColorPlane(e.GetPosition(ColorPlane));
     }
 
-    void ColorPlane_MouseLeave(object sender, MouseEventArgs e) => _isColorPlaneDragging = false;
+    void ColorPlane_MouseLeave(object sender, MouseEventArgs e) => isColorPlaneDragging = false;
 
     void ColorPlane_MouseMove(object sender, MouseEventArgs e)
     {
         if(e.LeftButton == MouseButtonState.Pressed)
-            _isColorPlaneDragging = true;
+            isColorPlaneDragging = true;
 
-        if(_isColorPlaneDragging)
+        if(isColorPlaneDragging)
             UpdateColorFromColorPlane(e.GetPosition(ColorPlane));
     }
 
-    void ColorPlane_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isColorPlaneDragging = false;
+    void ColorPlane_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => isColorPlaneDragging = false;
 
     void HueSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        _isHueDragging = true;
+        isHueDragging = true;
         UpdateColorFromHueSlider(e.GetPosition(HueSlider));
     }
 
     void HueSlider_MouseMove(object sender, MouseEventArgs e)
     {
         if(e.LeftButton == MouseButtonState.Pressed)
-            _isHueDragging = true;
+            isHueDragging = true;
 
-        if(_isHueDragging)
+        if(isHueDragging)
             UpdateColorFromHueSlider(e.GetPosition(HueSlider));
     }
 
-    void HueSlider_MouseLeave(object sender, MouseEventArgs e) => _isHueDragging = false;
+    void HueSlider_MouseLeave(object sender, MouseEventArgs e) => isHueDragging = false;
 
-    void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => _isHueDragging = false;
+    void HueSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => isHueDragging = false;
 
-    public void SetInitialColor(Color color) => ogColor = color;
+    public void SetInitialColor(Color color)
+    {
+        SelectedColor = ogColor = color;
+    }
 
     void ButtonConfirm_Click(object sender, RoutedEventArgs e)
     {
@@ -242,6 +168,89 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
         if(text.Length == 8)
             SelectedColor = ColorUtil.GetColorFromHex(txtHexColor.Text).GetValueOrDefault();
+    }
+
+
+    void UpdateColorFromSelectedColor()
+    {
+        isUpdating = true;
+        var hsv = ColorUtil.RgbToHsv(SelectedColor);
+        currentHue = hsv.H;
+        currentSaturation = hsv.S;
+        currentValue = hsv.V;
+
+        UpdateColorPlane();
+        UpdateColorSelector();
+        UpdateHueSelector();
+
+        OnPropertyChanged(nameof(Red));
+        OnPropertyChanged(nameof(Green));
+        OnPropertyChanged(nameof(Blue));
+        OnPropertyChanged(nameof(Alpha));
+        isUpdating = false;
+    }
+
+    void UpdateColorFromRgb(Color color)
+    {
+        if(!isUpdating)
+        {
+            isUpdating = true;
+            var hsv = ColorUtil.RgbToHsv(color);
+            currentHue = hsv.H;
+            currentSaturation = hsv.S;
+            currentValue = hsv.V;
+
+            UpdateColorPlane();
+            UpdateColorSelector();
+            UpdateHueSelector();
+            //HexColor = ColorUtil.ColorToHexString(color);
+            isUpdating = false;
+            OnSelectedColorChanged?.Invoke();
+        }
+    }
+
+    void UpdateColorFromColorPlane(Point position)
+    {
+        currentSaturation = Math.Clamp(position.X / ColorPlane.ActualWidth, 0, 1);
+        currentValue = Math.Clamp(1 - (position.Y / ColorPlane.ActualHeight), 0, 1);
+
+        UpdateColorSelector();
+        UpdateSelectedColor();
+    }
+
+    void UpdateColorFromHueSlider(Point position)
+    {
+        currentHue = Math.Clamp(position.Y / HueSlider.ActualHeight, 0, 1);
+
+        UpdateHueSelector();
+        UpdateColorPlane();
+        UpdateSelectedColor();
+    }
+
+    void UpdateSelectedColor()
+    {
+        isUpdating = true;
+        SelectedColor = ColorUtil.HsvToRgb(currentHue, currentSaturation, currentValue, SelectedColor.A);
+        OnPropertyChanged(nameof(Red));
+        OnPropertyChanged(nameof(Green));
+        OnPropertyChanged(nameof(Blue));
+        OnPropertyChanged(nameof(Alpha));
+        isUpdating = false;
+    }
+
+    void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(ColorUtil.HsvToRgb(currentHue, 1, 1));
+
+    void UpdateColorSelector()
+    {
+        Canvas.SetLeft(ColorSelector, currentSaturation * ColorPlane.ActualWidth - ColorSelector.Width/2);
+        Canvas.SetTop(ColorSelector, (1 - currentValue) * ColorPlane.ActualHeight - ColorSelector.Height / 2);
+    }
+
+    void UpdateHueSelector() => Canvas.SetTop(HueSelector, currentHue * HueSlider.ActualHeight);
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        UpdateColorFromSelectedColor();
     }
 }
 
