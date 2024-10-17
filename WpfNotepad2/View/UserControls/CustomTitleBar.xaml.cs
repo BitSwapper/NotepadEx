@@ -54,7 +54,7 @@ public partial class CustomTitleBar : UserControl
 
     void txtTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
     {
-        if(e.GetPosition(this).Y > Constants.ResizeBorderWidth / 2)
+        if(e.GetPosition(this).Y > UIConstants.ResizeBorderWidth / 2)
             WindowRef?.DragMove();
     }
 

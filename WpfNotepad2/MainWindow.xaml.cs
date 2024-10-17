@@ -35,8 +35,8 @@ public partial class MainWindow : Window
     void InitUI()
     {
         resizer = new();
-        MainWindowTitleBar.Init(this, Constants.AppName, Minimize_Click, Maximize_Click, Exit_Click);
-        string imagePath = Constants.ImagePath_MainIcon.ToUriPath();
+        MainWindowTitleBar.Init(this, DirectoryUtil.AppName, Minimize_Click, Maximize_Click, Exit_Click);
+        string imagePath = DirectoryUtil.ImagePath_MainIcon.ToUriPath();
         var v = new BitmapImage(new Uri(imagePath));
         MainWindowTitleBar.ImageSource = v;
 
@@ -61,7 +61,7 @@ public partial class MainWindow : Window
     void Border_MouseMove(object sender, MouseEventArgs e)
     {
         var position = e.GetPosition(this);
-        WindowResizer.ResizeWindow(this, position, Constants.ResizeBorderWidth);
+        WindowResizer.ResizeWindow(this, position, UIConstants.ResizeBorderWidth);
     }
 
     void MenuItemNew_Click(object sender, RoutedEventArgs e)
@@ -78,13 +78,13 @@ public partial class MainWindow : Window
 
     void MenuItemNewWindow_Click(object sender, RoutedEventArgs e) => AdditionalWindowManager.TryCreateNewNotepadWindow();
 
-    void MenuItemOpen_Click(object sender, RoutedEventArgs e) => DocumentUtil.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName);
+    void MenuItemOpen_Click(object sender, RoutedEventArgs e) => DocumentUtil.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, DirectoryUtil.AppName);
 
     void MenuItemOpenRecent_Click(object sender, RoutedEventArgs e)
     {
         MenuItem menuItem = (MenuItem)sender;
         MenuItem subMenuItem = (MenuItem)e.OriginalSource;
-        DocumentUtil.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, Constants.AppName, (string)subMenuItem.Header);
+        DocumentUtil.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, DirectoryUtil.AppName, (string)subMenuItem.Header);
     }
 
     void MenuItemMultiOpen_Click(object sender, RoutedEventArgs e) { }
@@ -183,7 +183,7 @@ public partial class MainWindow : Window
         AddRecentFile(fileName);
     }
 
-    void UpdateTitleText(string fileName) => MainWindowTitleBar.txtTitleBar.Text = fileName == string.Empty ? Constants.AppName : $"{Constants.AppName}  |  " + Path.GetFileName(fileName);
+    void UpdateTitleText(string fileName) => MainWindowTitleBar.txtTitleBar.Text = fileName == string.Empty ? DirectoryUtil.AppName : $"{DirectoryUtil.AppName}  |  " + Path.GetFileName(fileName);
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SaveSettings);
 
@@ -228,7 +228,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            Row_MainMenuBar.Height = new(Constants.InfoBarSize, GridUnitType.Pixel);
+            Row_MainMenuBar.Height = new(UIConstants.InfoBarSize, GridUnitType.Pixel);
             Row_MainMenuBar.IsEnabled = true;
             MainMenuBar.IsEnabled = true;
         }
@@ -243,7 +243,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            Row_InfoBar.Height = new(Constants.InfoBarSize, GridUnitType.Pixel);
+            Row_InfoBar.Height = new(UIConstants.InfoBarSize, GridUnitType.Pixel);
             Row_InfoBar.IsEnabled = true;
         }
 
@@ -267,7 +267,7 @@ public partial class MainWindow : Window
 
     }
 
-    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e) => AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, "Color_TextEditorFg", ColorUtil.GetRandomLinearGradientBrush(180));
+    void MenuItemTestTheme_Click(object sender, RoutedEventArgs e) => AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, UIConstants.Color_TextEditorFg, ColorUtil.GetRandomLinearGradientBrush(180));
 
     void MenuItemThemeEditor_Click(object sender, RoutedEventArgs e)
     {
@@ -332,29 +332,28 @@ public partial class MainWindow : Window
     {
         ThemeManager.CurrentTheme = theme;
 
-        ApplyThemeObject(theme.themeObj_TextEditorBg, "Color_TextEditorBg");
-        ApplyThemeObject(theme.themeObj_TextEditorFg, "Color_TextEditorFg");
-        ApplyThemeObject(theme.themeObj_TitleBarBg, "Color_TitleBarBg");
-        ApplyThemeObject(theme.themeObj_TitleBarFont, "Color_TitleBarFont");
+        ApplyThemeObject(theme.themeObj_TextEditorBg, UIConstants.Color_TextEditorBg);
+        ApplyThemeObject(theme.themeObj_TextEditorFg, UIConstants.Color_TextEditorFg);
+        ApplyThemeObject(theme.themeObj_TitleBarBg, UIConstants.Color_TitleBarBg);
+        ApplyThemeObject(theme.themeObj_TitleBarFont, UIConstants.Color_TitleBarFont);
 
-        ApplyThemeObject(theme.themeObj_SystemButtons, "Color_SystemButtons");
-        ApplyThemeObject(theme.themeObj_BorderColor, "Color_BorderColor");
-        ApplyThemeObject(theme.themeObj_MenuBarBg, "Color_MenuBarBg");
-        ApplyThemeObject(theme.themeObj_MenuItemFg, "Color_MenuItemFg");
-        ApplyThemeObject(theme.themeObj_InfoBarBg, "Color_InfoBarBg");
-        ApplyThemeObject(theme.themeObj_InfoBarFg, "Color_InfoBarFg");
+        ApplyThemeObject(theme.themeObj_SystemButtons, UIConstants.Color_SystemButtons);
+        ApplyThemeObject(theme.themeObj_BorderColor, UIConstants.Color_BorderColor);
+        ApplyThemeObject(theme.themeObj_MenuBarBg, UIConstants.Color_MenuBarBg);
+        ApplyThemeObject(theme.themeObj_MenuItemFg, UIConstants.Color_MenuItemFg);
+        ApplyThemeObject(theme.themeObj_InfoBarBg, UIConstants.Color_InfoBarBg);
+        ApplyThemeObject(theme.themeObj_InfoBarFg, UIConstants.Color_InfoBarFg);
 
-        ApplyThemeObject(theme.themeObj_MenuBorder, "Color_MenuBorder");
-        ApplyThemeObject(theme.themeObj_MenuBg, "Color_MenuBg");
-        ApplyThemeObject(theme.themeObj_MenuFg, "Color_MenuFg");
-        ApplyThemeObject(theme.themeObj_MenuSeperator, "Color_MenuSeperator");
-        ApplyThemeObject(theme.themeObj_MenuDisabledFg, "Color_MenuDisabledFg");
-        ApplyThemeObject(theme.themeObj_MenuItemSelectedBg, "Color_MenuItemSelectedBg");
-        ApplyThemeObject(theme.themeObj_MenuItemSelectedBorder, "Color_MenuItemSelectedBorder");
-        ApplyThemeObject(theme.themeObj_MenuItemHighlightBg, "Color_MenuItemHighlightBg");
-        ApplyThemeObject(theme.themeObj_MenuItemHighlightBorder, "Color_MenuItemHighlightBorder");
-        //ApplyThemeObject(theme.themeObj_MenuItemHighlightDisabledBg, "Color_MenuItemHighlightDisabledBg");
-        //ApplyThemeObject(theme.themeObj_MenuItemHighlightDisabledBorder, "Color_MenuItemHighlightDisabledBorder");
+        ApplyThemeObject(theme.themeObj_MenuBorder, UIConstants.Color_MenuBorder);
+        ApplyThemeObject(theme.themeObj_MenuBg, UIConstants.Color_MenuBg);
+        ApplyThemeObject(theme.themeObj_MenuFg, UIConstants.Color_MenuFg);
+        ApplyThemeObject(theme.themeObj_MenuSeperator, UIConstants.Color_MenuSeperator);
+        ApplyThemeObject(theme.themeObj_MenuDisabledFg, UIConstants.Color_MenuDisabledFg);
+        ApplyThemeObject(theme.themeObj_MenuItemSelectedBg, UIConstants.Color_MenuItemSelectedBg);
+        ApplyThemeObject(theme.themeObj_MenuItemSelectedBorder, UIConstants.Color_MenuItemSelectedBorder);
+        ApplyThemeObject(theme.themeObj_MenuItemHighlightBg, UIConstants.Color_MenuItemHighlightBg);
+        ApplyThemeObject(theme.themeObj_MenuItemHighlightBorder, UIConstants.Color_MenuItemHighlightBorder);
+
 
         static void ApplyThemeObject(ThemeObject themeObj, string resourceKey)
         {

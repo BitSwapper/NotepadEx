@@ -29,7 +29,6 @@
             <SolidColorBrush x:Key="Color_InfoBarBg" Color="#FF8A8A5D"/>
             <SolidColorBrush x:Key="Color_InfoBarFg" Color="White"/>
             
-            <!--<SolidColorBrush x:Key="Color_MenuBgColor_MenuBg" Color="#C7333B3E"/>-->
             <SolidColorBrush x:Key="Color_MenuBorder" Color="#FF999999"/>
             <SolidColorBrush x:Key="Color_MenuBg" Color="#BF202020"/>
             <SolidColorBrush x:Key="Color_MenuFg" Color="#FF00E2FF"/>
@@ -39,6 +38,7 @@
             <SolidColorBrush x:Key="Color_MenuItemSelectedBorder" Color="#FF26A0DA"/>
             <SolidColorBrush x:Key="Color_MenuItemHighlightBg" Color="#FF333E3C"/>
             <SolidColorBrush x:Key="Color_MenuItemHighlightBorder" Color="#FFFFE9F6"/>
+            <!--<SolidColorBrush x:Key="Color_MenuBgColor_MenuBg" Color="#C7333B3E"/>-->
             <!--<SolidColorBrush x:Key="Color_MenuItemHighlightDisabledBg" Color="#FF5FB51B"/>
             <SolidColorBrush x:Key="Color_MenuItemHighlightDisabledBorder" Color="#FFFF0FF0"/>-->
             

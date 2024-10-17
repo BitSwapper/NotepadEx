@@ -18,41 +18,44 @@ public partial class ThemeEditorWindow : Window
     string currentThemeName;
     int lineCt = 0;
 
+    SolidColorBrush brushWhite = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+    SolidColorBrush brushGray = new SolidColorBrush(Color.FromArgb(255, 188, 188, 188));
+
     List<string> keysMain = new()
             {
-                "Color_TextEditorBg",
-                "Color_TextEditorFg",
-                "Color_TitleBarBg",
-                "Color_TitleBarFont",
-                "Color_SystemButtons",
-                "Color_BorderColor",
+                UIConstants.Color_TextEditorBg,
+                UIConstants.Color_TextEditorFg,
+                UIConstants.Color_TitleBarBg,
+                UIConstants.Color_TitleBarFont,
+                UIConstants.Color_SystemButtons,
+                UIConstants.Color_BorderColor,
             };
 
 
     List<string> keysMenuBar = new()
             {
-                "Color_MenuBarBg",
-                "Color_MenuItemFg",
+                UIConstants.Color_MenuBarBg,
+                UIConstants.Color_MenuItemFg,
             };
 
 
     List<string> keysInfoBar = new()
             {
-                "Color_InfoBarBg",
-                "Color_InfoBarFg",
+                UIConstants.Color_InfoBarBg,
+                UIConstants.Color_InfoBarFg,
             };
 
     List<string> keysMenuItem = new()
             {
-                "Color_MenuBorder",
-                "Color_MenuBg",
-                "Color_MenuFg",
-                "Color_MenuSeperator",
-                "Color_MenuDisabledFg",
-                "Color_MenuItemSelectedBg",
-                "Color_MenuItemSelectedBorder",
-                "Color_MenuItemHighlightBg",
-                "Color_MenuItemHighlightBorder",
+                UIConstants.Color_MenuBorder,
+                UIConstants.Color_MenuBg,
+                UIConstants.Color_MenuFg,
+                UIConstants.Color_MenuSeperator,
+                UIConstants.Color_MenuDisabledFg,
+                UIConstants.Color_MenuItemSelectedBg,
+                UIConstants.Color_MenuItemSelectedBorder,
+                UIConstants.Color_MenuItemHighlightBg,
+                UIConstants.Color_MenuItemHighlightBorder,
             };
 
 
@@ -66,33 +69,33 @@ public partial class ThemeEditorWindow : Window
 
     void InitThemeData()
     {
-        AddNewColorLineSafe("Color_TextEditorBg", "Text Editor Background", ref ThemeManager.CurrentTheme.themeObj_TextEditorBg!);
-        AddNewColorLineSafe("Color_TextEditorFg", "Text Editor Font", ref ThemeManager.CurrentTheme.themeObj_TextEditorFg!);
+        AddNewColorLineSafe(UIConstants.Color_TextEditorBg, "Text Editor Background", ref ThemeManager.CurrentTheme.themeObj_TextEditorBg!);
+        AddNewColorLineSafe(UIConstants.Color_TextEditorFg, "Text Editor Font", ref ThemeManager.CurrentTheme.themeObj_TextEditorFg!);
 
-        AddNewColorLineSafe("Color_TitleBarBg", "Title Bar Background", ref ThemeManager.CurrentTheme.themeObj_TitleBarBg!);
-        AddNewColorLineSafe("Color_TitleBarFont", "Title Bar Font", ref ThemeManager.CurrentTheme.themeObj_TitleBarFont!);
+        AddNewColorLineSafe(UIConstants.Color_TitleBarBg, "Title Bar Background", ref ThemeManager.CurrentTheme.themeObj_TitleBarBg!);
+        AddNewColorLineSafe(UIConstants.Color_TitleBarFont, "Title Bar Font", ref ThemeManager.CurrentTheme.themeObj_TitleBarFont!);
 
-        AddNewColorLineSafe("Color_SystemButtons", "System Buttons", ref ThemeManager.CurrentTheme.themeObj_SystemButtons!);
-        AddNewColorLineSafe("Color_BorderColor", "Border Color", ref ThemeManager.CurrentTheme.themeObj_BorderColor!);
+        AddNewColorLineSafe(UIConstants.Color_SystemButtons, "System Buttons", ref ThemeManager.CurrentTheme.themeObj_SystemButtons!);
+        AddNewColorLineSafe(UIConstants.Color_BorderColor, "Border Color", ref ThemeManager.CurrentTheme.themeObj_BorderColor!);
 
-        AddNewColorLineSafe("Color_MenuBarBg", "Menu Bar Background", ref ThemeManager.CurrentTheme.themeObj_MenuBarBg!);
-        AddNewColorLineSafe("Color_MenuItemFg", "Menu Item Font", ref ThemeManager.CurrentTheme.themeObj_MenuItemFg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuBarBg, "Menu Bar Background", ref ThemeManager.CurrentTheme.themeObj_MenuBarBg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemFg, "Menu Item Font", ref ThemeManager.CurrentTheme.themeObj_MenuItemFg!);
 
-        AddNewColorLineSafe("Color_InfoBarBg", "Info Bar Background", ref ThemeManager.CurrentTheme.themeObj_InfoBarBg!);
-        AddNewColorLineSafe("Color_InfoBarFg", "Info Bar Font", ref ThemeManager.CurrentTheme.themeObj_InfoBarFg!);
+        AddNewColorLineSafe(UIConstants.Color_InfoBarBg, "Info Bar Background", ref ThemeManager.CurrentTheme.themeObj_InfoBarBg!);
+        AddNewColorLineSafe(UIConstants.Color_InfoBarFg, "Info Bar Font", ref ThemeManager.CurrentTheme.themeObj_InfoBarFg!);
 
 
         //AddNewColorLineSafe("Color_MenuBgColor_MenuBg", "Menu BG", ref ThemeManager.CurrentTheme.themeObj_MenuBgThemeObj_MenuBg!);
-        AddNewColorLineSafe("Color_MenuBg", "Menu Background", ref ThemeManager.CurrentTheme.themeObj_MenuBg!);
-        AddNewColorLineSafe("Color_MenuBorder", "Menu Border", ref ThemeManager.CurrentTheme.themeObj_MenuBorder!);
-        AddNewColorLineSafe("Color_MenuItemHighlightBg", "Menu Item Highlight Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBg!);
-        AddNewColorLineSafe("Color_MenuItemHighlightBorder", "Selected Menu Item Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBorder!);
-        AddNewColorLineSafe("Color_MenuSeperator", "Menu Seperator", ref ThemeManager.CurrentTheme.themeObj_MenuSeperator!);
-        AddNewColorLineSafe("Color_MenuDisabledFg", "Menu Disabled Font", ref ThemeManager.CurrentTheme.themeObj_MenuDisabledFg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuBg, "Menu Background", ref ThemeManager.CurrentTheme.themeObj_MenuBg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuBorder, "Menu Border", ref ThemeManager.CurrentTheme.themeObj_MenuBorder!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemHighlightBg, "Menu Item Highlight Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemHighlightBorder, "Selected Menu Item Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightBorder!);
+        AddNewColorLineSafe(UIConstants.Color_MenuSeperator, "Menu Seperator", ref ThemeManager.CurrentTheme.themeObj_MenuSeperator!);
+        AddNewColorLineSafe(UIConstants.Color_MenuDisabledFg, "Menu Disabled Font", ref ThemeManager.CurrentTheme.themeObj_MenuDisabledFg!);
 
-        AddNewColorLineSafe("Color_MenuItemSelectedBg", "Checkbox Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBg!);
-        AddNewColorLineSafe("Color_MenuItemSelectedBorder", "Checkbox Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBorder!);
-        AddNewColorLineSafe("Color_MenuFg", "Checkmark / Arrow", ref ThemeManager.CurrentTheme.themeObj_MenuFg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBg, "Checkbox Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBorder, "Checkbox Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBorder!);
+        AddNewColorLineSafe(UIConstants.Color_MenuFg, "Checkmark / Arrow", ref ThemeManager.CurrentTheme.themeObj_MenuFg!);
 
         //AddNewColorLineSafe("Color_MenuItemHighlightDisabledBg", "Menu Item Highlight Disabled Bg", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightDisabledBg!);
         //AddNewColorLineSafe("Color_MenuItemHighlightDisabledBorder", "Menu Item Highlight Disabled Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemHighlightDisabledBorder!);
@@ -109,12 +112,8 @@ public partial class ThemeEditorWindow : Window
         {
             ColorPickerLine line = new();
             line.SetupThemeObj(themeObj, resourceKey, friendlyThemeName);
-            if(++lineCt % 2 == 0)
-                line.ViewModel.BackgroundColor = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-            else
-                line.ViewModel.BackgroundColor = new SolidColorBrush(Color.FromArgb(255, 188, 188, 188));
 
-
+            line.ViewModel.BackgroundColor = ++lineCt % 2 == 0 ? brushWhite : brushGray;
 
             if(keysMain.Contains(resourceKey))
                 StackMain.Children.Add(line);
@@ -122,10 +121,8 @@ public partial class ThemeEditorWindow : Window
             else if(keysMenuBar.Contains(resourceKey))
                 StackMenuBar.Children.Add(line);
 
-
             else if(keysInfoBar.Contains(resourceKey))
                 StackInfoBar.Children.Add(line);
-
 
             else if(keysMenuItem.Contains(resourceKey))
                 StackMenuItem.Children.Add(line);
@@ -143,7 +140,7 @@ public partial class ThemeEditorWindow : Window
     void Border_MouseMove(object sender, MouseEventArgs e)
     {
         var position = e.GetPosition(this);
-        WindowResizer.ResizeWindow(this, position, Constants.ResizeBorderWidth);
+        WindowResizer.ResizeWindow(this, position, UIConstants.ResizeBorderWidth);
     }
 
     void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
@@ -188,29 +185,3 @@ public partial class ThemeEditorWindow : Window
         return true;
     }
 }
-
-
-//Application.Current.Resources["Color_TextEditorBg"]
-//Application.Current.Resources["Color_TextEditorFg"] = ColorUtil.GetRandomLinearGradientBrush(180);
-
-//Application.Current.Resources["Color_TitleBarFont"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_TitleBarBg"] = GetRandomLinearGradientBrush(180);
-//Application.Current.Resources["Color_SystemButtons"] = GetRandomColorBrush(180);
-
-//Application.Current.Resources["Color_BorderColor"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_InfoBarBg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_InfoBarFg"] = GetRandomColorBrush(180);
-
-//Application.Current.Resources["Color_MenuItemFg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuBarBg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuBg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuBorder"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuFg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuSeperator"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuDisabledFg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuItemSelectedBg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuItemSelectedBorder"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuItemHighlightBg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuItemHighlightBorder"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuItemHighlightDisabledBg"] = GetRandomColorBrush(180);
-//Application.Current.Resources["Color_MenuItemHighlightDisabledBorder"] = GetRandomColorBrush(180);
