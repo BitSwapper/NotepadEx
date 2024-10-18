@@ -107,13 +107,12 @@ public partial class GradientPickerWindow : Window
 
         UpdateGradientPreview();
 
-        // Update angle based on start and end points
         if(StartXSlider != null && StartYSlider != null && EndXSlider != null && EndYSlider != null)
         {
             double dx = EndXSlider.Value - StartXSlider.Value;
             double dy = EndYSlider.Value - StartYSlider.Value;
             double angle = Math.Atan2(dy, dx) * 180 / Math.PI;
-            angle = (angle + 360) % 360; // Ensure angle is between 0 and 360
+            angle = (angle + 360) % 360;
 
             SliderAngle.Value = angle;
         }

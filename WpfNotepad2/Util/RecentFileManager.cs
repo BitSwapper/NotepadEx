@@ -4,7 +4,7 @@ namespace NotepadEx.Util;
 
 public static class RecentFileManager
 {
-    const int maxRecentsToTrack = 10;
+    const int maxRecentsToTrack = 3;
     public static List<string> RecentFiles { get; private set; } = new();
 
     public static void LoadRecentFilesFromSettings()
@@ -16,8 +16,15 @@ public static class RecentFileManager
 
     public static void AddRecentFile(string filePath, MenuItem FileDropDown, Action SaveSettings)
     {
-        if(!string.IsNullOrEmpty(filePath) && !RecentFiles.Contains(filePath))
+        if(!string.IsNullOrEmpty(filePath))
         {
+            if(RecentFiles.Contains(filePath))
+            {
+                var index = RecentFiles.IndexOf(filePath);
+                var file = RecentFiles[index];
+                RecentFiles.RemoveAt(index);
+            }
+
             RecentFiles.Insert(0, filePath);
             if(RecentFiles.Count > maxRecentsToTrack)
                 RecentFiles.RemoveAt(RecentFiles.Count - 1);
@@ -28,7 +35,7 @@ public static class RecentFileManager
 
     public static void PopulateRecentFilesMenu(MenuItem FileDropDown)
     {
-        MenuItem openRecentMenuItem = (MenuItem)FileDropDown.FindName("MenuItem_OpenRecent");// .Items[3];
+        MenuItem openRecentMenuItem = (MenuItem)FileDropDown.FindName("MenuItem_OpenRecent");
         openRecentMenuItem.Items.Clear();
         foreach(string file in RecentFiles)
         {

@@ -2,7 +2,7 @@
 using System.Windows;
 
 namespace NotepadEx.Util;
-internal class AdditionalWindowManager
+internal class AdditionalWindowUtil
 {
     public static void TryCreateNewNotepadWindow()
     {

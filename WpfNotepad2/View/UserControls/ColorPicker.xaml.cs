@@ -32,7 +32,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     public ColorPicker()
     {
         InitializeComponent();
-
         DataContext = this;
         currentHue = 0;
         currentSaturation = 1;
@@ -160,7 +159,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     void txtHexColor_TextChanged(object sender, TextChangedEventArgs e)
     {
         var text = txtHexColor.Text.Replace("#",string.Empty);
-
         if(text.Length == 8)
             SelectedColor = ColorUtil.GetColorFromHex(txtHexColor.Text).GetValueOrDefault();
     }

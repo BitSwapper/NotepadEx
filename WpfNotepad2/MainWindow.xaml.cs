@@ -72,7 +72,7 @@ public partial class MainWindow : Window
         }
     }
 
-    void MenuItemNewWindow_Click(object sender, RoutedEventArgs e) => AdditionalWindowManager.TryCreateNewNotepadWindow();
+    void MenuItemNewWindow_Click(object sender, RoutedEventArgs e) => AdditionalWindowUtil.TryCreateNewNotepadWindow();
 
     void MenuItemOpen_Click(object sender, RoutedEventArgs e) => DocumentUtil.OpenDocument(SaveDocument, LoadDocument, hasTextChangedSinceSave, DirectoryUtil.AppName);
 

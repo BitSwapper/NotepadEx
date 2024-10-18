@@ -33,8 +33,6 @@ public class ColorTheme
 [Serializable]
 public class ColorThemeSerializable
 {
-
-
     [JsonPropertyName("themeObj_TextEditorBg")] public ThemeObjectSerializable ThemeObj_TextEditorBg { get; set; }
     [JsonPropertyName("themeObj_TextEditorFg")] public ThemeObjectSerializable ThemeObj_TextEditorFg { get; set; }
     [JsonPropertyName("themeObj_TitleBarBg")] public ThemeObjectSerializable ThemeObj_TitleBarBg { get; set; }
