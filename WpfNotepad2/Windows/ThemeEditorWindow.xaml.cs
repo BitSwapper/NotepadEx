@@ -12,9 +12,6 @@ namespace NotepadEx.Windows;
 
 public partial class ThemeEditorWindow : Window
 {
-    WindowState prevWindowState;
-    WindowResizer resizer;
-    string currentThemeName;
     int lineCt = 0;
 
     SolidColorBrush brushWhite = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
@@ -24,7 +21,6 @@ public partial class ThemeEditorWindow : Window
     public ThemeEditorWindow()
     {
         InitializeComponent();
-        resizer = new WindowResizer();
         ThemeEditorTitleBar.Init(this, "Theme Editor", Minimize_Click, null!, Close_Click);
         InitThemeData();
     }
@@ -113,7 +109,6 @@ public partial class ThemeEditorWindow : Window
 
         File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
         //UpdateTitleText(fileName);
-        currentThemeName = fileName;
         //UpdateModifiedStateOfTitleBar();
         //AddRecentFile(fileName);
         return true;

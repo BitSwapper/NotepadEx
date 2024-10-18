@@ -35,7 +35,7 @@ public static class ColorUtil
 
     public static Color? GetColorFromHex(string hex)
     {
-        if(hex == null) return null;
+        if(hex == null || hex.Length > 9) return null;
         if(hex.StartsWith("#"))
             hex = hex.Substring(1); // Remove the #
 
@@ -106,5 +106,68 @@ public static class ColorUtil
         }
 
         return Color.FromArgb(a, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+    }
+
+    public static string SerializeGradient(LinearGradientBrush gradient)
+    {
+        var serializedData = new List<string>
+        {
+            $"StartPoint:{gradient.StartPoint.X},{gradient.StartPoint.Y}",
+            $"EndPoint:{gradient.EndPoint.X},{gradient.EndPoint.Y}",
+            $"SpreadMethod:{gradient.SpreadMethod}",
+            $"MappingMode:{gradient.MappingMode}",
+            $"ColorInterpolationMode:{gradient.ColorInterpolationMode}"
+        };
+
+        var stops = gradient.GradientStops.Select(stop =>
+            $"{ColorUtil.ColorToHexString(stop.Color)}:{stop.Offset}");
+        serializedData.Add($"GradientStops:{string.Join("|", stops)}");
+
+        return string.Join(";", serializedData);
+    }
+
+    public static LinearGradientBrush DeserializeGradient(string gradientString)
+    {
+        var parts = gradientString.Split(';');
+        var brush = new LinearGradientBrush();
+
+        foreach(var part in parts)
+        {
+            var keyValue = part.Split(':');
+            if(keyValue.Length < 2) continue;
+
+            switch(keyValue[0])
+            {
+                case "StartPoint":
+                    var startPoint = keyValue[1].Split(',');
+                    brush.StartPoint = new Point(double.Parse(startPoint[0]), double.Parse(startPoint[1]));
+                    break;
+                case "EndPoint":
+                    var endPoint = keyValue[1].Split(',');
+                    brush.EndPoint = new Point(double.Parse(endPoint[0]), double.Parse(endPoint[1]));
+                    break;
+                case "SpreadMethod":
+                    brush.SpreadMethod = (GradientSpreadMethod)Enum.Parse(typeof(GradientSpreadMethod), keyValue[1]);
+                    break;
+                case "MappingMode":
+                    brush.MappingMode = (BrushMappingMode)Enum.Parse(typeof(BrushMappingMode), keyValue[1]);
+                    break;
+                case "ColorInterpolationMode":
+                    brush.ColorInterpolationMode = (ColorInterpolationMode)Enum.Parse(typeof(ColorInterpolationMode), keyValue[1]);
+                    break;
+                case "GradientStops":
+                    var stopsData = string.Join(":", keyValue.Skip(1));  // Rejoin in case there were colons in the color data
+                    var stops = stopsData.Split('|').Select(stop =>
+                    {
+                        var stopParts = stop.Split(':');
+                        if (stopParts.Length != 2) throw new FormatException($"Invalid gradient stop format: {stop}");
+                        return new GradientStop(ColorUtil.GetColorFromHex(stopParts[0]).Value, double.Parse(stopParts[1]));
+                    });
+                    brush.GradientStops = new GradientStopCollection(stops.ToList());  // Convert to List before creating GradientStopCollection
+                    break;
+            }
+        }
+
+        return brush;
     }
 }

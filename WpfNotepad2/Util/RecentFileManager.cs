@@ -4,7 +4,7 @@ namespace NotepadEx.Util;
 
 public static class RecentFileManager
 {
-    const int maxRecentsToTrack = 3;
+    const int maxRecentsToTrack = 20;
     public static List<string> RecentFiles { get; private set; } = new();
 
     public static void LoadRecentFilesFromSettings()

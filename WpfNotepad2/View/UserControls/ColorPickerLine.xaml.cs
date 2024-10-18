@@ -4,6 +4,7 @@ using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
 using Application = System.Windows.Application;
+using Color = System.Windows.Media.Color;
 using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 namespace NotepadEx.View.UserControls;
@@ -106,5 +107,37 @@ public partial class ColorPickerLine : UserControl
 
         if(themeObj != null)
             themeObj.isGradient = true;
+    }
+
+    private void ButtonCopy_Click(object sender, RoutedEventArgs e)
+    {
+        if(rdBtnColor.IsChecked == true)
+        {
+            var color = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path).Color;
+            Clipboard.SetText(ColorUtil.ColorToHexString(color));
+        }
+        else
+        {
+            var gradient = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
+            var serializedGradient = ColorUtil.SerializeGradient(gradient);
+            Clipboard.SetText(serializedGradient);
+        }
+    }
+
+    private void ButtonPaste_Click(object sender, RoutedEventArgs e)
+    {
+        Color? color = ColorUtil.GetColorFromHex(Clipboard.GetText());
+        if(color.HasValue)
+        {
+            var brush = new SolidColorBrush(color.Value);
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, brush);
+            gridForImage.Background = brush;
+        }
+        else
+        {
+            var gradient = ColorUtil.DeserializeGradient(Clipboard.GetText());
+            AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, gradient);
+            gridForImage.Background = gradient;
+        }
     }
 }

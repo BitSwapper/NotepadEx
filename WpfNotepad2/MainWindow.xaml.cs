@@ -34,15 +34,12 @@ public partial class MainWindow : Window
     {
         resizer = new();
         MainWindowTitleBar.Init(this, DirectoryUtil.AppName, Minimize_Click, Maximize_Click, Exit_Click);
-        string imagePath = DirectoryUtil.ImagePath_MainIcon.ToUriPath();
-        var v = new BitmapImage(new Uri(imagePath));
-        MainWindowTitleBar.ImageSource = v;
+        MainWindowTitleBar.ImageSource = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
 
         txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
         MenuItem_ToggleWrapping.IsChecked = Settings.Default.TextWrapping;
 
         SetupMainMenuBar(!Settings.Default.MenuBarAutoHide);
-        MenuItem_AutoHideMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
 
         SetupInfoBar();
         ThemeManager.SetupThemes(MenuItem_Theme);
@@ -232,6 +229,7 @@ public partial class MainWindow : Window
             Row_MainMenuBar.IsEnabled = true;
             MainMenuBar.IsEnabled = true;
         }
+        MenuItem_AutoHideMenuBar.IsChecked = Settings.Default.MenuBarAutoHide;
     }
 
     void SetupInfoBar()

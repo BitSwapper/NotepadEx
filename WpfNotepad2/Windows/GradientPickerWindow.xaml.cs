@@ -13,6 +13,7 @@ public partial class GradientPickerWindow : Window
     bool _updatingFromScale = false;
     double ScaleX { get; set; } = 1.0;
     double ScaleY { get; set; } = 1.0;
+
     public GradientPickerWindow()
     {
         InitializeComponent();
