@@ -16,7 +16,7 @@ public static class ColorUtil
         linearGradientBrush.StartPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
         linearGradientBrush.EndPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
 
-        int gradientStopCount = Random.Shared.Next(2, 5);
+        int gradientStopCount = Random.Shared.Next(2, 7);
         var gradientStops = new List<GradientStop>();
         for(int i = 0; i < gradientStopCount; i++)
         {

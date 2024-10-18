@@ -132,12 +132,14 @@ public partial class ColorPickerLine : UserControl
             var brush = new SolidColorBrush(color.Value);
             AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, brush);
             gridForImage.Background = brush;
+            rdBtnColor.IsChecked = true;
         }
         else
         {
             var gradient = ColorUtil.DeserializeGradient(Clipboard.GetText());
             AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, gradient);
             gridForImage.Background = gradient;
+            rdBtnGradient.IsChecked = true;
         }
     }
 }
