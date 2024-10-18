@@ -42,6 +42,9 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         UpdateHueSelector();
     }
 
+    void UserControl_Loaded(object sender, RoutedEventArgs e) => UpdateColorFromSelectedColor();
+
+
     public Color SelectedColor
     {
         get => (Color)GetValue(SelectedColorProperty);
@@ -238,8 +241,6 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     }
 
     void UpdateHueSelector() => Canvas.SetTop(HueSelector, currentHue * HueSlider.ActualHeight);
-
-    void UserControl_Loaded(object sender, RoutedEventArgs e) => UpdateColorFromSelectedColor();
 }
 
 

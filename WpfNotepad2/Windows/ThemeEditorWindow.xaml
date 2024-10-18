@@ -8,8 +8,9 @@
         mc:Ignorable="d"
         Title="ThemeEditorWindow" Height="450" Width="400"
         WindowStyle="None"
-        AllowsTransparency="True">
-    <Grid>
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Grid Background="#EEDDDDDD">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="18"/>
@@ -33,7 +34,7 @@
             </MenuItem>
         </Menu>
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Name="stackPanelMain">
+            <StackPanel Name="stackPanelMain" Background="Transparent">
                 <Expander Name="ExpanderMain" Header="Main">
                         <StackPanel Name="StackPanelMain" HorizontalAlignment="Center" Width="280"></StackPanel>
                     </Expander>

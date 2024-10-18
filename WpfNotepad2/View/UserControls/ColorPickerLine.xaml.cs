@@ -73,14 +73,11 @@ public partial class ColorPickerLine : UserControl
         else
         {
             GradientPickerWindow gradientPickerWindow = new();
-
-            //      **This code shows our current gradient but breaks our sliders afterward..
             if(gridForImage.Background is LinearGradientBrush gradientBrush)
             {
                 gradientPickerWindow.GradientStops.Clear();
                 gradientPickerWindow.SetGradient(gradientBrush.GradientStops);
             }
-
 
             if(gradientPickerWindow.ShowDialog() == true)
             {
@@ -109,7 +106,7 @@ public partial class ColorPickerLine : UserControl
             themeObj.isGradient = true;
     }
 
-    private void ButtonCopy_Click(object sender, RoutedEventArgs e)
+    void ButtonCopy_Click(object sender, RoutedEventArgs e)
     {
         if(rdBtnColor.IsChecked == true)
         {
@@ -124,7 +121,7 @@ public partial class ColorPickerLine : UserControl
         }
     }
 
-    private void ButtonPaste_Click(object sender, RoutedEventArgs e)
+    void ButtonPaste_Click(object sender, RoutedEventArgs e)
     {
         Color? color = ColorUtil.GetColorFromHex(Clipboard.GetText());
         if(color.HasValue)

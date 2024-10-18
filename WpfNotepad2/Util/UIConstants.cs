@@ -35,13 +35,11 @@ public static class UIConstants
         Color_BorderColor,
     };
 
-
     public static readonly List<string> UIColorKeysMenuBar = new()
     {
         Color_MenuBarBg,
         Color_MenuItemFg,
     };
-
 
     public static readonly List<string> UIColorKeysInfoBar = new()
     {
