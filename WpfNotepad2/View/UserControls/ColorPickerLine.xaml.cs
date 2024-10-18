@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
@@ -109,7 +110,11 @@ public partial class ColorPickerLine : UserControl
             themeObj.isGradient = false;
             if(themeObj.color.HasValue)
                 gridForImage.Background = new SolidColorBrush(themeObj.color.Value);
+            else
+                gridForImage.Background = new SolidColorBrush(Colors.Gray);
         }
+
+        AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, gridForImage.Background);
     }
 
     void rdBtnGradient_Checked(object sender, RoutedEventArgs e)
@@ -126,19 +131,30 @@ public partial class ColorPickerLine : UserControl
             themeObj.isGradient = true;
             if(themeObj.gradient is not null)
                 gridForImage.Background = themeObj.gradient;
+            else
+            {
+                GradientStopCollection GradientStops = new();
+                GradientStops.Add(new GradientStop(Colors.White, 0));
+                GradientStops.Add(new GradientStop(Colors.Black, 1));
+                gridForImage.Background = new LinearGradientBrush(GradientStops);
+            }
         }
+
+        AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, gridForImage.Background);
     }
 
     void ButtonCopy_Click(object sender, RoutedEventArgs e)
     {
         if(rdBtnColor.IsChecked == true)
         {
-            var color = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path).Color;
-            Clipboard.SetText(ColorUtil.ColorToHexString(color));
+            var color = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path)?.Color ?? null;
+            if(color.HasValue)
+                Clipboard.SetText(ColorUtil.ColorToHexString(color.Value));
         }
         else
         {
             var gradient = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
+            if(gradient == null) return;
             var serializedGradient = ColorUtil.SerializeGradient(gradient);
             Clipboard.SetText(serializedGradient);
         }
