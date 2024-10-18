@@ -73,10 +73,17 @@ public partial class ColorPickerLine : UserControl
         else
         {
             GradientPickerWindow gradientPickerWindow = new();
+
             if(gridForImage.Background is LinearGradientBrush gradientBrush)
             {
                 gradientPickerWindow.GradientStops.Clear();
                 gradientPickerWindow.SetGradient(gradientBrush.GradientStops);
+            }
+
+            else if(themeObj?.gradient != null)
+            {
+                gradientPickerWindow.GradientStops.Clear();
+                gradientPickerWindow.SetGradient(themeObj.gradient.GradientStops);
             }
 
             if(gradientPickerWindow.ShowDialog() == true)
@@ -91,19 +98,35 @@ public partial class ColorPickerLine : UserControl
     void rdBtnColor_Checked(object sender, RoutedEventArgs e)
     {
         if(path != null)
-            GridForImg.Background = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
+        {
+            var brush = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
+            if(brush != null)
+                GridForImg.Background = brush;
+        }
 
         if(themeObj != null)
+        {
             themeObj.isGradient = false;
+            if(themeObj.color.HasValue)
+                gridForImage.Background = new SolidColorBrush(themeObj.color.Value);
+        }
     }
 
     void rdBtnGradient_Checked(object sender, RoutedEventArgs e)
     {
         if(path != null)
-            GridForImg.Background = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
+        {
+            var brush = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
+            if(brush != null)
+                GridForImg.Background = brush; 
+        }
 
         if(themeObj != null)
+        {
             themeObj.isGradient = true;
+            if(themeObj.gradient is not null)
+                gridForImage.Background = themeObj.gradient;
+        }
     }
 
     void ButtonCopy_Click(object sender, RoutedEventArgs e)

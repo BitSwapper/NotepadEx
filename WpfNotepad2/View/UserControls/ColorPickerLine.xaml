@@ -32,9 +32,9 @@
                         </BulletDecorator>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="CheckMark" Property="Fill" Value="WhiteSmoke"/> <!-- Change selected color here -->
-                                <Setter TargetName="CheckMark" Property="Width" Value="5"/> <!-- Change selected color here -->
-                                <Setter TargetName="CheckMark" Property="Height" Value="5"/> <!-- Change selected color here -->
+                                <Setter TargetName="CheckMark" Property="Fill" Value="WhiteSmoke"/>
+                                <Setter TargetName="CheckMark" Property="Width" Value="5"/>
+                                <Setter TargetName="CheckMark" Property="Height" Value="5"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Stroke" Value="#AA0080FF"/>
@@ -67,18 +67,18 @@
             </Border>
             
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2">
-                <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="12 4 4 4" Checked="rdBtnColor_Checked"/>
-                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="4 4 8 4" Checked="rdBtnGradient_Checked"/>
+                <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="12 8 4 4" Checked="rdBtnColor_Checked"/>
+                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="4 8 8 4" Checked="rdBtnGradient_Checked"/>
 
                <!--<Button Name="btnEdit"  Height="24" Width="70" Margin="35 0" Content="Edit"  VerticalContentAlignment="Top" Click="ButtonEdit_Click"/>
                 <Button Height="24" Width="70" Content="Randomize"  VerticalContentAlignment="Top" Click="ButtonRandomize_Click"/>-->
             </StackPanel>
 
             <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <Button Width="70" Content="Randomize" Height="20"  Margin="16 0 5 0" Click="ButtonRandomize_Click"></Button>
-                <Button Name="btnEdit" Width="50" Height="20" Content="Edit" Margin="5 0 5 0" Click="ButtonEdit_Click"></Button>
-                <Button Width="50" Content="Copy" Height="20" Margin="5 0 5 0" Click="ButtonCopy_Click"></Button>
-                <Button Width="50" Content="Paste" Height="20"  Margin="5 0 5 0" Click="ButtonPaste_Click"></Button>
+                <Button Width="70" Content="Randomize" Height="20"  Margin="13 0 6 0" Click="ButtonRandomize_Click"></Button>
+                <Button Name="btnEdit" Width="50" Height="20" Content="Edit" Margin="5 0 6 0" Click="ButtonEdit_Click"></Button>
+                <Button Width="50" Content="Copy" Height="20" Margin="5 0 6 0" Click="ButtonCopy_Click"></Button>
+                <Button Width="50" Content="Paste" Height="20"  Margin="5 0 6 0" Click="ButtonPaste_Click"></Button>
 
             </StackPanel>
         </Grid>
