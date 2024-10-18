@@ -1,6 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using NotepadEx.Util;
+using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
 namespace NotepadEx.Windows;
 
@@ -8,9 +11,9 @@ public partial class GradientPickerWindow : Window
 {
     public ObservableCollection<GradientStop> GradientStops { get; set; } = new();
     public LinearGradientBrush GradientBrush => GradientPreview;
-    bool _updatingFromAngle = false;
-    bool _updatingFromOffset = false;
-    bool _updatingFromScale = false;
+    bool updatingFromAngle = false;
+    bool updatingFromOffset = false;
+    bool updatingFromScale = false;
     double ScaleX { get; set; } = 1.0;
     double ScaleY { get; set; } = 1.0;
 
@@ -38,9 +41,7 @@ public partial class GradientPickerWindow : Window
 
         GradientPreview.GradientStops.Clear();
         foreach(var stop in GradientStops)
-        {
             GradientPreview.GradientStops.Add(stop);
-        }
 
         if(StartXSlider != null && StartYSlider != null && EndXSlider != null && EndYSlider != null)
         {
@@ -84,13 +85,12 @@ public partial class GradientPickerWindow : Window
 
     void SliderAngle_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(_updatingFromAngle) return;
+        if(updatingFromAngle) return;
 
-        _updatingFromAngle = true;
+        updatingFromAngle = true;
 
-        double angle = SliderAngle.Value * Math.PI / 180; // Convert to radians
-        double length = Math.Sqrt(Math.Pow(EndXSlider.Value - StartXSlider.Value, 2) +
-                                  Math.Pow(EndYSlider.Value - StartYSlider.Value, 2));
+        double angle = SliderAngle.Value * Math.PI / 180;
+        double length = Math.Sqrt(Math.Pow(EndXSlider.Value - StartXSlider.Value, 2) + Math.Pow(EndYSlider.Value - StartYSlider.Value, 2));
 
         StartXSlider.Value = 0.5 - (length / 2) * Math.Cos(angle);
         StartYSlider.Value = 0.5 - (length / 2) * Math.Sin(angle);
@@ -98,13 +98,12 @@ public partial class GradientPickerWindow : Window
         EndYSlider.Value = 0.5 + (length / 2) * Math.Sin(angle);
 
         UpdateGradientPreview();
-
-        _updatingFromAngle = false;
+        updatingFromAngle = false;
     }
 
     void PositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(_updatingFromAngle || _updatingFromOffset) return;
+        if(updatingFromAngle || updatingFromOffset) return;
 
         UpdateGradientPreview();
 
@@ -121,18 +120,18 @@ public partial class GradientPickerWindow : Window
 
     void SliderOffsetX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(_updatingFromOffset) return;
-        _updatingFromOffset = true;
+        if(updatingFromOffset) return;
+        updatingFromOffset = true;
         UpdateGradientPreview();
-        _updatingFromOffset = false;
+        updatingFromOffset = false;
     }
 
     void SliderOffsetY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(_updatingFromOffset) return;
-        _updatingFromOffset = true;
+        if(updatingFromOffset) return;
+        updatingFromOffset = true;
         UpdateGradientPreview();
-        _updatingFromOffset = false;
+        updatingFromOffset = false;
     }
 
     void AddStop_Click(object sender, RoutedEventArgs e)
@@ -161,7 +160,7 @@ public partial class GradientPickerWindow : Window
 
             if(colorPicker.ShowDialog() == true)
             {
-                selectedStop.Color = colorPicker.SelectedColor;
+                SetStopColor(new SolidColorBrush(colorPicker.SelectedColor), selectedStop);
                 UpdateGradientPreview();
             }
         }
@@ -169,11 +168,33 @@ public partial class GradientPickerWindow : Window
 
     void CopyStop_Click(object sender, RoutedEventArgs e)
     {
+        if(sender is not Button button || button.Tag is not System.Windows.Shapes.Rectangle rectangle ||
+                   rectangle.Fill is not SolidColorBrush brush) return;
 
+        Clipboard.SetText(ColorUtil.ColorToHexString(brush.Color));
     }
+
     void PasteStop_Click(object sender, RoutedEventArgs e)
     {
+        if(sender is not Button button || button.Tag is not System.Windows.Shapes.Rectangle rectangle ||
+            rectangle.Fill is not SolidColorBrush brush) return;
 
+        var color = ColorUtil.GetColorFromHex(Clipboard.GetText());
+        if(color.HasValue)
+        {
+            brush.Color = color.Value;
+            if((button.DataContext as GradientStop) is GradientStop selectedStop)
+                SetStopColor(brush, selectedStop);
+
+            UpdateGradientPreview();
+        }
+    }
+
+    private void SetStopColor(SolidColorBrush brush, GradientStop selectedStop)
+    {
+        int index = GradientStops.IndexOf(selectedStop);
+        if(index != -1)
+            GradientStops[index] = new GradientStop(brush.Color, selectedStop.Offset);
     }
 
     void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -199,32 +220,19 @@ public partial class GradientPickerWindow : Window
 
     void SliderScaleX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(_updatingFromScale) return;
-        _updatingFromScale = true;
+        if(updatingFromScale) return;
+        updatingFromScale = true;
         ScaleX = e.NewValue;
         UpdateGradientPreview();
-        _updatingFromScale = false;
+        updatingFromScale = false;
     }
 
     void SliderScaleY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(_updatingFromScale) return;
-        _updatingFromScale = true;
+        if(updatingFromScale) return;
+        updatingFromScale = true;
         ScaleY = e.NewValue;
         UpdateGradientPreview();
-        _updatingFromScale = false;
+        updatingFromScale = false;
     }
-
-    void StopsListBox_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-    {
-
-    }
-
-    void StopsListBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-    }
-
-    void StopsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) => MessageBox.Show("");
-
-    void StopsListBox_Selected(object sender, RoutedEventArgs e) => MessageBox.Show("1");
 }

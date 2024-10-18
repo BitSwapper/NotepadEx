@@ -23,32 +23,8 @@
                 <LinearGradientBrush x:Name="GradientPreview"/>
             </Rectangle.Fill>
         </Rectangle>
-        
-        <!-- Angle Slider -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
-            
-            <TextBlock Text="Angle:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <Slider x:Name="SliderAngle" Width="160" Minimum="0" Maximum="360" Value="0" Margin="0,0,5,0" ValueChanged="SliderAngle_ValueChanged"/>
-            <TextBlock Text="{Binding ElementName=SliderAngle, Path=Value, StringFormat={}{0:F0}°}" VerticalAlignment="Center" Margin="5,0,10,0"/>
-            
-            <TextBlock Text="Offset X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <Slider x:Name="SliderOffsetX" Width="160" Minimum="-2" Maximum="2" Value="0" Margin="0,0,5,0" ValueChanged="SliderOffsetX_ValueChanged"/>
-
-            <TextBlock Text="Offset Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <Slider x:Name="SliderOffsetY" Width="160" Minimum="-2" Maximum="2" Value="0" ValueChanged="SliderOffsetY_ValueChanged"/>
-        </StackPanel>
 
 
-        <!-- Scale Slider -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
-
-   
-            <TextBlock Text="Scale X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <Slider x:Name="SliderScaleX" Width="180" Minimum="-3" Maximum="3" Value="0" Margin="0,0,5,0" ValueChanged="SliderScaleX_ValueChanged"/>
-
-            <TextBlock Text="Scale Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <Slider x:Name="SliderScaleY" Width="180" Minimum="-3" Maximum="3" Value="0" ValueChanged="SliderScaleY_ValueChanged"/>
-        </StackPanel>
 
 
         <!-- Start and End Position Controls -->
@@ -84,6 +60,37 @@
                 <TextBlock Text="{Binding ElementName=EndYSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,0,0"/>
             </StackPanel>
         </Grid>
+
+        <!-- Angle Slider -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+            
+            <TextBlock Text="Angle:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderAngle" Width="160" Minimum="0" Maximum="360" Value="0" Margin="0,0,5,0" ValueChanged="SliderAngle_ValueChanged"/>
+            <TextBlock Text="{Binding ElementName=SliderAngle, Path=Value, StringFormat={}{0:F0}°}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+            
+            <TextBlock Text="Offset X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderOffsetX" Width="160" Minimum="-2" Maximum="2" Value="0" Margin="0,0,5,0" ValueChanged="SliderOffsetX_ValueChanged"/>
+
+            <TextBlock Text="Offset Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderOffsetY" Width="160" Minimum="-2" Maximum="2" Value="0" ValueChanged="SliderOffsetY_ValueChanged"/>
+        </StackPanel>
+
+
+      
+
+
+        <!-- Scale Slider -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
+
+
+            <TextBlock Text="Scale X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderScaleX" Width="180" Minimum="-3" Maximum="3" Value="0" Margin="0,0,5,0" ValueChanged="SliderScaleX_ValueChanged"/>
+
+            <TextBlock Text="Scale Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderScaleY" Width="180" Minimum="-3" Maximum="3" Value="0" ValueChanged="SliderScaleY_ValueChanged"/>
+        </StackPanel>
+
+
         <!-- Gradient Stops -->
         <ListBox Grid.Row="4" x:Name="StopsListBox" Margin="10" d:ItemsSource="{d:SampleData ItemCount=9}">
             <ListBox.ItemTemplate>
@@ -105,12 +112,15 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Button Content="Edit" Grid.Column="2" Margin="5,0,0,0" Click="EditStop_Click"/>
-                        <Button Content="Copy" Grid.Column="3" Margin="5,0,0,0" Click="CopyStop_Click"/>
-                        <Button Content="Paste" Grid.Column="4" Margin="5,0,0,0" Click="PasteStop_Click"/>
+                        <Button Content="Copy" Grid.Column="3" Margin="5,0,0,0" Click="CopyStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                        <Button Content="Paste" Grid.Column="4" Margin="5,0,0,0" Click="PasteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        
+        
+        
         <!-- Controls -->
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Add Stop" Click="AddStop_Click" Margin="0,0,5,0"/>

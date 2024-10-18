@@ -123,20 +123,23 @@ public partial class ColorPickerLine : UserControl
 
     void ButtonPaste_Click(object sender, RoutedEventArgs e)
     {
-        Color? color = ColorUtil.GetColorFromHex(Clipboard.GetText());
-        if(color.HasValue)
+        var gradient = ColorUtil.DeserializeGradient(Clipboard.GetText());
+        if(gradient is not null)
         {
-            var brush = new SolidColorBrush(color.Value);
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, brush);
-            gridForImage.Background = brush;
-            rdBtnColor.IsChecked = true;
-        }
-        else
-        {
-            var gradient = ColorUtil.DeserializeGradient(Clipboard.GetText());
             AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, gradient);
             gridForImage.Background = gradient;
             rdBtnGradient.IsChecked = true;
+        }
+        else
+        {
+            Color? color = ColorUtil.GetColorFromHex(Clipboard.GetText());
+            if(color.HasValue)
+            {
+                var brush = new SolidColorBrush(color.Value);
+                AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, brush);
+                gridForImage.Background = brush;
+                rdBtnColor.IsChecked = true;
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ public static class ColorUtil
             hex = "FF" + hex; // Add alpha if missing
 
         if(!(hex.Length == 6 || hex.Length == 8))
-            return Color.FromArgb(128, 0, 0, 0);
+            return null;
 
         byte a, r, g, b;
 
@@ -130,7 +130,7 @@ public static class ColorUtil
     {
         var parts = gradientString.Split(';');
         var brush = new LinearGradientBrush();
-
+        bool wasValid = false;
         foreach(var part in parts)
         {
             var keyValue = part.Split(':');
@@ -163,11 +163,15 @@ public static class ColorUtil
                         if (stopParts.Length != 2) throw new FormatException($"Invalid gradient stop format: {stop}");
                         return new GradientStop(ColorUtil.GetColorFromHex(stopParts[0]).Value, double.Parse(stopParts[1]));
                     });
+
+                    if(stops.Count() > 0)
+                        wasValid = true;
+
                     brush.GradientStops = new GradientStopCollection(stops.ToList());  // Convert to List before creating GradientStopCollection
                     break;
             }
         }
-
+        if(!wasValid) return null;
         return brush;
     }
 }
