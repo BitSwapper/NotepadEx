@@ -16,7 +16,6 @@ public partial class ThemeEditorWindow : Window
     SolidColorBrush brushWhite = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
     SolidColorBrush brushGray = new SolidColorBrush(Color.FromArgb(255, 188, 188, 188));
 
-
     public ThemeEditorWindow()
     {
         InitializeComponent();

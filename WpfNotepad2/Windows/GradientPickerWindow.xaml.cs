@@ -190,7 +190,7 @@ public partial class GradientPickerWindow : Window
         }
     }
 
-    private void SetStopColor(SolidColorBrush brush, GradientStop selectedStop)
+    void SetStopColor(SolidColorBrush brush, GradientStop selectedStop)
     {
         int index = GradientStops.IndexOf(selectedStop);
         if(index != -1)
@@ -207,13 +207,6 @@ public partial class GradientPickerWindow : Window
     {
         DialogResult = false;
         Close();
-    }
-
-    public string GetGradientString()
-    {
-        var startPoint = GradientPreview.StartPoint;
-        var endPoint = GradientPreview.EndPoint;
-        return $"StartPoint:{startPoint.X:F2},{startPoint.Y:F2};EndPoint:{endPoint.X:F2},{endPoint.Y:F2};";
     }
 
     void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => UpdateGradientPreview();
