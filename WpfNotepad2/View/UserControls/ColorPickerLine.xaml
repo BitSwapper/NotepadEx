@@ -6,6 +6,50 @@
              xmlns:local="clr-namespace:NotepadEx.View.UserControls"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" d:DesignWidth="280" Height="125">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="Background" Value="#FF3C3C3C"/>
+            <Setter Property="BorderBrush" Value="#FF131313"/>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="Background" Value="#FF3C3C3C"/>
+            <Setter Property="BorderBrush" Value="#FF131313"/>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <BulletDecorator Background="Transparent">
+                            <BulletDecorator.Bullet>
+                                <Grid Width="13" Height="13">
+                                    <Ellipse x:Name="Border" Stroke="WhiteSmoke" StrokeThickness="1"/>
+                                    <Ellipse x:Name="CheckMark" Fill="Transparent" Stretch="Uniform"/>
+                                </Grid>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter Margin="4,0,0,0" VerticalAlignment="Center"/>
+                        </BulletDecorator>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark" Property="Fill" Value="WhiteSmoke"/> <!-- Change selected color here -->
+                                <Setter TargetName="CheckMark" Property="Width" Value="5"/> <!-- Change selected color here -->
+                                <Setter TargetName="CheckMark" Property="Height" Value="5"/> <!-- Change selected color here -->
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Stroke" Value="#AA0080FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Resources>
     <Border BorderBrush="#FF4E4E4E" BorderThickness="1">
         <Grid Background="{Binding BackgroundColor}">
             <Grid.RowDefinitions>
@@ -15,7 +59,7 @@
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Name="txtThemeName" Margin="5 17 0 0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
+            <TextBlock Name="txtThemeName" Margin="12 17 0 0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
             <Border BorderBrush="#FF74BEF7" Grid.Row="1" BorderThickness="1" Margin="12 0 12 0">
                 
                 <Grid Name="gridForImage"  HorizontalAlignment="Stretch" Background="#FF54799B" Margin="0"></Grid>
@@ -23,8 +67,8 @@
             </Border>
             
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2">
-                <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="4" Checked="rdBtnColor_Checked"/>
-                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="4 4 8 0" Checked="rdBtnGradient_Checked"/>
+                <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="12 4 4 4" Checked="rdBtnColor_Checked"/>
+                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="4 4 8 4" Checked="rdBtnGradient_Checked"/>
 
                <!--<Button Name="btnEdit"  Height="24" Width="70" Margin="35 0" Content="Edit"  VerticalContentAlignment="Top" Click="ButtonEdit_Click"/>
                 <Button Height="24" Width="70" Content="Randomize"  VerticalContentAlignment="Top" Click="ButtonRandomize_Click"/>-->

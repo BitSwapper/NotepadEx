@@ -13,8 +13,8 @@ public partial class ThemeEditorWindow : Window
 {
     int lineCt = 0;
 
-    SolidColorBrush brushWhite = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-    SolidColorBrush brushGray = new SolidColorBrush(Color.FromArgb(255, 188, 188, 188));
+    SolidColorBrush brushA = new SolidColorBrush(Color.FromArgb(255, 64, 64, 64));
+    SolidColorBrush brushB = new SolidColorBrush(Color.FromArgb(255, 44, 44, 44));
 
     public ThemeEditorWindow()
     {
@@ -60,7 +60,7 @@ public partial class ThemeEditorWindow : Window
             ColorPickerLine line = new();
             line.SetupThemeObj(themeObj, resourceKey, friendlyThemeName);
 
-            line.ViewModel.BackgroundColor = ++lineCt % 2 == 0 ? brushWhite : brushGray;
+            line.ViewModel.BackgroundColor = ++lineCt % 2 == 0 ? brushA : brushB;
 
             if(UIConstants.UIColorKeysMain.Contains(resourceKey))
                 StackPanelMain.Children.Add(line);

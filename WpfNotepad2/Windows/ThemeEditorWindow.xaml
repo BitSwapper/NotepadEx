@@ -10,7 +10,12 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent">
-    <Grid Background="#EEDDDDDD">
+    <Window.Resources>
+        <Style TargetType="Expander">
+            <Setter Property="Foreground" Value="WhiteSmoke"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF323232">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="18"/>
