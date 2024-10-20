@@ -75,16 +75,29 @@ public partial class ColorPickerLine : UserControl
         {
             GradientPickerWindow gradientPickerWindow = new();
 
+            gradientPickerWindow.OnSelectedColorChanged += () =>
+            {
+                gridForImage.Background = gradientPickerWindow.GradientPreview;
+                var newBrush = new LinearGradientBrush();
+                newBrush.StartPoint = gradientPickerWindow.GradientPreview.StartPoint;
+                newBrush.EndPoint = gradientPickerWindow.GradientPreview.EndPoint;
+                foreach(var stop in gradientPickerWindow.GradientPreview.GradientStops)
+                {
+                    newBrush.GradientStops.Add(new GradientStop(stop.Color, stop.Offset));
+                }
+                AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, newBrush);
+            };
+
             if(gridForImage.Background is LinearGradientBrush gradientBrush)
             {
                 gradientPickerWindow.GradientStops.Clear();
-                gradientPickerWindow.SetGradient(gradientBrush.GradientStops);
+                gradientPickerWindow.SetGradient(gradientBrush);
             }
 
             else if(themeObj?.gradient != null)
             {
                 gradientPickerWindow.GradientStops.Clear();
-                gradientPickerWindow.SetGradient(themeObj.gradient.GradientStops);
+                gradientPickerWindow.SetGradient(themeObj.gradient);
             }
 
             if(gradientPickerWindow.ShowDialog() == true)

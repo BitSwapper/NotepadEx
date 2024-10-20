@@ -9,6 +9,7 @@ namespace NotepadEx.Windows;
 
 public partial class GradientPickerWindow : Window
 {
+    public Action OnSelectedColorChanged;
     public ObservableCollection<GradientStop> GradientStops { get; set; } = new();
     public LinearGradientBrush GradientBrush => GradientPreview;
     bool updatingFromAngle = false;
@@ -27,8 +28,15 @@ public partial class GradientPickerWindow : Window
         UpdateGradientPreview();
     }
 
-    public void SetGradient(GradientStopCollection stops)
+    public void SetGradient(LinearGradientBrush brush)
     {
+        StartXSlider.Value = brush.StartPoint.X;
+        StartYSlider.Value = brush.StartPoint.Y;
+
+        EndXSlider.Value = brush.EndPoint.X;
+        EndYSlider.Value = brush.EndPoint.Y;
+
+        var stops = brush.GradientStops;
         GradientStops.Clear();
         foreach(var stop in stops)
             GradientStops.Add(new(stop.Color, stop.Offset));
@@ -82,6 +90,8 @@ public partial class GradientPickerWindow : Window
             GradientPreview.StartPoint = new Point(startX, startY);
             GradientPreview.EndPoint = new Point(endX, endY);
         }
+
+        OnSelectedColorChanged?.Invoke();
     }
 
     void SliderAngle_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

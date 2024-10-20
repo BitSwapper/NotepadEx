@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotepadEx.Windows"
         mc:Ignorable="d"
-        Title="GradientPickerWindow" Height="650" Width="720"
+        Title="GradientPickerWindow" Height="650" Width="750"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
@@ -92,7 +92,7 @@
 
 
         <!-- Gradient Stops -->
-        <ListBox Grid.Row="4" x:Name="StopsListBox" Margin="10" d:ItemsSource="{d:SampleData ItemCount=9}">
+        <ListBox Grid.Row="4" x:Name="StopsListBox"  d:ItemsSource="{d:SampleData ItemCount=9}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -101,7 +101,6 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="70"/>
                             <ColumnDefinition Width="30"/>
-                            <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="50"/>
                         </Grid.ColumnDefinitions>
@@ -117,7 +116,7 @@
                         <Button Content="Edit" Grid.Column="3" Margin="5,0,0,0" Click="EditStop_Click"/>
                         <Button Content="Copy" Grid.Column="4" Margin="5,0,0,0" Click="CopyStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
                         <Button Content="Paste" Grid.Column="5" Margin="5,0,0,0" Click="PasteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
-                        <Button Content="Delete" Grid.Column="5" Margin="5,0,0,0" Click="DeleteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                        <Button Content="Delete" Grid.Column="5" Margin="5,0,-0,0" Click="DeleteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
