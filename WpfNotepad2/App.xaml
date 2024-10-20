@@ -38,6 +38,9 @@
             <SolidColorBrush x:Key="Color_MenuItemSelectedBorder" Color="#FF26A0DA"/>
             <SolidColorBrush x:Key="Color_MenuItemHighlightBg" Color="#FF333E3C"/>
             <SolidColorBrush x:Key="Color_MenuItemHighlightBorder" Color="#FFFFE9F6"/>
+            
+            <SolidColorBrush x:Key="Color_ToolWindowBg" Color="#FF323232"/>
+            
             <!--<SolidColorBrush x:Key="Color_MenuBgColor_MenuBg" Color="#C7333B3E"/>-->
             <!--<SolidColorBrush x:Key="Color_MenuItemHighlightDisabledBg" Color="#FF5FB51B"/>
             <SolidColorBrush x:Key="Color_MenuItemHighlightDisabledBorder" Color="#FFFF0FF0"/>-->

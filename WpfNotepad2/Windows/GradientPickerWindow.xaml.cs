@@ -21,6 +21,7 @@ public partial class GradientPickerWindow : Window
     public GradientPickerWindow()
     {
         InitializeComponent();
+        TitleBar.Init(this, "Gradient Editor", false);
         GradientStops = new ObservableCollection<GradientStop>();
         StopsListBox.ItemsSource = GradientStops;
         GradientStops.Add(new GradientStop(Colors.White, 0));

@@ -14,8 +14,6 @@ public partial class CustomTitleBar : UserControl
     Action<object, RoutedEventArgs> Maximize;
     Action<object, RoutedEventArgs> Close;
 
-
-
     //public static readonly DependencyProperty TextValProperty =
     //    DependencyProperty.Register("TextVal", typeof(string), typeof(CustomTitleBar), new PropertyMetadata(default(string)));
 
