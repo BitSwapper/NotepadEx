@@ -13,7 +13,7 @@ public partial class ColorPickerWindow : Window
     public ColorPickerWindow()
     {
         InitializeComponent();
-        TitleBar.Init(this, "RGBA Color Picker");
+        TitleBar.Init(this, "RGBA Color Picker", false);
         myColorPicker.OnWindowCancel += OnCancel;
         myColorPicker.OnWindowConfirm += OnConfirm;
     }

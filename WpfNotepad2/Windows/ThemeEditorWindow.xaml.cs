@@ -19,7 +19,7 @@ public partial class ThemeEditorWindow : Window
     public ThemeEditorWindow()
     {
         InitializeComponent();
-        ThemeEditorTitleBar.Init(this, "Theme Editor", Minimize_Click, null!, Close_Click);
+        ThemeEditorTitleBar.Init(this, "Theme Editor", false, Minimize_Click, null!, Close_Click);
         InitThemeData();
     }
 

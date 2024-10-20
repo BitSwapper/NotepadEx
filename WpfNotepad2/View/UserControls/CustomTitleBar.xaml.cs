@@ -8,6 +8,7 @@ namespace NotepadEx.View.UserControls;
 
 public partial class CustomTitleBar : UserControl
 {
+    bool IsResizeable { get; set; }
     Window WindowRef;
     Action<object, RoutedEventArgs> Minimize;
     Action<object, RoutedEventArgs> Maximize;
@@ -39,9 +40,10 @@ public partial class CustomTitleBar : UserControl
         DataContext = this;
     }
 
-    public void Init(Window window, string windowTitleText, Action<object, RoutedEventArgs> Minimize = null, Action<object, RoutedEventArgs> Maximize = null, Action<object, RoutedEventArgs> Close = null)
+    public void Init(Window window, string windowTitleText, bool isResizable, Action<object, RoutedEventArgs> Minimize = null, Action<object, RoutedEventArgs> Maximize = null, Action<object, RoutedEventArgs> Close = null)
     {
         WindowRef = window;
+        IsResizeable = isResizable;
         SetText(windowTitleText);
         this.Minimize = Minimize;
         this.Maximize = Maximize;
@@ -54,7 +56,7 @@ public partial class CustomTitleBar : UserControl
 
     void txtTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
     {
-        if(e.GetPosition(this).Y > UIConstants.ResizeBorderWidth / 2)
+        if(!IsResizeable || (IsResizeable && e.GetPosition(this).Y > UIConstants.ResizeBorderWidth / 2))
             WindowRef?.DragMove();
     }
 

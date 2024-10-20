@@ -33,7 +33,7 @@ public partial class MainWindow : Window
     void InitUI()
     {
         resizer = new();
-        MainWindowTitleBar.Init(this, DirectoryUtil.AppName, Minimize_Click, Maximize_Click, Exit_Click);
+        MainWindowTitleBar.Init(this, DirectoryUtil.AppName, true, Minimize_Click, Maximize_Click, Exit_Click);
         MainWindowTitleBar.ImageSource = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
 
         txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
