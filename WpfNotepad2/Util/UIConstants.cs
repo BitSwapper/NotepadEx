@@ -24,6 +24,10 @@ public static class UIConstants
     public static readonly string Color_MenuItemSelectedBorder = "Color_MenuItemSelectedBorder";
     public static readonly string Color_MenuItemHighlightBg = "Color_MenuItemHighlightBg";
     public static readonly string Color_MenuItemHighlightBorder = "Color_MenuItemHighlightBorder";
+    public static readonly string Color_ToolWindowBg = "Color_ToolWindowBg";
+    public static readonly string Color_ToolWindowFont = "Color_ToolWindowFont";
+    public static readonly string Color_ToolWindowButtonBg = "Color_ToolWindowButtonBg";
+    public static readonly string Color_ToolWindowButtonBorder = "Color_ToolWindowButtonBorder";
 
     public static readonly List<string> UIColorKeysMain = new()
     {
@@ -58,5 +62,13 @@ public static class UIConstants
         Color_MenuItemSelectedBorder,
         Color_MenuItemHighlightBg,
         Color_MenuItemHighlightBorder,
+    };
+
+    public static readonly List<string> UIColorKeysToolWindow = new()
+    {
+        Color_ToolWindowBg,
+        Color_ToolWindowFont,
+        Color_ToolWindowButtonBg,
+        Color_ToolWindowButtonBorder,
     };
 }

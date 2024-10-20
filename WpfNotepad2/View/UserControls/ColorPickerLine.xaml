@@ -8,15 +8,15 @@
              mc:Ignorable="d" d:DesignWidth="280" Height="125">
     <UserControl.Resources>
         <Style TargetType="Button">
-            <Setter Property="Foreground" Value="WhiteSmoke"/>
-            <Setter Property="Background" Value="#FF3C3C3C"/>
-            <Setter Property="BorderBrush" Value="#FF131313"/>
+            <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"/>
+            <Setter Property="Background" Value="{DynamicResource Color_ToolWindowButtonBg}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Color_ToolWindowButtonBorder}"/>
         </Style>
 
         <Style TargetType="RadioButton">
-            <Setter Property="Foreground" Value="WhiteSmoke"/>
-            <Setter Property="Background" Value="#FF3C3C3C"/>
-            <Setter Property="BorderBrush" Value="#FF131313"/>
+            <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"/>
+            <Setter Property="Background" Value="{DynamicResource Color_ToolWindowButtonBg}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Color_ToolWindowButtonBorder}"/>
             
             <Setter Property="Template">
                 <Setter.Value>

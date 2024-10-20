@@ -9,7 +9,19 @@
         Title="GradientPickerWindow" Height="650" Width="750"
         ResizeMode="NoResize"
         WindowStyle="None"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        Background="{DynamicResource Color_ToolWindowBg}">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"></Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"/>
+            <Setter Property="Background" Value="{DynamicResource Color_ToolWindowButtonBg}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Color_ToolWindowButtonBorder}"/>
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -19,7 +31,7 @@
 
         <UserControls:CustomTitleBar x:Name="TitleBar"></UserControls:CustomTitleBar>
 
-        <Grid Grid.Row="1" Background="{Binding Color_ToolWindowBg}">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -28,6 +40,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <!-- Gradient Preview -->
             <Rectangle Grid.Row="0" Height="100" Margin="10">
@@ -104,7 +117,7 @@
 
 
             <!-- Gradient Stops -->
-            <ListBox Grid.Row="4" x:Name="StopsListBox"  d:ItemsSource="{d:SampleData ItemCount=9}">
+            <ListBox Grid.Row="4" x:Name="StopsListBox" Background="{DynamicResource Color_ToolWindowBg}"  d:ItemsSource="{d:SampleData ItemCount=9}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>

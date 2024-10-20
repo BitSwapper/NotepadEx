@@ -40,6 +40,9 @@
             <SolidColorBrush x:Key="Color_MenuItemHighlightBorder" Color="#FFFFE9F6"/>
             
             <SolidColorBrush x:Key="Color_ToolWindowBg" Color="#FF323232"/>
+            <SolidColorBrush x:Key="Color_ToolWindowFont" Color="WhiteSmoke"/>
+            <SolidColorBrush x:Key="Color_ToolWindowButtonBg" Color="#FF3C3C3C"/>
+            <SolidColorBrush x:Key="Color_ToolWindowButtonBorder" Color="#FF131313"/>
             
             <!--<SolidColorBrush x:Key="Color_MenuBgColor_MenuBg" Color="#C7333B3E"/>-->
             <!--<SolidColorBrush x:Key="Color_MenuItemHighlightDisabledBg" Color="#FF5FB51B"/>

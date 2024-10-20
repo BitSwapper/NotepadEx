@@ -12,10 +12,10 @@
         Background="Transparent">
     <Window.Resources>
         <Style TargetType="Expander">
-            <Setter Property="Foreground" Value="WhiteSmoke"></Setter>
+            <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"></Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="#FF323232">
+    <Grid Background="{DynamicResource Color_ToolWindowBg}">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="18"/>
@@ -45,17 +45,21 @@
                     </Expander>
                     
                     <Expander Name="ExpanderMenuBar" Header="Menu Bar">
-                    <StackPanel Name="StackPanelMenuBar" HorizontalAlignment="Center"></StackPanel>
+                        <StackPanel Name="StackPanelMenuBar" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
                     
                     <Expander Name="ExpanderInfoBar" Header="Info Bar">
-                    <StackPanel Name="StackPanelInfoBar" HorizontalAlignment="Center"></StackPanel>
+                        <StackPanel Name="StackPanelInfoBar" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
                     
                     <Expander Name="ExpanderMenuItem" Header="Menu Item">
-                    <StackPanel Name="StackPanelMenuItem" HorizontalAlignment="Center"></StackPanel>
+                        <StackPanel Name="StackPanelMenuItem" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
-                </StackPanel>
+
+                <Expander Name="ExpanderToolWindow" Header="Tool Windows">
+                    <StackPanel Name="StackPanelToolWindow" HorizontalAlignment="Center"></StackPanel>
+                </Expander>
+            </StackPanel>
             </ScrollViewer>
     </Grid>
 </Window>
