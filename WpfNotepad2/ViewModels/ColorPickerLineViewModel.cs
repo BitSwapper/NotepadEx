@@ -11,10 +11,10 @@ namespace NotepadEx.ViewModels;
 
 public class ColorPickerLineViewModel : ViewModelBase
 {
-    private string themeName;
-    private string themePath;
-    private ThemeObject themeObj;
-    private bool isGradient;
+    string themeName;
+    string themePath;
+    ThemeObject themeObj;
+    bool isGradient;
     Brush previewImage;
     Brush backgroundColor;
 
