@@ -99,6 +99,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="50"/>
@@ -111,9 +113,11 @@
                                 <SolidColorBrush x:Name="ColorPreviewForStopBrush" Color="{Binding Color}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <Button Content="Edit" Grid.Column="2" Margin="5,0,0,0" Click="EditStop_Click"/>
-                        <Button Content="Copy" Grid.Column="3" Margin="5,0,0,0" Click="CopyStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
-                        <Button Content="Paste" Grid.Column="4" Margin="5,0,0,0" Click="PasteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                        <Button Content="Randomize" Grid.Column="2" Margin="5,0,0,0" Click="RandomizeStop_Click"/>
+                        <Button Content="Edit" Grid.Column="3" Margin="5,0,0,0" Click="EditStop_Click"/>
+                        <Button Content="Copy" Grid.Column="4" Margin="5,0,0,0" Click="CopyStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                        <Button Content="Paste" Grid.Column="5" Margin="5,0,0,0" Click="PasteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                        <Button Content="Delete" Grid.Column="5" Margin="5,0,0,0" Click="DeleteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -124,7 +128,6 @@
         <!-- Controls -->
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Add Stop" Click="AddStop_Click" Margin="0,0,5,0"/>
-            <Button Content="Remove Stop" Click="RemoveStop_Click" Margin="5,0,0,0"/>
         </StackPanel>
         <!-- Confirm and Cancel buttons -->
         <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">

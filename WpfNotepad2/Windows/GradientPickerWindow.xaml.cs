@@ -31,7 +31,8 @@ public partial class GradientPickerWindow : Window
     {
         GradientStops.Clear();
         foreach(var stop in stops)
-            GradientStops.Add(stop);
+            GradientStops.Add(new(stop.Color, stop.Offset));
+
         UpdateGradientPreview();
     }
 
@@ -134,19 +135,51 @@ public partial class GradientPickerWindow : Window
         updatingFromOffset = false;
     }
 
+
+
+    void SetStopColor(SolidColorBrush brush, GradientStop selectedStop)
+    {
+        int index = GradientStops.IndexOf(selectedStop);
+        if(index != -1)
+            GradientStops[index] = new GradientStop(brush.Color, selectedStop.Offset);
+    }
+
+    void ConfirmButton_Click(object sender, RoutedEventArgs e)
+    {
+        DialogResult = true;
+        Close();
+    }
+
+    void CancelButton_Click(object sender, RoutedEventArgs e)
+    {
+        DialogResult = false;
+        Close();
+    }
+
+    void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => UpdateGradientPreview();
+
+    void SliderScaleX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if(updatingFromScale) return;
+        updatingFromScale = true;
+        ScaleX = e.NewValue;
+        UpdateGradientPreview();
+        updatingFromScale = false;
+    }
+
+    void SliderScaleY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if(updatingFromScale) return;
+        updatingFromScale = true;
+        ScaleY = e.NewValue;
+        UpdateGradientPreview();
+        updatingFromScale = false;
+    }
+
     void AddStop_Click(object sender, RoutedEventArgs e)
     {
         GradientStops.Add(new GradientStop(Colors.Gray, 0.5));
         UpdateGradientPreview();
-    }
-
-    void RemoveStop_Click(object sender, RoutedEventArgs e)
-    {
-        if(StopsListBox.SelectedItem is GradientStop selectedStop)
-        {
-            GradientStops.Remove(selectedStop);
-            UpdateGradientPreview();
-        }
     }
 
     void EditStop_Click(object sender, RoutedEventArgs e)
@@ -190,42 +223,24 @@ public partial class GradientPickerWindow : Window
         }
     }
 
-    void SetStopColor(SolidColorBrush brush, GradientStop selectedStop)
+    void DeleteStop_Click(object sender, RoutedEventArgs e)
     {
-        int index = GradientStops.IndexOf(selectedStop);
-        if(index != -1)
-            GradientStops[index] = new GradientStop(brush.Color, selectedStop.Offset);
+        if(sender is not Button button || button.Tag is not System.Windows.Shapes.Rectangle rectangle ||
+            rectangle.Fill is not SolidColorBrush brush) return;
+
+
+        if((sender as FrameworkElement)?.DataContext is GradientStop selectedStop)
+        {
+            GradientStops.Remove(selectedStop);
+            UpdateGradientPreview();
+        }
     }
 
-    void ConfirmButton_Click(object sender, RoutedEventArgs e)
+    void RandomizeStop_Click(object sender, RoutedEventArgs e)
     {
-        DialogResult = true;
-        Close();
-    }
-
-    void CancelButton_Click(object sender, RoutedEventArgs e)
-    {
-        DialogResult = false;
-        Close();
-    }
-
-    void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => UpdateGradientPreview();
-
-    void SliderScaleX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    {
-        if(updatingFromScale) return;
-        updatingFromScale = true;
-        ScaleX = e.NewValue;
+        if((sender as FrameworkElement)?.DataContext is GradientStop selectedStop)
+            SetStopColor(ColorUtil.GetRandomColorBrush(), selectedStop);
         UpdateGradientPreview();
-        updatingFromScale = false;
-    }
-
-    void SliderScaleY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    {
-        if(updatingFromScale) return;
-        updatingFromScale = true;
-        ScaleY = e.NewValue;
-        UpdateGradientPreview();
-        updatingFromScale = false;
+        //OnSelectedColorChanged?.Invoke();
     }
 }
