@@ -111,51 +111,48 @@ public partial class ColorPickerLine : UserControl
 
     void rdBtnColor_Checked(object sender, RoutedEventArgs e)
     {
-        if(path != null)
+        if(path is null) return;
+        if(themeObj is not null)
+        {
+            themeObj.isGradient = false;
+            if(themeObj.color.HasValue)
+                gridForImage.Background = new SolidColorBrush(themeObj.color.Value);
+            else
+                gridForImage.Background = new SolidColorBrush(Colors.Gray);
+        }
+        else
         {
             var brush = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, path);
-            if(brush != null)
+            if(brush is not null)
                 gridForImage.Background = brush;
-
-
-            if(themeObj != null)
-            {
-                themeObj.isGradient = false;
-                if(themeObj.color.HasValue)
-                    gridForImage.Background = new SolidColorBrush(themeObj.color.Value);
-                else
-                    gridForImage.Background = new SolidColorBrush(Colors.Gray);
-            }
-
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, gridForImage.Background);
         }
+
+        AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, gridForImage.Background);
     }
 
     void rdBtnGradient_Checked(object sender, RoutedEventArgs e)
     {
-        if(path != null)
+        if(path is null) return;
+        if(themeObj is not null)
+        {
+            themeObj.isGradient = true;
+            if(themeObj.gradient is not null)
+                gridForImage.Background = themeObj.gradient;
+            else
+            {
+                GradientStopCollection GradientStops = new();
+                GradientStops.Add(new GradientStop(Colors.White, 0));
+                GradientStops.Add(new GradientStop(Colors.Black, 1));
+                gridForImage.Background = new LinearGradientBrush(GradientStops);
+            }
+        }
+        else
         {
             var brush = AppResourceUtil<LinearGradientBrush>.TryGetResource(Application.Current, path);
             if(brush != null)
                 gridForImage.Background = brush;
-
-
-            if(themeObj != null)
-            {
-                themeObj.isGradient = true;
-                if(themeObj.gradient is not null)
-                    gridForImage.Background = themeObj.gradient;
-                else
-                {
-                    GradientStopCollection GradientStops = new();
-                    GradientStops.Add(new GradientStop(Colors.White, 0));
-                    GradientStops.Add(new GradientStop(Colors.Black, 1));
-                    gridForImage.Background = new LinearGradientBrush(GradientStops);
-                }
-            }
-
-            AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, gridForImage.Background);
         }
+        AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, gridForImage.Background);
     }
 
     void ButtonCopy_Click(object sender, RoutedEventArgs e)
@@ -182,6 +179,8 @@ public partial class ColorPickerLine : UserControl
         {
             AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, path, gradient);
             gridForImage.Background = gradient;
+            themeObj.gradient = gradient;
+            themeObj.isGradient = true;
             rdBtnGradient.IsChecked = true;
         }
         else
@@ -192,6 +191,8 @@ public partial class ColorPickerLine : UserControl
                 var brush = new SolidColorBrush(color.Value);
                 AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, path, brush);
                 gridForImage.Background = brush;
+                themeObj.color = brush.Color;
+                themeObj.isGradient = false;
                 rdBtnColor.IsChecked = true;
             }
         }
