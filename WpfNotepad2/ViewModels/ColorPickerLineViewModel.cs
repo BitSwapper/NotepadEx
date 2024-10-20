@@ -11,19 +11,19 @@ namespace NotepadEx.ViewModels;
 
 public class ColorPickerLineViewModel : ViewModelBase
 {
-    private string _themeName;
-    private string _themePath;
-    private ThemeObject _themeObj;
-    private bool _isGradient;
+    private string themeName;
+    private string themePath;
+    private ThemeObject themeObj;
+    private bool isGradient;
     Brush previewImage;
     Brush backgroundColor;
 
     public string ThemeName
     {
-        get => _themeName;
+        get => themeName;
         set
         {
-            _themeName = value;
+            themeName = value;
             OnPropertyChanged();
         }
     }
@@ -50,10 +50,10 @@ public class ColorPickerLineViewModel : ViewModelBase
 
     public bool IsGradient
     {
-        get => _isGradient;
+        get => isGradient;
         set
         {
-            _isGradient = value;
+            isGradient = value;
             OnPropertyChanged();
             UpdatePreviewColor();
         }
@@ -75,8 +75,8 @@ public class ColorPickerLineViewModel : ViewModelBase
     public void SetupThemeObj(ThemeObject obj, string themePath, string friendlyThemeName)
     {
         ThemeName = friendlyThemeName;
-        _themePath = themePath;
-        _themeObj = obj;
+        this.themePath = themePath;
+        themeObj = obj;
 
         if(obj == null)
         {
@@ -88,23 +88,23 @@ public class ColorPickerLineViewModel : ViewModelBase
         UpdatePreviewColor();
     }
 
-    private void UpdatePreviewColor()
+    void UpdatePreviewColor()
     {
-        if(_themeObj == null) return;
+        if(themeObj == null) return;
 
         if(IsGradient)
         {
-            PreviewImage = _themeObj.gradient ?? CreateDefaultGradient();
+            PreviewImage = themeObj.gradient ?? CreateDefaultGradient();
         }
         else
         {
-            PreviewImage = new SolidColorBrush(_themeObj.color ?? Colors.Gray);
+            PreviewImage = new SolidColorBrush(themeObj.color ?? Colors.Gray);
         }
 
         UpdateResourceBrush();
     }
 
-    private LinearGradientBrush CreateDefaultGradient() => new LinearGradientBrush
+    LinearGradientBrush CreateDefaultGradient() => new LinearGradientBrush
     {
         GradientStops = new GradientStopCollection
         {
@@ -113,47 +113,47 @@ public class ColorPickerLineViewModel : ViewModelBase
         }
     };
 
-    private void UpdateResourceBrush()
+    void UpdateResourceBrush()
     {
         if(IsGradient)
         {
-            AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, _themePath, PreviewImage as LinearGradientBrush);
+            AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, themePath, PreviewImage as LinearGradientBrush);
         }
         else
         {
-            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, _themePath, PreviewImage as SolidColorBrush);
+            AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, themePath, PreviewImage as SolidColorBrush);
         }
     }
 
-    private void ExecuteRandomize(object parameter)
+    void ExecuteRandomize(object parameter)
     {
         if(IsGradient)
         {
             var brush = ColorUtil.GetRandomLinearGradientBrush(180);
             PreviewImage = brush;
-            _themeObj.gradient = brush;
+            themeObj.gradient = brush;
         }
         else
         {
             var brush = ColorUtil.GetRandomColorBrush(180);
             PreviewImage = brush;
-            _themeObj.color = brush.Color;
+            themeObj.color = brush.Color;
         }
         UpdateResourceBrush();
     }
 
-    private void ExecuteEdit(object parameter)
+    void ExecuteEdit(object parameter)
     {
         if(!IsGradient)
         {
             ColorPickerWindow colorPickerWindow = new();
-            colorPickerWindow.myColorPicker.SetInitialColor(_themeObj.color ?? Colors.Gray);
+            colorPickerWindow.myColorPicker.SetInitialColor(themeObj.color ?? Colors.Gray);
 
             colorPickerWindow.myColorPicker.OnSelectedColorChanged += () =>
             {
                 var newBrush = new SolidColorBrush(colorPickerWindow.SelectedColor);
                 PreviewImage = newBrush;
-                _themeObj.color = colorPickerWindow.SelectedColor;
+                themeObj.color = colorPickerWindow.SelectedColor;
                 UpdateResourceBrush();
             };
 
@@ -173,32 +173,26 @@ public class ColorPickerLineViewModel : ViewModelBase
                 {
                     newBrush.GradientStops.Add(new GradientStop(stop.Color, stop.Offset));
                 }
-                AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, _themePath, newBrush);
-
-
-
-                //PreviewImage = gradientPickerWindow.GradientPreview;
-                //_themeObj.gradient = gradientPickerWindow.GradientPreview;
-                //UpdateResourceBrush();
+                AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, themePath, newBrush);
             };
 
             if(PreviewImage is LinearGradientBrush gradientBrush)
             {
                 gradientPickerWindow.SetGradient(gradientBrush);
             }
-            else if(_themeObj?.gradient != null)
+            else if(themeObj?.gradient != null)
             {
-                gradientPickerWindow.SetGradient(_themeObj.gradient);
+                gradientPickerWindow.SetGradient(themeObj.gradient);
             }
 
             if(gradientPickerWindow.ShowDialog() == true)
             {
-                _themeObj.gradient = gradientPickerWindow.GradientPreview;
+                themeObj.gradient = gradientPickerWindow.GradientPreview;
             }
         }
     }
 
-    private void ExecuteCopy(object parameter)
+    void ExecuteCopy(object parameter)
     {
         if(!IsGradient)
         {
@@ -217,14 +211,14 @@ public class ColorPickerLineViewModel : ViewModelBase
         }
     }
 
-    private void ExecutePaste(object parameter)
+    void ExecutePaste(object parameter)
     {
         var clipboardText = Clipboard.GetText();
         var gradient = ColorUtil.DeserializeGradient(clipboardText);
         if(gradient != null)
         {
             PreviewImage = gradient;
-            _themeObj.gradient = gradient;
+            themeObj.gradient = gradient;
             IsGradient = true;
         }
         else
@@ -234,7 +228,7 @@ public class ColorPickerLineViewModel : ViewModelBase
             {
                 var brush = new SolidColorBrush(color.Value);
                 PreviewImage = brush;
-                _themeObj.color = color.Value;
+                themeObj.color = color.Value;
                 IsGradient = false;
             }
         }
