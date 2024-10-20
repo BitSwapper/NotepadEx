@@ -47,7 +47,7 @@ public partial class ThemeEditorWindow : Window
         AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBg, "Checkbox Background", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBg!);
         AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBorder, "Checkbox Border", ref ThemeManager.CurrentTheme.themeObj_MenuItemSelectedBorder!);
         AddNewColorLineSafe(UIConstants.Color_MenuFg, "Checkmark / Arrow", ref ThemeManager.CurrentTheme.themeObj_MenuFg!);
-        
+
         AddNewColorLineSafe(UIConstants.Color_ToolWindowBg, "Tool Window Background", ref ThemeManager.CurrentTheme.themeObj_ToolWindowBg!);
         AddNewColorLineSafe(UIConstants.Color_ToolWindowFont, "Tool Window Font", ref ThemeManager.CurrentTheme.themeObj_ToolWindowFont!);
         AddNewColorLineSafe(UIConstants.Color_ToolWindowButtonBg, "Tool Window Buttons", ref ThemeManager.CurrentTheme.themeObj_ToolWindowButtonBg!);
@@ -68,7 +68,7 @@ public partial class ThemeEditorWindow : Window
         void AddColorLine(string resourceKey, string friendlyThemeName, ThemeObject themeObj)
         {
             ColorPickerLine line = new();
-            line.SetupThemeObj(themeObj, resourceKey, friendlyThemeName);
+            line.ViewModel.SetupThemeObj(themeObj, resourceKey, friendlyThemeName);
 
             line.ViewModel.BackgroundColor = ++lineCt % 2 == 0 ? brushA : brushB;
 

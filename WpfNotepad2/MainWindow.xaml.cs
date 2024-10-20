@@ -256,9 +256,7 @@ public partial class MainWindow : Window
         if(mousePosition.Y < 2)
         {
             if(!MainMenuBar.IsEnabled)
-            {
                 SetupMainMenuBar(true);
-            }
         }
         else
         {
@@ -266,9 +264,7 @@ public partial class MainWindow : Window
             {
                 Point menuPosition = e.GetPosition(MainMenuBar);
                 if(menuPosition.X < 0 || menuPosition.X > MainMenuBar.ActualWidth || menuPosition.Y < 0 || menuPosition.Y > MainMenuBar.ActualHeight)
-                {
                     SetupMainMenuBar(false);
-                }
             }
         }
     }

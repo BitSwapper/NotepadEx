@@ -4,9 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotepadEx.View.UserControls"
+             xmlns:Converters="clr-namespace:NotepadEx.Converters"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" d:DesignWidth="280" Height="125">
     <UserControl.Resources>
+        <Converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"/>
             <Setter Property="Background" Value="{DynamicResource Color_ToolWindowButtonBg}"/>
@@ -17,7 +20,7 @@
             <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"/>
             <Setter Property="Background" Value="{DynamicResource Color_ToolWindowButtonBg}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource Color_ToolWindowButtonBorder}"/>
-            
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
@@ -53,33 +56,24 @@
     <Border BorderBrush="#FF4E4E4E" BorderThickness="1">
         <Grid Background="{Binding BackgroundColor}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"></RowDefinition>
-                <RowDefinition Height="22"></RowDefinition>
-                <RowDefinition Height="25"></RowDefinition>
-                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="22"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
-
-            <TextBlock Name="txtThemeName" Margin="12 17 0 0" FontSize="16" Text="Name of Theme" FontFamily="Verdana"></TextBlock>
+            <TextBlock Text="{Binding ThemeName}" Margin="12 17 0 0" FontSize="16" FontFamily="Verdana"/>
             <Border BorderBrush="#FF74BEF7" Grid.Row="1" BorderThickness="1" Margin="12 0 12 0">
-                
-                <Grid Name="gridForImage"  HorizontalAlignment="Stretch" Background="#FF54799B" Margin="0"></Grid>
-                
+                <Grid HorizontalAlignment="Stretch" Background="{Binding PreviewImage}" Margin="0"/>
             </Border>
-            
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2">
-                <RadioButton Name="rdBtnColor"  FontFamily="Verdana" Content="Color" Margin="12 8 4 4" Checked="rdBtnColor_Checked"/>
-                <RadioButton Name="rdBtnGradient"  FontFamily="Verdana" Content="Gradient" Margin="4 8 8 4" Checked="rdBtnGradient_Checked"/>
-
-               <!--<Button Name="btnEdit"  Height="24" Width="70" Margin="35 0" Content="Edit"  VerticalContentAlignment="Top" Click="ButtonEdit_Click"/>
-                <Button Height="24" Width="70" Content="Randomize"  VerticalContentAlignment="Top" Click="ButtonRandomize_Click"/>-->
+                <RadioButton Content="Color" IsChecked="{Binding IsGradient, Converter={StaticResource InverseBooleanConverter}}" Margin="12 8 4 4" FontFamily="Verdana"/>
+                <RadioButton Content="Gradient" IsChecked="{Binding IsGradient}" Margin="4 8 8 4" FontFamily="Verdana"/>
             </StackPanel>
-
             <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <Button Width="70" Content="Randomize" Height="20"  Margin="13 0 6 0" Click="ButtonRandomize_Click"></Button>
-                <Button Name="btnEdit" Width="50" Height="20" Content="Edit" Margin="5 0 6 0" Click="ButtonEdit_Click"></Button>
-                <Button Width="50" Content="Copy" Height="20" Margin="5 0 6 0" Click="ButtonCopy_Click"></Button>
-                <Button Width="50" Content="Paste" Height="20"  Margin="5 0 6 0" Click="ButtonPaste_Click"></Button>
-
+                <Button Content="Randomize" Width="70" Height="20" Margin="13 0 6 0" Command="{Binding RandomizeCommand}"/>
+                <Button Content="Edit" Width="50" Height="20" Margin="5 0 6 0" Command="{Binding EditCommand}"/>
+                <Button Content="Copy" Width="50" Height="20" Margin="5 0 6 0" Command="{Binding CopyCommand}"/>
+                <Button Content="Paste" Width="50" Height="20" Margin="5 0 6 0" Command="{Binding PasteCommand}"/>
             </StackPanel>
         </Grid>
     </Border>
