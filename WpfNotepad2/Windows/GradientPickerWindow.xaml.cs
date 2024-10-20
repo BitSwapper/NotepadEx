@@ -104,14 +104,20 @@ public partial class GradientPickerWindow : Window
         double angle = SliderAngle.Value * Math.PI / 180;
         double length = Math.Sqrt(Math.Pow(EndXSlider.Value - StartXSlider.Value, 2) + Math.Pow(EndYSlider.Value - StartYSlider.Value, 2));
 
-        StartXSlider.Value = 0.5 - (length / 2) * Math.Cos(angle);
-        StartYSlider.Value = 0.5 - (length / 2) * Math.Sin(angle);
-        EndXSlider.Value = 0.5 + (length / 2) * Math.Cos(angle);
-        EndYSlider.Value = 0.5 + (length / 2) * Math.Sin(angle);
+        // Calculate the center point of the line segment
+        double centerX = (StartXSlider.Value + EndXSlider.Value) / 2;
+        double centerY = (StartYSlider.Value + EndYSlider.Value) / 2;
+
+        // Calculate the new start and end points based on the angle and center point
+        StartXSlider.Value = centerX - (length / 2) * Math.Cos(angle);
+        StartYSlider.Value = centerY - (length / 2) * Math.Sin(angle);
+        EndXSlider.Value = centerX + (length / 2) * Math.Cos(angle);
+        EndYSlider.Value = centerY + (length / 2) * Math.Sin(angle);
 
         UpdateGradientPreview();
         updatingFromAngle = false;
     }
+
 
     void PositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {

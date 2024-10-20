@@ -22,7 +22,8 @@ public static class ThemeManager
     {
         var themeFiles = new DirectoryInfo(DirectoryUtil.NotepadExThemesPath).GetFiles().OrderByDescending(f => f.LastWriteTime).ToList();
         var themeFile = themeFiles.Where(themeName => (themeName.Name) == Settings.Default.ThemeName).FirstOrDefault();
-        ApplyTheme(Path.GetFileName(themeFile.Name), Application.Current);
+        if(themeFile is not null)
+            ApplyTheme(Path.GetFileName(themeFile.Name), Application.Current);
     }
 
     public static void AddAllCustomThemes(MenuItem parentMenu)
