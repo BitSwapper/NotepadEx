@@ -59,7 +59,7 @@ public class ColorThemeSerializable
     [JsonPropertyName("themeObj_MenuItemSelectedBorder")] public ThemeObjectSerializable ThemeObj_MenuItemSelectedBorder { get; set; }
     [JsonPropertyName("themeObj_MenuItemHighlightBg")] public ThemeObjectSerializable ThemeObj_MenuItemHighlightBg { get; set; }
     [JsonPropertyName("themeObj_MenuItemHighlightBorder")] public ThemeObjectSerializable ThemeObj_MenuItemHighlightBorder { get; set; }
-    
+
     [JsonPropertyName("themeObj_ToolWindowBg;")] public ThemeObjectSerializable ThemeObj_ToolWindowBg { get; set; }
     [JsonPropertyName("themeObj_ToolWindowFont;")] public ThemeObjectSerializable ThemeObj_ToolWindowFont { get; set; }
     [JsonPropertyName("themeObj_ToolWindowButtonBg;")] public ThemeObjectSerializable ThemeObj_ToolWindowButtonBg { get; set; }
@@ -90,7 +90,7 @@ public class ColorThemeSerializable
         if(colorTheme.themeObj_MenuItemSelectedBorder != null) ThemeObj_MenuItemSelectedBorder = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemSelectedBorder);
         if(colorTheme.themeObj_MenuItemHighlightBg != null) ThemeObj_MenuItemHighlightBg = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightBg);
         if(colorTheme.themeObj_MenuItemHighlightBorder != null) ThemeObj_MenuItemHighlightBorder = new ThemeObjectSerializable(colorTheme.themeObj_MenuItemHighlightBorder);
-       
+
         if(colorTheme.themeObj_ToolWindowBg != null) ThemeObj_ToolWindowBg = new ThemeObjectSerializable(colorTheme.themeObj_ToolWindowBg);
         if(colorTheme.themeObj_ToolWindowFont != null) ThemeObj_ToolWindowFont = new ThemeObjectSerializable(colorTheme.themeObj_ToolWindowFont);
         if(colorTheme.themeObj_ToolWindowButtonBg != null) ThemeObj_ToolWindowButtonBg = new ThemeObjectSerializable(colorTheme.themeObj_ToolWindowButtonBg);

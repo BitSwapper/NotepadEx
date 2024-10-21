@@ -14,14 +14,6 @@ public partial class CustomTitleBar : UserControl
     Action<object, RoutedEventArgs> Maximize;
     Action<object, RoutedEventArgs> Close;
 
-    //public static readonly DependencyProperty TextValProperty =
-    //    DependencyProperty.Register("TextVal", typeof(string), typeof(CustomTitleBar), new PropertyMetadata(default(string)));
-
-    //public string TextVal
-    //{
-    //    get => (string)GetValue(TextValProperty);
-    //    set => SetValue(TextValProperty, value);
-    //}
 
     public static readonly DependencyProperty ImageSourceProperty =
         DependencyProperty.Register("ImageSource", typeof(BitmapImage), typeof(CustomTitleBar), new PropertyMetadata(default(BitmapImage)));
