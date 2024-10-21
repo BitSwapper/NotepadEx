@@ -1,13 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using NotepadEx.MVVM.View;
 using NotepadEx.Theme;
 using NotepadEx.Util;
-using NotepadEx.View;
 using NotepadEx.Windows;
 using Brush = System.Windows.Media.Brush;
 
-namespace NotepadEx.ViewModels;
+namespace NotepadEx.MVVM.ViewModels;
 
 public class ColorPickerLineViewModel : ViewModelBase
 {

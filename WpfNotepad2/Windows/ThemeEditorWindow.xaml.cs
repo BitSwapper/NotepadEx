@@ -4,7 +4,7 @@ using System.Windows;
 using Microsoft.Win32;
 using NotepadEx.Theme;
 using NotepadEx.Util;
-using NotepadEx.View.UserControls;
+using NotepadEx.MVVM.View.UserControls;
 using Color = System.Windows.Media.Color;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 namespace NotepadEx.Windows;

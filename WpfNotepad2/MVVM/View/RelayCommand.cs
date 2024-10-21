@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace NotepadEx.View;
+namespace NotepadEx.MVVM.View;
 
 public class RelayCommand : ICommand
 {

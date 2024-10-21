@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotepadEx.Windows"        
-        xmlns:UserControls="clr-namespace:NotepadEx.View.UserControls"
+        xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
         mc:Ignorable="d"
         Title="ThemeEditorWindow" Height="450" Width="400"
         WindowStyle="None"

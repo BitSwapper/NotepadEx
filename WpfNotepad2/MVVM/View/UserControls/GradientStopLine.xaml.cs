@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace NotepadEx.View.UserControls;
+namespace NotepadEx.MVVM.View.UserControls;
 /// <summary>
 /// Interaction logic for GradientStopLine.xaml
 /// </summary>

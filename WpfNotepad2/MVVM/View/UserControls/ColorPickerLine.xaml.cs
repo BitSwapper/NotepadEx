@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
-using NotepadEx.ViewModels;
-namespace NotepadEx.View.UserControls;
+using NotepadEx.MVVM.ViewModels;
+namespace NotepadEx.MVVM.View.UserControls;
 
 public partial class ColorPickerLine : UserControl
 {

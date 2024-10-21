@@ -8,7 +8,7 @@ using Color = System.Windows.Media.Color;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 using UserControl = System.Windows.Controls.UserControl;
-namespace NotepadEx.View.UserControls;
+namespace NotepadEx.MVVM.View.UserControls;
 
 public partial class ColorPicker : UserControl, INotifyPropertyChanged
 {

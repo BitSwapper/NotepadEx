@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using NotepadEx.Util;
 
-namespace NotepadEx.View.UserControls;
+namespace NotepadEx.MVVM.View.UserControls;
 
 public partial class CustomTitleBar : UserControl
 {
