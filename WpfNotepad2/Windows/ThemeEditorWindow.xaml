@@ -22,9 +22,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        
-        
-        <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar"></UserControls:CustomTitleBar>
+
+
+        <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
         <Menu Grid.Row="1" Background="{DynamicResource Color_MenuBarBg}">
             <MenuItem Name="MenuItem_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
                 <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSave_Click"></MenuItem>

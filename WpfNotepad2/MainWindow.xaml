@@ -15,7 +15,6 @@
         Background="Transparent"
         StateChanged="Window_StateChanged">
     <Grid>
-        <!--<Border x:Name="OutlineBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="0" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">-->
             <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="{DynamicResource Color_BorderColor}" CornerRadius="1" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -24,9 +23,9 @@
                     </Grid.RowDefinitions>
 
                     <!--Custom Title Bar-->
-                    <UserControls:CustomTitleBar x:Name="MainWindowTitleBar" Grid.Column="1"></UserControls:CustomTitleBar>
-
-                    <Grid Grid.Row="1">
+                    <!--<UserControls:CustomTitleBar x:Name="MainWindowTitleBar" Grid.Column="1"></UserControls:CustomTitleBar>-->
+                <UserControls:CustomTitleBar Grid.Row="0" DataContext="{Binding TitleBarViewModel}"/>
+                <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition x:Name="Row_MainMenuBar" Height="18"/>
                             <RowDefinition Height="*"/>
@@ -97,6 +96,5 @@
                     </Grid>
                 </Grid>
             </Border>
-        <!--</Border>-->
     </Grid>
 </Window>

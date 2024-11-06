@@ -125,7 +125,7 @@ public class ColorPickerLineViewModel : ViewModelBase
         }
     }
 
-    void ExecuteRandomize(object parameter)
+    void ExecuteRandomize()
     {
         if(IsGradient)
         {
@@ -142,7 +142,7 @@ public class ColorPickerLineViewModel : ViewModelBase
         UpdateResourceBrush();
     }
 
-    void ExecuteEdit(object parameter)
+    void ExecuteEdit()
     {
         if(!IsGradient)
         {
@@ -192,7 +192,7 @@ public class ColorPickerLineViewModel : ViewModelBase
         }
     }
 
-    void ExecuteCopy(object parameter)
+    void ExecuteCopy()
     {
         if(!IsGradient)
         {
@@ -211,7 +211,7 @@ public class ColorPickerLineViewModel : ViewModelBase
         }
     }
 
-    void ExecutePaste(object parameter)
+    void ExecutePaste()
     {
         var clipboardText = Clipboard.GetText();
         var gradient = ColorUtil.DeserializeGradient(clipboardText);

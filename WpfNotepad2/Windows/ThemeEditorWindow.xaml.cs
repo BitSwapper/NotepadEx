@@ -2,15 +2,19 @@
 using System.Text.Json;
 using System.Windows;
 using Microsoft.Win32;
+using NotepadEx.MVVM.View.UserControls;
+using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Theme;
 using NotepadEx.Util;
-using NotepadEx.MVVM.View.UserControls;
 using Color = System.Windows.Media.Color;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 namespace NotepadEx.Windows;
 
 public partial class ThemeEditorWindow : Window
 {
+    private CustomTitleBarViewModel _titleBarViewModel;
+    public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
+
     int lineCt = 0;
 
     SolidColorBrush brushA = new SolidColorBrush(Color.FromArgb(255, 64, 64, 64));
@@ -19,7 +23,9 @@ public partial class ThemeEditorWindow : Window
     public ThemeEditorWindow()
     {
         InitializeComponent();
-        ThemeEditorTitleBar.Init(this, "Theme Editor", false, Minimize_Click, null!, Close_Click);
+        DataContext = this;
+        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Theme Editor");
+        //ThemeEditorTitleBar.Init(this, "Theme Editor", false, Minimize_Click, null!, Close_Click);
         InitThemeData();
     }
 

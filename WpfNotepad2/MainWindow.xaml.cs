@@ -5,16 +5,23 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using NotepadEx.Extensions;
+using NotepadEx.MVVM.View.UserControls;
+using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Properties;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
 using Point = System.Windows.Point;
+using Window = System.Windows.Window;
 namespace NotepadEx;
 
 public partial class MainWindow : Window
 {
+    private CustomTitleBarViewModel _titleBarViewModel;
+    public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
+
     string currentFileName = string.Empty;
     bool hasTextChangedSinceSave = false;
     WindowState prevWindowState;
@@ -33,12 +40,13 @@ public partial class MainWindow : Window
     void InitUI()
     {
         resizer = new();
-        MainWindowTitleBar.Init(this, DirectoryUtil.AppName, true, Minimize_Click, Maximize_Click, Exit_Click);
-        MainWindowTitleBar.ImageSource = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
+        //MainWindowTitleBar.Init(this, DirectoryUtil.AppName, true, Minimize_Click, Maximize_Click, Exit_Click);
+        //MainWindowTitleBar.ImageSource = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
 
         txtEditor.TextWrapping = Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
         MenuItem_ToggleWrapping.IsChecked = Settings.Default.TextWrapping;
 
+        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "NotepadEx");
         SetupMainMenuBar(!Settings.Default.MenuBarAutoHide);
 
         SetupInfoBar();
@@ -176,7 +184,7 @@ public partial class MainWindow : Window
         AddRecentFile(fileName);
     }
 
-    void UpdateTitleText(string fileName) => MainWindowTitleBar.txtTitleBar.Text = fileName == string.Empty ? DirectoryUtil.AppName : $"{DirectoryUtil.AppName}  |  " + Path.GetFileName(fileName);
+    void UpdateTitleText(string fileName) {}//MainWindowTitleBar.txtTitleBar.Text = fileName == string.Empty ? DirectoryUtil.AppName : $"{DirectoryUtil.AppName}  |  " + Path.GetFileName(fileName);
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SaveSettings);
 

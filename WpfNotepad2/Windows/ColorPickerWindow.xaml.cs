@@ -1,10 +1,15 @@
 ﻿using System.Windows;
+using NotepadEx.MVVM.View.UserControls;
+using NotepadEx.MVVM.ViewModels;
 using Color = System.Windows.Media.Color;
 
 namespace NotepadEx.Windows;
 
 public partial class ColorPickerWindow : Window
 {
+    private CustomTitleBarViewModel _titleBarViewModel;
+    public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
+
     public Color SelectedColor
     {
         get => myColorPicker.SelectedColor; set => myColorPicker.SelectedColor = value;
@@ -13,7 +18,8 @@ public partial class ColorPickerWindow : Window
     public ColorPickerWindow()
     {
         InitializeComponent();
-        TitleBar.Init(this, "RGBA Color Picker", false);
+        DataContext = this;
+        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Color Picker");
         myColorPicker.OnWindowCancel += OnCancel;
         myColorPicker.OnWindowConfirm += OnConfirm;
     }

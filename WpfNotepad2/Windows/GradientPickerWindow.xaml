@@ -29,7 +29,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <UserControls:CustomTitleBar x:Name="TitleBar"></UserControls:CustomTitleBar>
+        <UserControls:CustomTitleBar x:Name="TitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

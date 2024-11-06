@@ -4,10 +4,10 @@ namespace NotepadEx.MVVM.View;
 
 public class RelayCommand : ICommand
 {
-    readonly Action<object> _execute;
-    readonly Func<object, bool> _canExecute;
+    private readonly Action _execute;
+    private readonly Func<bool> _canExecute;
 
-    public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+    public RelayCommand(Action execute, Func<bool> canExecute = null)
     {
         _execute = execute ?? throw new ArgumentNullException(nameof(execute));
         _canExecute = canExecute;
@@ -19,9 +19,8 @@ public class RelayCommand : ICommand
         remove => CommandManager.RequerySuggested -= value;
     }
 
-    public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
-
-    public void Execute(object parameter) => _execute(parameter);
+    public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
+    public void Execute(object parameter) => _execute();
 }
 
 public class RelayCommand<T> : ICommand
@@ -41,7 +40,6 @@ public class RelayCommand<T> : ICommand
         remove => CommandManager.RequerySuggested -= value;
     }
 
-    public bool CanExecute(object parameter) => _canExecute == null || _canExecute((T)parameter);
-
+    public bool CanExecute(object parameter) => _canExecute?.Invoke((T)parameter) ?? true;
     public void Execute(object parameter) => _execute((T)parameter);
 }

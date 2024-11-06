@@ -15,7 +15,9 @@
             <RowDefinition Height="16"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <UserControls:CustomTitleBar x:Name="TitleBar"></UserControls:CustomTitleBar>
+        <UserControls:CustomTitleBar x:Name="TitleBar" DataContext="{Binding TitleBarViewModel}"/>
+        <!--<UserControls:CustomTitleBar Grid.Row="0" DataContext="{Binding TitleBarViewModel}"/>-->
+
         <UserControls:ColorPicker x:Name="myColorPicker" Grid.Row="1"></UserControls:ColorPicker>
     </Grid>
 </Window>
