@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using NotepadEx.MVVM.View;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;

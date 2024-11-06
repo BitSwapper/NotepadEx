@@ -16,7 +16,7 @@ public static class MouseBehavior
 
     public static void SetMouseDownCommand(DependencyObject obj, ICommand value) => obj.SetValue(MouseDownCommandProperty, value);
 
-    private static void OnMouseDownCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    static void OnMouseDownCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if(d is UIElement element)
         {
@@ -31,7 +31,7 @@ public static class MouseBehavior
         }
     }
 
-    private static void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    static void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         var element = sender as UIElement;
         var command = GetMouseDownCommand(element);

@@ -1,34 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
+﻿using System.Globalization;
 using System.Windows;
+using System.Windows.Data;
 
-namespace NotepadEx.Converters
+namespace NotepadEx.Converters;
+
+public class CustomBooleanToVisibilityConverter : IValueConverter
 {
-    public class CustomBooleanToVisibilityConverter : IValueConverter
+    public Visibility FalseValue { get; set; } = Visibility.Hidden; // Use Hidden instead of Collapsed
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public Visibility FalseValue { get; set; } = Visibility.Hidden; // Use Hidden instead of Collapsed
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        if(value is bool boolValue)
         {
-            if(value is bool boolValue)
-            {
-                return boolValue ? Visibility.Visible : FalseValue;
-            }
-            return FalseValue;
+            return boolValue ? Visibility.Visible : FalseValue;
         }
+        return FalseValue;
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if(value is Visibility visibility)
         {
-            if(value is Visibility visibility)
-            {
-                return visibility == Visibility.Visible;
-            }
-            return false;
+            return visibility == Visibility.Visible;
         }
+        return false;
     }
 }

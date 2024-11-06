@@ -2,16 +2,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using NotepadEx.Extensions;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Properties;
 using NotepadEx.Theme;
 using NotepadEx.Util;
 using NotepadEx.Windows;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
 using Point = System.Windows.Point;
 using Window = System.Windows.Window;
@@ -19,7 +16,7 @@ namespace NotepadEx;
 
 public partial class MainWindow : Window
 {
-    private CustomTitleBarViewModel _titleBarViewModel;
+    CustomTitleBarViewModel _titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
 
     string currentFileName = string.Empty;
@@ -184,7 +181,7 @@ public partial class MainWindow : Window
         AddRecentFile(fileName);
     }
 
-    void UpdateTitleText(string fileName) {}//MainWindowTitleBar.txtTitleBar.Text = fileName == string.Empty ? DirectoryUtil.AppName : $"{DirectoryUtil.AppName}  |  " + Path.GetFileName(fileName);
+    void UpdateTitleText(string fileName) { }//MainWindowTitleBar.txtTitleBar.Text = fileName == string.Empty ? DirectoryUtil.AppName : $"{DirectoryUtil.AppName}  |  " + Path.GetFileName(fileName);
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, DropDown_File, SaveSettings);
 

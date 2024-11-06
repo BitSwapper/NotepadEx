@@ -1,9 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using NotepadEx.Extensions;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Util;
-using System.Windows.Media.Imaging;
-using System.Windows;
-using NotepadEx.Extensions;
 
 namespace NotepadEx.MVVM.View.UserControls;
 public partial class CustomTitleBar : UserControl
@@ -20,7 +20,7 @@ public partial class CustomTitleBar : UserControl
             showMaximize: true,
             showClose: true
         );
-        _titleBarViewModel.ImageSource = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
+        _titleBarViewModel.IconImage = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
     }
 }
 

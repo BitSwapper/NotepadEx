@@ -19,7 +19,7 @@ public partial class GradientPickerWindow : Window
     double ScaleX { get; set; } = 1.0;
     double ScaleY { get; set; } = 1.0;
 
-    private CustomTitleBarViewModel _titleBarViewModel;
+    CustomTitleBarViewModel _titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
 
     public GradientPickerWindow()

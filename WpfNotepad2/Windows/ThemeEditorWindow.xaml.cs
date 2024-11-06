@@ -12,7 +12,7 @@ namespace NotepadEx.Windows;
 
 public partial class ThemeEditorWindow : Window
 {
-    private CustomTitleBarViewModel _titleBarViewModel;
+    CustomTitleBarViewModel _titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
 
     int lineCt = 0;

@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Image Height="15" Margin="6,0,4,0" Source="{Binding ImageSource}"/>
+            <Image Height="15" Margin="6,0,4,0" Source="{Binding IconImage}"/>
             <TextBlock Grid.Column="1" 
          Text="{Binding TitleText}" 
          Foreground="{DynamicResource Color_TitleBarFont}" 
