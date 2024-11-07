@@ -4,7 +4,7 @@ using System.Windows.Interop;
 using Point = System.Windows.Point;
 
 namespace NotepadEx.Util;
-public class WindowResizer
+public class WindowResizerUtil
 {
     bool isManuallyMaximized = false;
     double oldLeft;

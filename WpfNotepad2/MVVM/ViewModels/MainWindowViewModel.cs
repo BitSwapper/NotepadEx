@@ -23,7 +23,6 @@ public class MainWindowViewModel : ViewModelBase
 
     public ICommand NewCommand { get; private set; }
     public ICommand OpenCommand { get; private set; }
-    public ICommand OpenRecentCommand { get; private set; }
     public ICommand SaveCommand { get; private set; }
     public ICommand SaveAsCommand { get; private set; }
     public ICommand PrintCommand { get; private set; }
@@ -57,19 +56,13 @@ public class MainWindowViewModel : ViewModelBase
     public int SelectionStart
     {
         get => document.SelectionStart;
-        set
-        {
-            document.SelectionStart = value;
-        }
+        set => document.SelectionStart = value;
     }
 
     public int SelectionLength
     {
         get => document.SelectionLength;
-        set
-        {
-            document.SelectionLength = value;
-        }
+        set => document.SelectionLength = value;
     }
 
     public string StatusText

@@ -68,7 +68,6 @@ public partial class MainWindow : Window
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);
-        resizer.Initialize(this);
     }
 
    void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e) //**Refactor / Fix
