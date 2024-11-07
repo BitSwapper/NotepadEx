@@ -100,23 +100,19 @@
                                 </ItemsPanelTemplate>
                             </MenuItem.ItemsPanel>
 
-                            <MenuItem Header="Theme Editor..." 
-              Command="{Binding OpenThemeEditorCommand}"
-              Foreground="{DynamicResource Color_MenuItemFg}"/>
-
+                            <MenuItem Header="Theme Editor..." Command="{Binding OpenThemeEditorCommand}" Foreground="{DynamicResource Color_MenuItemFg}"/>
                             <Separator/>
-
-                            <ItemsControl ItemsSource="{Binding AvailableThemes}">
-                                <ItemsControl.ItemTemplate>
+                            <MenuItem Header="Themes" ItemsSource="{Binding AvailableThemes}">
+                                <MenuItem.ItemTemplate>
                                     <DataTemplate>
                                         <MenuItem Header="{Binding Name}"
-                         Command="{Binding DataContext.ChangeThemeCommand, 
-                                   RelativeSource={RelativeSource AncestorType=MenuItem}}"
-                         CommandParameter="{Binding}"
-                         Foreground="{DynamicResource Color_MenuItemFg}"/>
+                      Command="{Binding DataContext.ChangeThemeCommand, 
+                                RelativeSource={RelativeSource AncestorType=Window}}"
+                      CommandParameter="{Binding}"
+                      Foreground="{DynamicResource Color_MenuItemFg}"/>
                                     </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                                </MenuItem.ItemTemplate>
+                            </MenuItem>
                         </MenuItem>
                     </Menu>
 

@@ -149,12 +149,6 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    void OnThemeChange(ThemeInfo theme)
-    {
-        if(theme != null)
-            themeService.ApplyTheme(theme.Name);
-    }
-
     void OnOpenThemeEditor() => themeService.OpenThemeEditor();
 
     void InitializeCommands()
@@ -174,6 +168,13 @@ public class MainWindowViewModel : ViewModelBase
         ChangeThemeCommand = new RelayCommand<ThemeInfo>(OnThemeChange);
         OpenThemeEditorCommand = new RelayCommand(OnOpenThemeEditor);
     }
+
+    void OnThemeChange(ThemeInfo theme)
+    {
+        if(theme != null)
+            themeService.ApplyTheme(theme.Name);
+    }
+
 
     void NewDocument()
     {
