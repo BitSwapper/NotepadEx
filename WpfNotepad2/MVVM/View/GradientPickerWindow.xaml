@@ -157,6 +157,8 @@
                 <Button Content="Cancel" Click="CancelButton_Click" Margin="5,0,0,0"/>
                 <Button Content="Confirm" Click="ConfirmButton_Click" Margin="5,0,0,0"/>
             </StackPanel>
+            <Grid Grid.Row="7" Height="1000" Background="{DynamicResource Color_ToolWindowBg}">
+            </Grid>
         </Grid>
     </Grid>
 </Window>
