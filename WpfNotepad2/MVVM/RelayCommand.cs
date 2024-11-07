@@ -4,13 +4,13 @@ namespace NotepadEx.MVVM;
 
 public class RelayCommand : ICommand
 {
-    readonly Action _execute;
-    readonly Func<bool> _canExecute;
+    readonly Action execute;
+    readonly Func<bool> canExecute;
 
     public RelayCommand(Action execute, Func<bool> canExecute = null)
     {
-        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-        _canExecute = canExecute;
+        this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        this.canExecute = canExecute;
     }
 
     public event EventHandler CanExecuteChanged
@@ -19,19 +19,19 @@ public class RelayCommand : ICommand
         remove => CommandManager.RequerySuggested -= value;
     }
 
-    public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
-    public void Execute(object parameter) => _execute();
+    public bool CanExecute(object parameter) => canExecute?.Invoke() ?? true;
+    public void Execute(object parameter) => execute();
 }
 
 public class RelayCommand<T> : ICommand
 {
-    readonly Action<T> _execute;
-    readonly Func<T, bool> _canExecute;
+    readonly Action<T> execute;
+    readonly Func<T, bool> canExecute;
 
     public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null)
     {
-        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-        _canExecute = canExecute;
+        this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        this.canExecute = canExecute;
     }
 
     public event EventHandler CanExecuteChanged
@@ -40,6 +40,6 @@ public class RelayCommand<T> : ICommand
         remove => CommandManager.RequerySuggested -= value;
     }
 
-    public bool CanExecute(object parameter) => _canExecute?.Invoke((T)parameter) ?? true;
-    public void Execute(object parameter) => _execute((T)parameter);
+    public bool CanExecute(object parameter) => canExecute?.Invoke((T)parameter) ?? true;
+    public void Execute(object parameter) => execute((T)parameter);
 }

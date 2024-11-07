@@ -16,10 +16,10 @@ namespace NotepadEx.MVVM.View;
 
 public partial class ThemeEditorWindow : Window
 {
-    readonly IThemeService _themeService;
-    readonly IWindowService _windowService;
-    CustomTitleBarViewModel _titleBarViewModel;
-    public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
+    readonly IThemeService themeService;
+    readonly IWindowService windowService;
+    CustomTitleBarViewModel titleBarViewModel;
+    public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
 
     int lineCt = 0;
 
@@ -28,44 +28,44 @@ public partial class ThemeEditorWindow : Window
 
     public ThemeEditorWindow(IThemeService themeService)
     {
-        _themeService = themeService;
-        _windowService = new WindowService(this);
+        this.themeService = themeService;
+        windowService = new WindowService(this);
         InitializeComponent();
         DataContext = this;
-        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Theme Editor", showMinimize: false, showMaximize: false);
-        _themeService.LoadCurrentTheme();
+        CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "Theme Editor", showMinimize: false, showMaximize: false);
+        this.themeService.LoadCurrentTheme();
         InitThemeData();
     }
 
     void InitThemeData()
     {
-        AddNewColorLineSafe(UIConstants.Color_TextEditorBg, "Text Editor Background", ref _themeService.CurrentTheme.themeObj_TextEditorBg!);
-        AddNewColorLineSafe(UIConstants.Color_TextEditorFg, "Text Editor Font", ref _themeService.CurrentTheme.themeObj_TextEditorFg!);
-        AddNewColorLineSafe(UIConstants.Color_TitleBarBg, "Title Bar Background", ref _themeService.CurrentTheme.themeObj_TitleBarBg!);
-        AddNewColorLineSafe(UIConstants.Color_TitleBarFont, "Title Bar Font", ref _themeService.CurrentTheme.themeObj_TitleBarFont!);
-        AddNewColorLineSafe(UIConstants.Color_SystemButtons, "System Buttons", ref _themeService.CurrentTheme.themeObj_SystemButtons!);
-        AddNewColorLineSafe(UIConstants.Color_BorderColor, "Border Color", ref _themeService.CurrentTheme.themeObj_BorderColor!);
+        AddNewColorLineSafe(UIConstants.Color_TextEditorBg, "Text Editor Background", ref themeService.CurrentTheme.themeObj_TextEditorBg!);
+        AddNewColorLineSafe(UIConstants.Color_TextEditorFg, "Text Editor Font", ref themeService.CurrentTheme.themeObj_TextEditorFg!);
+        AddNewColorLineSafe(UIConstants.Color_TitleBarBg, "Title Bar Background", ref themeService.CurrentTheme.themeObj_TitleBarBg!);
+        AddNewColorLineSafe(UIConstants.Color_TitleBarFont, "Title Bar Font", ref themeService.CurrentTheme.themeObj_TitleBarFont!);
+        AddNewColorLineSafe(UIConstants.Color_SystemButtons, "System Buttons", ref themeService.CurrentTheme.themeObj_SystemButtons!);
+        AddNewColorLineSafe(UIConstants.Color_BorderColor, "Border Color", ref themeService.CurrentTheme.themeObj_BorderColor!);
 
-        AddNewColorLineSafe(UIConstants.Color_MenuBarBg, "Menu Bar Background", ref _themeService.CurrentTheme.themeObj_MenuBarBg!);
-        AddNewColorLineSafe(UIConstants.Color_MenuItemFg, "Menu Item Font", ref _themeService.CurrentTheme.themeObj_MenuItemFg!);
-        AddNewColorLineSafe(UIConstants.Color_InfoBarBg, "Info Bar Background", ref _themeService.CurrentTheme.themeObj_InfoBarBg!);
-        AddNewColorLineSafe(UIConstants.Color_InfoBarFg, "Info Bar Font", ref _themeService.CurrentTheme.themeObj_InfoBarFg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuBarBg, "Menu Bar Background", ref themeService.CurrentTheme.themeObj_MenuBarBg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemFg, "Menu Item Font", ref themeService.CurrentTheme.themeObj_MenuItemFg!);
+        AddNewColorLineSafe(UIConstants.Color_InfoBarBg, "Info Bar Background", ref themeService.CurrentTheme.themeObj_InfoBarBg!);
+        AddNewColorLineSafe(UIConstants.Color_InfoBarFg, "Info Bar Font", ref themeService.CurrentTheme.themeObj_InfoBarFg!);
 
 
-        AddNewColorLineSafe(UIConstants.Color_MenuBg, "Menu Background", ref _themeService.CurrentTheme.themeObj_MenuBg!);
-        AddNewColorLineSafe(UIConstants.Color_MenuBorder, "Menu Border", ref _themeService.CurrentTheme.themeObj_MenuBorder!);
-        AddNewColorLineSafe(UIConstants.Color_MenuItemHighlightBg, "Menu Item Highlight Background", ref _themeService.CurrentTheme.themeObj_MenuItemHighlightBg!);
-        AddNewColorLineSafe(UIConstants.Color_MenuItemHighlightBorder, "Selected Menu Item Border", ref _themeService.CurrentTheme.themeObj_MenuItemHighlightBorder!);
-        AddNewColorLineSafe(UIConstants.Color_MenuSeperator, "Menu Seperator", ref _themeService.CurrentTheme.themeObj_MenuSeperator!);
-        AddNewColorLineSafe(UIConstants.Color_MenuDisabledFg, "Menu Disabled Font", ref _themeService.CurrentTheme.themeObj_MenuDisabledFg!);
-        AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBg, "Checkbox Background", ref _themeService.CurrentTheme.themeObj_MenuItemSelectedBg!);
-        AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBorder, "Checkbox Border", ref _themeService.CurrentTheme.themeObj_MenuItemSelectedBorder!);
-        AddNewColorLineSafe(UIConstants.Color_MenuFg, "Checkmark / Arrow", ref _themeService.CurrentTheme.themeObj_MenuFg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuBg, "Menu Background", ref themeService.CurrentTheme.themeObj_MenuBg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuBorder, "Menu Border", ref themeService.CurrentTheme.themeObj_MenuBorder!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemHighlightBg, "Menu Item Highlight Background", ref themeService.CurrentTheme.themeObj_MenuItemHighlightBg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemHighlightBorder, "Selected Menu Item Border", ref themeService.CurrentTheme.themeObj_MenuItemHighlightBorder!);
+        AddNewColorLineSafe(UIConstants.Color_MenuSeperator, "Menu Seperator", ref themeService.CurrentTheme.themeObj_MenuSeperator!);
+        AddNewColorLineSafe(UIConstants.Color_MenuDisabledFg, "Menu Disabled Font", ref themeService.CurrentTheme.themeObj_MenuDisabledFg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBg, "Checkbox Background", ref themeService.CurrentTheme.themeObj_MenuItemSelectedBg!);
+        AddNewColorLineSafe(UIConstants.Color_MenuItemSelectedBorder, "Checkbox Border", ref themeService.CurrentTheme.themeObj_MenuItemSelectedBorder!);
+        AddNewColorLineSafe(UIConstants.Color_MenuFg, "Checkmark / Arrow", ref themeService.CurrentTheme.themeObj_MenuFg!);
 
-        AddNewColorLineSafe(UIConstants.Color_ToolWindowBg, "Tool Window Background", ref _themeService.CurrentTheme.themeObj_ToolWindowBg!);
-        AddNewColorLineSafe(UIConstants.Color_ToolWindowFont, "Tool Window Font", ref _themeService.CurrentTheme.themeObj_ToolWindowFont!);
-        AddNewColorLineSafe(UIConstants.Color_ToolWindowButtonBg, "Tool Window Buttons", ref _themeService.CurrentTheme.themeObj_ToolWindowButtonBg!);
-        AddNewColorLineSafe(UIConstants.Color_ToolWindowButtonBorder, "Tool Window Button Border", ref _themeService.CurrentTheme.themeObj_ToolWindowButtonBorder!);
+        AddNewColorLineSafe(UIConstants.Color_ToolWindowBg, "Tool Window Background", ref themeService.CurrentTheme.themeObj_ToolWindowBg!);
+        AddNewColorLineSafe(UIConstants.Color_ToolWindowFont, "Tool Window Font", ref themeService.CurrentTheme.themeObj_ToolWindowFont!);
+        AddNewColorLineSafe(UIConstants.Color_ToolWindowButtonBg, "Tool Window Buttons", ref themeService.CurrentTheme.themeObj_ToolWindowButtonBg!);
+        AddNewColorLineSafe(UIConstants.Color_ToolWindowButtonBorder, "Tool Window Button Border", ref themeService.CurrentTheme.themeObj_ToolWindowButtonBorder!);
     }
 
     void AddNewColorLineSafe(string resourceKey, string friendlyThemeName, ref ThemeObject themeObj)
@@ -123,7 +123,7 @@ public partial class ThemeEditorWindow : Window
         else
             return false;
 
-        var theme = _themeService.CurrentTheme;
+        var theme = themeService.CurrentTheme;
         var serializedTheme = theme.ToSerializable();
 
         var options = new JsonSerializerOptions

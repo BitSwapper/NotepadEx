@@ -7,8 +7,8 @@ namespace NotepadEx.MVVM.View;
 
 public partial class ColorPickerWindow : Window
 {
-    CustomTitleBarViewModel _titleBarViewModel;
-    public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
+    CustomTitleBarViewModel titleBarViewModel;
+    public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
 
     public Color SelectedColor
     {
@@ -19,7 +19,7 @@ public partial class ColorPickerWindow : Window
     {
         InitializeComponent();
         DataContext = this;
-        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Color Picker", showMinimize: false, showMaximize: false);
+        CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "Color Picker", showMinimize: false, showMaximize: false);
         myColorPicker.OnWindowCancel += OnCancel;
         myColorPicker.OnWindowConfirm += OnConfirm;
     }

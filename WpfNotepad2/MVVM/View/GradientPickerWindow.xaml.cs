@@ -21,14 +21,14 @@ public partial class GradientPickerWindow : Window
     double ScaleX { get; set; } = 1.0;
     double ScaleY { get; set; } = 1.0;
 
-    CustomTitleBarViewModel _titleBarViewModel;
-    public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
+    CustomTitleBarViewModel titleBarViewModel;
+    public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
 
     public GradientPickerWindow()
     {
         InitializeComponent();
         DataContext = this;
-        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Gradient Picker", showMinimize: false, showMaximize: false);
+        CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "Gradient Picker", showMinimize: false, showMaximize: false);
 
         GradientStops = new ObservableCollection<GradientStop>();
         StopsListBox.ItemsSource = GradientStops;

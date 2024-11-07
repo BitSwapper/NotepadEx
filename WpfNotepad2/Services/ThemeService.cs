@@ -19,11 +19,11 @@ public class ThemeService : IThemeService
     public string CurrentThemeName { get; private set; }
     public ObservableCollection<ThemeInfo> AvailableThemes { get; private set; }
 
-    readonly Application _application;
+    readonly Application application;
 
     public ThemeService(Application application)
     {
-        _application = application;
+        this.application = application;
         AvailableThemes = new ObservableCollection<ThemeInfo>();
         LoadAvailableThemes();
     }
@@ -110,12 +110,12 @@ public class ThemeService : IThemeService
 
         if(themeObj.isGradient)
         {
-            AppResourceUtil<LinearGradientBrush>.TrySetResource(_application, resourceKey, themeObj.gradient);
+            AppResourceUtil<LinearGradientBrush>.TrySetResource(application, resourceKey, themeObj.gradient);
         }
         else
         {
             AppResourceUtil<SolidColorBrush>.TrySetResource(
-                _application,
+                application,
                 resourceKey,
                 new SolidColorBrush(themeObj.color.GetValueOrDefault())
             );

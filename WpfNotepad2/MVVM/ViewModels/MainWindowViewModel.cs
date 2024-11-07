@@ -94,8 +94,8 @@ public class MainWindowViewModel : ViewModelBase
     public bool IsAutoHideMenuBarEnabled => Settings.Default.MenuBarAutoHide;
 
 
-    CustomTitleBarViewModel _titleBarViewModel;
-    public CustomTitleBarViewModel TitleBarViewModel { get => _titleBarViewModel; set => _titleBarViewModel = value; }
+    CustomTitleBarViewModel titleBarViewModel;
+    public CustomTitleBarViewModel TitleBarViewModel { get => titleBarViewModel; set => titleBarViewModel = value; }
 
     MenuItem menuItemFileDropdown;
     Action SaveSettings;
@@ -242,7 +242,7 @@ public class MainWindowViewModel : ViewModelBase
     void UpdateTitle()
     {
         var title = string.IsNullOrEmpty(document.FileName) ? "NotepadEx" : $"NotepadEx | {document.FileName}{(document.IsModified ? "*" : "")}";
-        _titleBarViewModel.TitleText = title;
+        titleBarViewModel.TitleText = title;
     }
 
     public bool PromptToSaveChanges()

@@ -5,15 +5,15 @@ namespace NotepadEx.Services;
 
 public class WindowService : IWindowService
 {
-    public Window _owner { get; private set; }
+    public Window owner { get; private set; }
 
-    public WindowService(Window owner) => _owner = owner;
+    public WindowService(Window owner) => this.owner = owner;
 
-    public void ShowDialog(string message, string title = "") => MessageBox.Show(_owner, message, title, MessageBoxButton.OK);
+    public void ShowDialog(string message, string title = "") => MessageBox.Show(owner, message, title, MessageBoxButton.OK);
 
     public bool ShowConfirmDialog(string message, string title = "")
     {
-        var result = MessageBox.Show(_owner, message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+        var result = MessageBox.Show(owner, message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
         return result == MessageBoxResult.Yes;
     }
@@ -39,8 +39,8 @@ public class WindowService : IWindowService
         return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK ? dialog.FileName : null;
     }
 
-    public void SetWindowState(WindowState state) => _owner.WindowState = state;
+    public void SetWindowState(WindowState state) => owner.WindowState = state;
 
-    public WindowState GetWindowState() => _owner.WindowState;
+    public WindowState GetWindowState() => owner.WindowState;
 }
 
