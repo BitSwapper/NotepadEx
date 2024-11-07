@@ -9,7 +9,7 @@
         Title="ColorPickerWindow" Height="611" Width="611"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="{DynamicResource Color_ToolWindowBg}">
+        Background="Transparent">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="24"></RowDefinition>
