@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="{DynamicResource Color_ToolWindowBg}">
+        Background="Transparent">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"></Setter>
@@ -31,7 +31,7 @@
 
         <UserControls:CustomTitleBar x:Name="TitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Background="{DynamicResource Color_ToolWindowBg}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
