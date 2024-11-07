@@ -117,10 +117,7 @@ public class MainWindowViewModel : ViewModelBase
     }
 
 
-    void AddRecentFile(string filePath)
-    {
-        RecentFileManager.AddRecentFile(filePath, menuItemFileDropdown, SaveSettings);
-    }
+    void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, menuItemFileDropdown, SaveSettings);
 
     //void OpenRecent(object parameter)
     //{
@@ -178,13 +175,13 @@ public class MainWindowViewModel : ViewModelBase
 
     void NewDocument()
     {
-        if(PromptToSaveChanges())
-        {
-            document.Content = string.Empty;
-            document.FilePath = string.Empty;
-            document.IsModified = false;
-            UpdateTitle();
-        }
+        if(!PromptToSaveChanges()) return;
+
+        document.Content = string.Empty;
+        document.FilePath = string.Empty;
+        document.IsModified = false;
+        UpdateTitle();
+        OnPropertyChanged("DocumentContent");
     }
 
     void OpenDocument()
@@ -242,19 +239,13 @@ public class MainWindowViewModel : ViewModelBase
     {
         if(!document.IsModified) return true;
 
-        var result = windowService.ShowConfirmDialog(
-                "Do you want to save changes?",
-                "Save Changes");
+        var bResult = windowService.ShowConfirmDialog("Do you want to save changes?", "Save Changes");
 
-        if(result)
-        {
+        if(bResult)
             SaveDocument();
-        }
 
         return true;
     }
-
-
 
     void SaveDocument()
     {
