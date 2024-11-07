@@ -89,4 +89,13 @@ public partial class MainWindow : Window
     {
         viewModel.PromptToSaveChanges();
     }
+
+    private void TxtEditor_SelectionChanged(object sender, RoutedEventArgs e)
+    {
+        if(DataContext is MainWindowViewModel viewModel && sender is TextBox textBox)
+        {
+            viewModel.SelectionStart = textBox.SelectionStart;
+            viewModel.SelectionLength = textBox.SelectionLength;
+        }
+    }
 }

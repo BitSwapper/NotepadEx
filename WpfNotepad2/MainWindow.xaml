@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:NotepadEx"
         xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
         mc:Ignorable="d"
@@ -118,20 +119,22 @@
 
                     <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
                         <TextBox Text="{Binding DocumentContent, UpdateSourceTrigger=PropertyChanged}"
-                                Background="Transparent"
-                                Foreground="{DynamicResource Color_TextEditorFg}"
-                                AcceptsReturn="True"
-                                FontSize="18"
-                                FontFamily="Segoe UI"
-                                TextWrapping="{Binding TextWrappingMode}"
-                                TextOptions.TextRenderingMode="ClearType"
-                                Margin="2"
-                                BorderBrush="Transparent"
-                                BorderThickness="0"
-                                VerticalScrollBarVisibility="Auto"
-                                HorizontalScrollBarVisibility="Auto"
-                                CaretBrush="AliceBlue"
-                                Name ="txtEditor">
+                        Background="Transparent"
+                        Foreground="{DynamicResource Color_TextEditorFg}"
+                        AcceptsReturn="True"
+                        FontSize="18"
+                        FontFamily="Segoe UI"
+                        TextWrapping="{Binding TextWrappingMode}"
+                        TextOptions.TextRenderingMode="ClearType"
+                        Margin="2"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto"
+                        CaretBrush="AliceBlue"
+                        Name="txtEditor"
+                        SelectionChanged="TxtEditor_SelectionChanged">
+                      
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding SaveCommand}" 
                                           Gesture="Ctrl+S"/>

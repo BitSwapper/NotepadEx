@@ -5,8 +5,9 @@ namespace NotepadEx.MVVM.Models;
 public class Document
 {
     string _content = string.Empty;
-    int _selectionStart;
-    int _selectionLength;
+    
+    public int SelectionStart { get; set; }
+    public int SelectionLength { get; set; }
 
     public string Content
     {
@@ -22,33 +23,27 @@ public class Document
     public bool IsModified { get; set; }
     public string FileName => string.IsNullOrEmpty(FilePath) ? string.Empty : Path.GetFileName(FilePath);
 
-    public string SelectedText => _selectionLength > 0 ? _content.Substring(_selectionStart, _selectionLength) : string.Empty;
+    public string SelectedText => SelectionLength > 0 ? _content.Substring(SelectionStart, SelectionLength) : string.Empty;
 
     public void DeleteSelected()
     {
-        if(_selectionLength > 0)
+        if(SelectionLength > 0)
         {
-            _content = _content.Remove(_selectionStart, _selectionLength);
-            _selectionLength = 0;
+            _content = _content.Remove(SelectionStart, SelectionLength);
+            SelectionLength = 0;
             IsModified = true;
         }
     }
 
     public void InsertText(string text)
     {
-        if(_selectionLength > 0)
+        if(SelectionLength > 0)
         {
             DeleteSelected();
         }
-        _content = _content.Insert(_selectionStart, text);
-        _selectionStart += text.Length;
+        _content = _content.Insert(SelectionStart, text);
+        SelectionStart += text.Length;
         IsModified = true;
-    }
-
-    public void UpdateSelection(int start, int length)
-    {
-        _selectionStart = start;
-        _selectionLength = length;
     }
 }
 

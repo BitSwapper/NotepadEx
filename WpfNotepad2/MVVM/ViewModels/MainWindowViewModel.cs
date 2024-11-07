@@ -54,6 +54,26 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
+    public int SelectionStart
+    {
+        get => document.SelectionStart;
+        set
+        {
+            document.SelectionStart = value;
+            //UpdateEditCommandsCanExecute();
+        }
+    }
+
+    public int SelectionLength
+    {
+        get => document.SelectionLength;
+        set
+        {
+            document.SelectionLength = value;
+            //UpdateEditCommandsCanExecute();
+        }
+    }
+
     public string StatusText
     {
         get => statusText;
@@ -171,7 +191,6 @@ public class MainWindowViewModel : ViewModelBase
         if(theme != null)
             themeService.ApplyTheme(theme.Name);
     }
-
 
     void NewDocument()
     {
