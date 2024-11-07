@@ -9,7 +9,6 @@ using NotepadEx.Util;
 
 public partial class MainWindow : Window
 {
-    readonly WindowResizerUtil resizer;
     readonly MainWindowViewModel viewModel;
     readonly ThemeService themeService;
 
@@ -18,23 +17,21 @@ public partial class MainWindow : Window
         var windowService = new WindowService(this);
         var documentService = new DocumentService();
         themeService = new ThemeService(Application.Current);
-        resizer = new();
 
         InitializeComponent();
         DataContext = viewModel = new MainWindowViewModel(windowService, documentService, themeService, MenuItemFileDropDown, SaveSettings);
         InitTitleBar();
 
-
         StateChanged += OnWindowStateChanged;
         MouseMove += OnWindowMouseMove;
         Closed += WindowClosed;
+    }
 
-        void InitTitleBar()
-        {
-            var titleBarViewModel = new CustomTitleBarViewModel(this);
-            CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "NotepadEx");
-            viewModel.TitleBarViewModel = titleBarViewModel;
-        }
+    void InitTitleBar()
+    {
+        var titleBarViewModel = new CustomTitleBarViewModel(this);
+        CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "NotepadEx");
+        viewModel.TitleBarViewModel = titleBarViewModel;
     }
 
     void OnWindowStateChanged(object sender, EventArgs e)
@@ -46,7 +43,7 @@ public partial class MainWindow : Window
     void OnBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if(e.ClickCount == 2)
-            resizer.ToggleMaximizeState(this);
+            WindowResizerUtil.ToggleMaximizeState(this);
     }
 
     void OnWindowMouseMove(object sender, MouseEventArgs e)
@@ -62,11 +59,6 @@ public partial class MainWindow : Window
             var position = e.GetPosition(this);
             WindowResizerUtil.ResizeWindow(this, position);
         }
-    }
-
-    protected override void OnSourceInitialized(EventArgs e)
-    {
-        base.OnSourceInitialized(e);
     }
 
    void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e) //**Refactor / Fix

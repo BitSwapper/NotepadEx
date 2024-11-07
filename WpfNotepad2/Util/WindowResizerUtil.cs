@@ -12,17 +12,7 @@ public class WindowResizerUtil
     double oldWidth;
     double oldHeight;
     
-    public void ToggleMaximizeState(Window window)
-    {
-        if(window.WindowState == WindowState.Maximized)
-        {
-            window.WindowState = WindowState.Normal;
-        }
-        else
-        {
-            window.WindowState = WindowState.Maximized;
-        }
-    }
+
 
     public void DoWindowMaximizedStateChangeSpecial(Window window, WindowState prevWindowState)
     {
@@ -55,10 +45,29 @@ public class WindowResizerUtil
         }
     }
 
+    public static void ToggleMaximizeState(Window window)
+    {
+        if(window.WindowState == WindowState.Maximized)
+        {
+            window.WindowState = WindowState.Normal;
+        }
+        else
+        {
+            window.WindowState = WindowState.Maximized;
+        }
+        window.Cursor = Cursors.Arrow;
+    }
+
     public static void ResizeWindow(Window window, Point position, int edgeThreshold = 6, Action OnResized = null)
     {
         double windowWidth = window.ActualWidth;
         double windowHeight = window.ActualHeight;
+
+        if(window.WindowState == WindowState.Maximized)
+        {
+            window.Cursor = Cursors.Arrow;
+            return;
+        }
 
         if(position.X <= edgeThreshold && position.Y <= edgeThreshold)
         {

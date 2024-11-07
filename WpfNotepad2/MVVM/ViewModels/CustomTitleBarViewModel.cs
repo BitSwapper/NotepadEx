@@ -63,7 +63,7 @@ public class CustomTitleBarViewModel : ViewModelBase
 
     void ExecuteMinimize() => window.WindowState = WindowState.Minimized;
 
-    void ExecuteMaximize() => window.WindowState = window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+    void ExecuteMaximize() => WindowResizerUtil.ToggleMaximizeState(window);
 
     void ExecuteClose() => window.Close();
 
