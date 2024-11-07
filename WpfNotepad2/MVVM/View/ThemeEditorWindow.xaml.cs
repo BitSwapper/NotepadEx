@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Input;
 using Microsoft.Win32;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
@@ -138,5 +139,14 @@ public partial class ThemeEditorWindow : Window
         //UpdateModifiedStateOfTitleBar();
         //AddRecentFile(fileName);
         return true;
+    }
+
+    void OnWindowMouseMove(object sender, MouseEventArgs e)
+    {
+        if(WindowState == WindowState.Normal)
+        {
+            var position = e.GetPosition(this);
+            WindowResizerUtil.ResizeWindow(this, position);
+        }
     }
 }

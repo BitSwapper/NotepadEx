@@ -9,7 +9,8 @@
         Title="ThemeEditorWindow" Height="450" Width="400"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent"
+        MouseMove="OnWindowMouseMove">
     <Window.Resources>
         <Style TargetType="Expander">
             <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"></Setter>

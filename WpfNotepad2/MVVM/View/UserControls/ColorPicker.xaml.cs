@@ -244,7 +244,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
         double selectorHeight = HueSelector.ActualHeight;
         double sliderHeight = HueSlider.ActualHeight;
-        // Clamp the position to keep the selector fully visible
+
         double position = (currentHue * sliderHeight) - (selectorHeight / 2);
         position = Math.Clamp(position, 0, sliderHeight - selectorHeight);
         Canvas.SetTop(HueSelector, position);
