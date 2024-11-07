@@ -15,7 +15,7 @@
             <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"></Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="{DynamicResource Color_ToolWindowBg}">
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="24"/>
             <RowDefinition Height="18"/>
@@ -37,7 +37,7 @@
             </MenuItem>
         </Menu>
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Name="stackPanelMain" Background="Transparent">
+            <StackPanel Name="stackPanelMain" Background="{DynamicResource Color_ToolWindowBg}">
                 <Expander Name="ExpanderMain" Header="Main">
                         <StackPanel Name="StackPanelMain" HorizontalAlignment="Center" Width="280"></StackPanel>
                     </Expander>
