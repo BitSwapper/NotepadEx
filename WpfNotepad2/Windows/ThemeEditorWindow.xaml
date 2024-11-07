@@ -17,12 +17,10 @@
     </Window.Resources>
     <Grid Background="{DynamicResource Color_ToolWindowBg}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="24"/>
             <RowDefinition Height="18"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-
 
         <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
         <Menu Grid.Row="1" Background="{DynamicResource Color_MenuBarBg}">

@@ -23,7 +23,7 @@
                 MouseMove="OnWindowMouseMove">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="26"/>
+                    <RowDefinition Height="24"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 

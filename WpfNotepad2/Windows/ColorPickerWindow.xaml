@@ -12,7 +12,7 @@
         Background="{DynamicResource Color_ToolWindowBg}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="16"></RowDefinition>
+            <RowDefinition Height="24"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <UserControls:CustomTitleBar x:Name="TitleBar" DataContext="{Binding TitleBarViewModel}"/>
