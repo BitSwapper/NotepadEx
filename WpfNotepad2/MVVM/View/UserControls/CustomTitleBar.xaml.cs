@@ -10,15 +10,15 @@ public partial class CustomTitleBar : UserControl
 {
     public CustomTitleBar() => InitializeComponent();
 
-    public static void InitializeTitleBar(ref CustomTitleBarViewModel _titleBarViewModel, Window window, string windowName)
+    public static void InitializeTitleBar(ref CustomTitleBarViewModel _titleBarViewModel, Window window, string windowName, bool showMinimize = true, bool showMaximize = true, bool showExit = true)
     {
         _titleBarViewModel = new CustomTitleBarViewModel(window, true);
 
         _titleBarViewModel.Initialize(
             windowName,
-            showMinimize: true,
-            showMaximize: true,
-            showClose: true
+            showMinimize: showMinimize,
+            showMaximize: showMaximize,
+            showClose: showExit
         );
         _titleBarViewModel.IconImage = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
     }

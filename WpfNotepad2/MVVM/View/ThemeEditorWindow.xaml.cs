@@ -31,8 +31,7 @@ public partial class ThemeEditorWindow : Window
         _windowService = new WindowService(this);
         InitializeComponent();
         DataContext = this;
-        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Theme Editor");
-        //ThemeEditorTitleBar.Init(this, "Theme Editor", false, Minimize_Click, null!, Close_Click);
+        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Theme Editor", showMinimize: false, showMaximize: false);
         _themeService.LoadCurrentTheme();
         InitThemeData();
     }

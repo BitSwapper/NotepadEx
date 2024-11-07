@@ -15,8 +15,7 @@
     <Border BorderThickness="2" 
         BorderBrush="{DynamicResource Color_BorderColor}" 
         CornerRadius="1" 
-        Background="Transparent"
-        MouseMove="OnWindowMouseMove">
+        Background="Transparent">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="24"></RowDefinition>

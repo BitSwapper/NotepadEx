@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
@@ -27,7 +28,7 @@ public partial class GradientPickerWindow : Window
     {
         InitializeComponent();
         DataContext = this;
-        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Gradient Picker");
+        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Gradient Picker", showMinimize: false, showMaximize: false);
 
         GradientStops = new ObservableCollection<GradientStop>();
         StopsListBox.ItemsSource = GradientStops;

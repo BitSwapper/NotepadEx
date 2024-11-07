@@ -23,142 +23,148 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
 
-        <UserControls:CustomTitleBar x:Name="TitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
-
-        <Grid Grid.Row="1" Background="{DynamicResource Color_ToolWindowBg}">
+    <Border BorderThickness="2" 
+    BorderBrush="{DynamicResource Color_BorderColor}" 
+    CornerRadius="1" 
+    Background="Transparent">
+        <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <!-- Gradient Preview -->
-            <Rectangle Grid.Row="0" Height="100" Margin="10">
-                <Rectangle.Fill>
-                    <LinearGradientBrush x:Name="GradientPreview"/>
-                </Rectangle.Fill>
-            </Rectangle>
 
+            <UserControls:CustomTitleBar x:Name="TitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
 
-
-
-            <!-- Start and End Position Controls -->
-            <Grid Grid.Row="1" Margin="10">
+            <Grid Grid.Row="1" Background="{DynamicResource Color_ToolWindowBg}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-             
-                </Grid.ColumnDefinitions>
+                <!-- Gradient Preview -->
+                <Rectangle Grid.Row="0" Height="100" Margin="10">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush x:Name="GradientPreview"/>
+                    </Rectangle.Fill>
+                </Rectangle>
 
-                <TextBlock Text="Start:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                    <TextBlock Text="X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <Slider x:Name="StartXSlider" Width="300" Minimum="0" Maximum="1" Value="0" ValueChanged="PositionSlider_ValueChanged"/>
-                    <TextBlock Text="{Binding ElementName=StartXSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,10,0"/>
-                    <TextBlock Text="Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <Slider x:Name="StartYSlider" Width="300" Minimum="0" Maximum="1" Value="1" ValueChanged="PositionSlider_ValueChanged"/>
-                    <TextBlock Text="{Binding ElementName=StartYSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+
+
+                <!-- Start and End Position Controls -->
+                <Grid Grid.Row="1" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Start:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                        <TextBlock Text="X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <Slider x:Name="StartXSlider" Width="300" Minimum="0" Maximum="1" Value="0" ValueChanged="PositionSlider_ValueChanged"/>
+                        <TextBlock Text="{Binding ElementName=StartXSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                        <TextBlock Text="Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <Slider x:Name="StartYSlider" Width="300" Minimum="0" Maximum="1" Value="1" ValueChanged="PositionSlider_ValueChanged"/>
+                        <TextBlock Text="{Binding ElementName=StartYSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    </StackPanel>
+
+                    <TextBlock Text="End:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
+                        <TextBlock Text="X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <Slider x:Name="EndXSlider" Width="300" Minimum="0" Maximum="1" Value="1" ValueChanged="PositionSlider_ValueChanged"/>
+                        <TextBlock Text="{Binding ElementName=EndXSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                        <TextBlock Text="Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <Slider x:Name="EndYSlider" Width="300" Minimum="0" Maximum="1" Value="0" ValueChanged="PositionSlider_ValueChanged"/>
+                        <TextBlock Text="{Binding ElementName=EndYSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Angle Slider -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+
+                    <TextBlock Text="Angle:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <Slider x:Name="SliderAngle" Width="160" Minimum="0" Maximum="360" Value="0" Margin="0,0,5,0" ValueChanged="SliderAngle_ValueChanged"/>
+                    <TextBlock Text="{Binding ElementName=SliderAngle, Path=Value, StringFormat={}{0:F0}°}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+
+                    <TextBlock Text="Offset X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <Slider x:Name="SliderOffsetX" Width="160" Minimum="-2" Maximum="2" Value="0" Margin="0,0,5,0" ValueChanged="SliderOffsetX_ValueChanged"/>
+
+                    <TextBlock Text="Offset Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <Slider x:Name="SliderOffsetY" Width="160" Minimum="-2" Maximum="2" Value="0" ValueChanged="SliderOffsetY_ValueChanged"/>
                 </StackPanel>
 
-                <TextBlock Text="End:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
-                    <TextBlock Text="X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <Slider x:Name="EndXSlider" Width="300" Minimum="0" Maximum="1" Value="1" ValueChanged="PositionSlider_ValueChanged"/>
-                    <TextBlock Text="{Binding ElementName=EndXSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,10,0"/>
-                    <TextBlock Text="Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <Slider x:Name="EndYSlider" Width="300" Minimum="0" Maximum="1" Value="0" ValueChanged="PositionSlider_ValueChanged"/>
-                    <TextBlock Text="{Binding ElementName=EndYSlider, Path=Value, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+
+
+
+                <!-- Scale Slider -->
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
+
+
+                    <TextBlock Text="Scale X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <Slider x:Name="SliderScaleX" Width="180" Minimum="-3" Maximum="3" Value="0" Margin="0,0,5,0" ValueChanged="SliderScaleX_ValueChanged"/>
+
+                    <TextBlock Text="Scale Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <Slider x:Name="SliderScaleY" Width="180" Minimum="-3" Maximum="3" Value="0" ValueChanged="SliderScaleY_ValueChanged"/>
                 </StackPanel>
-            </Grid>
-
-            <!-- Angle Slider -->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
-                
-                <TextBlock Text="Angle:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <Slider x:Name="SliderAngle" Width="160" Minimum="0" Maximum="360" Value="0" Margin="0,0,5,0" ValueChanged="SliderAngle_ValueChanged"/>
-                <TextBlock Text="{Binding ElementName=SliderAngle, Path=Value, StringFormat={}{0:F0}°}" VerticalAlignment="Center" Margin="5,0,10,0"/>
-                
-                <TextBlock Text="Offset X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <Slider x:Name="SliderOffsetX" Width="160" Minimum="-2" Maximum="2" Value="0" Margin="0,0,5,0" ValueChanged="SliderOffsetX_ValueChanged"/>
-
-                <TextBlock Text="Offset Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <Slider x:Name="SliderOffsetY" Width="160" Minimum="-2" Maximum="2" Value="0" ValueChanged="SliderOffsetY_ValueChanged"/>
-            </StackPanel>
 
 
-          
+                <!-- Gradient Stops -->
+                <ListBox Grid.Row="4" x:Name="StopsListBox" Background="{DynamicResource Color_ToolWindowBg}"  d:ItemsSource="{d:SampleData ItemCount=9}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
 
 
-            <!-- Scale Slider -->
-            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
+                                <Slider Maximum="1" Width="490" Grid.Column="1" Value="{Binding Offset, Mode=TwoWay}" ValueChanged="StopSlider_ValueChanged"/>
+                                <Rectangle x:Name="ColorPreviewForStop" Width="20" Height="20" Margin="0,0,5,0">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush x:Name="ColorPreviewForStopBrush" Color="{Binding Color}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Button Content="Randomize" Grid.Column="2" Margin="5,0,0,0" Click="RandomizeStop_Click"/>
+                                <Button Content="Edit" Grid.Column="3" Margin="5,0,0,0" Click="EditStop_Click"/>
+                                <Button Content="Copy" Grid.Column="4" Margin="5,0,0,0" Click="CopyStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                                <Button Content="Paste" Grid.Column="5" Margin="5,0,0,0" Click="PasteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                                <Button Content="Delete" Grid.Column="5" Margin="5,0,-0,0" Click="DeleteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
 
-                <TextBlock Text="Scale X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <Slider x:Name="SliderScaleX" Width="180" Minimum="-3" Maximum="3" Value="0" Margin="0,0,5,0" ValueChanged="SliderScaleX_ValueChanged"/>
 
-                <TextBlock Text="Scale Y:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <Slider x:Name="SliderScaleY" Width="180" Minimum="-3" Maximum="3" Value="0" ValueChanged="SliderScaleY_ValueChanged"/>
-            </StackPanel>
-
-
-            <!-- Gradient Stops -->
-            <ListBox Grid.Row="4" x:Name="StopsListBox" Background="{DynamicResource Color_ToolWindowBg}"  d:ItemsSource="{d:SampleData ItemCount=9}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="50"/>
-                            </Grid.ColumnDefinitions>
-                       
-
-                            <Slider Maximum="1" Width="490" Grid.Column="1" Value="{Binding Offset, Mode=TwoWay}" ValueChanged="StopSlider_ValueChanged"/>
-                            <Rectangle x:Name="ColorPreviewForStop" Width="20" Height="20" Margin="0,0,5,0">
-                                <Rectangle.Fill>
-                                    <SolidColorBrush x:Name="ColorPreviewForStopBrush" Color="{Binding Color}"/>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <Button Content="Randomize" Grid.Column="2" Margin="5,0,0,0" Click="RandomizeStop_Click"/>
-                            <Button Content="Edit" Grid.Column="3" Margin="5,0,0,0" Click="EditStop_Click"/>
-                            <Button Content="Copy" Grid.Column="4" Margin="5,0,0,0" Click="CopyStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
-                            <Button Content="Paste" Grid.Column="5" Margin="5,0,0,0" Click="PasteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
-                            <Button Content="Delete" Grid.Column="5" Margin="5,0,-0,0" Click="DeleteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            
-            
-            
-            <!-- Controls -->
-            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Add Stop" Click="AddStop_Click" Margin="0,0,5,0"/>
-            </StackPanel>
-            <!-- Confirm and Cancel buttons -->
-            <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Cancel" Click="CancelButton_Click" Margin="5,0,0,0"/>
-                <Button Content="Confirm" Click="ConfirmButton_Click" Margin="5,0,0,0"/>
-            </StackPanel>
-            <Grid Grid.Row="7" Height="2000" Background="{DynamicResource Color_ToolWindowBg}">
+                <!-- Controls -->
+                <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content="Add Stop" Click="AddStop_Click" Margin="0,0,5,0"/>
+                </StackPanel>
+                <!-- Confirm and Cancel buttons -->
+                <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content="Cancel" Click="CancelButton_Click" Margin="5,0,0,0"/>
+                    <Button Content="Confirm" Click="ConfirmButton_Click" Margin="5,0,0,0"/>
+                </StackPanel>
+                <Grid Grid.Row="7" Height="2000" Background="{DynamicResource Color_ToolWindowBg}">
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

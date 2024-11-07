@@ -15,49 +15,55 @@
             <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"></Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="18"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
-        <Menu Grid.Row="1" Background="{DynamicResource Color_MenuBarBg}">
-            <MenuItem Name="MenuItem_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
-                <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSave_Click"></MenuItem>
-            </MenuItem>
-            <MenuItem Name="MenuItem_CopyFrom" Header="Copy From" Foreground="{DynamicResource Color_MenuItemFg}">
-                <MenuItem Header="Test Checked" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}">
-                    <MenuItem Header="Test CheckedChild" Foreground="{DynamicResource Color_MenuItemFg}"/>
-                    <MenuItem Header="Test CheckedChild2" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
-                    <MenuItem Header="Test CheckedChild2" IsEnabled="False" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
+    <Border BorderThickness="2" 
+    BorderBrush="{DynamicResource Color_BorderColor}" 
+    CornerRadius="1" 
+    Background="Transparent">
+        <Grid Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
+            <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
+            <Menu Grid.Row="1" Background="{DynamicResource Color_MenuBarBg}">
+                <MenuItem Name="MenuItem_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
+                    <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSave_Click"></MenuItem>
                 </MenuItem>
-            </MenuItem>
-        </Menu>
+                <MenuItem Name="MenuItem_CopyFrom" Header="Copy From" Foreground="{DynamicResource Color_MenuItemFg}">
+                    <MenuItem Header="Test Checked" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}">
+                        <MenuItem Header="Test CheckedChild" Foreground="{DynamicResource Color_MenuItemFg}"/>
+                        <MenuItem Header="Test CheckedChild2" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
+                        <MenuItem Header="Test CheckedChild2" IsEnabled="False" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
+
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Name="stackPanelMain" Background="{DynamicResource Color_ToolWindowBg}">
-                <Expander Name="ExpanderMain" Header="Main">
+                <StackPanel Name="stackPanelMain" Background="{DynamicResource Color_ToolWindowBg}">
+                    <Expander Name="ExpanderMain" Header="Main">
                         <StackPanel Name="StackPanelMain" HorizontalAlignment="Center" Width="280"></StackPanel>
                     </Expander>
-                    
+
                     <Expander Name="ExpanderMenuBar" Header="Menu Bar">
                         <StackPanel Name="StackPanelMenuBar" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
-                    
+
                     <Expander Name="ExpanderInfoBar" Header="Info Bar">
                         <StackPanel Name="StackPanelInfoBar" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
-                    
+
                     <Expander Name="ExpanderMenuItem" Header="Menu Item">
                         <StackPanel Name="StackPanelMenuItem" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
 
-                <Expander Name="ExpanderToolWindow" Header="Tool Windows">
-                    <StackPanel Name="StackPanelToolWindow" HorizontalAlignment="Center"></StackPanel>
-                </Expander>
-            </StackPanel>
+                    <Expander Name="ExpanderToolWindow" Header="Tool Windows">
+                        <StackPanel Name="StackPanelToolWindow" HorizontalAlignment="Center"></StackPanel>
+                    </Expander>
+                </StackPanel>
             </ScrollViewer>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

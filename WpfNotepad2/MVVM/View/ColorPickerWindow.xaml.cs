@@ -1,8 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Input;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
-using NotepadEx.Util;
 using Color = System.Windows.Media.Color;
 
 namespace NotepadEx.MVVM.View;
@@ -21,7 +19,7 @@ public partial class ColorPickerWindow : Window
     {
         InitializeComponent();
         DataContext = this;
-        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Color Picker");
+        CustomTitleBar.InitializeTitleBar(ref _titleBarViewModel, this, "Color Picker", showMinimize: false, showMaximize: false);
         myColorPicker.OnWindowCancel += OnCancel;
         myColorPicker.OnWindowConfirm += OnConfirm;
     }
@@ -36,15 +34,5 @@ public partial class ColorPickerWindow : Window
     {
         DialogResult = true;
         Close();
-    }
-
-    void OnWindowMouseMove(object sender, MouseEventArgs e)
-    {
-        if(WindowState == WindowState.Normal)
-        {
-            var position = e.GetPosition(this);
-            WindowResizerUtil.ResizeWindow(this, position, 6, () => myColorPicker.UpdateColorFromSelectedColor());
-            //Needs Improvement / **Refactor
-        }
     }
 }
