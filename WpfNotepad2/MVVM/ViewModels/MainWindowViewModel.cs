@@ -153,7 +153,6 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    // Update LoadDocument to handle recent files
     public void LoadDocument(string filePath)
     {
         try
@@ -175,9 +174,7 @@ public class MainWindowViewModel : ViewModelBase
     void OnThemeChange(ThemeInfo theme)
     {
         if(theme != null)
-        {
             _themeService.ApplyTheme(theme.Name);
-        }
     }
 
     void OnOpenThemeEditor() => _themeService.OpenThemeEditor();
@@ -186,7 +183,6 @@ public class MainWindowViewModel : ViewModelBase
     {
         NewCommand = new RelayCommand(NewDocument);
         OpenCommand = new RelayCommand(OpenDocument);
-        //OpenRecentCommand = new RelayCommand(OpenRecent);
         SaveCommand = new RelayCommand(SaveDocument);
         SaveAsCommand = new RelayCommand(SaveDocumentAs);
         PrintCommand = new RelayCommand(PrintDocument);
@@ -227,18 +223,6 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    //void OpenRecent(object sender, RoutedEventArgs e)
-    //{
-    //    //Old Code from OnClick Event before we made commands
-    //    //MenuItem menuItem = (MenuItem)sender;
-    //    //MenuItem subMenuItem = (MenuItem)e.OriginalSource;
-    //    //bool hasTextChangedSinceSave = false; //**Refactor / Fix
-    //    //LoadDocument((string)subMenuItem.Header);
-
-    //}
-
-
-
     void SaveDocumentAs()
     {
         var dialog = new System.Windows.Forms.SaveFileDialog
@@ -271,10 +255,8 @@ public class MainWindowViewModel : ViewModelBase
 
     void UpdateTitle()
     {
-        var title = string.IsNullOrEmpty(_document.FileName) ?
-                "NotepadEx" :
-                $"NotepadEx | {_document.FileName}{(_document.IsModified ? "*" : "")}";
-        // Notify title bar via event or service
+        var title = string.IsNullOrEmpty(_document.FileName) ? "NotepadEx" : $"NotepadEx | {_document.FileName}{(_document.IsModified ? "*" : "")}";
+        _titleBarViewModel.TitleText = title;
     }
 
     bool PromptToSaveChanges()
@@ -359,33 +341,24 @@ public class MainWindowViewModel : ViewModelBase
     public void HandleMouseMovement(double mouseY)
     {
         if(_settings.MenuBarAutoHide && mouseY < 2)
-        {
             UpdateMenuBarVisibility(false);
-        }
         else if(_settings.MenuBarAutoHide && mouseY > UIConstants.MenuBarHeight)
-        {
             UpdateMenuBarVisibility(true);
-        }
     }
 
     public void UpdateWindowState(WindowState newState)
     {
-        // Handle window state changes
         if(newState != WindowState.Minimized)
         {
-            // Update UI elements based on window state
             UpdateMenuBarVisibility(_settings.MenuBarAutoHide);
             UpdateInfoBarVisibility(_settings.InfoBarVisible);
         }
     }
 
-    // Clipboard Operations
     void Copy()
     {
         if(!string.IsNullOrEmpty(_document.SelectedText))
-        {
             Clipboard.SetText(_document.SelectedText);
-        }
     }
 
     void Cut()
@@ -406,12 +379,5 @@ public class MainWindowViewModel : ViewModelBase
             _document.InsertText(text);
             OnPropertyChanged(nameof(DocumentContent));
         }
-    }
-
-    // Event handlers for document changes
-    void OnDocumentChanged()
-    {
-        UpdateTitle();
-        UpdateStatusBar();
     }
 }
