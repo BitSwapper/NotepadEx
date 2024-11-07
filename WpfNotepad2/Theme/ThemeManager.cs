@@ -1,12 +1,4 @@
-﻿using System.IO;
-using System.Text.Json;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using NotepadEx.Properties;
-using NotepadEx.Util;
-
-namespace NotepadEx.Theme;
+﻿namespace NotepadEx.Theme;
 
 //public static class ThemeManager
 //{

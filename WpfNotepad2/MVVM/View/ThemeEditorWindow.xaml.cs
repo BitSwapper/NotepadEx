@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Windows;
 using Microsoft.Win32;
 using NotepadEx.MVVM.View.UserControls;
@@ -10,7 +9,8 @@ using NotepadEx.Theme;
 using NotepadEx.Util;
 using Color = System.Windows.Media.Color;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
-namespace NotepadEx.Windows;
+
+namespace NotepadEx.MVVM.View;
 
 public partial class ThemeEditorWindow : Window
 {
@@ -132,8 +132,8 @@ public partial class ThemeEditorWindow : Window
         };
 
         //File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
-        
-        
+
+
         //UpdateTitleText(fileName);
         //UpdateModifiedStateOfTitleBar();
         //AddRecentFile(fileName);

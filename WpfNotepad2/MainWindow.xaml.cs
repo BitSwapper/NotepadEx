@@ -1,6 +1,4 @@
-﻿using NotepadEx.MVVM.ViewModels;
-using NotepadEx.Util;
-namespace NotepadEx;
+﻿namespace NotepadEx;
 using System.Windows;
 using System.Windows.Input;
 using NotepadEx.MVVM.View.UserControls;

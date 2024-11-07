@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Drawing.Printing;
 using System.Windows;
 using System.Windows.Input;
 using NotepadEx.MVVM.Models;
@@ -112,10 +111,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void OnOpenThemeEditor()
-    {
-        _themeService.OpenThemeEditor();
-    }
+    private void OnOpenThemeEditor() => _themeService.OpenThemeEditor();
 
     void InitializeCommands()
     {
@@ -285,10 +281,7 @@ public class MainWindowViewModel : ViewModelBase
         SaveSettings();
     }
 
-    private void SaveSettings()
-    {
-        _settingsService.SaveSettings(_settings);
-    }
+    private void SaveSettings() => _settingsService.SaveSettings(_settings);
 
     private void UpdateStatusBar()
     {

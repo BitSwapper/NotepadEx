@@ -4,7 +4,6 @@ using System.Windows.Media;
 using NotepadEx.MVVM.View;
 using NotepadEx.Theme;
 using NotepadEx.Util;
-using NotepadEx.Windows;
 using Brush = System.Windows.Media.Brush;
 
 namespace NotepadEx.MVVM.ViewModels;

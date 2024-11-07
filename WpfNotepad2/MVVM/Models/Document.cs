@@ -22,10 +22,7 @@ public class Document
     public bool IsModified { get; set; }
     public string FileName => string.IsNullOrEmpty(FilePath) ? string.Empty : Path.GetFileName(FilePath);
 
-    public string SelectedText
-    {
-        get => _selectionLength > 0 ? _content.Substring(_selectionStart, _selectionLength) : string.Empty;
-    }
+    public string SelectedText => _selectionLength > 0 ? _content.Substring(_selectionStart, _selectionLength) : string.Empty;
 
     public void DeleteSelected()
     {
