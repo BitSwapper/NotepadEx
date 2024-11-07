@@ -39,13 +39,21 @@
                     <Menu IsMainMenu="True" 
                           Background="{DynamicResource Color_MenuBarBg}"
                           IsEnabled="{Binding IsMenuBarEnabled}">
-                        <MenuItem Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
+                        <MenuItem Name="MenuItemFileDropDown" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
                             <MenuItem Header="New" 
                                     Command="{Binding NewCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
                             <MenuItem Header="Open..." 
                                     Command="{Binding OpenCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
+
+                            <MenuItem Name="MenuItem_OpenRecent"  
+                                    Header="Open Recent" 
+                                    Foreground="{DynamicResource Color_MenuItemFg}"
+                                      Click="MenuItem_OpenRecent_Click">
+                                <MenuItem Header="..." Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            </MenuItem>
+                            
                             <MenuItem Header="Save" 
                                     Command="{Binding SaveCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>

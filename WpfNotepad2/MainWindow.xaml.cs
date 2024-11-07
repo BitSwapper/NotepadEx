@@ -1,5 +1,6 @@
 ﻿namespace NotepadEx;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
@@ -18,13 +19,13 @@ public partial class MainWindow : Window
         var documentService = new DocumentService();
         var _themeService = new ThemeService(Application.Current);
 
-        DataContext = _viewModel = new MainWindowViewModel(windowService, settingsService, documentService, _themeService);
+        InitializeComponent();
+        DataContext = _viewModel = new MainWindowViewModel(windowService, settingsService, documentService, _themeService, MenuItemFileDropDown);
 
         var titleBarViewModel = new CustomTitleBarViewModel(this);
         CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "NotepadEx");
         _viewModel.TitleBarViewModel = titleBarViewModel;
 
-        InitializeComponent();
         _resizer = new WindowResizer();
 
         StateChanged += OnWindowStateChanged;
@@ -76,5 +77,18 @@ public partial class MainWindow : Window
     void Window_StateChanged(object sender, EventArgs e)
     {
 
+    }
+
+    private void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e)
+    {
+
+        //Old Code from OnClick Event before we made commands
+        MenuItem menuItem = (MenuItem)sender;
+        MenuItem subMenuItem = (MenuItem)e.OriginalSource;
+        bool hasTextChangedSinceSave = false; //**Refactor / Fix
+
+        var path = (string)subMenuItem.Header;
+        if(path != "...")
+            _viewModel.LoadDocument(path);
     }
 }

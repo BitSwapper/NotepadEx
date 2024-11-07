@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using NotepadEx.MVVM.Models;
 using NotepadEx.Services.Interfaces;
@@ -25,6 +26,7 @@ public class MainWindowViewModel : ViewModelBase
 
     public ICommand NewCommand { get; private set; }
     public ICommand OpenCommand { get; private set; }
+    public ICommand OpenRecentCommand { get; private set; }
     public ICommand SaveCommand { get; private set; }
     public ICommand SaveAsCommand { get; private set; }
     public ICommand PrintCommand { get; private set; }
@@ -39,6 +41,15 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand OpenThemeEditorCommand { get; private set; }
 
     public ObservableCollection<ThemeInfo> AvailableThemes => _themeService.AvailableThemes;
+
+    private ObservableCollection<string> _recentFiles;
+
+    public ObservableCollection<string> RecentFiles
+    {
+        get => _recentFiles;
+        private set => SetProperty(ref _recentFiles, value);
+    }
+
 
     public string DocumentContent
     {
@@ -87,20 +98,78 @@ public class MainWindowViewModel : ViewModelBase
     CustomTitleBarViewModel _titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel { get => _titleBarViewModel; set => _titleBarViewModel = value; }
 
-    public MainWindowViewModel(IWindowService windowService, ISettingsService settingsService, IDocumentService documentService, IThemeService themeService)
+    MenuItem menuItemFileDropdown;
+
+    public MainWindowViewModel(IWindowService windowService, ISettingsService settingsService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown)
     {
         _windowService = windowService;
         _settingsService = settingsService;
         _documentService = documentService;
         _themeService = themeService;
+        this.menuItemFileDropdown = menuItemFileDropdown;
 
         _document = new Document();
         _settings = _settingsService.LoadSettings();
+
 
         InitializeCommands();
         UpdateMenuBarVisibility(_settings.MenuBarAutoHide);
         UpdateInfoBarVisibility(_settings.InfoBarVisible);
         _themeService.LoadCurrentTheme();
+        _recentFiles = new ObservableCollection<string>();
+        LoadRecentFiles();
+    }
+
+    private void LoadRecentFiles()
+    {
+        // Use the existing RecentFileManager
+        RecentFileManager.LoadRecentFilesFromSettings();
+        UpdateRecentFilesCollection();
+    }
+    private void UpdateRecentFilesCollection()
+    {
+        _recentFiles.Clear();
+        foreach(var file in RecentFileManager.RecentFiles)
+        {
+            _recentFiles.Add(file);
+        }
+        OnPropertyChanged(nameof(RecentFiles));
+    }
+
+    private void AddRecentFile(string filePath)
+    {
+        RecentFileManager.AddRecentFile(filePath, menuItemFileDropdown, SaveSettings);
+        UpdateRecentFilesCollection();
+    }
+
+    // Modify the OpenRecent method to work with commands
+    private void OpenRecent(object parameter)
+    {
+        if(parameter is string filePath)
+        {
+            if(!PromptToSaveChanges()) return;
+
+            LoadDocument(filePath);
+        }
+    }
+
+    // Update LoadDocument to handle recent files
+    public void LoadDocument(string filePath)
+    {
+        try
+        {
+            _documentService.LoadDocument(filePath, _document);
+            UpdateTitle();
+            UpdateStatusBar();
+            AddRecentFile(filePath);
+            OnPropertyChanged("DocumentContent");
+        }
+        catch(Exception ex)
+        {
+            _windowService.ShowDialog(
+                $"Error loading file: {ex.Message}",
+                "Error");
+        }
     }
 
     void OnThemeChange(ThemeInfo theme)
@@ -117,6 +186,7 @@ public class MainWindowViewModel : ViewModelBase
     {
         NewCommand = new RelayCommand(NewDocument);
         OpenCommand = new RelayCommand(OpenDocument);
+        //OpenRecentCommand = new RelayCommand(OpenRecent);
         SaveCommand = new RelayCommand(SaveDocument);
         SaveAsCommand = new RelayCommand(SaveDocumentAs);
         PrintCommand = new RelayCommand(PrintDocument);
@@ -156,6 +226,17 @@ public class MainWindowViewModel : ViewModelBase
             LoadDocument(dialog.FileName);
         }
     }
+
+    //void OpenRecent(object sender, RoutedEventArgs e)
+    //{
+    //    //Old Code from OnClick Event before we made commands
+    //    //MenuItem menuItem = (MenuItem)sender;
+    //    //MenuItem subMenuItem = (MenuItem)e.OriginalSource;
+    //    //bool hasTextChangedSinceSave = false; //**Refactor / Fix
+    //    //LoadDocument((string)subMenuItem.Header);
+
+    //}
+
 
 
     void SaveDocumentAs()
@@ -212,22 +293,7 @@ public class MainWindowViewModel : ViewModelBase
         return true;
     }
 
-    void LoadDocument(string filePath)
-    {
-        try
-        {
-            _documentService.LoadDocument(filePath, _document);
-            UpdateTitle();
-            UpdateStatusBar();
-            RecentFileManager.AddRecentFile(filePath, null, null);
-        }
-        catch(Exception ex)
-        {
-            _windowService.ShowDialog(
-                $"Error loading file: {ex.Message}",
-                "Error");
-        }
-    }
+
 
     void SaveDocument()
     {
