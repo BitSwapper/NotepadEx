@@ -240,7 +240,15 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         Canvas.SetTop(ColorSelector, (1 - currentValue) * ColorPlane.ActualHeight - ColorSelector.Height / 2);
     }
 
-    void UpdateHueSelector() => Canvas.SetTop(HueSelector, currentHue * HueSlider.ActualHeight);
+    void UpdateHueSelector()
+    {
+        double selectorHeight = HueSelector.ActualHeight;
+        double sliderHeight = HueSlider.ActualHeight;
+        // Clamp the position to keep the selector fully visible
+        double position = (currentHue * sliderHeight) - (selectorHeight / 2);
+        position = Math.Clamp(position, 0, sliderHeight - selectorHeight);
+        Canvas.SetTop(HueSelector, position);
+    }
 }
 
 
