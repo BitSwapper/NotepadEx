@@ -106,6 +106,8 @@ public class MainWindowViewModel : ViewModelBase
         UpdateInfoBarVisibility(Settings.Default.InfoBarVisible);
         this.themeService.LoadCurrentTheme();
         LoadRecentFiles();
+
+        OnPropertyChanged("AvailableThemes");
     }
 
     void LoadRecentFiles()

@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
 using System.Windows;
 using Microsoft.Win32;
 using NotepadEx.MVVM.View.UserControls;
@@ -122,8 +123,8 @@ public partial class ThemeEditorWindow : Window
         else
             return false;
 
-        //var theme = _themeService.CurrentTheme;
-        //var serializedTheme = theme.ToSerializable();
+        var theme = _themeService.CurrentTheme;
+        var serializedTheme = theme.ToSerializable();
 
         var options = new JsonSerializerOptions
         {
@@ -131,7 +132,7 @@ public partial class ThemeEditorWindow : Window
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        //File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
+        File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
 
 
         //UpdateTitleText(fileName);

@@ -17,9 +17,9 @@ public class ThemeService : IThemeService
     public event EventHandler<ThemeChangedEventArgs> ThemeChanged;
     public ColorTheme CurrentTheme { get; private set; }
     public string CurrentThemeName { get; private set; }
-    public ObservableCollection<ThemeInfo> AvailableThemes { get; }
+    public ObservableCollection<ThemeInfo> AvailableThemes { get; private set; }
 
-    ObservableCollection<ThemeInfo> IThemeService.AvailableThemes => throw new NotImplementedException();
+    //ObservableCollection<ThemeInfo> IThemeService.AvailableThemes => throw new NotImplementedException();
 
     readonly Application _application;
 
