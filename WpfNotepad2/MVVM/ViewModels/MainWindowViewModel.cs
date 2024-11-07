@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using NotepadEx.MVVM.Models;
+using NotepadEx.Properties;
 using NotepadEx.Services.Interfaces;
 using NotepadEx.Util;
 
@@ -10,19 +11,15 @@ namespace NotepadEx.MVVM.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    readonly Document _document;
-    readonly AppSettings _settings;
-    readonly IWindowService _windowService;
-    readonly ISettingsService _settingsService;
-    readonly IDocumentService _documentService;
-    readonly WindowState _prevWindowState;
-    readonly IThemeService _themeService;
-    string _statusText;
-    double _menuBarHeight;
-    double _infoBarHeight;
-    bool _isMenuBarEnabled;
-
-
+    readonly Document document;
+    readonly IWindowService windowService;
+    readonly IDocumentService documentService;
+    readonly WindowState prevWindowState;
+    readonly IThemeService themeService;
+    string statusText;
+    double menuBarHeight;
+    double infoBarHeight;
+    bool isMenuBarEnabled;
 
     public ICommand NewCommand { get; private set; }
     public ICommand OpenCommand { get; private set; }
@@ -40,26 +37,17 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand ChangeThemeCommand { get; private set; }
     public ICommand OpenThemeEditorCommand { get; private set; }
 
-    public ObservableCollection<ThemeInfo> AvailableThemes => _themeService.AvailableThemes;
-
-    private ObservableCollection<string> _recentFiles;
-
-    public ObservableCollection<string> RecentFiles
-    {
-        get => _recentFiles;
-        private set => SetProperty(ref _recentFiles, value);
-    }
-
+    public ObservableCollection<ThemeInfo> AvailableThemes => themeService.AvailableThemes;
 
     public string DocumentContent
     {
-        get => _document.Content;
+        get => document.Content;
         set
         {
-            if(_document.Content != value)
+            if(document.Content != value)
             {
-                _document.Content = value;
-                _document.IsModified = true;
+                document.Content = value;
+                document.IsModified = true;
                 OnPropertyChanged();
                 UpdateTitle();
             }
@@ -68,96 +56,84 @@ public class MainWindowViewModel : ViewModelBase
 
     public string StatusText
     {
-        get => _statusText;
-        set => SetProperty(ref _statusText, value);
+        get => statusText;
+        set => SetProperty(ref statusText, value);
     }
 
     public double MenuBarHeight
     {
-        get => _menuBarHeight;
-        set => SetProperty(ref _menuBarHeight, value);
+        get => menuBarHeight;
+        set => SetProperty(ref menuBarHeight, value);
     }
 
     public double InfoBarHeight
     {
-        get => _infoBarHeight;
-        set => SetProperty(ref _infoBarHeight, value);
+        get => infoBarHeight;
+        set => SetProperty(ref infoBarHeight, value);
     }
 
     public bool IsMenuBarEnabled
     {
-        get => _isMenuBarEnabled;
-        set => SetProperty(ref _isMenuBarEnabled, value);
+        get => isMenuBarEnabled;
+        set => SetProperty(ref isMenuBarEnabled, value);
     }
 
-    public TextWrapping TextWrappingMode => _settings.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
+    public TextWrapping TextWrappingMode => Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
 
-    public bool IsAutoHideMenuBarEnabled => _settings.MenuBarAutoHide;
+    public bool IsAutoHideMenuBarEnabled => Settings.Default.MenuBarAutoHide;
 
 
     CustomTitleBarViewModel _titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel { get => _titleBarViewModel; set => _titleBarViewModel = value; }
 
     MenuItem menuItemFileDropdown;
+    Action SaveSettings;
 
-    public MainWindowViewModel(IWindowService windowService, ISettingsService settingsService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown)
+    public MainWindowViewModel(IWindowService windowService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown, Action SaveSettings)
     {
-        _windowService = windowService;
-        _settingsService = settingsService;
-        _documentService = documentService;
-        _themeService = themeService;
+        this.windowService = windowService;
+        this.documentService = documentService;
+        this.themeService = themeService;
         this.menuItemFileDropdown = menuItemFileDropdown;
+        this.SaveSettings = SaveSettings;
+        document = new Document();
 
-        _document = new Document();
-        _settings = _settingsService.LoadSettings();
-
+        //_Settings.Default.MenuBarAutoHide = false;
+        //SaveSettings();
 
         InitializeCommands();
-        UpdateMenuBarVisibility(_settings.MenuBarAutoHide);
-        UpdateInfoBarVisibility(_settings.InfoBarVisible);
-        _themeService.LoadCurrentTheme();
-        _recentFiles = new ObservableCollection<string>();
+        UpdateMenuBarVisibility(Settings.Default.MenuBarAutoHide);
+        UpdateInfoBarVisibility(Settings.Default.InfoBarVisible);
+        this.themeService.LoadCurrentTheme();
         LoadRecentFiles();
     }
 
-    private void LoadRecentFiles()
+    void LoadRecentFiles()
     {
-        // Use the existing RecentFileManager
         RecentFileManager.LoadRecentFilesFromSettings();
-        UpdateRecentFilesCollection();
-    }
-    private void UpdateRecentFilesCollection()
-    {
-        _recentFiles.Clear();
-        foreach(var file in RecentFileManager.RecentFiles)
-        {
-            _recentFiles.Add(file);
-        }
-        OnPropertyChanged(nameof(RecentFiles));
+        RecentFileManager.PopulateRecentFilesMenu(menuItemFileDropdown);
     }
 
-    private void AddRecentFile(string filePath)
+
+    void AddRecentFile(string filePath)
     {
         RecentFileManager.AddRecentFile(filePath, menuItemFileDropdown, SaveSettings);
-        UpdateRecentFilesCollection();
     }
 
-    // Modify the OpenRecent method to work with commands
-    private void OpenRecent(object parameter)
-    {
-        if(parameter is string filePath)
-        {
-            if(!PromptToSaveChanges()) return;
-
-            LoadDocument(filePath);
-        }
-    }
+    //void OpenRecent(object parameter)
+    //{
+    //    if(parameter is string filePath)
+    //    {
+    //        if(!PromptToSaveChanges()) return;
+    //        LoadDocument(filePath);
+    //    }
+    //}
 
     public void LoadDocument(string filePath)
     {
         try
         {
-            _documentService.LoadDocument(filePath, _document);
+            documentService.LoadDocument(filePath, document);
             UpdateTitle();
             UpdateStatusBar();
             AddRecentFile(filePath);
@@ -165,7 +141,7 @@ public class MainWindowViewModel : ViewModelBase
         }
         catch(Exception ex)
         {
-            _windowService.ShowDialog(
+            windowService.ShowDialog(
                 $"Error loading file: {ex.Message}",
                 "Error");
         }
@@ -174,10 +150,10 @@ public class MainWindowViewModel : ViewModelBase
     void OnThemeChange(ThemeInfo theme)
     {
         if(theme != null)
-            _themeService.ApplyTheme(theme.Name);
+            themeService.ApplyTheme(theme.Name);
     }
 
-    void OnOpenThemeEditor() => _themeService.OpenThemeEditor();
+    void OnOpenThemeEditor() => themeService.OpenThemeEditor();
 
     void InitializeCommands()
     {
@@ -201,9 +177,9 @@ public class MainWindowViewModel : ViewModelBase
     {
         if(PromptToSaveChanges())
         {
-            _document.Content = string.Empty;
-            _document.FilePath = string.Empty;
-            _document.IsModified = false;
+            document.Content = string.Empty;
+            document.FilePath = string.Empty;
+            document.IsModified = false;
             UpdateTitle();
         }
     }
@@ -233,14 +209,14 @@ public class MainWindowViewModel : ViewModelBase
 
         if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
         {
-            _document.FilePath = dialog.FileName;
+            document.FilePath = dialog.FileName;
             SaveDocument();
         }
     }
 
     void ToggleWordWrap()
     {
-        _settings.TextWrapping = !_settings.TextWrapping;
+        Settings.Default.TextWrapping = !Settings.Default.TextWrapping;
         SaveSettings();
         OnPropertyChanged(nameof(TextWrappingMode));
     }
@@ -255,15 +231,15 @@ public class MainWindowViewModel : ViewModelBase
 
     void UpdateTitle()
     {
-        var title = string.IsNullOrEmpty(_document.FileName) ? "NotepadEx" : $"NotepadEx | {_document.FileName}{(_document.IsModified ? "*" : "")}";
+        var title = string.IsNullOrEmpty(document.FileName) ? "NotepadEx" : $"NotepadEx | {document.FileName}{(document.IsModified ? "*" : "")}";
         _titleBarViewModel.TitleText = title;
     }
 
     bool PromptToSaveChanges()
     {
-        if(!_document.IsModified) return true;
+        if(!document.IsModified) return true;
 
-        var result = _windowService.ShowConfirmDialog(
+        var result = windowService.ShowConfirmDialog(
                 "Do you want to save changes?",
                 "Save Changes");
 
@@ -279,7 +255,7 @@ public class MainWindowViewModel : ViewModelBase
 
     void SaveDocument()
     {
-        if(string.IsNullOrEmpty(_document.FilePath))
+        if(string.IsNullOrEmpty(document.FilePath))
         {
             SaveDocumentAs();
             return;
@@ -287,17 +263,13 @@ public class MainWindowViewModel : ViewModelBase
 
         try
         {
-            _documentService.SaveDocument(_document);
+            documentService.SaveDocument(document);
             UpdateTitle();
             UpdateStatusBar();
-            //return true;
         }
         catch(Exception ex)
         {
-            _windowService.ShowDialog(
-                $"Error saving file: {ex.Message}",
-                "Error");
-            //return false;
+            windowService.ShowDialog($"Error saving file: {ex.Message}", "Error");
         }
     }
 
@@ -305,44 +277,40 @@ public class MainWindowViewModel : ViewModelBase
     {
         try
         {
-            _documentService.PrintDocument(_document);
+            documentService.PrintDocument(document);
         }
         catch(Exception ex)
         {
-            _windowService.ShowDialog(
-                $"Error printing document: {ex.Message}",
-                "Error");
+            windowService.ShowDialog($"Error printing document: {ex.Message}", "Error");
         }
     }
 
     void ToggleMenuBar()
     {
-        _settings.MenuBarAutoHide = !_settings.MenuBarAutoHide;
-        UpdateMenuBarVisibility(_settings.MenuBarAutoHide);
+        Settings.Default.MenuBarAutoHide = !Settings.Default.MenuBarAutoHide;
+        UpdateMenuBarVisibility(Settings.Default.MenuBarAutoHide);
         SaveSettings();
     }
 
     void ToggleInfoBar()
     {
-        _settings.InfoBarVisible = !_settings.InfoBarVisible;
-        UpdateInfoBarVisibility(_settings.InfoBarVisible);
+        Settings.Default.InfoBarVisible = !Settings.Default.InfoBarVisible;
+        UpdateInfoBarVisibility(Settings.Default.InfoBarVisible);
         SaveSettings();
     }
 
-    void SaveSettings() => _settingsService.SaveSettings(_settings);
-
     void UpdateStatusBar()
     {
-        var lineCount = _document.Content.Split('\n').Length;
-        var charCount = _document.Content.Length;
+        var lineCount = document.Content.Split('\n').Length;
+        var charCount = document.Content.Length;
         StatusText = $"Lines: {lineCount} | Characters: {charCount}";
     }
 
     public void HandleMouseMovement(double mouseY)
     {
-        if(_settings.MenuBarAutoHide && mouseY < 2)
+        if(Settings.Default.MenuBarAutoHide && mouseY < 2)
             UpdateMenuBarVisibility(false);
-        else if(_settings.MenuBarAutoHide && mouseY > UIConstants.MenuBarHeight)
+        else if(Settings.Default.MenuBarAutoHide && mouseY > UIConstants.MenuBarHeight)
             UpdateMenuBarVisibility(true);
     }
 
@@ -350,23 +318,23 @@ public class MainWindowViewModel : ViewModelBase
     {
         if(newState != WindowState.Minimized)
         {
-            UpdateMenuBarVisibility(_settings.MenuBarAutoHide);
-            UpdateInfoBarVisibility(_settings.InfoBarVisible);
+            UpdateMenuBarVisibility(Settings.Default.MenuBarAutoHide);
+            UpdateInfoBarVisibility(Settings.Default.InfoBarVisible);
         }
     }
 
     void Copy()
     {
-        if(!string.IsNullOrEmpty(_document.SelectedText))
-            Clipboard.SetText(_document.SelectedText);
+        if(!string.IsNullOrEmpty(document.SelectedText))
+            Clipboard.SetText(document.SelectedText);
     }
 
     void Cut()
     {
-        if(!string.IsNullOrEmpty(_document.SelectedText))
+        if(!string.IsNullOrEmpty(document.SelectedText))
         {
-            Clipboard.SetText(_document.SelectedText);
-            _document.DeleteSelected();
+            Clipboard.SetText(document.SelectedText);
+            document.DeleteSelected();
             OnPropertyChanged(nameof(DocumentContent));
         }
     }
@@ -376,7 +344,7 @@ public class MainWindowViewModel : ViewModelBase
         if(Clipboard.ContainsText())
         {
             var text = Clipboard.GetText();
-            _document.InsertText(text);
+            document.InsertText(text);
             OnPropertyChanged(nameof(DocumentContent));
         }
     }

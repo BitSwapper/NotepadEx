@@ -2,8 +2,8 @@
 
 namespace NotepadEx.Services.Interfaces;
 
-public interface ISettingsService
-{
-    AppSettings LoadSettings();
-    void SaveSettings(AppSettings settings);
-}
+//public interface ISettingsService
+//{
+//    AppSettings LoadSettings();
+//    void SaveSettings(AppSettings settings);
+//}

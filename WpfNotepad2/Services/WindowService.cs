@@ -13,12 +13,7 @@ public class WindowService : IWindowService
 
     public bool ShowConfirmDialog(string message, string title = "")
     {
-        var result = MessageBox.Show(
-            _owner,
-            message,
-            title,
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
+        var result = MessageBox.Show(_owner, message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
         return result == MessageBoxResult.Yes;
     }
@@ -27,9 +22,7 @@ public class WindowService : IWindowService
     {
         var dialog = new System.Windows.Forms.OpenFileDialog
         {
-            Filter = string.IsNullOrEmpty(filter)
-                ? "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-                : filter
+            Filter = string.IsNullOrEmpty(filter) ? "Text Files (*.txt)|*.txt|All Files (*.*)|*.*" : filter
         };
 
         return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK ? dialog.FileName : null;
@@ -39,9 +32,7 @@ public class WindowService : IWindowService
     {
         var dialog = new System.Windows.Forms.SaveFileDialog
         {
-            Filter = string.IsNullOrEmpty(filter)
-                ? "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-                : filter,
+            Filter = string.IsNullOrEmpty(filter) ? "Text Files (*.txt)|*.txt|All Files (*.*)|*.*" : filter,
             DefaultExt = string.IsNullOrEmpty(defaultExt) ? ".txt" : defaultExt
         };
 

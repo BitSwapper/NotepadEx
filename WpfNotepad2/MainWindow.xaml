@@ -134,7 +134,8 @@
                                 BorderThickness="0"
                                 VerticalScrollBarVisibility="Auto"
                                 HorizontalScrollBarVisibility="Auto"
-                                CaretBrush="AliceBlue">
+                                CaretBrush="AliceBlue"
+                                Name ="txtEditor">
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding SaveCommand}" 
                                           Gesture="Ctrl+S"/>
