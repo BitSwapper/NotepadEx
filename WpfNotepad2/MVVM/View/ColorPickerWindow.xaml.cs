@@ -3,7 +3,7 @@ using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using Color = System.Windows.Media.Color;
 
-namespace NotepadEx.Windows;
+namespace NotepadEx.MVVM.View;
 
 public partial class ColorPickerWindow : Window
 {
