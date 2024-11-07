@@ -19,8 +19,6 @@ public class ThemeService : IThemeService
     public string CurrentThemeName { get; private set; }
     public ObservableCollection<ThemeInfo> AvailableThemes { get; private set; }
 
-    //ObservableCollection<ThemeInfo> IThemeService.AvailableThemes => throw new NotImplementedException();
-
     readonly Application _application;
 
     public ThemeService(Application application)
