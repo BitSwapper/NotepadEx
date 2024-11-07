@@ -26,6 +26,7 @@ public partial class MainWindow : Window
 
         StateChanged += OnWindowStateChanged;
         MouseMove += OnWindowMouseMove;
+        Closed += WindowClosed;
 
         void InitTitleBar()
         {
@@ -72,9 +73,10 @@ public partial class MainWindow : Window
 
    void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e) //**Refactor / Fix
     {
+        if(!viewModel.PromptToSaveChanges()) return;
+
         MenuItem menuItem = (MenuItem)sender;
         MenuItem subMenuItem = (MenuItem)e.OriginalSource;
-        bool hasTextChangedSinceSave = false; //**Refactor / Fix
 
         var path = (string)subMenuItem.Header;
         if(path != "...")
@@ -83,4 +85,8 @@ public partial class MainWindow : Window
 
     void SaveSettings() => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName);
 
+    void WindowClosed(object sender, EventArgs e)
+    {
+        viewModel.PromptToSaveChanges();
+    }
 }

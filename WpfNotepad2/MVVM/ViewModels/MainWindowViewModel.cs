@@ -238,7 +238,7 @@ public class MainWindowViewModel : ViewModelBase
         _titleBarViewModel.TitleText = title;
     }
 
-    bool PromptToSaveChanges()
+    public bool PromptToSaveChanges()
     {
         if(!document.IsModified) return true;
 
