@@ -7,8 +7,8 @@ namespace NotepadEx.Services;
 
 public class WindowResizer
 {
-    private HwndSource _hwndSource;
-    private WindowState _previousState;
+    HwndSource _hwndSource;
+    WindowState _previousState;
 
     public void Initialize(Window window)
     {
@@ -61,7 +61,7 @@ public class WindowResizer
         window.Cursor = cursor;
     }
 
-    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
         // Handle window messages for custom chrome behavior
         switch(msg)
@@ -75,9 +75,9 @@ public class WindowResizer
         return IntPtr.Zero;
     }
 
-    private IntPtr HandleNCHitTest(IntPtr lParam) =>
-        // Implementation for custom window resize behavior
-        // Returns appropriate values for different resize areas
-        // This would be actual implementation with proper hit testing
-        new IntPtr(1); // HTCLIENT for now
+    IntPtr HandleNCHitTest(IntPtr lParam) =>
+         // Implementation for custom window resize behavior
+         // Returns appropriate values for different resize areas
+         // This would be actual implementation with proper hit testing
+         new IntPtr(1); // HTCLIENT for now
 }

@@ -9,17 +9,17 @@ namespace NotepadEx.MVVM.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private readonly Document _document;
-    private readonly AppSettings _settings;
-    private readonly IWindowService _windowService;
-    private readonly ISettingsService _settingsService;
-    private readonly IDocumentService _documentService;
-    private readonly WindowState _prevWindowState;
-    private readonly IThemeService _themeService;
-    private string _statusText;
-    private double _menuBarHeight;
-    private double _infoBarHeight;
-    private bool _isMenuBarEnabled;
+    readonly Document _document;
+    readonly AppSettings _settings;
+    readonly IWindowService _windowService;
+    readonly ISettingsService _settingsService;
+    readonly IDocumentService _documentService;
+    readonly WindowState _prevWindowState;
+    readonly IThemeService _themeService;
+    string _statusText;
+    double _menuBarHeight;
+    double _infoBarHeight;
+    bool _isMenuBarEnabled;
 
 
 
@@ -103,7 +103,7 @@ public class MainWindowViewModel : ViewModelBase
         _themeService.LoadCurrentTheme();
     }
 
-    private void OnThemeChange(ThemeInfo theme)
+    void OnThemeChange(ThemeInfo theme)
     {
         if(theme != null)
         {
@@ -111,7 +111,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void OnOpenThemeEditor() => _themeService.OpenThemeEditor();
+    void OnOpenThemeEditor() => _themeService.OpenThemeEditor();
 
     void InitializeCommands()
     {
@@ -142,7 +142,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void OpenDocument()
+    void OpenDocument()
     {
         if(!PromptToSaveChanges()) return;
 
@@ -158,7 +158,7 @@ public class MainWindowViewModel : ViewModelBase
     }
 
 
-    private void SaveDocumentAs()
+    void SaveDocumentAs()
     {
         var dialog = new System.Windows.Forms.SaveFileDialog
         {
@@ -173,22 +173,22 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void ToggleWordWrap()
+    void ToggleWordWrap()
     {
         _settings.TextWrapping = !_settings.TextWrapping;
         SaveSettings();
         OnPropertyChanged(nameof(TextWrappingMode));
     }
 
-    private void UpdateMenuBarVisibility(bool autoHide)
+    void UpdateMenuBarVisibility(bool autoHide)
     {
         MenuBarHeight = autoHide ? 0 : UIConstants.MenuBarHeight;
         IsMenuBarEnabled = !autoHide;
     }
 
-    private void UpdateInfoBarVisibility(bool visible) => InfoBarHeight = visible ? UIConstants.InfoBarHeight : 0;
+    void UpdateInfoBarVisibility(bool visible) => InfoBarHeight = visible ? UIConstants.InfoBarHeight : 0;
 
-    private void UpdateTitle()
+    void UpdateTitle()
     {
         var title = string.IsNullOrEmpty(_document.FileName) ?
                 "NotepadEx" :
@@ -196,7 +196,7 @@ public class MainWindowViewModel : ViewModelBase
         // Notify title bar via event or service
     }
 
-    private bool PromptToSaveChanges()
+    bool PromptToSaveChanges()
     {
         if(!_document.IsModified) return true;
 
@@ -212,7 +212,7 @@ public class MainWindowViewModel : ViewModelBase
         return true;
     }
 
-    private void LoadDocument(string filePath)
+    void LoadDocument(string filePath)
     {
         try
         {
@@ -229,7 +229,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void SaveDocument()
+    void SaveDocument()
     {
         if(string.IsNullOrEmpty(_document.FilePath))
         {
@@ -253,7 +253,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void PrintDocument()
+    void PrintDocument()
     {
         try
         {
@@ -267,23 +267,23 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void ToggleMenuBar()
+    void ToggleMenuBar()
     {
         _settings.MenuBarAutoHide = !_settings.MenuBarAutoHide;
         UpdateMenuBarVisibility(_settings.MenuBarAutoHide);
         SaveSettings();
     }
 
-    private void ToggleInfoBar()
+    void ToggleInfoBar()
     {
         _settings.InfoBarVisible = !_settings.InfoBarVisible;
         UpdateInfoBarVisibility(_settings.InfoBarVisible);
         SaveSettings();
     }
 
-    private void SaveSettings() => _settingsService.SaveSettings(_settings);
+    void SaveSettings() => _settingsService.SaveSettings(_settings);
 
-    private void UpdateStatusBar()
+    void UpdateStatusBar()
     {
         var lineCount = _document.Content.Split('\n').Length;
         var charCount = _document.Content.Length;
@@ -314,7 +314,7 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     // Clipboard Operations
-    private void Copy()
+    void Copy()
     {
         if(!string.IsNullOrEmpty(_document.SelectedText))
         {
@@ -322,7 +322,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void Cut()
+    void Cut()
     {
         if(!string.IsNullOrEmpty(_document.SelectedText))
         {
@@ -332,7 +332,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void Paste()
+    void Paste()
     {
         if(Clipboard.ContainsText())
         {
@@ -343,7 +343,7 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     // Event handlers for document changes
-    private void OnDocumentChanged()
+    void OnDocumentChanged()
     {
         UpdateTitle();
         UpdateStatusBar();

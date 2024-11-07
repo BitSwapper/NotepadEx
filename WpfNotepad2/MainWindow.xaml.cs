@@ -7,9 +7,9 @@ using NotepadEx.Services;
 
 public partial class MainWindow : Window
 {
-    private readonly WindowResizer _resizer;
-    private readonly MainWindowViewModel _viewModel;
-    private readonly ThemeService _themeService;
+    readonly WindowResizer _resizer;
+    readonly MainWindowViewModel _viewModel;
+    readonly ThemeService _themeService;
 
     public MainWindow()
     {
@@ -31,7 +31,7 @@ public partial class MainWindow : Window
         MouseMove += OnWindowMouseMove;
     }
 
-    private void OnWindowStateChanged(object sender, EventArgs e)
+    void OnWindowStateChanged(object sender, EventArgs e)
     {
         if(WindowState != WindowState.Minimized)
         {
@@ -39,7 +39,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    void OnBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if(e.ClickCount == 2)
             _resizer.ToggleMaximizeState(this);
@@ -47,7 +47,7 @@ public partial class MainWindow : Window
             DragMove();
     }
 
-    private void OnWindowMouseMove(object sender, MouseEventArgs e)
+    void OnWindowMouseMove(object sender, MouseEventArgs e)
     {
         if(_viewModel.IsAutoHideMenuBarEnabled)
         {

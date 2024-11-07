@@ -20,7 +20,7 @@ public class ThemeService : IThemeService
 
     ObservableCollection<ThemeInfo> IThemeService.AvailableThemes => throw new NotImplementedException();
 
-    private readonly Application _application;
+    readonly Application _application;
 
     public ThemeService(Application application)
     {
@@ -86,7 +86,7 @@ public class ThemeService : IThemeService
         LoadAvailableThemes(); // Refresh themes after editor closes
     }
 
-    private void LoadAvailableThemes()
+    void LoadAvailableThemes()
     {
         AvailableThemes.Clear();
         var themeFiles = new DirectoryInfo(DirectoryUtil.NotepadExThemesPath)
@@ -104,7 +104,7 @@ public class ThemeService : IThemeService
         }
     }
 
-    private void ApplyThemeObject(ThemeObject themeObj, string resourceKey)
+    void ApplyThemeObject(ThemeObject themeObj, string resourceKey)
     {
         if(themeObj == null) return;
 

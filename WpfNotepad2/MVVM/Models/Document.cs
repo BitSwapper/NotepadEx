@@ -4,9 +4,9 @@ namespace NotepadEx.MVVM.Models;
 
 public class Document
 {
-    private string _content = string.Empty;
-    private int _selectionStart;
-    private int _selectionLength;
+    string _content = string.Empty;
+    int _selectionStart;
+    int _selectionLength;
 
     public string Content
     {

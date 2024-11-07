@@ -5,7 +5,7 @@ namespace NotepadEx.Services;
 
 public class WindowService : IWindowService
 {
-    private readonly Window _owner;
+    readonly Window _owner;
 
     public WindowService(Window owner) => _owner = owner;
 

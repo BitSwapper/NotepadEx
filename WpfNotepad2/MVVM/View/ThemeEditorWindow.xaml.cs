@@ -14,8 +14,8 @@ namespace NotepadEx.MVVM.View;
 
 public partial class ThemeEditorWindow : Window
 {
-    private readonly IThemeService _themeService;
-    private readonly IWindowService _windowService;
+    readonly IThemeService _themeService;
+    readonly IWindowService _windowService;
     CustomTitleBarViewModel _titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel => _titleBarViewModel;
 
