@@ -86,7 +86,7 @@ namespace NotepadEx.Services
 
         public void OpenThemeEditor()
         {
-            var themeEditorWindow = new ThemeEditorWindow();
+            var themeEditorWindow = new ThemeEditorWindow(this);
             themeEditorWindow.ShowDialog();
             LoadAvailableThemes(); // Refresh themes after editor closes
         }
