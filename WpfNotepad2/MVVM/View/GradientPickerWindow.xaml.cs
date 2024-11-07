@@ -7,7 +7,8 @@ using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Util;
 using Point = System.Windows.Point;
-namespace NotepadEx.Windows;
+
+namespace NotepadEx.MVVM.View;
 
 public partial class GradientPickerWindow : Window
 {
