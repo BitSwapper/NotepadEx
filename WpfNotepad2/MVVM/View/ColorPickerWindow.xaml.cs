@@ -44,7 +44,7 @@ public partial class ColorPickerWindow : Window
         {
             var position = e.GetPosition(this);
             WindowResizerUtil.ResizeWindow(this, position, 6, () => myColorPicker.UpdateColorFromSelectedColor());
-            //Need Improvement / **Refactor
+            //Needs Improvement / **Refactor
         }
     }
 }
