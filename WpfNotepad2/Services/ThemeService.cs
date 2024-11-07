@@ -16,6 +16,7 @@ public class ThemeService : IThemeService
 {
     public event EventHandler<ThemeChangedEventArgs> ThemeChanged;
     public ColorTheme CurrentTheme { get; private set; }
+    public string CurrentThemeName { get; private set; }
     public ObservableCollection<ThemeInfo> AvailableThemes { get; }
 
     ObservableCollection<ThemeInfo> IThemeService.AvailableThemes => throw new NotImplementedException();
@@ -50,6 +51,7 @@ public class ThemeService : IThemeService
         Settings.Default.ThemeName = themeName;
         Settings.Default.Save();
         CurrentTheme = theme;
+        CurrentThemeName = themeName;
 
         // Apply all theme objects
         ApplyThemeObject(theme.themeObj_TextEditorBg, UIConstants.Color_TextEditorBg);

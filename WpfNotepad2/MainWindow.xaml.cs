@@ -81,6 +81,6 @@ public partial class MainWindow : Window
             viewModel.LoadDocument(path);
     }
 
-    void SaveSettings() => SettingsManager.SaveSettings(txtEditor);
+    void SaveSettings() => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName);
 
 }
