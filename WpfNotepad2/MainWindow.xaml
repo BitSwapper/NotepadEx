@@ -6,95 +6,148 @@
         xmlns:local="clr-namespace:NotepadEx"
         xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
         mc:Ignorable="d"
-        Title="NotepadEx" Height="450" Width="800"
+        Title="NotepadEx" 
+        Height="450" 
+        Width="800"
         WindowStyle="None"
         AllowsTransparency="True"
         ResizeMode="NoResize"
         ShowInTaskbar="True"
-        Closing="Window_Closing"
-        Background="Transparent"
-        StateChanged="Window_StateChanged">
+        Background="Transparent">
     <Grid>
-            <Border x:Name="OutlineBorderColored" BorderThickness="2" BorderBrush="{DynamicResource Color_BorderColor}" CornerRadius="1" Background="Transparent" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseMove="Border_MouseMove">
-                <Grid>
+        <Border BorderThickness="2" 
+                BorderBrush="{DynamicResource Color_BorderColor}" 
+                CornerRadius="1" 
+                Background="Transparent"
+                MouseLeftButtonDown="OnBorderMouseLeftButtonDown"
+                MouseMove="OnWindowMouseMove">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="26"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <UserControls:CustomTitleBar Grid.Row="0" DataContext="{Binding TitleBarViewModel}"/>
+
+                <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="{Binding MenuBarHeight}"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="{Binding InfoBarHeight}"/>
                     </Grid.RowDefinitions>
 
-                    <!--Custom Title Bar-->
-                    <!--<UserControls:CustomTitleBar x:Name="MainWindowTitleBar" Grid.Column="1"></UserControls:CustomTitleBar>-->
-                <UserControls:CustomTitleBar Grid.Row="0" DataContext="{Binding TitleBarViewModel}"/>
-                <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition x:Name="Row_MainMenuBar" Height="18"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition x:Name="Row_InfoBar" Height="18"/>
-                        </Grid.RowDefinitions>
-
-                        <Menu Name="MainMenuBar" IsMainMenu="True" Background="{DynamicResource Color_MenuBarBg}">
-                            <MenuItem Name="DropDown_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
-                                <MenuItem Header="New" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemNew_Click"></MenuItem>
-                                <MenuItem Header="New Window..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemNewWindow_Click"></MenuItem>
-                                <MenuItem Header="Open..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemOpen_Click"></MenuItem>
-                                <MenuItem Name="MenuItem_OpenRecent"  Header="Open Recent" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemOpenRecent_Click">
-                                    <MenuItem Header="..." Foreground="{DynamicResource Color_MenuItemFg}" ></MenuItem>
-                                </MenuItem>
-                                <MenuItem Header="Open Multiple Files As One..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemMultiOpen_Click"/>
-                                <MenuItem Header="Print..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemPrint_Click"/>
-                                <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSave_Click"/>
-                                <MenuItem Header="Save as..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSaveAs_Click"/>
-                                <MenuItem Header="Exit" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemExit_Click"/>
-                            </MenuItem>
-
-                            <MenuItem Header="Edit" Foreground="{DynamicResource Color_MenuItemFg}">
-                            <MenuItem Header="Undo" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemUndo_Click"/>
-                            <MenuItem Header="Redo" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemRedo_Click"/>
-                            <MenuItem Header="Copy" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemCopy_Click"/>
-                            <MenuItem Header="Cut" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemCut_Click"/>
-                            <MenuItem Header="Paste" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemPaste_Click"/>
-                            <MenuItem Header="Delete" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemDelete_Click"/>
-                            <MenuItem Header="Find and Replace..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemFindReplace_Click"/>
-                            <MenuItem Header="Select All" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSelectAll_Click"/>
-                            <MenuItem Header="Insert Time/Date" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemTimeDate_Click"/>
-                            <MenuItem Header="Test Random Theme" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemTestTheme_Click"/>
+                    <Menu IsMainMenu="True" 
+                          Background="{DynamicResource Color_MenuBarBg}"
+                          IsEnabled="{Binding IsMenuBarEnabled}">
+                        <MenuItem Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem Header="New" 
+                                    Command="{Binding NewCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Open..." 
+                                    Command="{Binding OpenCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Save" 
+                                    Command="{Binding SaveCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Save As..." 
+                                    Command="{Binding SaveAsCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Print..." 
+                                    Command="{Binding PrintCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Exit" 
+                                    Command="{Binding ExitCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
                         </MenuItem>
 
-                            <MenuItem Header="Preferences" Foreground="{DynamicResource Color_MenuItemFg}">
-                            <MenuItem Header="Font..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemFont_Click"/>
-                            <MenuItem Name="MenuItem_ToggleWrapping" Header="Toggle Word Wrapping" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemWordWrap_Click"/>
-                            <MenuItem Name="MenuItem_AutoHideMenuBar" Header="Auto Hide Menu Bar" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemAutohideMenuBar_Click"/>
-                            <MenuItem Name="MenuItem_ToggleInfoBar" Header="Show Info Bar" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemToggleInfoBar_Click"/>
+                        <MenuItem Header="Edit" Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem Header="Copy" 
+                                    Command="{Binding CopyCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Cut" 
+                                    Command="{Binding CutCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Paste" 
+                                    Command="{Binding PasteCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
                         </MenuItem>
 
-                            <MenuItem Name="MenuItem_Theme" Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemTheme_Click">
-                            <MenuItem Header="Theme Editor..." Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemThemeEditor_Click"/>
+                        <MenuItem Header="Preferences" Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem Header="Toggle Word Wrapping" 
+                                    Command="{Binding ToggleWordWrapCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Auto Hide Menu Bar" 
+                                    Command="{Binding ToggleMenuBarCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Show Info Bar" 
+                                    Command="{Binding ToggleInfoBarCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
                         </MenuItem>
-                        </Menu>
+
+                        <MenuItem Header="Theme" 
+          Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </MenuItem.ItemsPanel>
+
+                            <MenuItem Header="Theme Editor..." 
+              Command="{Binding OpenThemeEditorCommand}"
+              Foreground="{DynamicResource Color_MenuItemFg}"/>
+
+                            <Separator/>
+
+                            <ItemsControl ItemsSource="{Binding AvailableThemes}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <MenuItem Header="{Binding Name}"
+                         Command="{Binding DataContext.ChangeThemeCommand, 
+                                   RelativeSource={RelativeSource AncestorType=MenuItem}}"
+                         CommandParameter="{Binding}"
+                         Foreground="{DynamicResource Color_MenuItemFg}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </MenuItem>
+                    </Menu>
 
                     <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
-                        <TextBox x:Name="txtEditor"
-                                 Grid.Row="1"
-                                 Background="Transparent"
-                                 Foreground="{DynamicResource Color_TextEditorFg}"
-                                 AcceptsReturn="True"
-                                 FontSize="18"
-                                 FontFamily="Segoe UI"
-                                 TextOptions.TextRenderingMode="ClearType"
-                                 Margin="2 2 2 2"
-                                 BorderBrush="Transparent"
-                                 BorderThickness="0"
-                                 VerticalScrollBarVisibility="Auto"
-                                 HorizontalScrollBarVisibility="Auto"
-                                 MouseMove="txtEditor_MouseMove"
-                                 CaretBrush="AliceBlue"></TextBox>
-                        </Grid>
-
-                    <TextBlock Background="{DynamicResource Color_InfoBarBg}" Grid.Row="2">
-                            <TextBlock x:Name="txtStatus" Margin="4,2,4,0" FontFamily="Verdana" FontSize="12" Foreground="{DynamicResource Color_InfoBarFg}" FontWeight="SemiBold" Text="Lines"/>
-                        </TextBlock>
+                        <TextBox Text="{Binding DocumentContent, UpdateSourceTrigger=PropertyChanged}"
+                                Background="Transparent"
+                                Foreground="{DynamicResource Color_TextEditorFg}"
+                                AcceptsReturn="True"
+                                FontSize="18"
+                                FontFamily="Segoe UI"
+                                TextWrapping="{Binding TextWrappingMode}"
+                                TextOptions.TextRenderingMode="ClearType"
+                                Margin="2"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                VerticalScrollBarVisibility="Auto"
+                                HorizontalScrollBarVisibility="Auto"
+                                CaretBrush="AliceBlue">
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding SaveCommand}" 
+                                          Gesture="Ctrl+S"/>
+                                <KeyBinding Command="{Binding OpenCommand}" 
+                                          Gesture="Ctrl+O"/>
+                                <KeyBinding Command="{Binding NewCommand}" 
+                                          Gesture="Ctrl+N"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
                     </Grid>
+
+                    <TextBlock Grid.Row="2" 
+                              Background="{DynamicResource Color_InfoBarBg}"
+                              Foreground="{DynamicResource Color_InfoBarFg}"
+                              Text="{Binding StatusText}"
+                              Margin="4,2,4,0" 
+                              FontFamily="Verdana" 
+                              FontSize="12"
+                              FontWeight="SemiBold"/>
                 </Grid>
-            </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
