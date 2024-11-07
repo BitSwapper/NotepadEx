@@ -5,10 +5,11 @@ using System.Windows.Input;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Services;
+using NotepadEx.Util;
 
 public partial class MainWindow : Window
 {
-    readonly WindowResizer resizer;
+    readonly WindowResizerUtil resizer;
     readonly MainWindowViewModel viewModel;
     readonly ThemeService themeService;
 
@@ -17,7 +18,7 @@ public partial class MainWindow : Window
         var windowService = new WindowService(this);
         var documentService = new DocumentService();
         themeService = new ThemeService(Application.Current);
-        resizer = new WindowResizer();
+        resizer = new();
 
         InitializeComponent();
         DataContext = viewModel = new MainWindowViewModel(windowService, documentService, themeService, MenuItemFileDropDown, SaveSettings);
@@ -46,8 +47,6 @@ public partial class MainWindow : Window
     {
         if(e.ClickCount == 2)
             resizer.ToggleMaximizeState(this);
-        else if(e.LeftButton == MouseButtonState.Pressed)
-            DragMove();
     }
 
     void OnWindowMouseMove(object sender, MouseEventArgs e)
@@ -61,7 +60,7 @@ public partial class MainWindow : Window
         if(WindowState == WindowState.Normal)
         {
             var position = e.GetPosition(this);
-            resizer.HandleMouseMove(this, position);
+            WindowResizerUtil.ResizeWindow(this, position);
         }
     }
 

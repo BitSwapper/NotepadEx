@@ -11,8 +11,20 @@ public class WindowResizerUtil
     double oldTop;
     double oldWidth;
     double oldHeight;
+    
+    public void ToggleMaximizeState(Window window)
+    {
+        if(window.WindowState == WindowState.Maximized)
+        {
+            window.WindowState = WindowState.Normal;
+        }
+        else
+        {
+            window.WindowState = WindowState.Maximized;
+        }
+    }
 
-    public void DoWindowMaximizedStateChange(Window window, WindowState prevWindowState)
+    public void DoWindowMaximizedStateChangeSpecial(Window window, WindowState prevWindowState)
     {
         if(prevWindowState == WindowState.Minimized) return;
         if(!isManuallyMaximized)
@@ -43,41 +55,63 @@ public class WindowResizerUtil
         }
     }
 
-    public static void ResizeWindow(Window window, Point position, int edgeThreshold)
+    public static void ResizeWindow(Window window, Point position, int edgeThreshold = 6)
     {
         double windowWidth = window.ActualWidth;
         double windowHeight = window.ActualHeight;
 
         if(position.X <= edgeThreshold && position.Y <= edgeThreshold)
-            ResizeWindowInternal(ResizeDirection.TopLeft, Cursors.SizeNWSE);
+        {
+            window.Cursor = Cursors.SizeNWSE;
+            ResizeWindowInternal(ResizeDirection.TopLeft);
+        }
 
         else if(position.X >= windowWidth - edgeThreshold && position.Y <= edgeThreshold)
-            ResizeWindowInternal(ResizeDirection.TopRight, Cursors.SizeNESW);
+        {
+            window.Cursor = Cursors.SizeNESW;
+            ResizeWindowInternal(ResizeDirection.TopRight);
+        }
 
         else if(position.X <= edgeThreshold && position.Y >= windowHeight - edgeThreshold)
-            ResizeWindowInternal(ResizeDirection.BottomLeft, Cursors.SizeNESW);
+        {
+            window.Cursor = Cursors.SizeNESW;
+            ResizeWindowInternal(ResizeDirection.BottomLeft);
+        }
 
         else if(position.X >= windowWidth - edgeThreshold && position.Y >= windowHeight - edgeThreshold)
-            ResizeWindowInternal(ResizeDirection.BottomRight, Cursors.SizeNWSE);
+        {
+            window.Cursor = Cursors.SizeNWSE;
+            ResizeWindowInternal(ResizeDirection.BottomRight);
+        }
 
         else if(position.X <= edgeThreshold)
-            ResizeWindowInternal(ResizeDirection.Left, Cursors.SizeWE);
+        {
+            window.Cursor = Cursors.SizeWE;
+            ResizeWindowInternal(ResizeDirection.Left);
+        }
 
         else if(position.X >= windowWidth - edgeThreshold)
-            ResizeWindowInternal(ResizeDirection.Right, Cursors.SizeWE);
+        {
+            window.Cursor = Cursors.SizeWE;
+            ResizeWindowInternal(ResizeDirection.Right);
+        }
 
         else if(position.Y <= edgeThreshold)
-            ResizeWindowInternal(ResizeDirection.Top, Cursors.SizeNS);
+        {
+            window.Cursor = Cursors.SizeNS;
+            ResizeWindowInternal(ResizeDirection.Top);
+        }
 
         else if(position.Y >= windowHeight - edgeThreshold)
-            ResizeWindowInternal(ResizeDirection.Bottom, Cursors.SizeNS);
-
+        {
+            window.Cursor = Cursors.SizeNS;
+            ResizeWindowInternal(ResizeDirection.Bottom);
+        }
         else
             window.Cursor = Cursors.Arrow;
 
-        void ResizeWindowInternal(ResizeDirection direction, Cursor cursor)
+        void ResizeWindowInternal(ResizeDirection direction)
         {
-            window.Cursor = cursor;
             if(Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(window).Handle);

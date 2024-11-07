@@ -7,17 +7,26 @@
         xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
         mc:Ignorable="d"
         Title="ColorPickerWindow" Height="611" Width="611"
+        ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="24"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <UserControls:CustomTitleBar x:Name="TitleBar" DataContext="{Binding TitleBarViewModel}"/>
-        <!--<UserControls:CustomTitleBar Grid.Row="0" DataContext="{Binding TitleBarViewModel}"/>-->
 
-        <UserControls:ColorPicker x:Name="myColorPicker" Grid.Row="1"></UserControls:ColorPicker>
-    </Grid>
+    <Border BorderThickness="2" 
+        BorderBrush="{DynamicResource Color_BorderColor}" 
+        CornerRadius="1" 
+        Background="Transparent"
+        MouseLeftButtonDown="OnBorderMouseLeftButtonDown"
+        MouseMove="OnWindowMouseMove">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <UserControls:CustomTitleBar x:Name="TitleBar" DataContext="{Binding TitleBarViewModel}"/>
+            <!--<UserControls:CustomTitleBar Grid.Row="0" DataContext="{Binding TitleBarViewModel}"/>-->
+
+            <UserControls:ColorPicker x:Name="myColorPicker" Grid.Row="1"></UserControls:ColorPicker>
+        </Grid>
+    </Border>
 </Window>
