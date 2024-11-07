@@ -60,7 +60,6 @@ public class MainWindowViewModel : ViewModelBase
         set
         {
             document.SelectionStart = value;
-            //UpdateEditCommandsCanExecute();
         }
     }
 
@@ -70,7 +69,6 @@ public class MainWindowViewModel : ViewModelBase
         set
         {
             document.SelectionLength = value;
-            //UpdateEditCommandsCanExecute();
         }
     }
 
