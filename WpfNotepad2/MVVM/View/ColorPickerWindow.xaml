@@ -16,7 +16,6 @@
         BorderBrush="{DynamicResource Color_BorderColor}" 
         CornerRadius="1" 
         Background="Transparent"
-        MouseLeftButtonDown="OnBorderMouseLeftButtonDown"
         MouseMove="OnWindowMouseMove">
         <Grid>
             <Grid.RowDefinitions>

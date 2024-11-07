@@ -166,7 +166,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
             SelectedColor = ColorUtil.GetColorFromHex(txtHexColor.Text).GetValueOrDefault();
     }
 
-    void UpdateColorFromSelectedColor()
+    public void UpdateColorFromSelectedColor()
     {
         isUpdating = true;
         var hsv = ColorUtil.RgbToHsv(SelectedColor);
@@ -185,7 +185,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
         isUpdating = false;
     }
 
-    void UpdateColorFromRgb(Color color)
+    public void UpdateColorFromRgb(Color color)
     {
         if(!isUpdating)
         {
@@ -234,7 +234,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
 
     void UpdateColorPlane() => ColorPlane.Background = new SolidColorBrush(ColorUtil.HsvToRgb(currentHue, 1, 1));
 
-    void UpdateColorSelector()
+    public void UpdateColorSelector()
     {
         Canvas.SetLeft(ColorSelector, currentSaturation * ColorPlane.ActualWidth - ColorSelector.Width / 2);
         Canvas.SetTop(ColorSelector, (1 - currentValue) * ColorPlane.ActualHeight - ColorSelector.Height / 2);

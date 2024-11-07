@@ -55,7 +55,7 @@ public class WindowResizerUtil
         }
     }
 
-    public static void ResizeWindow(Window window, Point position, int edgeThreshold = 6)
+    public static void ResizeWindow(Window window, Point position, int edgeThreshold = 6, Action OnResized = null)
     {
         double windowWidth = window.ActualWidth;
         double windowHeight = window.ActualHeight;
@@ -116,7 +116,9 @@ public class WindowResizerUtil
             {
                 HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(window).Handle);
                 SendMessage(hwndSource.Handle, WM_SYSCOMMAND, (IntPtr)(SC_SIZE + (int)direction), IntPtr.Zero);
+
             }
+            OnResized?.Invoke();
         }
     }
 
