@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
+using System.Windows;
 using NotepadEx.Util;
 using Color = System.Windows.Media.Color;
 using LinearGradientBrush = System.Windows.Media.LinearGradientBrush;
@@ -56,10 +58,18 @@ public class ThemeObjectSerializable
 
     public ThemeObject ToThemeObject()
     {
-        if(IsGradient)
-            return new ThemeObject(ColorUtil.DeserializeGradient(Gradient));
+        try
+        {
+            if(IsGradient)
+                return new ThemeObject(ColorUtil.DeserializeGradient(Gradient));
 
-        else
-            return new ThemeObject(ColorUtil.GetColorFromHex(Color).Value);
+            else
+                return new ThemeObject(ColorUtil.GetColorFromHex(Color).Value);
+        }
+        catch
+        {
+            MessageBox.Show("Failed to deserialize theme object. Substituting Blue. (Your theme contains corrupt data - Try picking a different one and restarting application for best results)");
+            return new ThemeObject(ColorUtil.GetColorFromHex("#FF0000FF").Value);
+        }
     }
 }

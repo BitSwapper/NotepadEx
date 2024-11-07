@@ -53,6 +53,10 @@ public class ColorPickerLineViewModel : ViewModelBase
         set
         {
             isGradient = value;
+
+            if(themeObj != null)
+                themeObj.isGradient = value;
+
             OnPropertyChanged();
             UpdatePreviewColor();
         }
@@ -117,10 +121,12 @@ public class ColorPickerLineViewModel : ViewModelBase
         if(IsGradient)
         {
             AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, themePath, PreviewImage as LinearGradientBrush);
+            themeObj.gradient = PreviewImage as LinearGradientBrush;
         }
         else
         {
             AppResourceUtil<SolidColorBrush>.TrySetResource(Application.Current, themePath, PreviewImage as SolidColorBrush);
+            themeObj.color = (PreviewImage as SolidColorBrush).Color;
         }
     }
 
