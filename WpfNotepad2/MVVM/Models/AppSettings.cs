@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace NotepadEx.MVVM.Models;
+﻿namespace NotepadEx.MVVM.Models;
 
 //public class AppSettings
 //{

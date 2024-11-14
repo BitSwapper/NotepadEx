@@ -77,7 +77,7 @@ public class ColorThemeSerializable
     {
         if(colorTheme.themeObj_TextEditorBg != null) ThemeObj_TextEditorBg = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorBg);
         if(colorTheme.themeObj_TextEditorFg != null) ThemeObj_TextEditorFg = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorFg);
-        if(colorTheme.themeObj_TextEditorCaret!= null) ThemeObj_TextEditorCaret = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorCaret);
+        if(colorTheme.themeObj_TextEditorCaret != null) ThemeObj_TextEditorCaret = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorCaret);
         if(colorTheme.themeObj_TextEditorScrollBar != null) ThemeObj_TextEditorScrollBar = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorScrollBar);
         if(colorTheme.themeObj_TextEditorTextHighlight != null) ThemeObj_TextEditorTextHighlight = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorTextHighlight);
         if(colorTheme.themeObj_TitleBarBg != null) ThemeObj_TitleBarBg = new ThemeObjectSerializable(colorTheme.themeObj_TitleBarBg);

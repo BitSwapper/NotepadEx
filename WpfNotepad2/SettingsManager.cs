@@ -21,7 +21,7 @@ public static class SettingsManager
         Settings.Default.FontStyle = txtEditor.FontStyle.ToString();
         Settings.Default.Underline = txtEditor.TextDecorations.Any(td => td.Location == TextDecorationLocation.Underline);
         Settings.Default.Strikethrough = txtEditor.TextDecorations.Any(td => td.Location == TextDecorationLocation.Strikethrough);
-        
+
         Settings.Default.Save();
     }
 }

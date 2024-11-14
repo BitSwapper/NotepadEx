@@ -8,7 +8,6 @@ using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Services;
 using NotepadEx.Util;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 public partial class MainWindow : Window
 {
@@ -88,70 +87,67 @@ public partial class MainWindow : Window
             viewModel.SelectionLength = textBox.SelectionLength;
         }
     }
-    private ScrollBar _activeScrollBar;
-private bool _isDragging;
-private Point _lastMousePosition;
 
-private void Rectangle_MouseMove(object sender, MouseEventArgs e)
-{
-    if(_isDragging && _activeScrollBar != null)
+    ScrollBar _activeScrollBar;
+    bool _isDragging;
+    Point _lastMousePosition;
+
+    void Rectangle_MouseMove(object sender, MouseEventArgs e)
     {
-        var currentPosition = e.GetPosition(_activeScrollBar);
-        
-        if(_activeScrollBar.Orientation == Orientation.Vertical)
+        if(_isDragging && _activeScrollBar != null)
         {
-            var delta = (currentPosition.Y - _lastMousePosition.Y) / _activeScrollBar.ActualHeight * 
+            var currentPosition = e.GetPosition(_activeScrollBar);
+
+            if(_activeScrollBar.Orientation == Orientation.Vertical)
+            {
+                var delta = (currentPosition.Y - _lastMousePosition.Y) / _activeScrollBar.ActualHeight *
                        (_activeScrollBar.Maximum - _activeScrollBar.Minimum);
-            var newValue = _activeScrollBar.Value + delta;
-            newValue = Math.Max(_activeScrollBar.Minimum, Math.Min(newValue, _activeScrollBar.Maximum));
-            _activeScrollBar.Value = newValue;
-            txtEditor.ScrollToVerticalOffset(newValue);
-        }
-        else
-        {
-            // For horizontal, calculate the absolute position instead of using delta
-            var newValue = (currentPosition.X / _activeScrollBar.ActualWidth) * 
+                var newValue = _activeScrollBar.Value + delta;
+                newValue = Math.Max(_activeScrollBar.Minimum, Math.Min(newValue, _activeScrollBar.Maximum));
+                _activeScrollBar.Value = newValue;
+                txtEditor.ScrollToVerticalOffset(newValue);
+            }
+            else
+            {
+                var newValue = (currentPosition.X / _activeScrollBar.ActualWidth) *
                           (_activeScrollBar.Maximum - _activeScrollBar.Minimum) + _activeScrollBar.Minimum;
-            newValue = Math.Max(_activeScrollBar.Minimum, Math.Min(newValue, _activeScrollBar.Maximum));
-            _activeScrollBar.Value = newValue;
-            txtEditor.ScrollToHorizontalOffset(newValue);
+                newValue = Math.Max(_activeScrollBar.Minimum, Math.Min(newValue, _activeScrollBar.Maximum));
+                _activeScrollBar.Value = newValue;
+                txtEditor.ScrollToHorizontalOffset(newValue);
+            }
+
+            _lastMousePosition = currentPosition;
         }
-
-        _lastMousePosition = currentPosition;
     }
-}
 
-private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
-{
-    if(_isDragging)
+    void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
     {
-        var rectangle = sender as System.Windows.Shapes.Rectangle;
-        if(rectangle != null)
+        if(_isDragging)
         {
-            rectangle.MouseMove -= Rectangle_MouseMove;
-            rectangle.MouseUp -= Rectangle_MouseUp;
-            rectangle.ReleaseMouseCapture();
+            var rectangle = sender as System.Windows.Shapes.Rectangle;
+            if(rectangle != null)
+            {
+                rectangle.MouseMove -= Rectangle_MouseMove;
+                rectangle.MouseUp -= Rectangle_MouseUp;
+                rectangle.ReleaseMouseCapture();
+            }
+
+            _isDragging = false;
+            _activeScrollBar = null;
         }
-
-        _isDragging = false;
-        _activeScrollBar = null;
     }
-}
 
-    // Helper method to find parent ScrollBar
-    private ScrollBar FindParentScrollBar(DependencyObject child)
+    ScrollBar FindParentScrollBar(DependencyObject child)
     {
         var parent = VisualTreeHelper.GetParent(child);
 
         while(parent != null && !(parent is ScrollBar))
-        {
             parent = VisualTreeHelper.GetParent(parent);
-        }
 
         return parent as ScrollBar;
     }
 
-    private void PART_ScrollbarRect_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    void PART_ScrollbarRect_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
         if(e.LeftButton == MouseButtonState.Pressed)
         {
@@ -168,7 +164,6 @@ private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
             var textBox = txtEditor;
             if(textBox == null) return;
 
-            // Initial snap
             double newValue;
             if(scrollBar.Orientation == Orientation.Vertical)
             {

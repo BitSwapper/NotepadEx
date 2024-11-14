@@ -11,7 +11,7 @@ public class WindowResizerUtil
     double oldTop;
     double oldWidth;
     double oldHeight;
-    
+
 
 
     public void DoWindowMaximizedStateChangeSpecial(Window window, WindowState prevWindowState)

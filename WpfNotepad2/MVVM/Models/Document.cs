@@ -5,7 +5,7 @@ namespace NotepadEx.MVVM.Models;
 public class Document
 {
     string content = string.Empty;
-    
+
     public int SelectionStart { get; set; }
     public int SelectionLength { get; set; }
 
