@@ -21,7 +21,7 @@ public partial class ThemeEditorWindow : Window
     CustomTitleBarViewModel titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
 
-    int lineCt = 0;
+    int colorLineCt = 0;
 
     SolidColorBrush brushA = new SolidColorBrush(Color.FromArgb(255, 64, 64, 64));
     SolidColorBrush brushB = new SolidColorBrush(Color.FromArgb(255, 44, 44, 44));
@@ -87,7 +87,7 @@ public partial class ThemeEditorWindow : Window
             ColorPickerLine line = new();
             line.ViewModel.SetupThemeObj(themeObj, resourceKey, friendlyThemeName);
 
-            line.ViewModel.BackgroundColor = ++lineCt % 2 == 0 ? brushA : brushB;
+            line.ViewModel.BackgroundColor = ++colorLineCt % 2 == 0 ? brushA : brushB;
 
             if(UIConstants.UIColorKeysMain.Contains(resourceKey))
                 StackPanelMain.Children.Add(line);
@@ -95,11 +95,11 @@ public partial class ThemeEditorWindow : Window
             else if(UIConstants.UIColorKeysMenuBar.Contains(resourceKey))
                 StackPanelMenuBar.Children.Add(line);
 
-            else if(UIConstants.UIColorKeysInfoBar.Contains(resourceKey))
-                StackPanelInfoBar.Children.Add(line);
-
             else if(UIConstants.UIColorKeysMenuItem.Contains(resourceKey))
                 StackPanelMenuItem.Children.Add(line);
+
+            else if(UIConstants.UIColorKeysInfoBar.Contains(resourceKey))
+                StackPanelInfoBar.Children.Add(line);
 
             else if(UIConstants.UIColorKeysToolWindow.Contains(resourceKey))
                 StackPanelToolWindow.Children.Add(line);

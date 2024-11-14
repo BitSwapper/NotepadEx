@@ -382,7 +382,7 @@ public class MainWindowViewModel : ViewModelBase
             UpdateStatusBar();
             AddRecentFile(filePath);
             OnPropertyChanged("DocumentContent");
-            updateCaretPosition(0); // Add this to scroll to start of document
+            updateCaretPosition(0);
         }
         catch(Exception ex)
         {
@@ -401,7 +401,7 @@ public class MainWindowViewModel : ViewModelBase
         document.IsModified = false;
         UpdateTitle();
         OnPropertyChanged("DocumentContent");
-        updateCaretPosition(0); // Add this to scroll to start of document
+        updateCaretPosition(0);
     }
 
     void OpenFileLocation()
