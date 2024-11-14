@@ -92,50 +92,6 @@ public partial class MainWindow : Window
 private bool _isDragging;
 private Point _lastMousePosition;
 
-private void PART_Background_MouseDown(object sender, MouseButtonEventArgs e)
-{
-    if(e.LeftButton == MouseButtonState.Pressed)
-    {
-        var rectangle = sender as System.Windows.Shapes.Rectangle;
-        if(rectangle == null) return;
-
-        var scrollBar = FindParentScrollBar(rectangle);
-        if(scrollBar == null) return;
-
-        _activeScrollBar = scrollBar;
-        _isDragging = true;
-        _lastMousePosition = e.GetPosition(scrollBar);
-
-        var textBox = txtEditor;
-        if(textBox == null) return;
-
-        // Initial snap
-        double newValue;
-        if(scrollBar.Orientation == Orientation.Vertical)
-        {
-            newValue = (_lastMousePosition.Y / scrollBar.ActualHeight) *
-                      (scrollBar.Maximum - scrollBar.Minimum) + scrollBar.Minimum;
-            newValue = Math.Max(scrollBar.Minimum, Math.Min(newValue, scrollBar.Maximum));
-            scrollBar.Value = newValue;
-            textBox.ScrollToVerticalOffset(newValue);
-        }
-        else
-        {
-            newValue = (_lastMousePosition.X / scrollBar.ActualWidth) *
-                      (scrollBar.Maximum - scrollBar.Minimum) + scrollBar.Minimum;
-            newValue = Math.Max(scrollBar.Minimum, Math.Min(newValue, scrollBar.Maximum));
-            scrollBar.Value = newValue;
-            textBox.ScrollToHorizontalOffset(newValue);
-        }
-
-        rectangle.MouseMove += Rectangle_MouseMove;
-        rectangle.MouseUp += Rectangle_MouseUp;
-        rectangle.CaptureMouse();
-        
-        e.Handled = true;
-    }
-}
-
 private void Rectangle_MouseMove(object sender, MouseEventArgs e)
 {
     if(_isDragging && _activeScrollBar != null)
@@ -193,5 +149,49 @@ private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
         }
 
         return parent as ScrollBar;
+    }
+
+    private void PART_Background_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if(e.LeftButton == MouseButtonState.Pressed)
+        {
+            var rectangle = sender as System.Windows.Shapes.Rectangle;
+            if(rectangle == null) return;
+
+            var scrollBar = FindParentScrollBar(rectangle);
+            if(scrollBar == null) return;
+
+            _activeScrollBar = scrollBar;
+            _isDragging = true;
+            _lastMousePosition = e.GetPosition(scrollBar);
+
+            var textBox = txtEditor;
+            if(textBox == null) return;
+
+            // Initial snap
+            double newValue;
+            if(scrollBar.Orientation == Orientation.Vertical)
+            {
+                newValue = (_lastMousePosition.Y / scrollBar.ActualHeight) *
+                          (scrollBar.Maximum - scrollBar.Minimum) + scrollBar.Minimum;
+                newValue = Math.Max(scrollBar.Minimum, Math.Min(newValue, scrollBar.Maximum));
+                scrollBar.Value = newValue;
+                textBox.ScrollToVerticalOffset(newValue);
+            }
+            else
+            {
+                newValue = (_lastMousePosition.X / scrollBar.ActualWidth) *
+                          (scrollBar.Maximum - scrollBar.Minimum) + scrollBar.Minimum;
+                newValue = Math.Max(scrollBar.Minimum, Math.Min(newValue, scrollBar.Maximum));
+                scrollBar.Value = newValue;
+                textBox.ScrollToHorizontalOffset(newValue);
+            }
+
+            rectangle.MouseMove += Rectangle_MouseMove;
+            rectangle.MouseUp += Rectangle_MouseUp;
+            rectangle.CaptureMouse();
+
+            e.Handled = true;
+        }
     }
 }

@@ -148,13 +148,17 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <!--  Rectangle for the background -->
-                                                    <Rectangle x:Name="PART_Background" Fill="#8F858689" MouseDown="PART_Background_MouseDown"/>
+                                                    <!-- Rectangle for the background -->
                                                     <Track x:Name="PART_Track">
                                                         <Track.Thumb>
-                                                                <Thumb Background="{DynamicResource Color_TextEditorScrollBar}" />
+                                                            <Thumb x:Name="PART_Thumb" Background="{DynamicResource Color_TextEditorScrollBar}">
+                                                                <Thumb.Effect>
+                                                                    <DropShadowEffect/>
+                                                                </Thumb.Effect>
+                                                            </Thumb>
                                                         </Track.Thumb>
                                                     </Track>
+                                                    <Rectangle x:Name="PART_Background" Fill="Transparent" PreviewMouseDown="PART_Background_PreviewMouseDown"/>
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="Orientation" Value="Vertical">
@@ -170,7 +174,6 @@
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
-
                                     <Setter Property="Opacity" Value="0.4"/>
                                 </Style>
                                 <Style TargetType="TextBox">
