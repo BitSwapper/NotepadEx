@@ -24,7 +24,8 @@ public partial class MainWindow : Window
             documentService,
             themeService,
             MenuItemFileDropDown,
-            () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName)
+            () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName),
+            UpdateCaretPosition
         );
 
         InitTitleBar();
@@ -74,5 +75,10 @@ public partial class MainWindow : Window
     {
         if(sender is System.Windows.Shapes.Rectangle rectangle && e.LeftButton == MouseButtonState.Pressed)
             viewModel.HandleScrollBarDrag(rectangle, txtEditor, e);
+    }
+
+    void UpdateCaretPosition(int caretIndex)
+    {
+        txtEditor.CaretIndex = caretIndex;
     }
 }

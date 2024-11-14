@@ -219,6 +219,8 @@
                                           Gesture="Ctrl+O"/>
                                 <KeyBinding Command="{Binding NewCommand}" 
                                           Gesture="Ctrl+N"/>
+                                <KeyBinding Command="{Binding CutLineCommand}" 
+                                            Gesture="Ctrl+X"/>
                             </TextBox.InputBindings>
                         </TextBox>
                     </Grid>

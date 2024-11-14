@@ -18,6 +18,7 @@ public class MainWindowViewModel : ViewModelBase
     readonly IDocumentService documentService;
     readonly WindowState prevWindowState;
     readonly IThemeService themeService;
+    readonly Action<int> updateCaretPosition;
     string statusText;
     double menuBarHeight;
     double infoBarHeight;
@@ -34,6 +35,7 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand ToggleInfoBarCommand { get; private set; }
     public ICommand CopyCommand { get; private set; }
     public ICommand CutCommand { get; private set; }
+    public ICommand CutLineCommand { get; private set; }
     public ICommand PasteCommand { get; private set; }
     public ICommand ChangeThemeCommand { get; private set; }
     public ICommand OpenThemeEditorCommand { get; private set; }
@@ -102,13 +104,14 @@ public class MainWindowViewModel : ViewModelBase
     MenuItem menuItemFileDropdown;
     Action SaveSettings;
 
-    public MainWindowViewModel(IWindowService windowService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown, Action SaveSettings)
+    public MainWindowViewModel(IWindowService windowService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown, Action SaveSettings, Action<int> updateCaretPosition)
     {
         this.windowService = windowService;
         this.documentService = documentService;
         this.themeService = themeService;
         this.menuItemFileDropdown = menuItemFileDropdown;
         this.SaveSettings = SaveSettings;
+        this.updateCaretPosition = updateCaretPosition;
         document = new Document();
 
         //_Settings.Default.MenuBarAutoHide = false;
@@ -165,6 +168,7 @@ public class MainWindowViewModel : ViewModelBase
         ToggleInfoBarCommand = new RelayCommand(ToggleInfoBar);
         CopyCommand = new RelayCommand(Copy);
         CutCommand = new RelayCommand(Cut);
+        CutLineCommand = new RelayCommand(CutLine);
         PasteCommand = new RelayCommand(Paste);
         ChangeThemeCommand = new RelayCommand<ThemeInfo>(OnThemeChange);
         OpenThemeEditorCommand = new RelayCommand(OnOpenThemeEditor);
@@ -349,9 +353,22 @@ public class MainWindowViewModel : ViewModelBase
     {
         if(!string.IsNullOrEmpty(document.SelectedText))
         {
+            var caretIndex = document.CaretIndex;
             Clipboard.SetText(document.SelectedText);
             document.DeleteSelected();
             OnPropertyChanged(nameof(DocumentContent));
+            updateCaretPosition(caretIndex);
+        }
+    }
+
+    void CutLine()
+    {
+        if(string.IsNullOrEmpty(document.SelectedText))
+        {
+            var caretIndex = document.CaretIndex;
+            document.CutLine();
+            OnPropertyChanged(nameof(DocumentContent));
+            updateCaretPosition(caretIndex);
         }
     }
 
@@ -360,8 +377,10 @@ public class MainWindowViewModel : ViewModelBase
         if(Clipboard.ContainsText())
         {
             var text = Clipboard.GetText();
+            var caretIndex = document.CaretIndex;
             document.InsertText(text);
             OnPropertyChanged(nameof(DocumentContent));
+            updateCaretPosition(caretIndex + text.Length);
         }
     }
 }
