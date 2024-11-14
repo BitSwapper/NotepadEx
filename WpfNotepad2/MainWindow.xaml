@@ -138,10 +138,6 @@
 
                             <TextBox.Resources>
                                 <Style TargetType="ScrollBar">
-                                    <Setter Property="Background" Value="#FF858689" />
-                                    <Setter Property="Foreground" Value="#F0F52629" />
-                                    <Setter Property="BorderBrush" Value="#FF3D0EA7" />
-
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ScrollBar">
@@ -152,7 +148,7 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <!-- Add a Rectangle for the background -->
+                                                    <!--  Rectangle for the background -->
                                                     <Rectangle x:Name="PART_Background" Fill="#8F858689" MouseDown="PART_Background_MouseDown"/>
                                                     <Track x:Name="PART_Track">
                                                         <Track.Thumb>

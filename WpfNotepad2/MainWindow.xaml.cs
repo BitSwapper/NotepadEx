@@ -3,10 +3,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Services;
 using NotepadEx.Util;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 public partial class MainWindow : Window
 {
@@ -62,7 +64,7 @@ public partial class MainWindow : Window
         }
     }
 
-   void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e) //**Refactor / Fix
+    void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e) //**Refactor / Fix
     {
         if(!viewModel.PromptToSaveChanges()) return;
 
@@ -76,12 +78,9 @@ public partial class MainWindow : Window
 
     void SaveSettings() => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName);
 
-    void WindowClosed(object sender, EventArgs e)
-    {
-        viewModel.PromptToSaveChanges();
-    }
+    void WindowClosed(object sender, EventArgs e) => viewModel.PromptToSaveChanges();
 
-    private void TxtEditor_SelectionChanged(object sender, RoutedEventArgs e)
+    void TxtEditor_SelectionChanged(object sender, RoutedEventArgs e)
     {
         if(DataContext is MainWindowViewModel viewModel && sender is TextBox textBox)
         {
@@ -89,40 +88,110 @@ public partial class MainWindow : Window
             viewModel.SelectionLength = textBox.SelectionLength;
         }
     }
+    private ScrollBar _activeScrollBar;
+private bool _isDragging;
+private Point _lastMousePosition;
 
-    void PART_Background_MouseDown(object sender, MouseButtonEventArgs e)
+private void PART_Background_MouseDown(object sender, MouseButtonEventArgs e)
+{
+    if(e.LeftButton == MouseButtonState.Pressed)
     {
-        if(e.LeftButton == MouseButtonState.Pressed)
+        var rectangle = sender as System.Windows.Shapes.Rectangle;
+        if(rectangle == null) return;
+
+        var scrollBar = FindParentScrollBar(rectangle);
+        if(scrollBar == null) return;
+
+        _activeScrollBar = scrollBar;
+        _isDragging = true;
+        _lastMousePosition = e.GetPosition(scrollBar);
+
+        var textBox = txtEditor;
+        if(textBox == null) return;
+
+        // Initial snap
+        double newValue;
+        if(scrollBar.Orientation == Orientation.Vertical)
         {
-            var scrollBar = sender as FrameworkElement;
-            if(scrollBar != null)
-            {
-
-                var position = e.GetPosition(scrollBar);
-                var scrollBars = VisualTreeUtil.FindVisualChildren<ScrollBar>(txtEditor);
-                foreach(var sb in scrollBars)
-                {
-                    var scrollBarPosition = sb.PointToScreen(new Point(0, 0));
-                    var mousePosition = Mouse.GetPosition(txtEditor);
-                    mousePosition.X += Width;
-                    mousePosition.Y += Height;
-
-                    if(mousePosition.X >= scrollBarPosition.X && mousePosition.X <= scrollBarPosition.X + sb.ActualWidth && mousePosition.Y >= scrollBarPosition.Y && mousePosition.Y <= scrollBarPosition.Y + sb.ActualHeight)
-                    {
-                        double newValue;
-                        if(sb.Orientation == Orientation.Vertical)
-                        {
-                            newValue = mousePosition.Y / sb.ActualHeight * (sb.Maximum - sb.Minimum) + sb.Minimum;
-                            txtEditor.ScrollToVerticalOffset(newValue);
-                        }
-                        else
-                        {
-                            newValue = mousePosition.X / sb.ActualWidth * (sb.Maximum - sb.Minimum) + sb.Minimum;
-                            txtEditor.ScrollToHorizontalOffset(newValue);
-                        }
-                    }
-                }
-            }
+            newValue = (_lastMousePosition.Y / scrollBar.ActualHeight) *
+                      (scrollBar.Maximum - scrollBar.Minimum) + scrollBar.Minimum;
+            newValue = Math.Max(scrollBar.Minimum, Math.Min(newValue, scrollBar.Maximum));
+            scrollBar.Value = newValue;
+            textBox.ScrollToVerticalOffset(newValue);
         }
+        else
+        {
+            newValue = (_lastMousePosition.X / scrollBar.ActualWidth) *
+                      (scrollBar.Maximum - scrollBar.Minimum) + scrollBar.Minimum;
+            newValue = Math.Max(scrollBar.Minimum, Math.Min(newValue, scrollBar.Maximum));
+            scrollBar.Value = newValue;
+            textBox.ScrollToHorizontalOffset(newValue);
+        }
+
+        rectangle.MouseMove += Rectangle_MouseMove;
+        rectangle.MouseUp += Rectangle_MouseUp;
+        rectangle.CaptureMouse();
+        
+        e.Handled = true;
+    }
+}
+
+private void Rectangle_MouseMove(object sender, MouseEventArgs e)
+{
+    if(_isDragging && _activeScrollBar != null)
+    {
+        var currentPosition = e.GetPosition(_activeScrollBar);
+        
+        if(_activeScrollBar.Orientation == Orientation.Vertical)
+        {
+            var delta = (currentPosition.Y - _lastMousePosition.Y) / _activeScrollBar.ActualHeight * 
+                       (_activeScrollBar.Maximum - _activeScrollBar.Minimum);
+            var newValue = _activeScrollBar.Value + delta;
+            newValue = Math.Max(_activeScrollBar.Minimum, Math.Min(newValue, _activeScrollBar.Maximum));
+            _activeScrollBar.Value = newValue;
+            txtEditor.ScrollToVerticalOffset(newValue);
+        }
+        else
+        {
+            // For horizontal, calculate the absolute position instead of using delta
+            var newValue = (currentPosition.X / _activeScrollBar.ActualWidth) * 
+                          (_activeScrollBar.Maximum - _activeScrollBar.Minimum) + _activeScrollBar.Minimum;
+            newValue = Math.Max(_activeScrollBar.Minimum, Math.Min(newValue, _activeScrollBar.Maximum));
+            _activeScrollBar.Value = newValue;
+            txtEditor.ScrollToHorizontalOffset(newValue);
+        }
+
+        _lastMousePosition = currentPosition;
+    }
+}
+
+private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
+{
+    if(_isDragging)
+    {
+        var rectangle = sender as System.Windows.Shapes.Rectangle;
+        if(rectangle != null)
+        {
+            rectangle.MouseMove -= Rectangle_MouseMove;
+            rectangle.MouseUp -= Rectangle_MouseUp;
+            rectangle.ReleaseMouseCapture();
+        }
+
+        _isDragging = false;
+        _activeScrollBar = null;
+    }
+}
+
+    // Helper method to find parent ScrollBar
+    private ScrollBar FindParentScrollBar(DependencyObject child)
+    {
+        var parent = VisualTreeHelper.GetParent(child);
+
+        while(parent != null && !(parent is ScrollBar))
+        {
+            parent = VisualTreeHelper.GetParent(parent);
+        }
+
+        return parent as ScrollBar;
     }
 }
