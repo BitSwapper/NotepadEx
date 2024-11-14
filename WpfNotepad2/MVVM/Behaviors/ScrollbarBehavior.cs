@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows;
-using System.Windows.Controls.Primitives;
 using Point = System.Windows.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
-using System.Windows.Controls;
 
 namespace NotepadEx.MVVM.Behaviors;
 
 public class ScrollBarBehavior
 {
-   ScrollBar _activeScrollBar;
-   bool _isDragging;
-   Point _lastMousePosition;
-   TextBox _textBox;
+    ScrollBar _activeScrollBar;
+    bool _isDragging;
+    Point _lastMousePosition;
+    TextBox _textBox;
 
     public void StartDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e)
     {
@@ -37,7 +32,7 @@ public class ScrollBarBehavior
         rectangle.CaptureMouse();
     }
 
-   void UpdateScrollPosition()
+    void UpdateScrollPosition()
     {
         if(_textBox == null || _activeScrollBar == null) return;
 
@@ -60,7 +55,7 @@ public class ScrollBarBehavior
         }
     }
 
-   void Rectangle_MouseMove(object sender, MouseEventArgs e)
+    void Rectangle_MouseMove(object sender, MouseEventArgs e)
     {
         if(_isDragging && _activeScrollBar != null)
         {
@@ -87,7 +82,7 @@ public class ScrollBarBehavior
         }
     }
 
-   void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
+    void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
     {
         if(_isDragging && sender is Rectangle rectangle)
         {
@@ -101,7 +96,7 @@ public class ScrollBarBehavior
         }
     }
 
-   ScrollBar FindParentScrollBar(DependencyObject child)
+    ScrollBar FindParentScrollBar(DependencyObject child)
     {
         var parent = VisualTreeHelper.GetParent(child);
         while(parent != null && !(parent is ScrollBar))

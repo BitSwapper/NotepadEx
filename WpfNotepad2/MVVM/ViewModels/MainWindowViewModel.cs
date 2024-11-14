@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -40,6 +42,7 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand ChangeThemeCommand { get; private set; }
     public ICommand OpenThemeEditorCommand { get; private set; }
     public ICommand InsertTabCommand { get; private set; }
+    public ICommand OpenFileLocationCommand { get; private set; }
 
     public ObservableCollection<ThemeInfo> AvailableThemes => themeService.AvailableThemes;
     readonly ScrollBarBehavior scrollBarBehavior = new();
@@ -158,6 +161,7 @@ public class MainWindowViewModel : ViewModelBase
         ChangeThemeCommand = new RelayCommand<ThemeInfo>(OnThemeChange);
         OpenThemeEditorCommand = new RelayCommand(OnOpenThemeEditor);
         InsertTabCommand = new RelayCommand(InsertTab);
+        OpenFileLocationCommand = new RelayCommand(OpenFileLocation);
     }
 
     void OnThemeChange(ThemeInfo theme)
@@ -398,5 +402,12 @@ public class MainWindowViewModel : ViewModelBase
         UpdateTitle();
         OnPropertyChanged("DocumentContent");
         updateCaretPosition(0); // Add this to scroll to start of document
+    }
+
+    void OpenFileLocation()
+    {
+        var path = document.FilePath;
+        if(File.Exists(path))
+            Process.Start("explorer.exe", $"/select,\"{path}\"");
     }
 }

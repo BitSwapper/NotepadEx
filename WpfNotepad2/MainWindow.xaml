@@ -63,6 +63,9 @@
                             <MenuItem Header="Print..." 
                                     Command="{Binding PrintCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
+                            <MenuItem Header="Open Current File Location..." 
+                                    Command="{Binding OpenFileLocationCommand}"
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
                             <MenuItem Header="Exit" 
                                     Command="{Binding ExitCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
@@ -213,18 +216,12 @@
 
 
                             <TextBox.InputBindings>
-                                <KeyBinding Command="{Binding SaveCommand}" 
-                                            Gesture="Ctrl+S"/>
-                                <KeyBinding Command="{Binding OpenCommand}" 
-                                            Gesture="Ctrl+O"/>
-                                <KeyBinding Command="{Binding NewCommand}" 
-                                            Gesture="Ctrl+N"/>
-                                <KeyBinding Command="{Binding PasteCommand}" 
-                                            Gesture="Ctrl+V"/>
-                                <KeyBinding Command="{Binding CutCommand}" 
-                                            Gesture="Ctrl+X"/>
-                                <KeyBinding Command="{Binding InsertTabCommand}" 
-                                            Gesture="Tab"/>
+                                <KeyBinding Command="{Binding SaveCommand}"      Gesture="Ctrl+S"/>
+                                <KeyBinding Command="{Binding OpenCommand}"      Gesture="Ctrl+O"/>
+                                <KeyBinding Command="{Binding NewCommand}"       Gesture="Ctrl+N"/>
+                                <KeyBinding Command="{Binding PasteCommand}"     Gesture="Ctrl+V"/>
+                                <KeyBinding Command="{Binding CutCommand}"       Gesture="Ctrl+X"/>
+                                <KeyBinding Command="{Binding InsertTabCommand}" Gesture="Tab"/>
                             </TextBox.InputBindings>
                         </TextBox>
                     </Grid>

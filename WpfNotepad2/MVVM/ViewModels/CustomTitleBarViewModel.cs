@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using NotepadEx.Util;
@@ -28,7 +27,7 @@ public class CustomTitleBarViewModel : ViewModelBase
         set => SetProperty(ref iconImage, value);
     }
 
-   bool _isMaximized;
+    bool _isMaximized;
 
     public bool IsMaximized
     {
