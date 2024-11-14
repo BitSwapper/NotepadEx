@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:NotepadEx.MVVM.View.UserControls"
              xmlns:Converters="clr-namespace:NotepadEx.Converters"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             mc:Ignorable="d" d:DesignWidth="280" Height="125">
+             mc:Ignorable="d" d:DesignWidth="800" Height="35">
     <UserControl.Resources>
         <Converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
         
@@ -53,27 +53,31 @@
             <Setter Property="Background" Value="Transparent"/>
         </Style>
     </UserControl.Resources>
-    <Border BorderBrush="#FF4E4E4E" BorderThickness="1">
+    
+    <Border BorderBrush="Transparent" BorderThickness="1">
         <Grid Background="{Binding BackgroundColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
-                <RowDefinition Height="22"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding ThemeName}" Margin="12 17 0 0" FontSize="16" FontFamily="Verdana"/>
-            <Border BorderBrush="#FF74BEF7" Grid.Row="1" BorderThickness="1" Margin="12 0 12 0">
-                <Grid HorizontalAlignment="Stretch" Background="{Binding PreviewImage}" Margin="0"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding ThemeName}" Grid.Column="0" VerticalAlignment="Center" FontSize="14" FontFamily="Verdana"/>
+            <Border BorderBrush="#FF74BEF7" Margin="0 5 0 5" BorderThickness="1" Grid.Column="1">
+                <Grid HorizontalAlignment="Stretch" Background="{Binding PreviewImage}"/>
             </Border>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left">
                 <RadioButton Content="Color" IsChecked="{Binding IsGradient, Converter={StaticResource InverseBooleanConverter}}" Margin="12 8 4 4" FontFamily="Verdana"/>
                 <RadioButton Content="Gradient" IsChecked="{Binding IsGradient}" Margin="4 8 8 4" FontFamily="Verdana"/>
             </StackPanel>
-            <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <Button Content="Randomize" Width="70" Height="20" Margin="13 0 6 0" Command="{Binding RandomizeCommand}"/>
-                <Button Content="Edit" Width="50" Height="20" Margin="5 0 6 0" Command="{Binding EditCommand}"/>
-                <Button Content="Copy" Width="50" Height="20" Margin="5 0 6 0" Command="{Binding CopyCommand}"/>
-                <Button Content="Paste" Width="50" Height="20" Margin="5 0 6 0" Command="{Binding PasteCommand}"/>
+            <StackPanel Grid.Column="3" Orientation="Horizontal">
+                <Button Content="Randomize" Width="70" Height="20" Margin="5 0 0 0" Command="{Binding RandomizeCommand}"/>
+                <Button Content="Edit" Width="50" Height="20" Margin="5 0 0 0" Command="{Binding EditCommand}"/>
+                <Button Content="Copy" Width="50" Height="20" Margin="5 0 0 0" Command="{Binding CopyCommand}"/>
+                <Button Content="Paste" Width="50" Height="20" Margin="5 0 0 0" Command="{Binding PasteCommand}"/>
             </StackPanel>
         </Grid>
     </Border>
