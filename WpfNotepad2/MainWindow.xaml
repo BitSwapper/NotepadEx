@@ -131,7 +131,7 @@
                         BorderThickness="0"
                         VerticalScrollBarVisibility="Auto"
                         HorizontalScrollBarVisibility="Auto"
-                        CaretBrush="AliceBlue"
+                        CaretBrush="{DynamicResource Color_TextEditorCaret}"
                         Name="txtEditor"
                         SelectionChanged="TxtEditor_SelectionChanged">
                       

@@ -41,6 +41,7 @@ public partial class ThemeEditorWindow : Window
     {
         AddNewColorLineSafe(UIConstants.Color_TextEditorBg, "Text Editor Background", ref themeService.CurrentTheme.themeObj_TextEditorBg!);
         AddNewColorLineSafe(UIConstants.Color_TextEditorFg, "Text Editor Font", ref themeService.CurrentTheme.themeObj_TextEditorFg!);
+        AddNewColorLineSafe(UIConstants.Color_TextEditorCaret, "Text Editor Caret", ref themeService.CurrentTheme.themeObj_TextEditorCaret!);
         AddNewColorLineSafe(UIConstants.Color_TitleBarBg, "Title Bar Background", ref themeService.CurrentTheme.themeObj_TitleBarBg!);
         AddNewColorLineSafe(UIConstants.Color_TitleBarFont, "Title Bar Font", ref themeService.CurrentTheme.themeObj_TitleBarFont!);
         AddNewColorLineSafe(UIConstants.Color_SystemButtons, "System Buttons", ref themeService.CurrentTheme.themeObj_SystemButtons!);

@@ -9,6 +9,7 @@ public static class UIConstants
 
     public static readonly string Color_TextEditorBg = "Color_TextEditorBg";
     public static readonly string Color_TextEditorFg = "Color_TextEditorFg";
+    public static readonly string Color_TextEditorCaret = "Color_TextEditorCaret";
     public static readonly string Color_TitleBarBg = "Color_TitleBarBg";
     public static readonly string Color_TitleBarFont = "Color_TitleBarFont";
     public static readonly string Color_SystemButtons = "Color_SystemButtons";
@@ -35,6 +36,7 @@ public static class UIConstants
     {
         Color_TextEditorBg,
         Color_TextEditorFg,
+        Color_TextEditorCaret,
         Color_TitleBarBg,
         Color_TitleBarFont,
         Color_SystemButtons,

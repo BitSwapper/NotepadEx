@@ -33,12 +33,12 @@
                 <MenuItem Name="MenuItem_File" Header="File" Foreground="{DynamicResource Color_MenuItemFg}">
                     <MenuItem Header="Save" Foreground="{DynamicResource Color_MenuItemFg}" Click="MenuItemSave_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Name="MenuItem_CopyFrom" Header="Copy From" Foreground="{DynamicResource Color_MenuItemFg}">
+                <MenuItem Header="Test Dropdown" Foreground="{DynamicResource Color_MenuItemFg}">
                     <MenuItem Header="Test Checked" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}">
-                        <MenuItem Header="Test CheckedChild" Foreground="{DynamicResource Color_MenuItemFg}"/>
-                        <MenuItem Header="Test CheckedChild2" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
-                        <MenuItem Header="Test CheckedChild2" IsEnabled="False" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
-
+                        <MenuItem Header="Test Child" Foreground="{DynamicResource Color_MenuItemFg}"/>
+                        <MenuItem Header="Test Child Checked" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
+                        <MenuItem Header="Test Disabled" IsEnabled="False" IsChecked="False" Foreground="{DynamicResource Color_MenuItemFg}"/>
+                        <MenuItem Header="Test Checked Disabled" IsEnabled="False" IsChecked="True" Foreground="{DynamicResource Color_MenuItemFg}"/>
                     </MenuItem>
                 </MenuItem>
             </Menu>

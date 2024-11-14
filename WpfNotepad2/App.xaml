@@ -16,6 +16,7 @@
 
             <SolidColorBrush x:Key="Color_TextEditorBg" Color="#ED202020"/>
             <SolidColorBrush x:Key="Color_TextEditorFg" Color="AliceBlue"/>
+            <SolidColorBrush x:Key="Color_TextEditorCaret" Color="DarkSlateGray"/>
 
             <SolidColorBrush x:Key="Color_TitleBarBg" Color="#F4202222"/>
             <SolidColorBrush x:Key="Color_TitleBarFont" Color="#FFFBFBFB"/>
