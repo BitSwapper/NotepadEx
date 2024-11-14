@@ -2,11 +2,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using NotepadEx.MVVM.Behaviors;
 using NotepadEx.MVVM.Models;
 using NotepadEx.Properties;
 using NotepadEx.Services.Interfaces;
 using NotepadEx.Util;
-
+using Point = System.Windows.Point;
+using Rectangle = System.Windows.Shapes.Rectangle;
 namespace NotepadEx.MVVM.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
@@ -351,5 +353,30 @@ public class MainWindowViewModel : ViewModelBase
             document.InsertText(text);
             OnPropertyChanged(nameof(DocumentContent));
         }
+    }
+
+    public void UpdateSelection(int selectionStart, int selectionLength)
+    {
+        SelectionStart = selectionStart;
+        SelectionLength = selectionLength;
+    }
+
+    public void ToggleMaximizeState(Window window) =>
+        WindowResizerUtil.ToggleMaximizeState(window);
+
+    public void HandleWindowResize(Window window, Point position) =>
+        WindowResizerUtil.ResizeWindow(window, position);
+
+    public void OpenRecentFile(string path)
+    {
+        if(!PromptToSaveChanges()) return;
+        LoadDocument(path);
+    }
+
+    private readonly ScrollBarBehavior scrollBarBehavior = new();
+
+    public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e)
+    {
+        scrollBarBehavior.StartDrag(rectangle, textBox, e);
     }
 }

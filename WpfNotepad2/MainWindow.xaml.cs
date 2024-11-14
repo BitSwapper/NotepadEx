@@ -9,184 +9,81 @@ using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Services;
 using NotepadEx.Util;
 
+
 public partial class MainWindow : Window
 {
-    readonly MainWindowViewModel viewModel;
-    readonly ThemeService themeService;
+    private readonly MainWindowViewModel viewModel;
 
     public MainWindow()
     {
+        InitializeComponent();
+
         var windowService = new WindowService(this);
         var documentService = new DocumentService();
-        themeService = new ThemeService(Application.Current);
+        var themeService = new ThemeService(Application.Current);
 
-        InitializeComponent();
-        DataContext = viewModel = new MainWindowViewModel(windowService, documentService, themeService, MenuItemFileDropDown, SaveSettings);
+        DataContext = viewModel = new MainWindowViewModel(
+            windowService,
+            documentService,
+            themeService,
+            MenuItemFileDropDown,
+            () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName)
+        );
+
         InitTitleBar();
-
-        StateChanged += OnWindowStateChanged;
-        MouseMove += OnWindowMouseMove;
-        Closed += WindowClosed;
+        InitializeEventHandlers();
     }
 
-    void InitTitleBar()
+    private void InitTitleBar()
     {
         var titleBarViewModel = new CustomTitleBarViewModel(this);
         CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "NotepadEx");
         viewModel.TitleBarViewModel = titleBarViewModel;
     }
 
-    void OnWindowStateChanged(object sender, EventArgs e)
+    private void InitializeEventHandlers()
     {
-        if(WindowState != WindowState.Minimized)
-            viewModel.UpdateWindowState(WindowState);
+        // Window events
+        StateChanged += (s, e) =>
+        {
+            if(WindowState != WindowState.Minimized)
+                viewModel.UpdateWindowState(WindowState);
+        };
+
+        Closed += (s, e) => viewModel.PromptToSaveChanges();
+
+        // TextBox events
+        txtEditor.SelectionChanged += (s, e) =>
+        {
+            if(s is TextBox textBox)
+                viewModel.UpdateSelection(textBox.SelectionStart, textBox.SelectionLength);
+        };
     }
 
-    void OnBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void OnBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if(e.ClickCount == 2)
-            WindowResizerUtil.ToggleMaximizeState(this);
+            viewModel.ToggleMaximizeState(this);
     }
 
-    void OnWindowMouseMove(object sender, MouseEventArgs e)
+    private void OnWindowMouseMove(object sender, MouseEventArgs e)
     {
-        if(viewModel.IsAutoHideMenuBarEnabled)
-        {
-            var position = e.GetPosition(this);
-            viewModel.HandleMouseMovement(position.Y);
-        }
+        var position = e.GetPosition(this);
+        viewModel.HandleMouseMovement(position.Y);
 
         if(WindowState == WindowState.Normal)
-        {
-            var position = e.GetPosition(this);
-            WindowResizerUtil.ResizeWindow(this, position);
-        }
+            viewModel.HandleWindowResize(this, position);
     }
 
-    void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e) //**Refactor / Fix
+    private void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e)
     {
-        if(!viewModel.PromptToSaveChanges()) return;
-
-        MenuItem menuItem = (MenuItem)sender;
-        MenuItem subMenuItem = (MenuItem)e.OriginalSource;
-
-        var path = (string)subMenuItem.Header;
-        if(path != "...")
-            viewModel.LoadDocument(path);
+        if(e.OriginalSource is MenuItem menuItem && menuItem.Header is string path && path != "...")
+            viewModel.OpenRecentFile(path);
     }
 
-    void SaveSettings() => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName);
-
-    void WindowClosed(object sender, EventArgs e) => viewModel.PromptToSaveChanges();
-
-    void TxtEditor_SelectionChanged(object sender, RoutedEventArgs e)
+    private void PART_ScrollbarRect_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
-        if(DataContext is MainWindowViewModel viewModel && sender is TextBox textBox)
-        {
-            viewModel.SelectionStart = textBox.SelectionStart;
-            viewModel.SelectionLength = textBox.SelectionLength;
-        }
-    }
-
-    ScrollBar _activeScrollBar;
-    bool _isDragging;
-    Point _lastMousePosition;
-
-    void Rectangle_MouseMove(object sender, MouseEventArgs e)
-    {
-        if(_isDragging && _activeScrollBar != null)
-        {
-            var currentPosition = e.GetPosition(_activeScrollBar);
-
-            if(_activeScrollBar.Orientation == Orientation.Vertical)
-            {
-                var delta = (currentPosition.Y - _lastMousePosition.Y) / _activeScrollBar.ActualHeight *
-                       (_activeScrollBar.Maximum - _activeScrollBar.Minimum);
-                var newValue = _activeScrollBar.Value + delta;
-                newValue = Math.Max(_activeScrollBar.Minimum, Math.Min(newValue, _activeScrollBar.Maximum));
-                _activeScrollBar.Value = newValue;
-                txtEditor.ScrollToVerticalOffset(newValue);
-            }
-            else
-            {
-                var newValue = (currentPosition.X / _activeScrollBar.ActualWidth) *
-                          (_activeScrollBar.Maximum - _activeScrollBar.Minimum) + _activeScrollBar.Minimum;
-                newValue = Math.Max(_activeScrollBar.Minimum, Math.Min(newValue, _activeScrollBar.Maximum));
-                _activeScrollBar.Value = newValue;
-                txtEditor.ScrollToHorizontalOffset(newValue);
-            }
-
-            _lastMousePosition = currentPosition;
-        }
-    }
-
-    void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-        if(_isDragging)
-        {
-            var rectangle = sender as System.Windows.Shapes.Rectangle;
-            if(rectangle != null)
-            {
-                rectangle.MouseMove -= Rectangle_MouseMove;
-                rectangle.MouseUp -= Rectangle_MouseUp;
-                rectangle.ReleaseMouseCapture();
-            }
-
-            _isDragging = false;
-            _activeScrollBar = null;
-        }
-    }
-
-    ScrollBar FindParentScrollBar(DependencyObject child)
-    {
-        var parent = VisualTreeHelper.GetParent(child);
-
-        while(parent != null && !(parent is ScrollBar))
-            parent = VisualTreeHelper.GetParent(parent);
-
-        return parent as ScrollBar;
-    }
-
-    void PART_ScrollbarRect_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        if(e.LeftButton == MouseButtonState.Pressed)
-        {
-            var rectangle = sender as System.Windows.Shapes.Rectangle;
-            if(rectangle == null) return;
-
-            var scrollBar = FindParentScrollBar(rectangle);
-            if(scrollBar == null) return;
-
-            _activeScrollBar = scrollBar;
-            _isDragging = true;
-            _lastMousePosition = e.GetPosition(scrollBar);
-
-            var textBox = txtEditor;
-            if(textBox == null) return;
-
-            double newValue;
-            if(scrollBar.Orientation == Orientation.Vertical)
-            {
-                newValue = (_lastMousePosition.Y / scrollBar.ActualHeight) *
-                          (scrollBar.Maximum - scrollBar.Minimum) + scrollBar.Minimum;
-                newValue = Math.Max(scrollBar.Minimum, Math.Min(newValue, scrollBar.Maximum));
-                scrollBar.Value = newValue;
-                textBox.ScrollToVerticalOffset(newValue);
-            }
-            else
-            {
-                newValue = (_lastMousePosition.X / scrollBar.ActualWidth) *
-                          (scrollBar.Maximum - scrollBar.Minimum) + scrollBar.Minimum;
-                newValue = Math.Max(scrollBar.Minimum, Math.Min(newValue, scrollBar.Maximum));
-                scrollBar.Value = newValue;
-                textBox.ScrollToHorizontalOffset(newValue);
-            }
-
-            rectangle.MouseMove += Rectangle_MouseMove;
-            rectangle.MouseUp += Rectangle_MouseUp;
-            rectangle.CaptureMouse();
-
-            e.Handled = true;
-        }
+        if(sender is System.Windows.Shapes.Rectangle rectangle && e.LeftButton == MouseButtonState.Pressed)
+            viewModel.HandleScrollBarDrag(rectangle, txtEditor, e);
     }
 }
