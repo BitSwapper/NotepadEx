@@ -132,9 +132,56 @@
                         VerticalScrollBarVisibility="Auto"
                         HorizontalScrollBarVisibility="Auto"
                         CaretBrush="{DynamicResource Color_TextEditorCaret}"
+                        SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
                         Name="txtEditor"
                         SelectionChanged="TxtEditor_SelectionChanged">
-                      
+
+                            <TextBox.Resources>
+                                <Style TargetType="ScrollBar">
+                                    <Setter Property="Background" Value="#FF858689" />
+                                    <Setter Property="Foreground" Value="#F0F52629" />
+                                    <Setter Property="BorderBrush" Value="#FF3D0EA7" />
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ScrollBar">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <!-- Add a Rectangle for the background -->
+                                                    <Rectangle x:Name="PART_Background" Fill="#8F858689" MouseDown="PART_Background_MouseDown"/>
+                                                    <Track x:Name="PART_Track">
+                                                        <Track.Thumb>
+                                                                <Thumb Background="{DynamicResource Color_TextEditorScrollBar}" />
+                                                        </Track.Thumb>
+                                                    </Track>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="Orientation" Value="Vertical">
+                                                        <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="True"/>
+                                                        <Setter Property="Grid.Row" Value="0" />
+                                                        <Setter Property="Grid.Column" Value="0" />
+                                                    </Trigger>
+                                                    <Trigger Property="Orientation" Value="Horizontal">
+                                                        <Setter Property="Grid.Row" Value="0" />
+                                                        <Setter Property="Grid.Column" Value="0" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Setter Property="Opacity" Value="0.4"/>
+                                </Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Style>
+                            </TextBox.Resources>
+
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding SaveCommand}" 
                                           Gesture="Ctrl+S"/>

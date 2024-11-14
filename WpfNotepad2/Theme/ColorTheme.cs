@@ -7,6 +7,8 @@ public class ColorTheme
     public ThemeObject? themeObj_TextEditorBg;
     public ThemeObject? themeObj_TextEditorFg;
     public ThemeObject? themeObj_TextEditorCaret;
+    public ThemeObject? themeObj_TextEditorScrollBar;
+    public ThemeObject? themeObj_TextEditorTextHighlight;
     public ThemeObject? themeObj_TitleBarBg;
     public ThemeObject? themeObj_TitleBarFont;
 
@@ -42,6 +44,8 @@ public class ColorThemeSerializable
     [JsonPropertyName("themeObj_TextEditorBg")] public ThemeObjectSerializable ThemeObj_TextEditorBg { get; set; }
     [JsonPropertyName("themeObj_TextEditorFg")] public ThemeObjectSerializable ThemeObj_TextEditorFg { get; set; }
     [JsonPropertyName("themeObj_TextEditorCaret")] public ThemeObjectSerializable ThemeObj_TextEditorCaret { get; set; }
+    [JsonPropertyName("themeObj_TextEditorScrollBar")] public ThemeObjectSerializable ThemeObj_TextEditorScrollBar { get; set; }
+    [JsonPropertyName("themeObj_TextEditorTextHighlight")] public ThemeObjectSerializable ThemeObj_TextEditorTextHighlight { get; set; }
     [JsonPropertyName("themeObj_TitleBarBg")] public ThemeObjectSerializable ThemeObj_TitleBarBg { get; set; }
     [JsonPropertyName("themeObj_TitleBarFont")] public ThemeObjectSerializable ThemeObj_TitleBarFont { get; set; }
     [JsonPropertyName("themeObj_SystemButtons")] public ThemeObjectSerializable ThemeObj_SystemButtons { get; set; }
@@ -74,6 +78,8 @@ public class ColorThemeSerializable
         if(colorTheme.themeObj_TextEditorBg != null) ThemeObj_TextEditorBg = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorBg);
         if(colorTheme.themeObj_TextEditorFg != null) ThemeObj_TextEditorFg = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorFg);
         if(colorTheme.themeObj_TextEditorCaret!= null) ThemeObj_TextEditorCaret = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorCaret);
+        if(colorTheme.themeObj_TextEditorScrollBar != null) ThemeObj_TextEditorScrollBar = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorScrollBar);
+        if(colorTheme.themeObj_TextEditorTextHighlight != null) ThemeObj_TextEditorTextHighlight = new ThemeObjectSerializable(colorTheme.themeObj_TextEditorTextHighlight);
         if(colorTheme.themeObj_TitleBarBg != null) ThemeObj_TitleBarBg = new ThemeObjectSerializable(colorTheme.themeObj_TitleBarBg);
         if(colorTheme.themeObj_TitleBarFont != null) ThemeObj_TitleBarFont = new ThemeObjectSerializable(colorTheme.themeObj_TitleBarFont);
         if(colorTheme.themeObj_SystemButtons != null) ThemeObj_SystemButtons = new ThemeObjectSerializable(colorTheme.themeObj_SystemButtons);
@@ -105,6 +111,8 @@ public class ColorThemeSerializable
         themeObj_TextEditorBg = ThemeObj_TextEditorBg?.ToThemeObject(),
         themeObj_TextEditorFg = ThemeObj_TextEditorFg?.ToThemeObject(),
         themeObj_TextEditorCaret = ThemeObj_TextEditorCaret?.ToThemeObject(),
+        themeObj_TextEditorScrollBar = ThemeObj_TextEditorScrollBar?.ToThemeObject(),
+        themeObj_TextEditorTextHighlight = ThemeObj_TextEditorTextHighlight?.ToThemeObject(),
 
         themeObj_TitleBarBg = ThemeObj_TitleBarBg?.ToThemeObject(),
         themeObj_TitleBarFont = ThemeObj_TitleBarFont?.ToThemeObject(),

@@ -1,6 +1,7 @@
 ﻿namespace NotepadEx;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
@@ -86,6 +87,42 @@ public partial class MainWindow : Window
         {
             viewModel.SelectionStart = textBox.SelectionStart;
             viewModel.SelectionLength = textBox.SelectionLength;
+        }
+    }
+
+    void PART_Background_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if(e.LeftButton == MouseButtonState.Pressed)
+        {
+            var scrollBar = sender as FrameworkElement;
+            if(scrollBar != null)
+            {
+
+                var position = e.GetPosition(scrollBar);
+                var scrollBars = VisualTreeUtil.FindVisualChildren<ScrollBar>(txtEditor);
+                foreach(var sb in scrollBars)
+                {
+                    var scrollBarPosition = sb.PointToScreen(new Point(0, 0));
+                    var mousePosition = Mouse.GetPosition(txtEditor);
+                    mousePosition.X += Width;
+                    mousePosition.Y += Height;
+
+                    if(mousePosition.X >= scrollBarPosition.X && mousePosition.X <= scrollBarPosition.X + sb.ActualWidth && mousePosition.Y >= scrollBarPosition.Y && mousePosition.Y <= scrollBarPosition.Y + sb.ActualHeight)
+                    {
+                        double newValue;
+                        if(sb.Orientation == Orientation.Vertical)
+                        {
+                            newValue = mousePosition.Y / sb.ActualHeight * (sb.Maximum - sb.Minimum) + sb.Minimum;
+                            txtEditor.ScrollToVerticalOffset(newValue);
+                        }
+                        else
+                        {
+                            newValue = mousePosition.X / sb.ActualWidth * (sb.Maximum - sb.Minimum) + sb.Minimum;
+                            txtEditor.ScrollToHorizontalOffset(newValue);
+                        }
+                    }
+                }
+            }
         }
     }
 }

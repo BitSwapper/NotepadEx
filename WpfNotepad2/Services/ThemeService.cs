@@ -36,16 +36,13 @@ public class ThemeService : IThemeService
 
         var themeFile = themeFiles.FirstOrDefault(t => t.Name == Settings.Default.ThemeName);
         if(themeFile != null)
-        {
             ApplyTheme(themeFile.Name);
-        }
     }
 
     public void ApplyTheme(string themeName)
     {
         try
         {
-
             var fileData = File.ReadAllText(Path.Combine(DirectoryUtil.NotepadExThemesPath, themeName));
             var themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
             var theme = themeSerialized.ToColorTheme();
@@ -58,6 +55,10 @@ public class ThemeService : IThemeService
             // Apply all theme objects
             ApplyThemeObject(theme.themeObj_TextEditorBg, UIConstants.Color_TextEditorBg);
             ApplyThemeObject(theme.themeObj_TextEditorFg, UIConstants.Color_TextEditorFg);
+            ApplyThemeObject(theme.themeObj_TextEditorCaret, UIConstants.Color_TextEditorCaret);
+            ApplyThemeObject(theme.themeObj_TextEditorScrollBar, UIConstants.Color_TextEditorScrollBar);
+            ApplyThemeObject(theme.themeObj_TextEditorTextHighlight, UIConstants.Color_TextEditorTextHighlight);
+
             ApplyThemeObject(theme.themeObj_TitleBarBg, UIConstants.Color_TitleBarBg);
             ApplyThemeObject(theme.themeObj_TitleBarFont, UIConstants.Color_TitleBarFont);
 
@@ -131,6 +132,7 @@ public class ThemeService : IThemeService
         }
     }
 }
+
 public class ThemeChangedEventArgs : EventArgs
 {
     public string ThemeName { get; }

@@ -8,6 +8,7 @@ public interface IThemeService
 {
     event EventHandler<ThemeChangedEventArgs> ThemeChanged;
     ColorTheme CurrentTheme { get; }
+    string CurrentThemeName { get; }
     ObservableCollection<ThemeInfo> AvailableThemes { get; }
     void LoadCurrentTheme();
     void ApplyTheme(string themeName);
