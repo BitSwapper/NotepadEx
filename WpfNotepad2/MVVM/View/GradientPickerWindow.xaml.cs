@@ -17,8 +17,8 @@ public partial class GradientPickerWindow : Window
     bool updatingFromAngle = false;
     bool updatingFromOffset = false;
     bool updatingFromScale = false;
-    double ScaleX { get; set; } = 1.0;
-    double ScaleY { get; set; } = 1.0;
+    //double ScaleX { get; set; } = 1.0;
+    //double ScaleY { get; set; } = 1.0;
 
     CustomTitleBarViewModel titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
@@ -62,9 +62,6 @@ public partial class GradientPickerWindow : Window
 
         if(StartXSlider != null && StartYSlider != null && EndXSlider != null && EndYSlider != null)
         {
-            double offsetX = SliderOffsetX.Value;
-            double offsetY = SliderOffsetY.Value;
-
             // Original start and end points
             double startXOriginal = StartXSlider.Value;
             double startYOriginal = StartYSlider.Value;
@@ -82,18 +79,18 @@ public partial class GradientPickerWindow : Window
             double originalLength = Math.Sqrt(dx * dx + dy * dy);
 
             // Apply scaling to the length while keeping the angle intact
-            double scaledLengthX = originalLength * ScaleX;
-            double scaledLengthY = originalLength * ScaleY;
+            double scaledLengthX = originalLength;
+            double scaledLengthY = originalLength;
 
             // Calculate new half-lengths based on scaled lengths
             double newHalfLengthX = (scaledLengthX / 2) * Math.Cos(angle);
             double newHalfLengthY = (scaledLengthY / 2) * Math.Sin(angle);
 
             // Recalculate the start and end points based on the scaled length and fixed angle
-            double startX = centerX - newHalfLengthX + offsetX;
-            double startY = centerY - newHalfLengthY + offsetY;
-            double endX = centerX + newHalfLengthX + offsetX;
-            double endY = centerY + newHalfLengthY + offsetY;
+            double startX = centerX - newHalfLengthX;
+            double startY = centerY - newHalfLengthY;
+            double endX = centerX + newHalfLengthX;
+            double endY = centerY + newHalfLengthY;
 
             GradientPreview.StartPoint = new Point(startX, startY);
             GradientPreview.EndPoint = new Point(endX, endY);
@@ -102,28 +99,7 @@ public partial class GradientPickerWindow : Window
         OnSelectedColorChanged?.Invoke();
     }
 
-    void SliderAngle_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    {
-        if(updatingFromAngle) return;
 
-        updatingFromAngle = true;
-
-        double angle = SliderAngle.Value * Math.PI / 180;
-        double length = Math.Sqrt(Math.Pow(EndXSlider.Value - StartXSlider.Value, 2) + Math.Pow(EndYSlider.Value - StartYSlider.Value, 2));
-
-        // Calculate the center point of the line segment
-        double centerX = (StartXSlider.Value + EndXSlider.Value) / 2;
-        double centerY = (StartYSlider.Value + EndYSlider.Value) / 2;
-
-        // Calculate the new start and end points based on the angle and center point
-        StartXSlider.Value = centerX - (length / 2) * Math.Cos(angle);
-        StartYSlider.Value = centerY - (length / 2) * Math.Sin(angle);
-        EndXSlider.Value = centerX + (length / 2) * Math.Cos(angle);
-        EndYSlider.Value = centerY + (length / 2) * Math.Sin(angle);
-
-        UpdateGradientPreview();
-        updatingFromAngle = false;
-    }
 
 
     void PositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -132,15 +108,15 @@ public partial class GradientPickerWindow : Window
 
         UpdateGradientPreview();
 
-        if(StartXSlider != null && StartYSlider != null && EndXSlider != null && EndYSlider != null)
-        {
-            double dx = EndXSlider.Value - StartXSlider.Value;
-            double dy = EndYSlider.Value - StartYSlider.Value;
-            double angle = Math.Atan2(dy, dx) * 180 / Math.PI;
-            angle = (angle + 360) % 360;
+        //if(StartXSlider != null && StartYSlider != null && EndXSlider != null && EndYSlider != null)
+        //{
+        //    double dx = EndXSlider.Value - StartXSlider.Value;
+        //    double dy = EndYSlider.Value - StartYSlider.Value;
+        //    double angle = Math.Atan2(dy, dx) * 180 / Math.PI;
+        //    angle = (angle + 360) % 360;
 
-            SliderAngle.Value = angle;
-        }
+        //    SliderAngle.Value = angle;
+        //}
     }
 
     void SliderOffsetX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -182,23 +158,23 @@ public partial class GradientPickerWindow : Window
 
     void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => UpdateGradientPreview();
 
-    void SliderScaleX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    {
-        if(updatingFromScale) return;
-        updatingFromScale = true;
-        ScaleX = e.NewValue;
-        UpdateGradientPreview();
-        updatingFromScale = false;
-    }
+    //void SliderScaleX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    //{
+    //    if(updatingFromScale) return;
+    //    updatingFromScale = true;
+    //    ScaleX = e.NewValue;
+    //    UpdateGradientPreview();
+    //    updatingFromScale = false;
+    //}
 
-    void SliderScaleY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    {
-        if(updatingFromScale) return;
-        updatingFromScale = true;
-        ScaleY = e.NewValue;
-        UpdateGradientPreview();
-        updatingFromScale = false;
-    }
+    //void SliderScaleY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    //{
+    //    if(updatingFromScale) return;
+    //    updatingFromScale = true;
+    //    ScaleY = e.NewValue;
+    //    UpdateGradientPreview();
+    //    updatingFromScale = false;
+    //}
 
     void AddStop_Click(object sender, RoutedEventArgs e)
     {
