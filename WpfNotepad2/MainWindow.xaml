@@ -214,12 +214,14 @@
 
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding SaveCommand}" 
-                                          Gesture="Ctrl+S"/>
+                                            Gesture="Ctrl+S"/>
                                 <KeyBinding Command="{Binding OpenCommand}" 
-                                          Gesture="Ctrl+O"/>
+                                            Gesture="Ctrl+O"/>
                                 <KeyBinding Command="{Binding NewCommand}" 
-                                          Gesture="Ctrl+N"/>
-                                <KeyBinding Command="{Binding CutLineCommand}" 
+                                            Gesture="Ctrl+N"/>
+                                <KeyBinding Command="{Binding PasteCommand}" 
+                                            Gesture="Ctrl+V"/>
+                                <KeyBinding Command="{Binding CutCommand}" 
                                             Gesture="Ctrl+X"/>
                                 <KeyBinding Command="{Binding InsertTabCommand}" 
                                             Gesture="Tab"/>
