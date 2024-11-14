@@ -15,10 +15,10 @@ namespace NotepadEx.MVVM.Behaviors;
 
 public class ScrollBarBehavior
 {
-    private ScrollBar _activeScrollBar;
-    private bool _isDragging;
-    private Point _lastMousePosition;
-    private TextBox _textBox;
+   ScrollBar _activeScrollBar;
+   bool _isDragging;
+   Point _lastMousePosition;
+   TextBox _textBox;
 
     public void StartDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e)
     {
@@ -37,7 +37,7 @@ public class ScrollBarBehavior
         rectangle.CaptureMouse();
     }
 
-    private void UpdateScrollPosition()
+   void UpdateScrollPosition()
     {
         if(_textBox == null || _activeScrollBar == null) return;
 
@@ -60,7 +60,7 @@ public class ScrollBarBehavior
         }
     }
 
-    private void Rectangle_MouseMove(object sender, MouseEventArgs e)
+   void Rectangle_MouseMove(object sender, MouseEventArgs e)
     {
         if(_isDragging && _activeScrollBar != null)
         {
@@ -87,7 +87,7 @@ public class ScrollBarBehavior
         }
     }
 
-    private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
+   void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
     {
         if(_isDragging && sender is Rectangle rectangle)
         {
@@ -101,7 +101,7 @@ public class ScrollBarBehavior
         }
     }
 
-    private ScrollBar FindParentScrollBar(DependencyObject child)
+   ScrollBar FindParentScrollBar(DependencyObject child)
     {
         var parent = VisualTreeHelper.GetParent(child);
         while(parent != null && !(parent is ScrollBar))

@@ -28,7 +28,7 @@ public class CustomTitleBarViewModel : ViewModelBase
         set => SetProperty(ref iconImage, value);
     }
 
-    private bool _isMaximized;
+   bool _isMaximized;
 
     public bool IsMaximized
     {

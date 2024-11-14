@@ -1,18 +1,15 @@
 ﻿namespace NotepadEx;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Services;
-using NotepadEx.Util;
 
 
 public partial class MainWindow : Window
 {
-    private readonly MainWindowViewModel viewModel;
+    readonly MainWindowViewModel viewModel;
 
     public MainWindow()
     {
@@ -34,16 +31,15 @@ public partial class MainWindow : Window
         InitializeEventHandlers();
     }
 
-    private void InitTitleBar()
+    void InitTitleBar()
     {
         var titleBarViewModel = new CustomTitleBarViewModel(this);
         CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "NotepadEx");
         viewModel.TitleBarViewModel = titleBarViewModel;
     }
 
-    private void InitializeEventHandlers()
+    void InitializeEventHandlers()
     {
-        // Window events
         StateChanged += (s, e) =>
         {
             if(WindowState != WindowState.Minimized)
@@ -52,7 +48,6 @@ public partial class MainWindow : Window
 
         Closed += (s, e) => viewModel.PromptToSaveChanges();
 
-        // TextBox events
         txtEditor.SelectionChanged += (s, e) =>
         {
             if(s is TextBox textBox)
@@ -60,13 +55,7 @@ public partial class MainWindow : Window
         };
     }
 
-    private void OnBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        if(e.ClickCount == 2)
-            viewModel.ToggleMaximizeState(this);
-    }
-
-    private void OnWindowMouseMove(object sender, MouseEventArgs e)
+    void OnWindowMouseMove(object sender, MouseEventArgs e)
     {
         var position = e.GetPosition(this);
         viewModel.HandleMouseMovement(position.Y);
@@ -75,13 +64,13 @@ public partial class MainWindow : Window
             viewModel.HandleWindowResize(this, position);
     }
 
-    private void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e)
+    void MenuItem_OpenRecent_Click(object sender, RoutedEventArgs e)
     {
         if(e.OriginalSource is MenuItem menuItem && menuItem.Header is string path && path != "...")
             viewModel.OpenRecentFile(path);
     }
 
-    private void PART_ScrollbarRect_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    void PART_ScrollbarRect_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
         if(sender is System.Windows.Shapes.Rectangle rectangle && e.LeftButton == MouseButtonState.Pressed)
             viewModel.HandleScrollBarDrag(rectangle, txtEditor, e);

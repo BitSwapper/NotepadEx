@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,11 +11,7 @@ using NotepadEx.Util;
 namespace NotepadEx.MVVM.View.UserControls;
 public partial class CustomTitleBar : UserControl
 {
-  
     public CustomTitleBar() => InitializeComponent();
-
-
-
 
 
     public static void InitializeTitleBar(ref CustomTitleBarViewModel titleBarViewModel, Window window, string windowName, bool showMinimize = true, bool showMaximize = true, bool showExit = true)
