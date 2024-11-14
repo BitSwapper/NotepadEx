@@ -137,6 +137,38 @@
                         SelectionChanged="TxtEditor_SelectionChanged">
 
                             <TextBox.Resources>
+                                <!-- ScrollViewer Style to remove the white corner -->
+                                <Style TargetType="ScrollViewer">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ScrollViewer">
+                                                <Grid x:Name="PART_Root">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="0" Grid.Column="0" ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                                                    <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Row="0" Grid.Column="1" Orientation="Vertical" 
+                                   Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Value="{TemplateBinding VerticalOffset}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+
+                                                    <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" 
+                                   Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Value="{TemplateBinding HorizontalOffset}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
+
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+
+                                <!-- ScrollBar Style -->
                                 <Style TargetType="ScrollBar">
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -148,7 +180,6 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <!-- Rectangle for the background -->
                                                     <Track x:Name="PART_Track">
                                                         <Track.Thumb>
                                                             <Thumb x:Name="PART_Thumb" Background="{DynamicResource Color_TextEditorScrollBar}">
@@ -158,7 +189,7 @@
                                                             </Thumb>
                                                         </Track.Thumb>
                                                     </Track>
-                                                    <Rectangle x:Name="PART_Background" Fill="Transparent" PreviewMouseDown="PART_Background_PreviewMouseDown"/>
+                                                    <Rectangle Fill="Transparent" PreviewMouseDown="PART_ScrollbarRect_PreviewMouseDown"/>
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="Orientation" Value="Vertical">
@@ -176,10 +207,12 @@
                                     </Setter>
                                     <Setter Property="Opacity" Value="0.4"/>
                                 </Style>
+
                                 <Style TargetType="TextBox">
                                     <Setter Property="BorderThickness" Value="0" />
                                 </Style>
                             </TextBox.Resources>
+
 
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding SaveCommand}" 

@@ -151,7 +151,7 @@ private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
         return parent as ScrollBar;
     }
 
-    private void PART_Background_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private void PART_ScrollbarRect_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
         if(e.LeftButton == MouseButtonState.Pressed)
         {
