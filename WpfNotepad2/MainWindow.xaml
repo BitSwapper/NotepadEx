@@ -221,6 +221,8 @@
                                           Gesture="Ctrl+N"/>
                                 <KeyBinding Command="{Binding CutLineCommand}" 
                                             Gesture="Ctrl+X"/>
+                                <KeyBinding Command="{Binding InsertTabCommand}" 
+                                            Gesture="Tab"/>
                             </TextBox.InputBindings>
                         </TextBox>
                     </Grid>

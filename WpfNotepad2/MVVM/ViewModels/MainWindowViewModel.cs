@@ -39,6 +39,7 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand PasteCommand { get; private set; }
     public ICommand ChangeThemeCommand { get; private set; }
     public ICommand OpenThemeEditorCommand { get; private set; }
+    public ICommand InsertTabCommand { get; private set; }
 
     public ObservableCollection<ThemeInfo> AvailableThemes => themeService.AvailableThemes;
     readonly ScrollBarBehavior scrollBarBehavior = new();
@@ -172,6 +173,7 @@ public class MainWindowViewModel : ViewModelBase
         PasteCommand = new RelayCommand(Paste);
         ChangeThemeCommand = new RelayCommand<ThemeInfo>(OnThemeChange);
         OpenThemeEditorCommand = new RelayCommand(OnOpenThemeEditor);
+        InsertTabCommand = new RelayCommand(InsertTab);
     }
 
     void OnThemeChange(ThemeInfo theme)
@@ -359,6 +361,8 @@ public class MainWindowViewModel : ViewModelBase
             OnPropertyChanged(nameof(DocumentContent));
             updateCaretPosition(caretIndex);
         }
+        else
+            CutLine();
     }
 
     void CutLine()
@@ -382,5 +386,13 @@ public class MainWindowViewModel : ViewModelBase
             OnPropertyChanged(nameof(DocumentContent));
             updateCaretPosition(caretIndex + text.Length);
         }
+    }
+
+    void InsertTab()
+    {
+        var caretIndex = document.CaretIndex;
+        document.InsertText("    ");
+        OnPropertyChanged(nameof(DocumentContent));
+        updateCaretPosition(caretIndex + 4);
     }
 }
