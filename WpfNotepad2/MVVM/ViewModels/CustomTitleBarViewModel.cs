@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using NotepadEx.Util;
@@ -25,6 +26,14 @@ public class CustomTitleBarViewModel : ViewModelBase
     {
         get => iconImage;
         set => SetProperty(ref iconImage, value);
+    }
+
+    private bool _isMaximized;
+
+    public bool IsMaximized
+    {
+        get => _isMaximized;
+        set => SetProperty(ref _isMaximized, value);
     }
 
     public bool ShowMinimizeButton
@@ -63,7 +72,11 @@ public class CustomTitleBarViewModel : ViewModelBase
 
     void ExecuteMinimize() => window.WindowState = WindowState.Minimized;
 
-    void ExecuteMaximize() => WindowResizerUtil.ToggleMaximizeState(window);
+    void ExecuteMaximize()
+    {
+        IsMaximized = !IsMaximized;
+        WindowResizerUtil.ToggleMaximizeState(window);
+    }
 
     void ExecuteClose() => window.Close();
 

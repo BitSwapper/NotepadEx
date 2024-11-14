@@ -11,6 +11,7 @@
     <Grid>
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:BooleanToIconConverter x:Key="BooleanToIconConverter" />
         </Grid.Resources>
         <Grid Background="{DynamicResource Color_TitleBarBg}">
             <Grid.ColumnDefinitions>
@@ -38,16 +39,16 @@
                     Content="_" 
                     FontFamily="Verdana" 
                     Width="30"/>
+            
             <Button Grid.Column="2" 
                     HorizontalAlignment="Right" 
                     Command="{Binding MaximizeCommand}"
-                    Visibility="{Binding ShowMaximizeButton, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Background="Transparent" 
                     BorderThickness="0" 
                     Foreground="{DynamicResource Color_SystemButtons}" 
-                    Content="🗗" 
-                    FontFamily="Verdana" 
-                    Width="30"/>
+                    Content="{Binding IsMaximized, Converter={StaticResource BooleanToIconConverter}}"  
+                    Width="30" FontFamily="Verdana"/>
+            
             <Button Grid.Column="3" 
                     HorizontalAlignment="Right" 
                     Command="{Binding CloseCommand}"

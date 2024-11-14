@@ -39,7 +39,7 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand OpenThemeEditorCommand { get; private set; }
 
     public ObservableCollection<ThemeInfo> AvailableThemes => themeService.AvailableThemes;
-
+    readonly ScrollBarBehavior scrollBarBehavior = new();
     public string DocumentContent
     {
         get => document.Content;
@@ -131,15 +131,6 @@ public class MainWindowViewModel : ViewModelBase
 
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, menuItemFileDropdown, SaveSettings);
-
-    //void OpenRecent(object parameter)
-    //{
-    //    if(parameter is string filePath)
-    //    {
-    //        if(!PromptToSaveChanges()) return;
-    //        LoadDocument(filePath);
-    //    }
-    //}
 
     public void LoadDocument(string filePath)
     {
@@ -329,6 +320,25 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
+    public void UpdateSelection(int selectionStart, int selectionLength)
+    {
+        SelectionStart = selectionStart;
+        SelectionLength = selectionLength;
+    }
+
+    public void ToggleMaximizeState(Window window) => WindowResizerUtil.ToggleMaximizeState(window);
+
+    public void HandleWindowResize(Window window, Point position) => WindowResizerUtil.ResizeWindow(window, position);
+
+    public void OpenRecentFile(string path)
+    {
+        if(!PromptToSaveChanges()) return;
+        LoadDocument(path);
+    }
+
+    public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e) => scrollBarBehavior.StartDrag(rectangle, textBox, e);
+
+
     void Copy()
     {
         if(!string.IsNullOrEmpty(document.SelectedText))
@@ -353,30 +363,5 @@ public class MainWindowViewModel : ViewModelBase
             document.InsertText(text);
             OnPropertyChanged(nameof(DocumentContent));
         }
-    }
-
-    public void UpdateSelection(int selectionStart, int selectionLength)
-    {
-        SelectionStart = selectionStart;
-        SelectionLength = selectionLength;
-    }
-
-    public void ToggleMaximizeState(Window window) =>
-        WindowResizerUtil.ToggleMaximizeState(window);
-
-    public void HandleWindowResize(Window window, Point position) =>
-        WindowResizerUtil.ResizeWindow(window, position);
-
-    public void OpenRecentFile(string path)
-    {
-        if(!PromptToSaveChanges()) return;
-        LoadDocument(path);
-    }
-
-    private readonly ScrollBarBehavior scrollBarBehavior = new();
-
-    public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e)
-    {
-        scrollBarBehavior.StartDrag(rectangle, textBox, e);
     }
 }
