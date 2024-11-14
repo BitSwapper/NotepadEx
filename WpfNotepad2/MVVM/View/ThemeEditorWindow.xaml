@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NotepadEx.MVVM.View"        
         xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
         mc:Ignorable="d"
-        Title="ThemeEditorWindow" Height="450" Width="820"
+        Title="ThemeEditorWindow" Height="450" Width="840"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"

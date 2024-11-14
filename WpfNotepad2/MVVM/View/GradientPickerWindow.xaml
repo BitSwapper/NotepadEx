@@ -95,7 +95,7 @@
 
                     <TextBlock Text="Angle:" VerticalAlignment="Center" Margin="0,0,5,0"/>
                     <Slider x:Name="SliderAngle" Width="160" Minimum="0" Maximum="360" Value="0" Margin="0,0,5,0" ValueChanged="SliderAngle_ValueChanged"/>
-                    <TextBlock Text="{Binding ElementName=SliderAngle, Path=Value, StringFormat={}{0:F0}°}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                    <TextBox Text="{Binding ElementName=SliderAngle, Mode=TwoWay, Path=Value, StringFormat={}{0:F0}}" Width="20" VerticalAlignment="Center" Margin="0,0,10,0"/>
 
                     <TextBlock Text="Offset X:" VerticalAlignment="Center" Margin="0,0,5,0"/>
                     <Slider x:Name="SliderOffsetX" Width="160" Minimum="-2" Maximum="2" Value="0" Margin="0,0,5,0" ValueChanged="SliderOffsetX_ValueChanged"/>

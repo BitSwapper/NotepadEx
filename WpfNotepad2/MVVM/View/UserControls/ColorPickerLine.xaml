@@ -65,7 +65,7 @@
                 <ColumnDefinition Width="150"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{Binding ThemeName}" Grid.Column="0" VerticalAlignment="Center" FontSize="14" FontFamily="Verdana"/>
+            <TextBlock Text="{Binding ThemeName}" Grid.Column="0" VerticalAlignment="Center" Margin="5 0 0 0" FontSize="14" FontFamily="Verdana"/>
             <Border BorderBrush="#FF74BEF7" Margin="0 5 0 5" BorderThickness="1" Grid.Column="1">
                 <Grid HorizontalAlignment="Stretch" Background="{Binding PreviewImage}"/>
             </Border>
@@ -77,7 +77,7 @@
                 <Button Content="Randomize" Width="70" Height="20" Margin="5 0 0 0" Command="{Binding RandomizeCommand}"/>
                 <Button Content="Edit" Width="50" Height="20" Margin="5 0 0 0" Command="{Binding EditCommand}"/>
                 <Button Content="Copy" Width="50" Height="20" Margin="5 0 0 0" Command="{Binding CopyCommand}"/>
-                <Button Content="Paste" Width="50" Height="20" Margin="5 0 0 0" Command="{Binding PasteCommand}"/>
+                <Button Content="Paste" Width="50" Height="20" Margin="5 0 5 0" Command="{Binding PasteCommand}"/>
             </StackPanel>
         </Grid>
     </Border>
