@@ -54,6 +54,7 @@ public class MainWindowViewModel : ViewModelBase
                 document.IsModified = true;
                 OnPropertyChanged();
                 UpdateTitle();
+                updateCaretPosition(document.CaretIndex + 1);
             }
         }
     }
@@ -136,23 +137,6 @@ public class MainWindowViewModel : ViewModelBase
 
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, menuItemFileDropdown, SaveSettings);
 
-    public void LoadDocument(string filePath)
-    {
-        try
-        {
-            documentService.LoadDocument(filePath, document);
-            UpdateTitle();
-            UpdateStatusBar();
-            AddRecentFile(filePath);
-            OnPropertyChanged("DocumentContent");
-        }
-        catch(Exception ex)
-        {
-            windowService.ShowDialog(
-                $"Error loading file: {ex.Message}",
-                "Error");
-        }
-    }
 
     void OnOpenThemeEditor() => themeService.OpenThemeEditor();
 
@@ -180,17 +164,6 @@ public class MainWindowViewModel : ViewModelBase
     {
         if(theme != null)
             themeService.ApplyTheme(theme.Name);
-    }
-
-    void NewDocument()
-    {
-        if(!PromptToSaveChanges()) return;
-
-        document.Content = string.Empty;
-        document.FilePath = string.Empty;
-        document.IsModified = false;
-        UpdateTitle();
-        OnPropertyChanged("DocumentContent");
     }
 
     void OpenDocument()
@@ -394,5 +367,36 @@ public class MainWindowViewModel : ViewModelBase
         document.InsertText("    ");
         OnPropertyChanged(nameof(DocumentContent));
         updateCaretPosition(caretIndex + 4);
+    }
+
+    void LoadDocument(string filePath)
+    {
+        try
+        {
+            documentService.LoadDocument(filePath, document);
+            UpdateTitle();
+            UpdateStatusBar();
+            AddRecentFile(filePath);
+            OnPropertyChanged("DocumentContent");
+            updateCaretPosition(0); // Add this to scroll to start of document
+        }
+        catch(Exception ex)
+        {
+            windowService.ShowDialog(
+                $"Error loading file: {ex.Message}",
+                "Error");
+        }
+    }
+
+    void NewDocument()
+    {
+        if(!PromptToSaveChanges()) return;
+
+        document.Content = string.Empty;
+        document.FilePath = string.Empty;
+        document.IsModified = false;
+        UpdateTitle();
+        OnPropertyChanged("DocumentContent");
+        updateCaretPosition(0); // Add this to scroll to start of document
     }
 }

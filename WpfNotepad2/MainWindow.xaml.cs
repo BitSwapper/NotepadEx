@@ -77,8 +77,14 @@ public partial class MainWindow : Window
             viewModel.HandleScrollBarDrag(rectangle, txtEditor, e);
     }
 
+    void ScrollToCaretPosition()
+    {
+        //To Do
+    }
+
     void UpdateCaretPosition(int caretIndex)
     {
         txtEditor.CaretIndex = caretIndex;
+        ScrollToCaretPosition();
     }
 }
