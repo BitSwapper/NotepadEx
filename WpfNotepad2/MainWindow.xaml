@@ -121,21 +121,21 @@
                     <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
 
                         <TextBox Text="{Binding DocumentContent, UpdateSourceTrigger=PropertyChanged}"
-                        Background="Transparent"
-                        Foreground="{DynamicResource Color_TextEditorFg}"
-                        AcceptsReturn="True"
-                        FontSize="18"
-                        FontFamily="Segoe UI"
-                        TextWrapping="{Binding TextWrappingMode}"
-                        TextOptions.TextRenderingMode="ClearType"
-                        Margin="2"
-                        BorderBrush="Transparent"
-                        BorderThickness="0"
-                        VerticalScrollBarVisibility="Auto"
-                        HorizontalScrollBarVisibility="Auto"
-                        CaretBrush="{DynamicResource Color_TextEditorCaret}"
-                        SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
-                        Name="txtEditor">
+                            Background="Transparent"
+                            Foreground="{DynamicResource Color_TextEditorFg}"
+                            AcceptsReturn="True"
+                            FontSize="18"
+                            FontFamily="Segoe UI"
+                            TextWrapping="{Binding TextWrappingMode}"
+                            TextOptions.TextRenderingMode="ClearType"
+                            Margin="2"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Auto"
+                            CaretBrush="{DynamicResource Color_TextEditorCaret}"
+                            SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
+                            Name="txtEditor">
 
                             <TextBox.Resources>
                                 <!--ScrollViewer Style to remove the white corner-->
