@@ -21,6 +21,8 @@ public class MainWindowViewModel : ViewModelBase
     readonly WindowState prevWindowState;
     readonly IThemeService themeService;
     readonly TextBox textBox;
+    readonly MenuItem menuItemFileDropdown;
+    readonly Action SaveSettings;
     string statusText;
     double menuBarHeight;
     double infoBarHeight;
@@ -97,15 +99,8 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     public TextWrapping TextWrappingMode => Settings.Default.TextWrapping ? TextWrapping.Wrap : TextWrapping.NoWrap;
-
     public bool IsAutoHideMenuBarEnabled => Settings.Default.MenuBarAutoHide;
-
-
-    CustomTitleBarViewModel titleBarViewModel;
-    public CustomTitleBarViewModel TitleBarViewModel { get => titleBarViewModel; set => titleBarViewModel = value; }
-
-    MenuItem menuItemFileDropdown;
-    Action SaveSettings;
+    public CustomTitleBarViewModel TitleBarViewModel { get; set; }
 
     public MainWindowViewModel(IWindowService windowService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown, TextBox textBox, Action SaveSettings)
     {
@@ -212,7 +207,7 @@ public class MainWindowViewModel : ViewModelBase
     void UpdateTitle()
     {
         var title = string.IsNullOrEmpty(document.FileName) ? "NotepadEx" : $"NotepadEx | {document.FileName}{(document.IsModified ? "*" : "")}";
-        titleBarViewModel.TitleText = title;
+        TitleBarViewModel.TitleText = title;
     }
 
     public bool PromptToSaveChanges()

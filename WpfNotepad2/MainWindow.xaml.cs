@@ -6,7 +6,6 @@ using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Services;
 
-
 public partial class MainWindow : Window
 {
     readonly MainWindowViewModel viewModel;
@@ -19,13 +18,7 @@ public partial class MainWindow : Window
         var documentService = new DocumentService();
         var themeService = new ThemeService(Application.Current);
 
-        DataContext = viewModel = new MainWindowViewModel(
-            windowService,
-            documentService,
-            themeService,
-            MenuItemFileDropDown,
-            txtEditor,
-            () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName));
+        DataContext = viewModel = new MainWindowViewModel(windowService, documentService, themeService, MenuItemFileDropDown, txtEditor, () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName));
 
         InitTitleBar();
         InitializeEventHandlers();
