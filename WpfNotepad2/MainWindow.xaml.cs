@@ -24,9 +24,8 @@ public partial class MainWindow : Window
             documentService,
             themeService,
             MenuItemFileDropDown,
-            () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName),
-            UpdateCaretPosition
-        );
+            txtEditor,
+            () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName));
 
         InitTitleBar();
         InitializeEventHandlers();
@@ -80,11 +79,5 @@ public partial class MainWindow : Window
     void ScrollToCaretPosition()
     {
         //To Do
-    }
-
-    void UpdateCaretPosition(int caretIndex)
-    {
-        txtEditor.CaretIndex = caretIndex;
-        ScrollToCaretPosition();
     }
 }

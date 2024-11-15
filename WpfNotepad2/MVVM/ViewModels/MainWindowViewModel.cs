@@ -20,7 +20,7 @@ public class MainWindowViewModel : ViewModelBase
     readonly IDocumentService documentService;
     readonly WindowState prevWindowState;
     readonly IThemeService themeService;
-    readonly Action<int> updateCaretPosition;
+    readonly TextBox textBox;
     string statusText;
     double menuBarHeight;
     double infoBarHeight;
@@ -37,7 +37,6 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand ToggleInfoBarCommand { get; private set; }
     public ICommand CopyCommand { get; private set; }
     public ICommand CutCommand { get; private set; }
-    public ICommand CutLineCommand { get; private set; }
     public ICommand PasteCommand { get; private set; }
     public ICommand ChangeThemeCommand { get; private set; }
     public ICommand OpenThemeEditorCommand { get; private set; }
@@ -57,7 +56,6 @@ public class MainWindowViewModel : ViewModelBase
                 document.IsModified = true;
                 OnPropertyChanged();
                 UpdateTitle();
-                updateCaretPosition(document.CaretIndex + 1);
             }
         }
     }
@@ -109,18 +107,15 @@ public class MainWindowViewModel : ViewModelBase
     MenuItem menuItemFileDropdown;
     Action SaveSettings;
 
-    public MainWindowViewModel(IWindowService windowService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown, Action SaveSettings, Action<int> updateCaretPosition)
+    public MainWindowViewModel(IWindowService windowService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown, TextBox textBox, Action SaveSettings)
     {
         this.windowService = windowService;
         this.documentService = documentService;
         this.themeService = themeService;
         this.menuItemFileDropdown = menuItemFileDropdown;
+        this.textBox = textBox;
         this.SaveSettings = SaveSettings;
-        this.updateCaretPosition = updateCaretPosition;
         document = new Document();
-
-        //_Settings.Default.MenuBarAutoHide = false;
-        //SaveSettings();
 
         InitializeCommands();
         UpdateMenuBarVisibility(Settings.Default.MenuBarAutoHide);
@@ -156,7 +151,6 @@ public class MainWindowViewModel : ViewModelBase
         ToggleInfoBarCommand = new RelayCommand(ToggleInfoBar);
         CopyCommand = new RelayCommand(Copy);
         CutCommand = new RelayCommand(Cut);
-        CutLineCommand = new RelayCommand(CutLine);
         PasteCommand = new RelayCommand(Paste);
         ChangeThemeCommand = new RelayCommand<ThemeInfo>(OnThemeChange);
         OpenThemeEditorCommand = new RelayCommand(OnOpenThemeEditor);
@@ -321,36 +315,17 @@ public class MainWindowViewModel : ViewModelBase
 
     public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e) => scrollBarBehavior.StartDrag(rectangle, textBox, e);
 
-
     void Copy()
     {
         if(!string.IsNullOrEmpty(document.SelectedText))
             Clipboard.SetText(document.SelectedText);
-    }
-
-    void Cut()
-    {
-        if(!string.IsNullOrEmpty(document.SelectedText))
-        {
-            var caretIndex = document.CaretIndex;
-            Clipboard.SetText(document.SelectedText);
-            document.DeleteSelected();
-            OnPropertyChanged(nameof(DocumentContent));
-            updateCaretPosition(caretIndex);
-        }
         else
-            CutLine();
+            Clipboard.SetText(document.GetCurrentLine());
     }
 
     void CutLine()
     {
-        if(string.IsNullOrEmpty(document.SelectedText))
-        {
-            var caretIndex = document.CaretIndex;
-            document.CutLine();
-            OnPropertyChanged(nameof(DocumentContent));
-            updateCaretPosition(caretIndex);
-        }
+        document.CutLine(textBox);
     }
 
     void Paste()
@@ -358,19 +333,28 @@ public class MainWindowViewModel : ViewModelBase
         if(Clipboard.ContainsText())
         {
             var text = Clipboard.GetText();
-            var caretIndex = document.CaretIndex;
-            document.InsertText(text);
-            OnPropertyChanged(nameof(DocumentContent));
-            updateCaretPosition(caretIndex + text.Length);
+            var caretPosition = textBox.SelectionStart + text.Length;
+            textBox.SelectedText = text;  // This preserves undo stack
+            textBox.SelectionStart = caretPosition;  // Move caret after pasted text
         }
     }
 
     void InsertTab()
     {
-        var caretIndex = document.CaretIndex;
-        document.InsertText("    ");
-        OnPropertyChanged(nameof(DocumentContent));
-        updateCaretPosition(caretIndex + 4);
+        var caretPosition = textBox.SelectionStart + 4;
+        textBox.SelectedText = "    ";  // This preserves undo stack
+        textBox.SelectionStart = caretPosition;  // Move caret after tab
+    }
+
+    void Cut()
+    {
+        if(!string.IsNullOrEmpty(document.SelectedText))
+        {
+            Clipboard.SetText(document.SelectedText);
+            textBox.SelectedText = "";  // This preserves undo stack
+        }
+        else
+            CutLine();
     }
 
     void LoadDocument(string filePath)
@@ -382,7 +366,6 @@ public class MainWindowViewModel : ViewModelBase
             UpdateStatusBar();
             AddRecentFile(filePath);
             OnPropertyChanged("DocumentContent");
-            updateCaretPosition(0);
         }
         catch(Exception ex)
         {
@@ -401,7 +384,6 @@ public class MainWindowViewModel : ViewModelBase
         document.IsModified = false;
         UpdateTitle();
         OnPropertyChanged("DocumentContent");
-        updateCaretPosition(0);
     }
 
     void OpenFileLocation()

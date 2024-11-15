@@ -1,12 +1,11 @@
 ﻿using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
-namespace NotepadEx.MVVM.Models;
-public class Document
+namespace NotepadEx.MVVM.Models; public class Document
 {
     private string content = string.Empty;
     private string[] cachedLines = Array.Empty<string>();
-
     public int SelectionStart { get; set; }
     public int SelectionLength { get; set; }
 
@@ -36,19 +35,15 @@ public class Document
     {
         if(position < 0 || string.IsNullOrEmpty(content))
             return 1;
-
         int lineCount = 1;
         int currentPos = 0;
-
         foreach(string line in cachedLines)
         {
             if(position <= currentPos + line.Length)
                 return lineCount;
-
             currentPos += line.Length + Environment.NewLine.Length;
             lineCount++;
         }
-
         return lineCount;
     }
 
@@ -56,17 +51,14 @@ public class Document
     {
         if(position <= 0)
             return 0;
-
         int currentPos = 0;
         foreach(string line in cachedLines)
         {
             int lineLength = line.Length + Environment.NewLine.Length;
             if(position <= currentPos + lineLength)
                 return position - currentPos;
-
             currentPos += lineLength;
         }
-
         return 0;
     }
 
@@ -78,63 +70,39 @@ public class Document
             : string.Empty;
     }
 
-    public void DeleteSelected()
-    {
-        if(SelectionLength > 0)
-        {
-            content = content.Remove(SelectionStart, SelectionLength);
-            UpdateCachedLines();
-            SelectionLength = 0;
-            IsModified = true;
-        }
-    }
-
-    public void InsertText(string text)
-    {
-        if(SelectionLength > 0)
-            DeleteSelected();
-
-        content = content.Insert(SelectionStart, text);
-        UpdateCachedLines();
-        SelectionStart += text.Length;
-        IsModified = true;
-    }
-
     public int GetPosition(int lineNumber, int columnIndex)
     {
         if(lineNumber <= 0 || lineNumber > cachedLines.Length)
             return 0;
-
         int position = 0;
         for(int i = 0; i < lineNumber - 1; i++)
             position += cachedLines[i].Length + Environment.NewLine.Length;
-
         return position + Math.Min(columnIndex, cachedLines[lineNumber - 1].Length);
     }
 
-    public void CutLine()
+    public void CutLine(TextBox textBox)
     {
         int lineIndex = CurrentLineNumber - 1;
-
         if(lineIndex >= 0 && lineIndex < cachedLines.Length)
         {
             int lineStartPosition = GetPosition(CurrentLineNumber, 0);
-
             int lineLength = cachedLines[lineIndex].Length;
-
             if(lineIndex < cachedLines.Length - 1)
                 lineLength += Environment.NewLine.Length;
 
-            string lineText = cachedLines[lineIndex];
+            // Save current selection
+            int originalStart = SelectionStart;
+            int originalLength = SelectionLength;
 
+            // Select the line
+            textBox.Select(lineStartPosition, lineLength);
+
+            // Copy the selected text and cut it using TextBox
+            string lineText = textBox.SelectedText;
             Clipboard.SetText(lineText);
+            textBox.SelectedText = "";
 
-            content = content.Remove(lineStartPosition, lineLength);
-            UpdateCachedLines();
-
-            SelectionStart = lineStartPosition;
-            SelectionLength = 0;
-            IsModified = true;
+            // Selection and content will update through binding
         }
     }
 }
