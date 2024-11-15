@@ -127,9 +127,7 @@ public class MainWindowViewModel : ViewModelBase
         RecentFileManager.PopulateRecentFilesMenu(menuItemFileDropdown);
     }
 
-
     void AddRecentFile(string filePath) => RecentFileManager.AddRecentFile(filePath, menuItemFileDropdown, SaveSettings);
-
 
     void OnOpenThemeEditor() => themeService.OpenThemeEditor();
 
@@ -169,9 +167,7 @@ public class MainWindowViewModel : ViewModelBase
         };
 
         if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        {
             LoadDocument(dialog.FileName);
-        }
     }
 
     void SaveDocumentAs()
@@ -304,7 +300,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public void OpenRecentFile(string path)
     {
-        if(!PromptToSaveChanges()) return;
+        if(!PromptToSaveChanges()) 
+            return;
         LoadDocument(path);
     }
 
