@@ -53,7 +53,7 @@
                                       Click="MenuItem_OpenRecent_Click">
                                 <MenuItem Header="..." Foreground="{DynamicResource Color_MenuItemFg}"/>
                             </MenuItem>
-                            
+
                             <MenuItem Header="Save" 
                                     Command="{Binding SaveCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
@@ -120,6 +120,7 @@
                     </Menu>
 
                     <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
+
                         <TextBox Text="{Binding DocumentContent, UpdateSourceTrigger=PropertyChanged}"
                         Background="Transparent"
                         Foreground="{DynamicResource Color_TextEditorFg}"
@@ -236,14 +237,17 @@
                         </TextBox>
                     </Grid>
 
-                    <TextBlock Grid.Row="2" 
-                               Background="{DynamicResource Color_InfoBarBg}"
+                    <Grid Grid.Row="2" Background="{DynamicResource Color_InfoBarBg}">
+                        
+                        <TextBlock  
                                Foreground="{DynamicResource Color_InfoBarFg}"
                                Text="{Binding StatusText}"
-                               Margin="0,0,0,0" 
+                               Margin="4,0,0,0" 
                                FontFamily="Verdana" 
                                FontSize="12"
-                               FontWeight="SemiBold"/>
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+                    </Grid>
                 </Grid>
             </Grid>
         </Border>

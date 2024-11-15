@@ -1,0 +1,5 @@
+﻿Highlighting text and moving mouse above or below screen does not scroll window
+text going off screen while typing / pasting often will not scroll into view
+ctrl + a for large files takes significantly long
+
+editing a theme, not saving, closing theme editor, opening theme editor - reverts changes
