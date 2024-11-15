@@ -240,7 +240,7 @@
                                Background="{DynamicResource Color_InfoBarBg}"
                                Foreground="{DynamicResource Color_InfoBarFg}"
                                Text="{Binding StatusText}"
-                               Margin="3,2,3,0" 
+                               Margin="0,0,0,0" 
                                FontFamily="Verdana" 
                                FontSize="12"
                                FontWeight="SemiBold"/>

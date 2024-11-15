@@ -58,6 +58,7 @@ public class MainWindowViewModel : ViewModelBase
                 document.IsModified = true;
                 OnPropertyChanged();
                 UpdateTitle();
+                UpdateStatusBar();
             }
         }
     }
@@ -117,6 +118,7 @@ public class MainWindowViewModel : ViewModelBase
         UpdateInfoBarVisibility(Settings.Default.InfoBarVisible);
         this.themeService.LoadCurrentTheme();
         LoadRecentFiles();
+        UpdateStatusBar();
 
         OnPropertyChanged("AvailableThemes");
     }
