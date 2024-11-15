@@ -95,8 +95,7 @@
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
                         </MenuItem>
 
-                        <MenuItem Header="Theme" 
-          Foreground="{DynamicResource Color_MenuItemFg}">
+                        <MenuItem Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}">
                             <MenuItem.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Vertical"/>
@@ -224,7 +223,6 @@
                                 </Style>
                             </TextBox.Resources>
 
-
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding SaveCommand}"      Gesture="Ctrl+S"/>
                                 <KeyBinding Command="{Binding OpenCommand}"      Gesture="Ctrl+O"/>
@@ -238,7 +236,6 @@
                     </Grid>
 
                     <Grid Grid.Row="2" Background="{DynamicResource Color_InfoBarBg}">
-                        
                         <TextBlock  
                                Foreground="{DynamicResource Color_InfoBarFg}"
                                Text="{Binding StatusText}"
