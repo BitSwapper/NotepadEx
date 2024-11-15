@@ -74,7 +74,7 @@ public partial class MainWindow : Window
         //To Do
     }
 
-    private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
         var grid = (Grid)sender;
         var scrollViewer = grid.TemplatedParent as ScrollViewer;

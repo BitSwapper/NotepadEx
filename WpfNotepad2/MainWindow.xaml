@@ -138,14 +138,12 @@
                         Name="txtEditor">
 
                             <TextBox.Resources>
-                                <!-- ScrollViewer Style to remove the white corner -->
+                                <!--ScrollViewer Style to remove the white corner-->
                                 <Style TargetType="ScrollViewer">
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ScrollViewer">
-                                                <Grid x:Name="PART_Root" 
-                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-                                                    <!-- Add this -->
+                                                <Grid x:Name="PART_Root" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
@@ -155,35 +153,32 @@
                                                         <RowDefinition Height="Auto"/>
                                                     </Grid.RowDefinitions>
 
-                                                    <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" 
-                                          Grid.Row="0" 
-                                          Grid.Column="0" 
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                                    <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="0" Grid.Column="0" ContentTemplate="{TemplateBinding ContentTemplate}"/>
 
                                                     <ScrollBar x:Name="PART_VerticalScrollBar" 
-                             Grid.Row="0" 
-                             Grid.Column="1" 
-                             Orientation="Vertical" 
-                             Maximum="{TemplateBinding ScrollableHeight}" 
-                             ViewportSize="{TemplateBinding ViewportHeight}"
-                             Value="{TemplateBinding VerticalOffset}" 
-                             Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                                                        Grid.Row="0" 
+                                                        Grid.Column="1" 
+                                                        Orientation="Vertical" 
+                                                        Maximum="{TemplateBinding ScrollableHeight}" 
+                                                        ViewportSize="{TemplateBinding ViewportHeight}"
+                                                        Value="{TemplateBinding VerticalOffset}" 
+                                                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
 
                                                     <ScrollBar x:Name="PART_HorizontalScrollBar" 
-                             Grid.Row="1" 
-                             Grid.Column="0" 
-                             Orientation="Horizontal" 
-                             Maximum="{TemplateBinding ScrollableWidth}" 
-                             ViewportSize="{TemplateBinding ViewportWidth}"
-                             Value="{TemplateBinding HorizontalOffset}" 
-                             Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
+                                                        Grid.Row="1" 
+                                                        Grid.Column="0" 
+                                                        Orientation="Horizontal" 
+                                                        Maximum="{TemplateBinding ScrollableWidth}" 
+                                                        ViewportSize="{TemplateBinding ViewportWidth}"
+                                                        Value="{TemplateBinding HorizontalOffset}" 
+                                                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
                                                 </Grid>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
 
-                                <!-- ScrollBar Style -->
+                                <!--ScrollBar Style-->
                                 <Style TargetType="ScrollBar">
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -242,13 +237,13 @@
                     </Grid>
 
                     <TextBlock Grid.Row="2" 
-                              Background="{DynamicResource Color_InfoBarBg}"
-                              Foreground="{DynamicResource Color_InfoBarFg}"
-                              Text="{Binding StatusText}"
-                              Margin="4,2,4,0" 
-                              FontFamily="Verdana" 
-                              FontSize="12"
-                              FontWeight="SemiBold"/>
+                               Background="{DynamicResource Color_InfoBarBg}"
+                               Foreground="{DynamicResource Color_InfoBarFg}"
+                               Text="{Binding StatusText}"
+                               Margin="3,2,3,0" 
+                               FontFamily="Verdana" 
+                               FontSize="12"
+                               FontWeight="SemiBold"/>
                 </Grid>
             </Grid>
         </Border>
