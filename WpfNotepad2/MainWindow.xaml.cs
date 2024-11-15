@@ -1,9 +1,11 @@
 ﻿namespace NotepadEx;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
+using NotepadEx.Properties;
 using NotepadEx.Services;
 
 public partial class MainWindow : Window
@@ -18,8 +20,9 @@ public partial class MainWindow : Window
         var documentService = new DocumentService();
         var themeService = new ThemeService(Application.Current);
 
+        Settings.Default.MenuBarAutoHide = false;
+        Settings.Default.TextWrapping = true;
         DataContext = viewModel = new MainWindowViewModel(windowService, documentService, themeService, MenuItemFileDropDown, txtEditor, () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName));
-
         InitTitleBar();
         InitializeEventHandlers();
     }
@@ -80,7 +83,15 @@ public partial class MainWindow : Window
         var scrollViewer = grid.TemplatedParent as ScrollViewer;
         if(scrollViewer != null)
         {
-            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - (e.Delta / 3.0));
+            var verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
+            var newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
+
+            newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
+
+            scrollViewer.ScrollToVerticalOffset(newOffset);
+            if(verticalScrollBar != null)
+                verticalScrollBar.Value = newOffset;
+
             e.Handled = true;
         }
     }
