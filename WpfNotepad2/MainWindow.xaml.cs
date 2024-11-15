@@ -73,4 +73,15 @@ public partial class MainWindow : Window
     {
         //To Do
     }
+
+    private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    {
+        var grid = (Grid)sender;
+        var scrollViewer = grid.TemplatedParent as ScrollViewer;
+        if(scrollViewer != null)
+        {
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - (e.Delta / 3.0));
+            e.Handled = true;
+        }
+    }
 }

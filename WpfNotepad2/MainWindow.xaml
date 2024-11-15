@@ -143,7 +143,9 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ScrollViewer">
-                                                <Grid x:Name="PART_Root">
+                                                <Grid x:Name="PART_Root" 
+                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                                                    <!-- Add this -->
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
@@ -153,16 +155,28 @@
                                                         <RowDefinition Height="Auto"/>
                                                     </Grid.RowDefinitions>
 
-                                                    <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="0" Grid.Column="0" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                                    <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" 
+                                          Grid.Row="0" 
+                                          Grid.Column="0" 
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
 
-                                                    <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Row="0" Grid.Column="1" Orientation="Vertical" 
-                                   Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}"
-                                   Value="{TemplateBinding VerticalOffset}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                                                    <ScrollBar x:Name="PART_VerticalScrollBar" 
+                             Grid.Row="0" 
+                             Grid.Column="1" 
+                             Orientation="Vertical" 
+                             Maximum="{TemplateBinding ScrollableHeight}" 
+                             ViewportSize="{TemplateBinding ViewportHeight}"
+                             Value="{TemplateBinding VerticalOffset}" 
+                             Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
 
-                                                    <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" 
-                                   Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}"
-                                   Value="{TemplateBinding HorizontalOffset}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
-
+                                                    <ScrollBar x:Name="PART_HorizontalScrollBar" 
+                             Grid.Row="1" 
+                             Grid.Column="0" 
+                             Orientation="Horizontal" 
+                             Maximum="{TemplateBinding ScrollableWidth}" 
+                             ViewportSize="{TemplateBinding ViewportWidth}"
+                             Value="{TemplateBinding HorizontalOffset}" 
+                             Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
                                                 </Grid>
                                             </ControlTemplate>
                                         </Setter.Value>

@@ -208,7 +208,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public bool PromptToSaveChanges()
     {
-        if(!document.IsModified) return true;
+        if(!document.IsModified) 
+            return true;
 
         var bResult = windowService.ShowConfirmDialog("Do you want to save changes?", "Save Changes");
 
@@ -300,7 +301,7 @@ public class MainWindowViewModel : ViewModelBase
 
     public void OpenRecentFile(string path)
     {
-        if(!PromptToSaveChanges()) 
+        if(!PromptToSaveChanges())
             return;
         LoadDocument(path);
     }
@@ -315,10 +316,7 @@ public class MainWindowViewModel : ViewModelBase
             Clipboard.SetText(document.GetCurrentLine());
     }
 
-    void CutLine()
-    {
-        document.CutLine(textBox);
-    }
+    void CutLine() => document.CutLine(textBox);
 
     void Paste()
     {
@@ -326,16 +324,16 @@ public class MainWindowViewModel : ViewModelBase
         {
             var text = Clipboard.GetText();
             var caretPosition = textBox.SelectionStart + text.Length;
-            textBox.SelectedText = text;  // This preserves undo stack
-            textBox.SelectionStart = caretPosition;  // Move caret after pasted text
+            textBox.SelectedText = text;
+            textBox.SelectionStart = caretPosition;
         }
     }
 
     void InsertTab()
     {
         var caretPosition = textBox.SelectionStart + 4;
-        textBox.SelectedText = "    ";  // This preserves undo stack
-        textBox.SelectionStart = caretPosition;  // Move caret after tab
+        textBox.SelectedText = "    ";
+        textBox.SelectionStart = caretPosition;
     }
 
     void Cut()
@@ -343,7 +341,7 @@ public class MainWindowViewModel : ViewModelBase
         if(!string.IsNullOrEmpty(document.SelectedText))
         {
             Clipboard.SetText(document.SelectedText);
-            textBox.SelectedText = "";  // This preserves undo stack
+            textBox.SelectedText = "";
         }
         else
             CutLine();
@@ -369,7 +367,8 @@ public class MainWindowViewModel : ViewModelBase
 
     void NewDocument()
     {
-        if(!PromptToSaveChanges()) return;
+        if(!PromptToSaveChanges())
+            return;
 
         document.Content = string.Empty;
         document.FilePath = string.Empty;
