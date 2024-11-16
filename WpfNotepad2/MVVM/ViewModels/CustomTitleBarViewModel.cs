@@ -14,7 +14,7 @@ public class CustomTitleBarViewModel : ViewModelBase
     bool showMinimizeButton = true;
     bool showMaximizeButton = true;
     bool showCloseButton = true;
-
+    bool hideInsteadOfClose;
     public string TitleText
     {
         get => titleText;
@@ -77,19 +77,25 @@ public class CustomTitleBarViewModel : ViewModelBase
         WindowResizerUtil.ToggleMaximizeState(window);
     }
 
-    void ExecuteClose() => window.Close();
-
+    void ExecuteClose()
+    {
+        if(hideInsteadOfClose)
+            window.Hide();
+        else
+            window.Close();
+    }
     void ExecuteTitleBarMouseDown(MouseButtonEventArgs e)
     {
         if(!isResizeable || (isResizeable && e.GetPosition(window).Y > UIConstants.ResizeBorderWidth / 2))
             window.DragMove();
     }
 
-    public void Initialize(string titleText, bool showMinimize = true, bool showMaximize = true, bool showClose = true)
+    public void Initialize(string titleText, bool showMinimize = true, bool showMaximize = true, bool showClose = true, bool hideInsteadOfClose = false)
     {
         TitleText = titleText;
         ShowMinimizeButton = showMinimize;
         ShowMaximizeButton = showMaximize;
         ShowCloseButton = showClose;
+        this.hideInsteadOfClose = hideInsteadOfClose;
     }
 }

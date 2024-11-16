@@ -32,7 +32,7 @@ public partial class ThemeEditorWindow : Window
         windowService = new WindowService(this);
         InitializeComponent();
         DataContext = this;
-        titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Theme Editor", showMinimize: false, showMaximize: false);
+        titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Theme Editor", showMinimize: false, showMaximize: false, hideInsteadOfClose: true);
         this.themeService.LoadCurrentTheme();
         AddEditableColorLinesToWindow();
     }
@@ -105,10 +105,6 @@ public partial class ThemeEditorWindow : Window
                 StackPanelToolWindow.Children.Add(line);
         }
     }
-
-    void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-
-    void Close_Click(object sender, RoutedEventArgs e) => Close();
 
     void MenuItemSave_Click(object sender, RoutedEventArgs e) => SaveThemeFile();
 

@@ -20,6 +20,7 @@ public class ThemeService : IThemeService
     public ObservableCollection<ThemeInfo> AvailableThemes { get; private set; }
 
     readonly Application application;
+    ThemeEditorWindow themeEditorWindow;
 
     public ThemeService(Application application)
     {
@@ -91,9 +92,12 @@ public class ThemeService : IThemeService
 
     public void OpenThemeEditor()
     {
-        var themeEditorWindow = new ThemeEditorWindow(this);
-        themeEditorWindow.ShowDialog();
-        LoadAvailableThemes(); // Refresh themes after editor closes
+        if(themeEditorWindow == null)
+        {
+            themeEditorWindow = new ThemeEditorWindow(this);
+            LoadAvailableThemes(); // Refresh themes after editor closes
+        }
+        themeEditorWindow.Show();
     }
 
     void LoadAvailableThemes()
