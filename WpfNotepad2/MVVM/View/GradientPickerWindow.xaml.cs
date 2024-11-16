@@ -135,13 +135,10 @@ public partial class GradientPickerWindow : Window
         updatingFromOffset = false;
     }
 
-
-
-    void SetStopColor(SolidColorBrush brush, GradientStop selectedStop)
+    void SetStopColor(SolidColorBrush brush, int stopIndex, double stopOffset)
     {
-        int index = GradientStops.IndexOf(selectedStop);
-        if(index != -1)
-            GradientStops[index] = new GradientStop(brush.Color, selectedStop.Offset);
+        if(stopIndex != -1)
+            GradientStops[stopIndex] = new GradientStop(brush.Color, stopOffset);
     }
 
     void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -186,14 +183,28 @@ public partial class GradientPickerWindow : Window
     {
         if((sender as FrameworkElement)?.DataContext is GradientStop selectedStop)
         {
+            var ogColor = selectedStop.Color;
+            var stopIndex = GradientStops.IndexOf(selectedStop);
+            var stopOffset = GradientStops[stopIndex].Offset;
             var colorPicker = new ColorPickerWindow
             {
                 SelectedColor = selectedStop.Color
             };
 
+            colorPicker.myColorPicker.OnSelectedColorChanged += () =>
+            {
+                SetStopColor(new SolidColorBrush(colorPicker.SelectedColor), stopIndex, stopOffset);
+                UpdateGradientPreview();
+            };
+
             if(colorPicker.ShowDialog() == true)
             {
-                SetStopColor(new SolidColorBrush(colorPicker.SelectedColor), selectedStop);
+                SetStopColor(new SolidColorBrush(colorPicker.SelectedColor), stopIndex, stopOffset);
+                UpdateGradientPreview();
+            }
+            else
+            {
+                SetStopColor(new SolidColorBrush(ogColor), stopIndex, stopOffset);
                 UpdateGradientPreview();
             }
         }
@@ -217,7 +228,11 @@ public partial class GradientPickerWindow : Window
         {
             brush.Color = color.Value;
             if((button.DataContext as GradientStop) is GradientStop selectedStop)
-                SetStopColor(brush, selectedStop);
+            {
+                var stopIndex = GradientStops.IndexOf(selectedStop);
+
+                SetStopColor(brush, stopIndex, selectedStop.Offset);
+            }
 
             UpdateGradientPreview();
         }
@@ -239,7 +254,10 @@ public partial class GradientPickerWindow : Window
     void RandomizeStop_Click(object sender, RoutedEventArgs e)
     {
         if((sender as FrameworkElement)?.DataContext is GradientStop selectedStop)
-            SetStopColor(ColorUtil.GetRandomColorBrush(), selectedStop);
+        {
+            var stopIndex = GradientStops.IndexOf(selectedStop);
+            SetStopColor(ColorUtil.GetRandomColorBrush(), stopIndex, selectedStop.Offset);
+        }
         UpdateGradientPreview();
         //OnSelectedColorChanged?.Invoke();
     }
