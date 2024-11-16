@@ -80,19 +80,7 @@ public partial class MainWindow : Window
     void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
         var grid = (Grid)sender;
-        var scrollViewer = grid.TemplatedParent as ScrollViewer;
-        if(scrollViewer != null)
-        {
-            var verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
-            var newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
-
-            newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
-
-            scrollViewer.ScrollToVerticalOffset(newOffset);
-            if(verticalScrollBar != null)
-                verticalScrollBar.Value = newOffset;
-
-            e.Handled = true;
-        }
+        viewModel.HandleMouseScroll(grid, e.Delta);
+        e.Handled = true;
     }
 }

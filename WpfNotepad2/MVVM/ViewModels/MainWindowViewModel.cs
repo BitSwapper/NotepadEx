@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using NotepadEx.MVVM.Behaviors;
 using NotepadEx.MVVM.Models;
@@ -210,7 +211,7 @@ public class MainWindowViewModel : ViewModelBase
 
     public bool PromptToSaveChanges()
     {
-        if(!document.IsModified) 
+        if(!document.IsModified)
             return true;
 
         var bResult = windowService.ShowConfirmDialog("Do you want to save changes?", "Save Changes");
@@ -309,6 +310,22 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e) => scrollBarBehavior.StartDrag(rectangle, textBox, e);
+
+    public void HandleMouseScroll(Grid grid, int scrollDelta)
+    {
+        var scrollViewer = grid.TemplatedParent as ScrollViewer;
+        if(scrollViewer != null)
+        {
+            var verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
+            var newOffset = scrollViewer.VerticalOffset - (scrollDelta / 3.0);
+
+            newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
+
+            scrollViewer.ScrollToVerticalOffset(newOffset);
+            if(verticalScrollBar != null)
+                verticalScrollBar.Value = newOffset;
+        }
+    }
 
     void Copy()
     {
