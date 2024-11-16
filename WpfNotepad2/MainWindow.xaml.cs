@@ -28,9 +28,9 @@ public partial class MainWindow : Window
 
     void InitTitleBar()
     {
-        var titleBarViewModel = new CustomTitleBarViewModel(this);
-        CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "NotepadEx");
-        viewModel.TitleBarViewModel = titleBarViewModel;
+        //var titleBarViewModel = new CustomTitleBarViewModel(this);
+        viewModel.TitleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "NotepadEx");
+        
     }
 
     void InitializeEventHandlers()

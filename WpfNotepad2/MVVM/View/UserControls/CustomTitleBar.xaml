@@ -43,6 +43,7 @@
             <Button Grid.Column="2" 
                     HorizontalAlignment="Right" 
                     Command="{Binding MaximizeCommand}"
+                    Visibility="{Binding ShowMaximizeButton, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Background="Transparent" 
                     BorderThickness="0" 
                     Foreground="{DynamicResource Color_SystemButtons}" 

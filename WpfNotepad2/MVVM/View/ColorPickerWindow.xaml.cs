@@ -19,7 +19,7 @@ public partial class ColorPickerWindow : Window
     {
         InitializeComponent();
         DataContext = this;
-        CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "Color Picker", showMinimize: false, showMaximize: false);
+        titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Color Picker", showMinimize: false, showMaximize: false, isResizable: false);
         myColorPicker.OnWindowCancel += OnCancel;
         myColorPicker.OnWindowConfirm += OnConfirm;
     }

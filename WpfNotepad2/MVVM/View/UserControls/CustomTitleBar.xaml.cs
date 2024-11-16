@@ -11,17 +11,13 @@ public partial class CustomTitleBar : UserControl
     public CustomTitleBar() => InitializeComponent();
 
 
-    public static void InitializeTitleBar(ref CustomTitleBarViewModel titleBarViewModel, Window window, string windowName, bool showMinimize = true, bool showMaximize = true, bool showExit = true)
+    public static CustomTitleBarViewModel InitializeTitleBar(Window window, string windowName, bool showMinimize = true, bool showMaximize = true, bool showExit = true, bool isResizable = true)
     {
-        titleBarViewModel = new CustomTitleBarViewModel(window, true);
-
-        titleBarViewModel.Initialize(
-            windowName,
-            showMinimize: showMinimize,
-            showMaximize: showMaximize,
-            showClose: showExit
-        );
+        var titleBarViewModel = new CustomTitleBarViewModel(window, isResizable);
+        titleBarViewModel.Initialize(windowName, showMinimize, showMaximize, showExit);
         titleBarViewModel.IconImage = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
+        
+        return titleBarViewModel;
     }
 }
 

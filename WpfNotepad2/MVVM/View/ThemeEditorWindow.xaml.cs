@@ -32,7 +32,7 @@ public partial class ThemeEditorWindow : Window
         windowService = new WindowService(this);
         InitializeComponent();
         DataContext = this;
-        CustomTitleBar.InitializeTitleBar(ref titleBarViewModel, this, "Theme Editor", showMinimize: false, showMaximize: false);
+        titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Theme Editor", showMinimize: false, showMaximize: false);
         this.themeService.LoadCurrentTheme();
         AddEditableColorLinesToWindow();
     }
