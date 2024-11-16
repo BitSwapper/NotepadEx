@@ -311,19 +311,22 @@ public class MainWindowViewModel : ViewModelBase
 
     public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e) => scrollBarBehavior.StartDrag(rectangle, textBox, e);
 
-    public void HandleMouseScroll(Grid grid, int scrollDelta)
+    public void HandleMouseScroll(object sender, MouseWheelEventArgs e)
     {
+        var grid = (Grid)sender;
         var scrollViewer = grid.TemplatedParent as ScrollViewer;
         if(scrollViewer != null)
         {
             var verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
-            var newOffset = scrollViewer.VerticalOffset - (scrollDelta / 3.0);
+            var newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
 
             newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
 
             scrollViewer.ScrollToVerticalOffset(newOffset);
             if(verticalScrollBar != null)
                 verticalScrollBar.Value = newOffset;
+
+            e.Handled = true;
         }
     }
 

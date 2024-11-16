@@ -1,7 +1,6 @@
 ﻿namespace NotepadEx;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
@@ -77,10 +76,5 @@ public partial class MainWindow : Window
         //To Do
     }
 
-    void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-    {
-        var grid = (Grid)sender;
-        viewModel.HandleMouseScroll(grid, e.Delta);
-        e.Handled = true;
-    }
+    void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e) => viewModel.HandleMouseScroll(sender, e);
 }
