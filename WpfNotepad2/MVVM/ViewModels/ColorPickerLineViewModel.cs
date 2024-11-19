@@ -166,8 +166,21 @@ public class ColorPickerLineViewModel : ViewModelBase
         }
         else
         {
-            GradientPickerWindow gradientPickerWindow = new();
+            LinearGradientBrush ogGradient = null;
+            if(PreviewImage is LinearGradientBrush existingGradient)
+            {
+                ogGradient = new LinearGradientBrush
+                {
+                    StartPoint = existingGradient.StartPoint,
+                    EndPoint = existingGradient.EndPoint
+                };
+                foreach(var stop in existingGradient.GradientStops)
+                {
+                    ogGradient.GradientStops.Add(new GradientStop(stop.Color, stop.Offset));
+                }
+            }
 
+            GradientPickerWindow gradientPickerWindow = new();
             gradientPickerWindow.OnSelectedColorChanged += () =>
             {
                 PreviewImage = gradientPickerWindow.GradientPreview;
@@ -180,7 +193,6 @@ public class ColorPickerLineViewModel : ViewModelBase
                 }
                 AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, themePath, newBrush);
             };
-
             if(PreviewImage is LinearGradientBrush gradientBrush)
             {
                 gradientPickerWindow.SetGradient(gradientBrush);
@@ -189,10 +201,17 @@ public class ColorPickerLineViewModel : ViewModelBase
             {
                 gradientPickerWindow.SetGradient(themeObj.gradient);
             }
-
             if(gradientPickerWindow.ShowDialog() == true)
             {
                 themeObj.gradient = gradientPickerWindow.GradientPreview;
+            }
+            else
+            {
+                if(ogGradient != null)
+                {
+                    PreviewImage = ogGradient;
+                    AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, themePath, ogGradient);
+                }
             }
         }
     }
