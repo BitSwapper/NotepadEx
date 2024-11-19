@@ -18,7 +18,7 @@
         Background="Transparent">
 
     <Window.Resources>
-        <Converters:StringEqualityConverter x:Key="StringEqualityConverter"/>
+        <Converters:StringEqualityMultiConverter x:Key="StringEqualityMultiConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -117,7 +117,15 @@
                       Command="{Binding DataContext.ChangeThemeCommand, 
                                 RelativeSource={RelativeSource AncestorType=Window}}"
                       CommandParameter="{Binding}"
-                      Foreground="{DynamicResource Color_MenuItemFg}"/>
+                      Foreground="{DynamicResource Color_MenuItemFg}">
+                                            <MenuItem.IsChecked>
+                                                <MultiBinding Converter="{StaticResource StringEqualityMultiConverter}">
+                                                    <Binding Path="Name"/>
+                                                    <Binding Path="DataContext.CurrentThemeName" 
+                                RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                                </MultiBinding>
+                                            </MenuItem.IsChecked>
+                                        </MenuItem>
                                     </DataTemplate>
                                 </MenuItem.ItemTemplate>
                             </MenuItem>

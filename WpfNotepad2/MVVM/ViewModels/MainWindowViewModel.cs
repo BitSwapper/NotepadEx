@@ -48,6 +48,16 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<ThemeInfo> AvailableThemes => themeService.AvailableThemes;
     readonly ScrollBarBehavior scrollBarBehavior = new();
+
+    public string CurrentThemeName
+    {
+        get => Settings.Default.ThemeName;
+        set
+        {
+            Settings.Default.ThemeName = value;
+            OnPropertyChanged();
+        }
+    }
     public string DocumentContent
     {
         get => document.Content;
@@ -157,7 +167,10 @@ public class MainWindowViewModel : ViewModelBase
     void OnThemeChange(ThemeInfo theme)
     {
         if(theme != null)
+        {
             themeService.ApplyTheme(theme.Name);
+            CurrentThemeName = theme.Name;
+        }
     }
 
     void OpenDocument()
