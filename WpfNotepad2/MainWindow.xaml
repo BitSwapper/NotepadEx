@@ -149,7 +149,11 @@
                             HorizontalScrollBarVisibility="Auto"
                             CaretBrush="{DynamicResource Color_TextEditorCaret}"
                             SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
-                            Name="txtEditor">
+                            Name="txtEditor"
+                            Loaded="TextBox_Loaded"
+                            PreviewMouseMove="TextBox_MouseMove"
+                            PreviewMouseUp="TextBox_MouseUp"
+                            PreviewMouseDown="TextBox_MouseDown">
 
                             <TextBox.Resources>
                                 <!--ScrollViewer Style to remove the white corner-->

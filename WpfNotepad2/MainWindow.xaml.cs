@@ -1,11 +1,14 @@
 ﻿namespace NotepadEx;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Threading;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Properties;
 using NotepadEx.Services;
+using NotepadEx.Util;
 
 public partial class MainWindow : Window
 {
@@ -70,4 +73,101 @@ public partial class MainWindow : Window
     }
 
     void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e) => viewModel.HandleMouseScroll(sender, e);
+
+
+
+    private ScrollViewer _scrollViewer;
+    private ScrollBar _verticalScrollBar;
+    private bool _isSelecting = false;
+    private DispatcherTimer _scrollTimer;
+    private double _scrollSpeed = 75; // Adjust the scrolling speed
+
+    private void TextBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        // Access the ScrollViewer inside the TextBox
+        _scrollViewer = VisualTreeUtil.FindVisualChildren<ScrollViewer>(sender as TextBox).First();
+
+
+        var grid = _scrollViewer.Template.FindName("PART_Root", _scrollViewer) as Grid;
+        if(grid != null)
+        {
+            _verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
+            //if(_verticalScrollBar != null)
+            //{
+            //    _verticalScrollBar.Maximum = _scrollViewer.ScrollableHeight;
+            //    _verticalScrollBar.Value = _scrollViewer.VerticalOffset;
+            //}
+        }
+
+
+        _scrollTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(16) // ~60 FPS
+        };
+        _scrollTimer.Tick += ScrollTimer_Tick;
+    }
+
+    private void TextBox_MouseMove(object sender, MouseEventArgs e)
+    {
+        if(_isSelecting)
+        {
+            Point mousePosition = e.GetPosition(_scrollViewer);
+            if(mousePosition.Y < 0)
+            {
+                // Scroll up
+                StartScrolling(-_scrollSpeed);
+            }
+            else if(mousePosition.Y > _scrollViewer.ActualHeight)
+            {
+                // Scroll down
+                StartScrolling(_scrollSpeed);
+            }
+            else
+            {
+                StopScrolling();
+            }
+        }
+    }
+
+    private void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
+    {
+        _isSelecting = false;
+        StopScrolling();
+    }
+
+    private void StartScrolling(double speed)
+    {
+        if(!_scrollTimer.IsEnabled)
+        {
+            _scrollTimer.Tag = speed;
+            _scrollTimer.Start();
+        }
+    }
+
+    private void StopScrolling()
+    {
+        _scrollTimer.Stop();
+    }
+
+    private void ScrollTimer_Tick(object sender, EventArgs e)
+    {
+        double speed = (double)_scrollTimer.Tag;
+        double newOffset = _scrollViewer.VerticalOffset + speed;
+
+        // Clamp the new offset
+        newOffset = Math.Max(0, Math.Min(newOffset, _scrollViewer.ScrollableHeight));
+
+        // Update the ScrollViewer
+        _scrollViewer.ScrollToVerticalOffset(newOffset);
+
+        // Update the vertical scrollbar
+        if(_verticalScrollBar != null)
+            _verticalScrollBar.Value = newOffset;
+    }
+
+    private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        _isSelecting = true;
+        StartScrolling(_scrollSpeed);
+    }
 }
