@@ -20,10 +20,10 @@ public partial class ThemeEditorWindow : Window
     readonly IThemeService themeService;
     readonly IWindowService windowService;
     CustomTitleBarViewModel titleBarViewModel;
+
     public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
 
     int colorLineCt = 0;
-
     SolidColorBrush brushA = new SolidColorBrush(Color.FromArgb(255, 64, 64, 64));
     SolidColorBrush brushB = new SolidColorBrush(Color.FromArgb(255, 44, 44, 44));
 
@@ -54,7 +54,6 @@ public partial class ThemeEditorWindow : Window
         AddNewColorLineSafe(UIConstants.Color_MenuItemFg, "Menu Item Font", ref themeService.CurrentTheme.themeObj_MenuItemFg!);
         AddNewColorLineSafe(UIConstants.Color_InfoBarBg, "Info Bar Background", ref themeService.CurrentTheme.themeObj_InfoBarBg!);
         AddNewColorLineSafe(UIConstants.Color_InfoBarFg, "Info Bar Font", ref themeService.CurrentTheme.themeObj_InfoBarFg!);
-
 
         AddNewColorLineSafe(UIConstants.Color_MenuBg, "Menu Background", ref themeService.CurrentTheme.themeObj_MenuBg!);
         AddNewColorLineSafe(UIConstants.Color_MenuBorder, "Menu Border", ref themeService.CurrentTheme.themeObj_MenuBorder!);
@@ -131,16 +130,12 @@ public partial class ThemeEditorWindow : Window
             WriteIndented = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-                
+
         File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
         Settings.Default.ThemeName = Path.GetFileName(fileName);
         Settings.Default.Save();
 
         themeService.LoadAvailableThemes();
-
-        //UpdateTitleText(fileName);
-        //UpdateModifiedStateOfTitleBar();
-        //AddRecentFile(fileName);
         return true;
     }
 

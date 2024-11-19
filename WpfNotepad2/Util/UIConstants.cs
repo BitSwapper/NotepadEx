@@ -34,7 +34,7 @@ public static class UIConstants
     public static readonly string Color_ToolWindowButtonBg      = "Color_ToolWindowButtonBg";
     public static readonly string Color_ToolWindowButtonBorder  = "Color_ToolWindowButtonBorder";
 
-    public static readonly List<string> UIColorKeysMain = new()
+    public static readonly HashSet<string> UIColorKeysMain = new()
     {
         Color_TextEditorBg,
         Color_TextEditorFg,
@@ -47,19 +47,19 @@ public static class UIConstants
         Color_BorderColor,
     };
 
-    public static readonly List<string> UIColorKeysMenuBar = new()
+    public static readonly HashSet<string> UIColorKeysMenuBar = new()
     {
         Color_MenuBarBg,
         Color_MenuItemFg,
     };
 
-    public static readonly List<string> UIColorKeysInfoBar = new()
+    public static readonly HashSet<string> UIColorKeysInfoBar = new()
     {
         Color_InfoBarBg,
         Color_InfoBarFg,
     };
 
-    public static readonly List<string> UIColorKeysMenuItem = new()
+    public static readonly HashSet<string> UIColorKeysMenuItem = new()
     {
         Color_MenuBorder,
         Color_MenuBg,

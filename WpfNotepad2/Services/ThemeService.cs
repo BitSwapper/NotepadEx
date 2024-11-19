@@ -125,15 +125,3 @@ public class ThemeService : IThemeService
             AppResourceUtil<SolidColorBrush>.TrySetResource(application, resourceKey, new SolidColorBrush(themeObj.color.GetValueOrDefault()));
     }
 }
-
-public class ThemeChangedEventArgs : EventArgs
-{
-    public string ThemeName { get; }
-    public ColorTheme Theme { get; }
-
-    public ThemeChangedEventArgs(string themeName, ColorTheme theme)
-    {
-        ThemeName = themeName;
-        Theme = theme;
-    }
-}
