@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Util;
+using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
 
 namespace NotepadEx.MVVM.View;
@@ -186,6 +188,7 @@ public partial class GradientPickerWindow : Window
             var ogColor = selectedStop.Color;
             var stopIndex = GradientStops.IndexOf(selectedStop);
             var stopOffset = GradientStops[stopIndex].Offset;
+
             var colorPicker = new ColorPickerWindow
             {
                 SelectedColor = selectedStop.Color
@@ -193,21 +196,28 @@ public partial class GradientPickerWindow : Window
 
             colorPicker.myColorPicker.OnSelectedColorChanged += () =>
             {
-                SetStopColor(new SolidColorBrush(colorPicker.SelectedColor), stopIndex, stopOffset);
+                SetStopColorEz(colorPicker.SelectedColor);
                 UpdateGradientPreview();
             };
 
             if(colorPicker.ShowDialog() == true)
             {
-                SetStopColor(new SolidColorBrush(colorPicker.SelectedColor), stopIndex, stopOffset);
+                SetStopColorEz(colorPicker.SelectedColor);
                 UpdateGradientPreview();
             }
             else
             {
-                SetStopColor(new SolidColorBrush(ogColor), stopIndex, stopOffset);
+                SetStopColorEz(ogColor);
                 UpdateGradientPreview();
             }
+
+            void SetStopColorEz(Color color)
+            {
+                SetStopColor(new SolidColorBrush(color), stopIndex, stopOffset);
+            }
         }
+
+        
     }
 
     void CopyStop_Click(object sender, RoutedEventArgs e)
@@ -230,7 +240,6 @@ public partial class GradientPickerWindow : Window
             if((button.DataContext as GradientStop) is GradientStop selectedStop)
             {
                 var stopIndex = GradientStops.IndexOf(selectedStop);
-
                 SetStopColor(brush, stopIndex, selectedStop.Offset);
             }
 
