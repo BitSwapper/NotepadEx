@@ -31,7 +31,6 @@ public class ThemeService : IThemeService
     public void LoadCurrentTheme()
     {
         var themeFiles = new DirectoryInfo(DirectoryUtil.NotepadExThemesPath).GetFiles().OrderByDescending(f => f.LastWriteTime);
-
         var themeFile = themeFiles.FirstOrDefault(t => t.Name == Settings.Default.ThemeName);
         ApplyTheme(themeFile?.Name ?? null);
     }
