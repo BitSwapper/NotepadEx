@@ -150,68 +150,78 @@ public class ColorPickerLineViewModel : ViewModelBase
     void ExecuteEdit()
     {
         if(!IsGradient)
-        {
-            ColorPickerWindow colorPickerWindow = new();
-            colorPickerWindow.myColorPicker.SetInitialColor(themeObj.color ?? Colors.Gray);
-
-            colorPickerWindow.myColorPicker.OnSelectedColorChanged += () =>
-            {
-                var newBrush = new SolidColorBrush(colorPickerWindow.SelectedColor);
-                PreviewImage = newBrush;
-                themeObj.color = colorPickerWindow.SelectedColor;
-                UpdateResourceBrush();
-            };
-
-            colorPickerWindow.ShowDialog();
-        }
+            HandleColorEdit();
         else
+            HandleGradientEdit();
+
+
+        void HandleColorEdit()
         {
-            LinearGradientBrush ogGradient = null;
-            if(PreviewImage is LinearGradientBrush existingGradient)
+            var colorPickerWindow = new ColorPickerWindow();
+            colorPickerWindow.myColorPicker.SetInitialColor(themeObj.color ?? Colors.Gray);
+            colorPickerWindow.myColorPicker.OnSelectedColorChanged += () => UpdateColorPreview(colorPickerWindow);
+            colorPickerWindow.ShowDialog();
+
+
+            void UpdateColorPreview(ColorPickerWindow picker)
             {
-                ogGradient = new LinearGradientBrush
-                {
-                    StartPoint = existingGradient.StartPoint,
-                    EndPoint = existingGradient.EndPoint
-                };
-                foreach(var stop in existingGradient.GradientStops)
-                {
-                    ogGradient.GradientStops.Add(new GradientStop(stop.Color, stop.Offset));
-                }
+                var newBrush = new SolidColorBrush(picker.SelectedColor);
+                PreviewImage = newBrush;
+                themeObj.color = picker.SelectedColor;
+                UpdateResourceBrush();
+            }
+        }
+
+        void HandleGradientEdit()
+        {
+            LinearGradientBrush originalGradient = null;
+            if(PreviewImage is LinearGradientBrush existingGradient)
+                originalGradient = CreateGradientCopy(existingGradient);
+
+            var gradientPickerWindow = new GradientPickerWindow();
+            gradientPickerWindow.OnSelectedColorChanged += () => UpdateGradientPreview(gradientPickerWindow);
+
+            if(PreviewImage is LinearGradientBrush gradientBrush)
+                gradientPickerWindow.SetGradient(gradientBrush);
+            else if(themeObj?.gradient != null)
+                gradientPickerWindow.SetGradient(themeObj.gradient);
+
+            if(gradientPickerWindow.ShowDialog() == true)
+                themeObj.gradient = gradientPickerWindow.GradientPreview;
+            else if(originalGradient != null)
+            {
+                PreviewImage = originalGradient;
+                AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, themePath, originalGradient);
             }
 
-            GradientPickerWindow gradientPickerWindow = new();
-            gradientPickerWindow.OnSelectedColorChanged += () =>
+
+            LinearGradientBrush CreateGradientCopy(LinearGradientBrush source)
             {
-                PreviewImage = gradientPickerWindow.GradientPreview;
-                var newBrush = new LinearGradientBrush();
-                newBrush.StartPoint = gradientPickerWindow.GradientPreview.StartPoint;
-                newBrush.EndPoint = gradientPickerWindow.GradientPreview.EndPoint;
-                foreach(var stop in gradientPickerWindow.GradientPreview.GradientStops)
+                var copy = new LinearGradientBrush
                 {
+                    StartPoint = source.StartPoint,
+                    EndPoint = source.EndPoint
+                };
+
+                foreach(var stop in source.GradientStops)
+                    copy.GradientStops.Add(new GradientStop(stop.Color, stop.Offset));
+
+                return copy;
+            }
+
+            void UpdateGradientPreview(GradientPickerWindow picker)
+            {
+                PreviewImage = picker.GradientPreview;
+                var newBrush = new LinearGradientBrush
+                {
+                    StartPoint = picker.GradientPreview.StartPoint,
+                    EndPoint = picker.GradientPreview.EndPoint
+                };
+
+                foreach(var stop in picker.GradientPreview.GradientStops)
                     newBrush.GradientStops.Add(new GradientStop(stop.Color, stop.Offset));
-                }
+
                 AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, themePath, newBrush);
-            };
-            if(PreviewImage is LinearGradientBrush gradientBrush)
-            {
-                gradientPickerWindow.SetGradient(gradientBrush);
-            }
-            else if(themeObj?.gradient != null)
-            {
-                gradientPickerWindow.SetGradient(themeObj.gradient);
-            }
-            if(gradientPickerWindow.ShowDialog() == true)
-            {
-                themeObj.gradient = gradientPickerWindow.GradientPreview;
-            }
-            else
-            {
-                if(ogGradient != null)
-                {
-                    PreviewImage = ogGradient;
-                    AppResourceUtil<LinearGradientBrush>.TrySetResource(Application.Current, themePath, ogGradient);
-                }
             }
         }
     }
