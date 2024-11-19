@@ -97,7 +97,7 @@ public class ThemeService : IThemeService
         if(themeEditorWindow == null)
         {
             themeEditorWindow = new ThemeEditorWindow(this);
-            LoadAvailableThemes(); // Refresh themes after editor closes
+            LoadAvailableThemes();
         }
         themeEditorWindow.Show();
     }
@@ -125,17 +125,9 @@ public class ThemeService : IThemeService
         if(themeObj == null) return;
 
         if(themeObj.isGradient)
-        {
             AppResourceUtil<LinearGradientBrush>.TrySetResource(application, resourceKey, themeObj.gradient);
-        }
         else
-        {
-            AppResourceUtil<SolidColorBrush>.TrySetResource(
-                application,
-                resourceKey,
-                new SolidColorBrush(themeObj.color.GetValueOrDefault())
-            );
-        }
+            AppResourceUtil<SolidColorBrush>.TrySetResource(application, resourceKey, new SolidColorBrush(themeObj.color.GetValueOrDefault()));
     }
 }
 
