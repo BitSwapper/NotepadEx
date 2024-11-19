@@ -36,7 +36,7 @@ public static class ColorUtil
         return linearGradientBrush;
     }
 
-    public static Color? GetColorFromHex(string hex)
+    public static Color? HexStringToColor(string hex)
     {
         if(hex == null || hex.Length > 9) return null;
         if(hex.StartsWith("#"))
@@ -131,6 +131,7 @@ public static class ColorUtil
 
     public static LinearGradientBrush DeserializeGradient(string gradientString)
     {
+        if(gradientString == null) return null;
         var parts = gradientString.Split(';');
         var brush = new LinearGradientBrush();
         bool wasValid = false;
@@ -164,7 +165,7 @@ public static class ColorUtil
                     {
                         var stopParts = stop.Split(':');
                         if (stopParts.Length != 2) throw new FormatException($"Invalid gradient stop format: {stop}");
-                        return new GradientStop(ColorUtil.GetColorFromHex(stopParts[0]).Value, double.Parse(stopParts[1]));
+                        return new GradientStop(ColorUtil.HexStringToColor(stopParts[0]).Value, double.Parse(stopParts[1]));
                     });
 
                     if(stops.Count() > 0)

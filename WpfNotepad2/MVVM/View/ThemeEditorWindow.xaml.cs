@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
+using NotepadEx.Properties;
 using NotepadEx.Services;
 using NotepadEx.Services.Interfaces;
 using NotepadEx.Theme;
@@ -130,9 +131,10 @@ public partial class ThemeEditorWindow : Window
             WriteIndented = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-
+                
         File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
-
+        Settings.Default.ThemeName = Path.GetFileName(fileName);
+        Settings.Default.Save();
 
         //UpdateTitleText(fileName);
         //UpdateModifiedStateOfTitleBar();

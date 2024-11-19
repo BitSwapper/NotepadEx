@@ -133,19 +133,27 @@ public class ColorPickerLineViewModel : ViewModelBase
     void ExecuteRandomize()
     {
         if(IsGradient)
+            RandomizeGradient();
+        else
+            RandomizeColorBrush();
+
+        UpdateResourceBrush();
+
+
+        void RandomizeGradient()
         {
             var brush = ColorUtil.GetRandomLinearGradientBrush(180);
             PreviewImage = brush;
             themeObj.gradient = brush;
         }
-        else
+
+        void RandomizeColorBrush()
         {
-            byte minAlpha = System.Random.Shared.NextDouble() > 0.5 ? (byte)128 : (byte)255;
+            byte minAlpha = System.Random.Shared.NextDouble() >= 0.5 ? (byte)128 : (byte)255;
             var brush = ColorUtil.GetRandomColorBrush(minAlpha);
             PreviewImage = brush;
             themeObj.color = brush.Color;
         }
-        UpdateResourceBrush();
     }
 
     void ExecuteEdit()
@@ -229,13 +237,20 @@ public class ColorPickerLineViewModel : ViewModelBase
 
     void ExecuteCopy()
     {
-        if(!IsGradient)
+        if(IsGradient)
+            CopyGradient();
+        else
+            CopyColor();
+
+
+        void CopyColor()
         {
             var color = (PreviewImage as SolidColorBrush)?.Color;
             if(color.HasValue)
                 Clipboard.SetText(ColorUtil.ColorToHexString(color.Value));
         }
-        else
+
+        void CopyGradient()
         {
             var gradient = PreviewImage as LinearGradientBrush;
             if(gradient != null)
@@ -251,14 +266,23 @@ public class ColorPickerLineViewModel : ViewModelBase
         var clipboardText = Clipboard.GetText();
         var gradient = ColorUtil.DeserializeGradient(clipboardText);
         if(gradient != null)
+            PasteGradient(gradient);
+        else
+            PasteColor(clipboardText);
+
+        UpdateResourceBrush();
+
+
+        void PasteGradient(LinearGradientBrush gradient)
         {
             PreviewImage = gradient;
             themeObj.gradient = gradient;
             IsGradient = true;
         }
-        else
+
+        void PasteColor(string clipboardText)
         {
-            var color = ColorUtil.GetColorFromHex(clipboardText);
+            var color = ColorUtil.HexStringToColor(clipboardText);
             if(color.HasValue)
             {
                 var brush = new SolidColorBrush(color.Value);
@@ -267,6 +291,5 @@ public class ColorPickerLineViewModel : ViewModelBase
                 IsGradient = false;
             }
         }
-        UpdateResourceBrush();
     }
 }

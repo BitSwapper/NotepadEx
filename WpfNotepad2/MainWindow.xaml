@@ -6,6 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:NotepadEx"
         xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
+        xmlns:Converters="clr-namespace:NotepadEx.Converters"
         mc:Ignorable="d"
         Title="NotepadEx" 
         Height="450" 
@@ -15,6 +16,11 @@
         ResizeMode="NoResize"
         ShowInTaskbar="True"
         Background="Transparent">
+
+    <Window.Resources>
+        <Converters:StringEqualityConverter x:Key="StringEqualityConverter"/>
+    </Window.Resources>
+
     <Grid>
         <Border BorderThickness="2" 
                 BorderBrush="{DynamicResource Color_BorderColor}" 

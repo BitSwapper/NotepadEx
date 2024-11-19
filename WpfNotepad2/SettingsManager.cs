@@ -14,7 +14,7 @@ public static class SettingsManager
         Settings.Default.TextWrapping = txtEditor.TextWrapping == TextWrapping.Wrap;
         //Settings.Default.MenuBarAutoHide;
         //Settings.Default.InfoBarAutoHide;
-        Settings.Default.ThemeName = themeName;
+        //Settings.Default.ThemeName = themeName;
         Settings.Default.FontSize = txtEditor.FontSize;
         Settings.Default.FontFamily = txtEditor.FontFamily.Source;
         Settings.Default.FontWeight = txtEditor.FontWeight.ToString();

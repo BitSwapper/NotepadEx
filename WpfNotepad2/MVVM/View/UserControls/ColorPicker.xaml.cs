@@ -163,7 +163,7 @@ public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
         var text = txtHexColor.Text.Replace("#",string.Empty);
         if(text.Length == 8)
-            SelectedColor = ColorUtil.GetColorFromHex(txtHexColor.Text).GetValueOrDefault();
+            SelectedColor = ColorUtil.HexStringToColor(txtHexColor.Text).GetValueOrDefault();
     }
 
     public void UpdateColorFromSelectedColor()

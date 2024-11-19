@@ -63,12 +63,12 @@ public class ThemeObjectSerializable
                 return new ThemeObject(ColorUtil.DeserializeGradient(Gradient));
 
             else
-                return new ThemeObject(ColorUtil.GetColorFromHex(Color).Value);
+                return new ThemeObject(ColorUtil.HexStringToColor(Color).Value);
         }
         catch
         {
             MessageBox.Show("Failed to deserialize theme object. Substituting Blue. (Your theme contains corrupt data - Try picking a different one and restarting application for best results)");
-            return new ThemeObject(ColorUtil.GetColorFromHex("#FF0000FF").Value);
+            return new ThemeObject(ColorUtil.HexStringToColor("#FF0000FF").Value);
         }
     }
 }

@@ -233,7 +233,7 @@ public partial class GradientPickerWindow : Window
         if(sender is not Button button || button.Tag is not System.Windows.Shapes.Rectangle rectangle ||
             rectangle.Fill is not SolidColorBrush brush) return;
 
-        var color = ColorUtil.GetColorFromHex(Clipboard.GetText());
+        var color = ColorUtil.HexStringToColor(Clipboard.GetText());
         if(color.HasValue)
         {
             brush.Color = color.Value;
