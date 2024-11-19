@@ -140,7 +140,8 @@ public class ColorPickerLineViewModel : ViewModelBase
         }
         else
         {
-            var brush = ColorUtil.GetRandomColorBrush(180);
+            byte minAlpha = System.Random.Shared.NextDouble() > 0.5 ? (byte)128 : (byte)255;
+            var brush = ColorUtil.GetRandomColorBrush(minAlpha);
             PreviewImage = brush;
             themeObj.color = brush.Color;
         }

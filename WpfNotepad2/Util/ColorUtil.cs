@@ -16,7 +16,7 @@ public static class ColorUtil
         linearGradientBrush.StartPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
         linearGradientBrush.EndPoint = new Point(Random.Shared.NextDouble(), Random.Shared.NextDouble());
 
-        int gradientStopCount = Random.Shared.Next(2, 7);
+        int gradientStopCount = Random.Shared.Next(2, 6);
         var gradientStops = new List<GradientStop>();
         for(int i = 0; i < gradientStopCount; i++)
         {
@@ -27,7 +27,10 @@ public static class ColorUtil
             gradientStops.Add(new GradientStop(randomColor, offset));
         }
 
-        foreach(var stop in gradientStops.OrderBy(gs => gs.Offset))    // Sort the gradient stops by offset and add them to the brush
+        //foreach(var stop in gradientStops.OrderBy(gs => gs.Offset))    // Sort the gradient stops by offset and add them to the brush
+        //    linearGradientBrush.GradientStops.Add(stop);
+
+        foreach(var stop in gradientStops)
             linearGradientBrush.GradientStops.Add(stop);
 
         return linearGradientBrush;
