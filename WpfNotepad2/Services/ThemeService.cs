@@ -14,7 +14,6 @@ namespace NotepadEx.Services;
 
 public class ThemeService : IThemeService
 {
-    public event EventHandler<ThemeChangedEventArgs> ThemeChanged;
     public ColorTheme CurrentTheme { get; private set; }
     public string CurrentThemeName { get; private set; }
     public ObservableCollection<ThemeInfo> AvailableThemes { get; private set; }
@@ -36,24 +35,31 @@ public class ThemeService : IThemeService
         .OrderByDescending(f => f.LastWriteTime);
 
         var themeFile = themeFiles.FirstOrDefault(t => t.Name == Settings.Default.ThemeName);
-        if(themeFile != null)
-            ApplyTheme(themeFile.Name);
+        ApplyTheme(themeFile?.Name ?? null);
     }
 
     public void ApplyTheme(string themeName)
     {
         try
         {
-            var fileData = File.ReadAllText(Path.Combine(DirectoryUtil.NotepadExThemesPath, themeName));
-            var themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
-            var theme = themeSerialized.ToColorTheme();
+            string fileData;
+            ColorThemeSerializable themeSerialized;
+            ColorTheme theme;
+
+            if(themeName != null)
+            {
+                fileData = File.ReadAllText(Path.Combine(DirectoryUtil.NotepadExThemesPath, themeName));
+                themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
+                theme = themeSerialized.ToColorTheme();
+            }
+            else
+                theme = new();
 
             Settings.Default.ThemeName = themeName;
             Settings.Default.Save();
             CurrentTheme = theme;
             CurrentThemeName = themeName;
 
-            // Apply all theme objects
             ApplyThemeObject(theme.themeObj_TextEditorBg, UIConstants.Color_TextEditorBg);
             ApplyThemeObject(theme.themeObj_TextEditorFg, UIConstants.Color_TextEditorFg);
             ApplyThemeObject(theme.themeObj_TextEditorCaret, UIConstants.Color_TextEditorCaret);
@@ -79,9 +85,6 @@ public class ThemeService : IThemeService
             ApplyThemeObject(theme.themeObj_MenuItemSelectedBorder, UIConstants.Color_MenuItemSelectedBorder);
             ApplyThemeObject(theme.themeObj_MenuItemHighlightBg, UIConstants.Color_MenuItemHighlightBg);
             ApplyThemeObject(theme.themeObj_MenuItemHighlightBorder, UIConstants.Color_MenuItemHighlightBorder);
-
-            // Raise theme changed event if needed
-            ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(themeName, theme));
         }
         catch(Exception ex)
         {
@@ -100,7 +103,7 @@ public class ThemeService : IThemeService
         themeEditorWindow.Show();
     }
 
-    void LoadAvailableThemes()
+    public void LoadAvailableThemes()
     {
         AvailableThemes.Clear();
         var themeFiles = new DirectoryInfo(DirectoryUtil.NotepadExThemesPath)

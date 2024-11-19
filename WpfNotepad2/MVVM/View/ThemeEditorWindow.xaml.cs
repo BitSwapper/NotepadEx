@@ -40,6 +40,9 @@ public partial class ThemeEditorWindow : Window
 
     void AddEditableColorLinesToWindow()
     {
+        //if(themeService.CurrentTheme == null)
+        //    themeService.CurrentTheme = new();
+
         AddNewColorLineSafe(UIConstants.Color_TextEditorBg, "Text Editor Background", ref themeService.CurrentTheme.themeObj_TextEditorBg!);
         AddNewColorLineSafe(UIConstants.Color_TextEditorFg, "Text Editor Font", ref themeService.CurrentTheme.themeObj_TextEditorFg!);
         AddNewColorLineSafe(UIConstants.Color_TextEditorCaret, "Text Editor Caret", ref themeService.CurrentTheme.themeObj_TextEditorCaret!);
@@ -135,6 +138,8 @@ public partial class ThemeEditorWindow : Window
         File.WriteAllText(fileName, JsonSerializer.Serialize<ColorThemeSerializable>(serializedTheme, options));
         Settings.Default.ThemeName = Path.GetFileName(fileName);
         Settings.Default.Save();
+
+        themeService.LoadAvailableThemes();
 
         //UpdateTitleText(fileName);
         //UpdateModifiedStateOfTitleBar();
