@@ -42,13 +42,12 @@ public class ThemeService : IThemeService
     {
         try
         {
-            string fileData;
             ColorThemeSerializable themeSerialized;
             ColorTheme theme;
 
             if(themeName != null)
             {
-                fileData = File.ReadAllText(Path.Combine(DirectoryUtil.NotepadExThemesPath, themeName));
+                var fileData = File.ReadAllText(Path.Combine(DirectoryUtil.NotepadExThemesPath, themeName));
                 themeSerialized = JsonSerializer.Deserialize<ColorThemeSerializable>(fileData);
                 theme = themeSerialized.ToColorTheme();
             }
