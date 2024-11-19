@@ -63,6 +63,7 @@ public partial class MainWindow : Window
 
     void PART_ScrollbarRect_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
+        //if(_isSelecting) return;
         if(sender is System.Windows.Shapes.Rectangle rectangle && e.LeftButton == MouseButtonState.Pressed)
             viewModel.HandleScrollBarDrag(rectangle, txtEditor, e);
     }
@@ -76,29 +77,32 @@ public partial class MainWindow : Window
 
 
 
-    private ScrollViewer _scrollViewer;
-    private ScrollBar _verticalScrollBar;
-    private bool _isSelecting = false;
-    private DispatcherTimer _scrollTimer;
-    private double _scrollSpeed = 75; // Adjust the scrolling speed
+    ScrollViewer _scrollViewer;
+    ScrollBar _verticalScrollBar;
+    bool isMouseDown = false;
+    bool isScrollbarDragging = false; // Tracks if the scrollbar itself is being dragged
+    bool _isSelecting => txtEditor.SelectionLength > 0 && isMouseDown;
+    DispatcherTimer _scrollTimer;
+    double _scrollSpeed = 75;
 
-    private void TextBox_Loaded(object sender, RoutedEventArgs e)
+    void TextBox_Loaded(object sender, RoutedEventArgs e)
     {
-        // Access the ScrollViewer inside the TextBox
         _scrollViewer = VisualTreeUtil.FindVisualChildren<ScrollViewer>(sender as TextBox).First();
-
 
         var grid = _scrollViewer.Template.FindName("PART_Root", _scrollViewer) as Grid;
         if(grid != null)
         {
             _verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
-            //if(_verticalScrollBar != null)
-            //{
-            //    _verticalScrollBar.Maximum = _scrollViewer.ScrollableHeight;
-            //    _verticalScrollBar.Value = _scrollViewer.VerticalOffset;
-            //}
-        }
+            if(_verticalScrollBar != null)
+            {
+                // Track when the scrollbar is being dragged
+                _verticalScrollBar.PreviewMouseDown += (s, args) => isScrollbarDragging = true;
+                _verticalScrollBar.PreviewMouseUp += (s, args) => isScrollbarDragging = false;
 
+                // Synchronize the ScrollViewer with the scrollbar
+                _verticalScrollBar.ValueChanged += VerticalScrollBar_ValueChanged;
+            }
+        }
 
         _scrollTimer = new DispatcherTimer
         {
@@ -107,7 +111,7 @@ public partial class MainWindow : Window
         _scrollTimer.Tick += ScrollTimer_Tick;
     }
 
-    private void TextBox_MouseMove(object sender, MouseEventArgs e)
+    void TextBox_MouseMove(object sender, MouseEventArgs e)
     {
         if(_isSelecting)
         {
@@ -129,13 +133,13 @@ public partial class MainWindow : Window
         }
     }
 
-    private void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
+    void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
     {
-        _isSelecting = false;
+        isMouseDown = false;
         StopScrolling();
     }
 
-    private void StartScrolling(double speed)
+    void StartScrolling(double speed)
     {
         if(!_scrollTimer.IsEnabled)
         {
@@ -144,13 +148,15 @@ public partial class MainWindow : Window
         }
     }
 
-    private void StopScrolling()
+    void StopScrolling()
     {
         _scrollTimer.Stop();
     }
 
-    private void ScrollTimer_Tick(object sender, EventArgs e)
+    void ScrollTimer_Tick(object sender, EventArgs e)
     {
+        if(!_isSelecting || isScrollbarDragging) return;
+
         double speed = (double)_scrollTimer.Tag;
         double newOffset = _scrollViewer.VerticalOffset + speed;
 
@@ -165,9 +171,17 @@ public partial class MainWindow : Window
             _verticalScrollBar.Value = newOffset;
     }
 
-    private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+    void VerticalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        _isSelecting = true;
+        if(isScrollbarDragging)
+        {
+            _scrollViewer.ScrollToVerticalOffset(e.NewValue);
+        }
+    }
+
+    void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        isMouseDown = true;
         StartScrolling(_scrollSpeed);
     }
 }
