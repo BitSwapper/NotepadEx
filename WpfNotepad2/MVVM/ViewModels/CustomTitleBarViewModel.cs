@@ -14,7 +14,8 @@ public class CustomTitleBarViewModel : ViewModelBase
     bool showMinimizeButton = true;
     bool showMaximizeButton = true;
     bool showCloseButton = true;
-    bool hideInsteadOfClose;
+    Action onClose;
+
     public string TitleText
     {
         get => titleText;
@@ -79,8 +80,8 @@ public class CustomTitleBarViewModel : ViewModelBase
 
     void ExecuteClose()
     {
-        if(hideInsteadOfClose)
-            window.Hide();
+        if(onClose != null)
+            onClose();
         else
             window.Close();
     }
@@ -90,12 +91,12 @@ public class CustomTitleBarViewModel : ViewModelBase
             window.DragMove();
     }
 
-    public void Initialize(string titleText, bool showMinimize = true, bool showMaximize = true, bool showClose = true, bool hideInsteadOfClose = false)
+    public void Initialize(string titleText, bool showMinimize = true, bool showMaximize = true, bool showClose = true, Action onClose = null)
     {
         TitleText = titleText;
         ShowMinimizeButton = showMinimize;
         ShowMaximizeButton = showMaximize;
         ShowCloseButton = showClose;
-        this.hideInsteadOfClose = hideInsteadOfClose;
+        this. onClose = onClose;
     }
 }

@@ -151,7 +151,7 @@ public class MainWindowViewModel : ViewModelBase
         SaveCommand = new RelayCommand(SaveDocument);
         SaveAsCommand = new RelayCommand(SaveDocumentAs);
         PrintCommand = new RelayCommand(PrintDocument);
-        ExitCommand = new RelayCommand(() => Application.Current.Shutdown());
+        //ExitCommand = new RelayCommand(ExitApp);
         ToggleWordWrapCommand = new RelayCommand(ToggleWordWrap);
         ToggleMenuBarCommand = new RelayCommand(ToggleMenuBar);
         ToggleInfoBarCommand = new RelayCommand(ToggleInfoBar);
@@ -266,6 +266,11 @@ public class MainWindowViewModel : ViewModelBase
             windowService.ShowDialog($"Error printing document: {ex.Message}", "Error");
         }
     }
+
+    //void ExitApp()
+    //{
+    //    Application.Current.Shutdown();
+    //}
 
     void ToggleMenuBar()
     {
