@@ -13,7 +13,8 @@ public partial class FontEditorWindow : Window
 {
     private readonly IFontService _fontService;
     private FontSettings _workingCopy;
-    CustomTitleBarViewModel _titleBarViewModel;
+    CustomTitleBarViewModel titleBarViewModel;
+    public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
     public FontSettings CurrentFont
     {
         get => _workingCopy;
@@ -29,6 +30,9 @@ public partial class FontEditorWindow : Window
     public FontEditorWindow(IFontService fontService)
     {
         InitializeComponent();
+        DataContext = this;
+        titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Font Settings");
+
         _fontService = fontService;
 
         // Create a working copy of current font settings
@@ -43,9 +47,6 @@ public partial class FontEditorWindow : Window
         };
 
         AvailableFonts = _fontService.AvailableFonts;
-
-        DataContext = this;
-        _titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Font Settings");
     }
 
     private void ApplyButton_Click(object sender, RoutedEventArgs e)
