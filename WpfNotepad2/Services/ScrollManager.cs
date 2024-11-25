@@ -15,11 +15,21 @@ public class ScrollManager
     private bool isScrollbarDragging;
     private readonly TextBox _textBox;
     private const double PADDING = 20;
+    private bool _isInitialized;
 
     public ScrollManager(TextBox textBox)
     {
         _textBox = textBox;
-        InitializeScrollViewer();
+        _textBox.Loaded += TextBox_Loaded;
+    }
+
+    private void TextBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        if(!_isInitialized)
+        {
+            InitializeScrollViewer();
+            _isInitialized = true;
+        }
     }
 
     private void InitializeScrollViewer()
@@ -46,23 +56,14 @@ public class ScrollManager
         }
     }
 
-    public void HandleNavigationKey(Key key, ModifierKeys modifiers)
-    {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
-        {
-            ScrollToCaretPosition((modifiers & ModifierKeys.Control) == ModifierKeys.Control);
-        }));
-    }
+    public void HandleNavigationKey(Key key, ModifierKeys modifiers) => Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
+                                                                             {
+                                                                                 ScrollToCaretPosition((modifiers & ModifierKeys.Control) == ModifierKeys.Control);
+                                                                             }));
 
-    public void HandleTextChanged()
-    {
-        ScrollToCaretPosition(false);
-    }
+    public void HandleTextChanged() => ScrollToCaretPosition(false);
 
-    public void HandleSelectionChanged()
-    {
-        ScrollToCaretPosition(false);
-    }
+    public void HandleSelectionChanged() => ScrollToCaretPosition(false);
 
     private bool IsAtStartOfLine()
     {

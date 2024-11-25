@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -211,13 +210,10 @@ public partial class GradientPickerWindow : Window
                 UpdateGradientPreview();
             }
 
-            void SetStopColorEz(Color color)
-            {
-                SetStopColor(new SolidColorBrush(color), stopIndex, stopOffset);
-            }
+            void SetStopColorEz(Color color) => SetStopColor(new SolidColorBrush(color), stopIndex, stopOffset);
         }
 
-        
+
     }
 
     void CopyStop_Click(object sender, RoutedEventArgs e)

@@ -97,6 +97,6 @@ public class CustomTitleBarViewModel : ViewModelBase
         ShowMinimizeButton = showMinimize;
         ShowMaximizeButton = showMaximize;
         ShowCloseButton = showClose;
-        this. onClose = onClose;
+        this.onClose = onClose;
     }
 }

@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:NotepadEx"
+        xmlns:behaviors="clr-namespace:NotepadEx.MVVM.Behaviors"
         xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
         xmlns:Converters="clr-namespace:NotepadEx.Converters"
         mc:Ignorable="d"
@@ -17,6 +18,12 @@
         ShowInTaskbar="True"
         Background="Transparent">
 
+    <b:Interaction.Behaviors>
+        <behaviors:WindowMouseMoveBehavior 
+            MouseMoveCommand="{Binding MouseMoveCommand}"
+            ResizeCommand="{Binding ResizeCommand}"/>
+    </b:Interaction.Behaviors>
+
     <Window.Resources>
         <Converters:StringEqualityMultiConverter x:Key="StringEqualityMultiConverter"/>
     </Window.Resources>
@@ -25,8 +32,8 @@
         <Border BorderThickness="2" 
                 BorderBrush="{DynamicResource Color_BorderColor}" 
                 CornerRadius="1" 
-                Background="Transparent"
-                MouseMove="OnWindowMouseMove">
+                Background="Transparent">
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24"/>
@@ -55,8 +62,11 @@
 
                             <MenuItem Name="MenuItem_OpenRecent"  
                                     Header="Open Recent" 
-                                    Foreground="{DynamicResource Color_MenuItemFg}"
-                                      Click="MenuItem_OpenRecent_Click">
+                                    Foreground="{DynamicResource Color_MenuItemFg}">
+                                <b:Interaction.Behaviors>
+                                    <behaviors:MenuItemBehavior 
+                                        ClickCommand="{Binding OpenRecentCommand}"/>
+                                </b:Interaction.Behaviors>
                                 <MenuItem Header="..." Foreground="{DynamicResource Color_MenuItemFg}"/>
                             </MenuItem>
 
@@ -133,35 +143,41 @@
                     </Menu>
 
                     <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
-
                         <TextBox Text="{Binding DocumentContent, UpdateSourceTrigger=PropertyChanged}"
-     Background="Transparent"
-     Foreground="{DynamicResource Color_TextEditorFg}"
-     AcceptsReturn="True"
-     FontSize="18"
-     FontFamily="Segoe UI"
-     TextWrapping="{Binding TextWrappingMode}"
-     TextOptions.TextRenderingMode="ClearType"
-     Margin="2"
-     BorderBrush="Transparent"
-     BorderThickness="0"
-     VerticalScrollBarVisibility="Auto"
-     HorizontalScrollBarVisibility="Auto"
-     CaretBrush="{DynamicResource Color_TextEditorCaret}"
-     SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
-     Name="txtEditor"
-     Loaded="TextBox_Loaded"
-     PreviewMouseMove="TextBox_MouseMove"
-     PreviewMouseUp="TextBox_MouseUp"
-     PreviewMouseDown="TextBox_MouseDown">
+                                Background="Transparent"
+                                Foreground="{DynamicResource Color_TextEditorFg}"
+                                AcceptsReturn="True"
+                                FontSize="18"
+                                FontFamily="Segoe UI"
+                                TextWrapping="{Binding TextWrappingMode}"
+                                TextOptions.TextRenderingMode="ClearType"
+                                Margin="2"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                VerticalScrollBarVisibility="Auto"
+                                HorizontalScrollBarVisibility="Auto"
+                                CaretBrush="{DynamicResource Color_TextEditorCaret}"
+                                SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
+                                Name="txtEditor">
+
+                            <b:Interaction.Behaviors>
+                                <behaviors:TextBoxSelectionBehavior 
+                                    SelectionChangedCommand="{Binding SelectionChangedCommand}"
+                                    TextChangedCommand="{Binding TextChangedCommand}"
+                                    PreviewKeyDownCommand="{Binding PreviewKeyDownCommand}"/>
+                            </b:Interaction.Behaviors>
 
                             <TextBox.Resources>
-                                <!--ScrollViewer Style to maintain scrolling behavior-->
                                 <Style TargetType="ScrollViewer">
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ScrollViewer">
-                                                <Grid x:Name="PART_Root" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                                                <Grid x:Name="PART_Root">
+                                                    <b:Interaction.Behaviors>
+                                                        <behaviors:ScrollViewerBehavior 
+                                                            MouseWheelCommand="{Binding ScrollCommand}"/>
+                                                    </b:Interaction.Behaviors>
+
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
@@ -172,39 +188,38 @@
                                                     </Grid.RowDefinitions>
 
                                                     <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" 
-                                                   Grid.Row="0" 
-                                                   Grid.Column="0" 
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   CanContentScroll="True"
-                                                   CanHorizontallyScroll="True"
-                                                   CanVerticallyScroll="True"/>
+                                                                          Grid.Row="0" 
+                                                                          Grid.Column="0" 
+                                                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                          CanContentScroll="True"
+                                                                          CanHorizontallyScroll="True"
+                                                                          CanVerticallyScroll="True"/>
 
                                                     <ScrollBar x:Name="PART_VerticalScrollBar" 
-                                 Grid.Row="0" 
-                                 Grid.Column="1" 
-                                 Orientation="Vertical" 
-                                 Maximum="{TemplateBinding ScrollableHeight}" 
-                                 ViewportSize="{TemplateBinding ViewportHeight}"
-                                 Value="{TemplateBinding VerticalOffset}" 
-                                 Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                                 AutomationProperties.AutomationId="VerticalScrollBar"/>
+                                                             Grid.Row="0" 
+                                                             Grid.Column="1" 
+                                                             Orientation="Vertical" 
+                                                             Maximum="{TemplateBinding ScrollableHeight}" 
+                                                             ViewportSize="{TemplateBinding ViewportHeight}"
+                                                             Value="{TemplateBinding VerticalOffset}" 
+                                                             Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                                             AutomationProperties.AutomationId="VerticalScrollBar"/>
 
                                                     <ScrollBar x:Name="PART_HorizontalScrollBar" 
-                                 Grid.Row="1" 
-                                 Grid.Column="0" 
-                                 Orientation="Horizontal" 
-                                 Maximum="{TemplateBinding ScrollableWidth}" 
-                                 ViewportSize="{TemplateBinding ViewportWidth}"
-                                 Value="{TemplateBinding HorizontalOffset}" 
-                                 Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
-                                 AutomationProperties.AutomationId="HorizontalScrollBar"/>
+                                                             Grid.Row="1" 
+                                                             Grid.Column="0" 
+                                                             Orientation="Horizontal" 
+                                                             Maximum="{TemplateBinding ScrollableWidth}" 
+                                                             ViewportSize="{TemplateBinding ViewportWidth}"
+                                                             Value="{TemplateBinding HorizontalOffset}" 
+                                                             Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                             AutomationProperties.AutomationId="HorizontalScrollBar"/>
                                                 </Grid>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
 
-                                <!--ScrollBar Style-->
                                 <Style TargetType="ScrollBar">
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -218,14 +233,20 @@
                                                     </Grid.ColumnDefinitions>
                                                     <Track x:Name="PART_Track" IsEnabled="True">
                                                         <Track.Thumb>
-                                                            <Thumb x:Name="PART_Thumb" Background="{DynamicResource Color_TextEditorScrollBar}">
+                                                            <Thumb x:Name="PART_Thumb" 
+                                                                  Background="{DynamicResource Color_TextEditorScrollBar}">
                                                                 <Thumb.Effect>
                                                                     <DropShadowEffect/>
                                                                 </Thumb.Effect>
                                                             </Thumb>
                                                         </Track.Thumb>
                                                     </Track>
-                                                    <Rectangle Fill="Transparent" PreviewMouseDown="PART_ScrollbarRect_PreviewMouseDown"/>
+                                                    <Rectangle Fill="Transparent">
+                                                        <b:Interaction.Behaviors>
+                                                            <behaviors:ScrollBarDragBehavior
+                                                                PreviewMouseDownCommand="{Binding ScrollBarDragCommand}"/>
+                                                        </b:Interaction.Behaviors>
+                                                    </Rectangle>
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="Orientation" Value="Vertical">

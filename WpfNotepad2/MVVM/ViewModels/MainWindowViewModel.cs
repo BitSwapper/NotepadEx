@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using NotepadEx.MVVM.Behaviors;
 using NotepadEx.MVVM.Models;
@@ -47,6 +46,15 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand InsertTabCommand { get; private set; }
     public ICommand OpenFileLocationCommand { get; private set; }
 
+    public ICommand MouseMoveCommand { get; private set; }
+    public ICommand ResizeCommand { get; private set; }
+    public ICommand SelectionChangedCommand { get; private set; }
+    public ICommand TextChangedCommand { get; private set; }
+    public ICommand PreviewKeyDownCommand { get; private set; }
+    public ICommand ScrollCommand { get; private set; }
+    public ICommand ScrollBarDragCommand { get; private set; }
+    public ICommand OpenRecentCommand { get; private set; }
+    public ICommand MouseWheelCommand { get; private set; }
     public ObservableCollection<ThemeInfo> AvailableThemes => themeService.AvailableThemes;
     readonly ScrollBarBehavior scrollBarBehavior = new();
 
@@ -125,7 +133,8 @@ public class MainWindowViewModel : ViewModelBase
         this.SaveSettings = SaveSettings;
         document = new Document();
 
-
+        _scrollManager = new ScrollManager(textBox);
+        InitializeTextBoxEvents(textBox);
 
         InitializeCommands();
         UpdateMenuBarVisibility(Settings.Default.MenuBarAutoHide);
@@ -165,6 +174,16 @@ public class MainWindowViewModel : ViewModelBase
         OpenThemeEditorCommand = new RelayCommand(OnOpenThemeEditor);
         InsertTabCommand = new RelayCommand(InsertTab);
         OpenFileLocationCommand = new RelayCommand(OpenFileLocation);
+
+        MouseMoveCommand = new RelayCommand<double>(HandleMouseMovement);
+        ResizeCommand = new RelayCommand<Point>(p => HandleWindowResize(Application.Current.MainWindow, p));
+        SelectionChangedCommand = new RelayCommand<RoutedEventArgs>(HandleSelectionChanged);
+        TextChangedCommand = new RelayCommand<TextChangedEventArgs>(HandleTextChanged);
+        PreviewKeyDownCommand = new RelayCommand<KeyEventArgs>(HandlePreviewKeyDown);
+        ScrollCommand = new RelayCommand<MouseWheelEventArgs>(HandleScroll);
+        ScrollBarDragCommand = new RelayCommand<MouseButtonEventArgs>(HandleScrollBarDrag);
+        OpenRecentCommand = new RelayCommand<RoutedEventArgs>(HandleOpenRecent);
+        MouseWheelCommand = new RelayCommand<MouseWheelEventArgs>(HandleMouseWheel);
     }
 
     void OnThemeChange(ThemeInfo theme)
@@ -330,26 +349,7 @@ public class MainWindowViewModel : ViewModelBase
         LoadDocument(path);
     }
 
-    public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e) => scrollBarBehavior.StartDrag(rectangle, textBox, e);
 
-    public void HandleMouseScroll(object sender, MouseWheelEventArgs e)
-    {
-        var grid = (Grid)sender;
-        var scrollViewer = grid.TemplatedParent as ScrollViewer;
-        if(scrollViewer != null)
-        {
-            var verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
-            var newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
-
-            newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
-
-            scrollViewer.ScrollToVerticalOffset(newOffset);
-            if(verticalScrollBar != null)
-                verticalScrollBar.Value = newOffset;
-
-            e.Handled = true;
-        }
-    }
 
     void Copy()
     {
@@ -425,5 +425,163 @@ public class MainWindowViewModel : ViewModelBase
         var path = document.FilePath;
         if(File.Exists(path))
             Process.Start("explorer.exe", $"/select,\"{path}\"");
+    }
+
+    private void InitializeTextBoxEvents(TextBox textBox)
+    {
+        textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
+        textBox.TextChanged += TextBox_TextChanged;
+        textBox.SelectionChanged += TextBox_SelectionChanged;
+    }
+
+    private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        bool isNavigationKey = e.Key == Key.Left || e.Key == Key.Right ||
+                             e.Key == Key.Up || e.Key == Key.Down ||
+                             e.Key == Key.Home || e.Key == Key.End ||
+                             e.Key == Key.PageUp || e.Key == Key.PageDown;
+
+        if(isNavigationKey)
+        {
+            _scrollManager.HandleNavigationKey(e.Key, Keyboard.Modifiers);
+        }
+    }
+
+    private void TextBox_TextChanged(object sender, TextChangedEventArgs e) => _scrollManager.HandleTextChanged();
+
+    private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
+    {
+        _scrollManager.HandleSelectionChanged();
+
+        if(sender is TextBox textBox)
+        {
+            UpdateSelection(textBox.SelectionStart, textBox.SelectionLength);
+        }
+    }
+
+    public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e) => scrollBarBehavior.StartDrag(rectangle, textBox, e);
+
+    //public void HandleMouseScroll(object sender, MouseWheelEventArgs e)
+    //{
+    //    var grid = (Grid)sender;
+    //    var scrollViewer = grid.TemplatedParent as ScrollViewer;
+    //    if(scrollViewer != null)
+    //    {
+    //        var verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
+    //        var newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
+
+    //        newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
+
+    //        scrollViewer.ScrollToVerticalOffset(newOffset);
+    //        if(verticalScrollBar != null)
+    //            verticalScrollBar.Value = newOffset;
+
+    //        e.Handled = true;
+    //    }
+    //}
+
+    public void HandleMouseScroll(object sender, MouseWheelEventArgs e) => _scrollManager.HandleMouseWheel(sender, e);
+
+    private void HandleOpenRecent(RoutedEventArgs e)
+    {
+        if(e.OriginalSource is MenuItem menuItem && menuItem.Header is string path && path != "...")
+        {
+            OpenRecentFile(path);
+        }
+    }
+
+    private void HandleSelectionChanged(RoutedEventArgs e)
+    {
+        if(e.Source is TextBox textBox)
+        {
+            UpdateSelection(textBox.SelectionStart, textBox.SelectionLength);
+        }
+    }
+
+    private void HandleTextChanged(TextChangedEventArgs e) => _scrollManager.HandleTextChanged();
+
+    private void HandlePreviewKeyDown(KeyEventArgs e)
+    {
+        bool isNavigationKey = e.Key == Key.Left || e.Key == Key.Right ||
+                             e.Key == Key.Up || e.Key == Key.Down ||
+                             e.Key == Key.Home || e.Key == Key.End ||
+                             e.Key == Key.PageUp || e.Key == Key.PageDown;
+
+        if(isNavigationKey)
+        {
+            _scrollManager.HandleNavigationKey(e.Key, Keyboard.Modifiers);
+        }
+    }
+
+    private void HandleScroll(MouseWheelEventArgs e) => _scrollManager.HandleMouseWheel(e.Source, e);
+
+    private void HandleScrollBarDrag(MouseButtonEventArgs e)
+    {
+        if(e.Source is Rectangle rectangle && e.LeftButton == MouseButtonState.Pressed)
+        {
+            scrollBarBehavior.StartDrag(rectangle, textBox, e);
+        }
+    }
+
+    private void HandleMouseWheel(MouseWheelEventArgs e)
+    {
+        if(e.Source is Grid grid && grid.TemplatedParent is ScrollViewer scrollViewer)
+        {
+            _scrollManager?.HandleMouseWheel(scrollViewer, e);
+        }
+    }
+
+    public void Cleanup()
+    {
+        // Cleanup commands
+        (MouseMoveCommand as IDisposable)?.Dispose();
+        (ResizeCommand as IDisposable)?.Dispose();
+        (SelectionChangedCommand as IDisposable)?.Dispose();
+        (TextChangedCommand as IDisposable)?.Dispose();
+        (PreviewKeyDownCommand as IDisposable)?.Dispose();
+        (ScrollCommand as IDisposable)?.Dispose();
+        (ScrollBarDragCommand as IDisposable)?.Dispose();
+        (NewCommand as IDisposable)?.Dispose();
+        (OpenCommand as IDisposable)?.Dispose();
+        (SaveCommand as IDisposable)?.Dispose();
+        (SaveAsCommand as IDisposable)?.Dispose();
+        (PrintCommand as IDisposable)?.Dispose();
+        (ExitCommand as IDisposable)?.Dispose();
+        (ToggleWordWrapCommand as IDisposable)?.Dispose();
+        (ToggleMenuBarCommand as IDisposable)?.Dispose();
+        (ToggleInfoBarCommand as IDisposable)?.Dispose();
+        (CopyCommand as IDisposable)?.Dispose();
+        (CutCommand as IDisposable)?.Dispose();
+        (PasteCommand as IDisposable)?.Dispose();
+        (ChangeThemeCommand as IDisposable)?.Dispose();
+        (OpenThemeEditorCommand as IDisposable)?.Dispose();
+        (InsertTabCommand as IDisposable)?.Dispose();
+        (OpenFileLocationCommand as IDisposable)?.Dispose();
+        (OpenRecentCommand as IDisposable)?.Dispose();
+
+        // Cleanup event handlers if any were directly subscribed
+        if(textBox != null)
+        {
+            textBox.PreviewKeyDown -= TextBox_PreviewKeyDown;
+            textBox.TextChanged -= TextBox_TextChanged;
+            textBox.SelectionChanged -= TextBox_SelectionChanged;
+        }
+
+        // Cleanup services if they implement IDisposable
+        (windowService as IDisposable)?.Dispose();
+        (documentService as IDisposable)?.Dispose();
+        (themeService as IDisposable)?.Dispose();
+
+        // Cleanup ScrollManager
+        (_scrollManager as IDisposable)?.Dispose();
+
+        // Clear collections if any
+        AvailableThemes?.Clear();
+
+        // Cleanup document if needed
+        (document as IDisposable)?.Dispose();
+
+        // Save settings one last time
+        SaveSettings?.Invoke();
     }
 }

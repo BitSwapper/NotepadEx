@@ -16,7 +16,7 @@ public partial class CustomTitleBar : UserControl
         var titleBarViewModel = new CustomTitleBarViewModel(window, isResizable);
         titleBarViewModel.Initialize(windowName, showMinimize, showMaximize, showExit, onClose);
         titleBarViewModel.IconImage = new BitmapImage(new Uri(DirectoryUtil.ImagePath_MainIcon.ToUriPath()));
-        
+
         return titleBarViewModel;
     }
 }
