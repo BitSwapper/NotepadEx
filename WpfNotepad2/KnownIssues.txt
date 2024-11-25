@@ -2,5 +2,6 @@
 text going off screen while typing / pasting often will not scroll into view
 ctrl + a for large files takes significantly long
 
+
 // FIXED | editing a theme, not saving, closing theme editor, opening theme editor - reverts changes
 Should prompt user for saving theme if theme has been edited and closing the actual application (not theme window it self)

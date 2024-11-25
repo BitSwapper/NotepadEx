@@ -150,17 +150,32 @@ public class ScrollManager
 
     public void HandleMouseWheel(object sender, MouseWheelEventArgs e)
     {
-        var grid = (Grid)sender;
-        var scrollViewer = grid.TemplatedParent as ScrollViewer;
-        if(scrollViewer != null)
+        if(sender is TextBox textBox)
         {
-            var verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
-            var newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
-            newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
-            scrollViewer.ScrollToVerticalOffset(newOffset);
-            if(verticalScrollBar != null)
-                verticalScrollBar.Value = newOffset;
-            e.Handled = true;
+            var scrollViewer = FindScrollViewer(textBox);
+            if(scrollViewer != null)
+            {
+                // Find the grid inside ScrollViewer template
+                var grid = scrollViewer.Template.FindName("PART_Root", scrollViewer) as Grid;
+                if(grid != null)
+                {
+                    var verticalScrollBar = grid.FindName("PART_VerticalScrollBar") as ScrollBar;
+                    var newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
+                    newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
+                    scrollViewer.ScrollToVerticalOffset(newOffset);
+                    if(verticalScrollBar != null)
+                        verticalScrollBar.Value = newOffset;
+                }
+                e.Handled = true;
+            }
         }
+    }
+
+    private ScrollViewer FindScrollViewer(TextBox textBox)
+    {
+        if(textBox == null) return null;
+
+        // Try to find ScrollViewer in the visual tree
+        return VisualTreeUtil.FindVisualChildren<ScrollViewer>(textBox).FirstOrDefault();
     }
 }
