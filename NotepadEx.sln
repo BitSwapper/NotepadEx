@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotepadEx", "WpfNotepad2\NotepadEx.csproj", "{3BA2B24D-247A-4008-AF69-BEF3685D4F7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotepadEx", "NotepadEx\NotepadEx.csproj", "{3BA2B24D-247A-4008-AF69-BEF3685D4F7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
