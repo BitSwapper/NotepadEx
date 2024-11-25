@@ -20,8 +20,8 @@ public class ScrollViewerBehavior : Behavior<Grid>
         set => SetValue(MouseWheelCommandProperty, value);
     }
 
-    private ScrollViewer _scrollViewer;
-    private ScrollBar _verticalScrollBar;
+    ScrollViewer _scrollViewer;
+    ScrollBar _verticalScrollBar;
 
     protected override void OnAttached()
     {
@@ -43,7 +43,7 @@ public class ScrollViewerBehavior : Behavior<Grid>
         base.OnDetaching();
     }
 
-    private void InitializeScrollComponents()
+    void InitializeScrollComponents()
     {
         if(AssociatedObject.TemplatedParent is ScrollViewer scrollViewer)
         {
@@ -52,7 +52,7 @@ public class ScrollViewerBehavior : Behavior<Grid>
         }
     }
 
-    private void Grid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    void Grid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
         if(MouseWheelCommand?.CanExecute(e) == true)
         {

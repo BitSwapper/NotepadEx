@@ -22,7 +22,7 @@ public class ScrollBarDragBehavior : BehaviorBase<Rectangle>
         set => SetValue(PreviewMouseDownCommandProperty, value);
     }
 
-    private ScrollBar _parentScrollBar;
+    ScrollBar _parentScrollBar;
 
     protected override void OnAttached()
     {
@@ -40,7 +40,7 @@ public class ScrollBarDragBehavior : BehaviorBase<Rectangle>
         base.OnDetaching();
     }
 
-    private void Rectangle_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    void Rectangle_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
         if(PreviewMouseDownCommand?.CanExecute(e) == true)
         {
@@ -70,7 +70,7 @@ public class ScrollBarDragBehavior : BehaviorBase<Rectangle>
         }
     }
 
-    private ScrollBar FindParentScrollBar()
+    ScrollBar FindParentScrollBar()
     {
         DependencyObject current = AssociatedObject;
         while(current != null && !(current is ScrollBar))

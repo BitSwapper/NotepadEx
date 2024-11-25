@@ -27,7 +27,7 @@ public class MainWindowViewModel : ViewModelBase
     double menuBarHeight;
     double infoBarHeight;
     bool isMenuBarEnabled;
-    private readonly ScrollManager _scrollManager;
+    readonly ScrollManager _scrollManager;
 
     public ICommand NewCommand { get; private set; }
     public ICommand OpenCommand { get; private set; }
@@ -427,14 +427,14 @@ public class MainWindowViewModel : ViewModelBase
             Process.Start("explorer.exe", $"/select,\"{path}\"");
     }
 
-    private void InitializeTextBoxEvents(TextBox textBox)
+    void InitializeTextBoxEvents(TextBox textBox)
     {
         textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
         textBox.TextChanged += TextBox_TextChanged;
         textBox.SelectionChanged += TextBox_SelectionChanged;
     }
 
-    private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+    void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
     {
         bool isNavigationKey = e.Key == Key.Left || e.Key == Key.Right ||
                              e.Key == Key.Up || e.Key == Key.Down ||
@@ -447,9 +447,9 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void TextBox_TextChanged(object sender, TextChangedEventArgs e) => _scrollManager.HandleTextChanged();
+    void TextBox_TextChanged(object sender, TextChangedEventArgs e) => _scrollManager.HandleTextChanged();
 
-    private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
+    void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
     {
         _scrollManager.HandleSelectionChanged();
 
@@ -482,7 +482,7 @@ public class MainWindowViewModel : ViewModelBase
 
     public void HandleMouseScroll(object sender, MouseWheelEventArgs e) => _scrollManager.HandleMouseWheel(sender, e);
 
-    private void HandleOpenRecent(RoutedEventArgs e)
+    void HandleOpenRecent(RoutedEventArgs e)
     {
         if(e.OriginalSource is MenuItem menuItem && menuItem.Header is string path && path != "...")
         {
@@ -490,7 +490,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void HandleSelectionChanged(RoutedEventArgs e)
+    void HandleSelectionChanged(RoutedEventArgs e)
     {
         if(e.Source is TextBox textBox)
         {
@@ -498,9 +498,9 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void HandleTextChanged(TextChangedEventArgs e) => _scrollManager.HandleTextChanged();
+    void HandleTextChanged(TextChangedEventArgs e) => _scrollManager.HandleTextChanged();
 
-    private void HandlePreviewKeyDown(KeyEventArgs e)
+    void HandlePreviewKeyDown(KeyEventArgs e)
     {
         bool isNavigationKey = e.Key == Key.Left || e.Key == Key.Right ||
                              e.Key == Key.Up || e.Key == Key.Down ||
@@ -513,9 +513,9 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void HandleScroll(MouseWheelEventArgs e) => _scrollManager.HandleMouseWheel(e.Source, e);
+    void HandleScroll(MouseWheelEventArgs e) => _scrollManager.HandleMouseWheel(e.Source, e);
 
-    private void HandleScrollBarDrag(MouseButtonEventArgs e)
+    void HandleScrollBarDrag(MouseButtonEventArgs e)
     {
         if(e.Source is Rectangle rectangle && e.LeftButton == MouseButtonState.Pressed)
         {
@@ -523,7 +523,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void HandleMouseWheel(MouseWheelEventArgs e)
+    void HandleMouseWheel(MouseWheelEventArgs e)
     {
         if(e.Source is Grid grid && grid.TemplatedParent is ScrollViewer scrollViewer)
         {

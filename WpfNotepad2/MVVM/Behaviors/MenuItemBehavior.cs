@@ -34,7 +34,7 @@ public class MenuItemBehavior : Behavior<MenuItem>
         base.OnDetaching();
     }
 
-    private void MenuItem_Click(object sender, RoutedEventArgs e)
+    void MenuItem_Click(object sender, RoutedEventArgs e)
     {
         // Only handle clicks from child menu items (not the parent "Open Recent" item)
         if(e.OriginalSource is MenuItem menuItem &&

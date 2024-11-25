@@ -4,8 +4,8 @@ using System.Windows.Controls;
 
 namespace NotepadEx.MVVM.Models; public class Document
 {
-    private string content = string.Empty;
-    private string[] cachedLines = Array.Empty<string>();
+    string content = string.Empty;
+    string[] cachedLines = Array.Empty<string>();
     public int SelectionStart { get; set; }
     public int SelectionLength { get; set; }
 
@@ -29,7 +29,7 @@ namespace NotepadEx.MVVM.Models; public class Document
     public int CaretLineIndex => GetColumnIndexInLine(SelectionStart);
     public int TotalLines => cachedLines.Length;
 
-    private void UpdateCachedLines() => cachedLines = content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+    void UpdateCachedLines() => cachedLines = content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
     public int GetLineNumberFromPosition(int position)
     {

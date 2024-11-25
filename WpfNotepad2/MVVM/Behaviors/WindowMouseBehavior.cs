@@ -39,7 +39,7 @@ public class WindowMouseMoveBehavior : BehaviorBase<Window>
         }
     }
 
-    private void Window_MouseMove(object sender, MouseEventArgs e)
+    void Window_MouseMove(object sender, MouseEventArgs e)
     {
         var window = AssociatedObject;
         var position = e.GetPosition(window);

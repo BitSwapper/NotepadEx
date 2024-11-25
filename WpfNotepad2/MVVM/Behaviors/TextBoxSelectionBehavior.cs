@@ -11,13 +11,13 @@ namespace NotepadEx.MVVM.Behaviors;
 
 public class TextBoxSelectionBehavior : Behavior<TextBox>
 {
-    private bool isMouseDown = false;
-    private bool isScrollbarDragging = false;
-    private DispatcherTimer scrollTimer;
-    private const double ScrollSpeed = 75;
-    private ScrollViewer scrollViewer;
-    private ScrollBar verticalScrollBar;
-    private ScrollBar horizontalScrollBar;
+    bool isMouseDown = false;
+    bool isScrollbarDragging = false;
+    DispatcherTimer scrollTimer;
+    const double ScrollSpeed = 75;
+    ScrollViewer scrollViewer;
+    ScrollBar verticalScrollBar;
+    ScrollBar horizontalScrollBar;
 
     #region Dependency Properties
     public static readonly DependencyProperty SelectionChangedCommandProperty =
@@ -104,9 +104,9 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         base.OnDetaching();
     }
 
-    private void TextBox_Loaded(object sender, RoutedEventArgs e) => InitializeScrollViewer();
+    void TextBox_Loaded(object sender, RoutedEventArgs e) => InitializeScrollViewer();
 
-    private void InitializeScrollViewer()
+    void InitializeScrollViewer()
     {
         try
         {
@@ -139,7 +139,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+    void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
     {
         if(PreviewKeyDownCommand?.CanExecute(e) == true)
         {
@@ -147,7 +147,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+    void TextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         if(TextChangedCommand?.CanExecute(e) == true)
         {
@@ -155,7 +155,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+    void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
     {
         isMouseDown = true;
         if(!scrollTimer.IsEnabled && IsSelecting)
@@ -165,13 +165,13 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
+    void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
     {
         isMouseDown = false;
         StopScrolling();
     }
 
-    private void TextBox_MouseMove(object sender, MouseEventArgs e)
+    void TextBox_MouseMove(object sender, MouseEventArgs e)
     {
         if(IsSelecting && scrollViewer != null)
         {
@@ -191,7 +191,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
+    void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
     {
         if(SelectionChangedCommand?.CanExecute(e) == true)
         {
@@ -199,11 +199,11 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void ScrollBar_PreviewMouseDown(object sender, MouseButtonEventArgs e) => isScrollbarDragging = true;
+    void ScrollBar_PreviewMouseDown(object sender, MouseButtonEventArgs e) => isScrollbarDragging = true;
 
-    private void ScrollBar_PreviewMouseUp(object sender, MouseButtonEventArgs e) => isScrollbarDragging = false;
+    void ScrollBar_PreviewMouseUp(object sender, MouseButtonEventArgs e) => isScrollbarDragging = false;
 
-    private void VerticalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    void VerticalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if(isScrollbarDragging && scrollViewer != null)
         {
@@ -211,7 +211,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void ScrollTimer_Tick(object sender, EventArgs e)
+    void ScrollTimer_Tick(object sender, EventArgs e)
     {
         if(!IsSelecting || isScrollbarDragging || scrollViewer == null) return;
 
@@ -231,7 +231,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void StartScrolling(double speed)
+    void StartScrolling(double speed)
     {
         if(!scrollTimer.IsEnabled)
         {
@@ -240,8 +240,8 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
-    private void StopScrolling() => scrollTimer?.Stop();
+    void StopScrolling() => scrollTimer?.Stop();
 
-    private bool IsSelecting => AssociatedObject.SelectionLength > 0 && isMouseDown;
+    bool IsSelecting => AssociatedObject.SelectionLength > 0 && isMouseDown;
 }
 

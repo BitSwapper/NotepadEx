@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -10,20 +9,20 @@ namespace NotepadEx.MVVM.ViewModels;
 
 public class ScrollManager
 {
-    private ScrollViewer _scrollViewer;
-    private ScrollBar _verticalScrollBar;
-    private ScrollBar _horizontalScrollBar;
-    private bool isScrollbarDragging;
-    private readonly TextBox _textBox;
-    private const double PADDING = 20;
-    private const double SCROLL_ZONE_PERCENTAGE  = 0.25; // Height of the auto-scroll zones at top/bottom
-    private bool _isInitialized;
-    private bool isMouseDown;
-    private DispatcherTimer _scrollTimer;
-    private double _scrollSpeed = 5;
-    private bool isAutoScrolling;
+    ScrollViewer _scrollViewer;
+    ScrollBar _verticalScrollBar;
+    ScrollBar _horizontalScrollBar;
+    bool isScrollbarDragging;
+    readonly TextBox _textBox;
+    const double PADDING = 20;
+    const double SCROLL_ZONE_PERCENTAGE  = 0.25; // Height of the auto-scroll zones at top/bottom
+    bool _isInitialized;
+    bool isMouseDown;
+    DispatcherTimer _scrollTimer;
+    double _scrollSpeed = 5;
+    bool isAutoScrolling;
 
-    private bool _isSelecting => _textBox.SelectionLength > 0 && isMouseDown;
+    bool _isSelecting => _textBox.SelectionLength > 0 && isMouseDown;
 
     public ScrollManager(TextBox textBox)
     {
@@ -33,7 +32,7 @@ public class ScrollManager
         InitializeMouseEvents();
     }
 
-    private void ScrollTimer_Tick(object sender, EventArgs e)
+    void ScrollTimer_Tick(object sender, EventArgs e)
     {
         if(!_isSelecting || isScrollbarDragging) return;
 
@@ -51,7 +50,7 @@ public class ScrollManager
         }
     }
 
-    private void TextBox_MouseMove(object sender, MouseEventArgs e)
+    void TextBox_MouseMove(object sender, MouseEventArgs e)
     {
         if(_isSelecting)
         {
@@ -82,7 +81,7 @@ public class ScrollManager
     }
 
 
-    private void ScrollToCaretPosition(bool ensureVisible = false)
+    void ScrollToCaretPosition(bool ensureVisible = false)
     {
         // Don't interfere with selection scrolling
         if(_scrollViewer == null || isScrollbarDragging || isAutoScrolling || _isSelecting) return;
@@ -90,20 +89,20 @@ public class ScrollManager
         // ... rest of ScrollToCaretPosition implementation ...
     }
 
-    private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+    void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
     {
         isMouseDown = true;
         isAutoScrolling = false;
     }
 
-    private void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
+    void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
     {
         isMouseDown = false;
         isAutoScrolling = false;
         StopScrolling();
     }
 
-    private void StartScrolling(double speed)
+    void StartScrolling(double speed)
     {
         _scrollTimer.Tag = speed;
         if(!_scrollTimer.IsEnabled)
@@ -112,13 +111,10 @@ public class ScrollManager
         }
     }
 
-    private void StopScrolling()
-    {
-        _scrollTimer.Stop();
-    }
-    
+    void StopScrolling() => _scrollTimer.Stop();
 
-    private void InitializeTimer()
+
+    void InitializeTimer()
     {
         _scrollTimer = new DispatcherTimer
         {
@@ -127,15 +123,15 @@ public class ScrollManager
         _scrollTimer.Tick += ScrollTimer_Tick;
     }
 
-    private void InitializeMouseEvents()
+    void InitializeMouseEvents()
     {
         _textBox.PreviewMouseDown += TextBox_MouseDown;
         _textBox.PreviewMouseUp += TextBox_MouseUp;
         _textBox.PreviewMouseMove += TextBox_MouseMove;
     }
 
-   
-    private void TextBox_Loaded(object sender, RoutedEventArgs e)
+
+    void TextBox_Loaded(object sender, RoutedEventArgs e)
     {
         if(!_isInitialized)
         {
@@ -144,7 +140,7 @@ public class ScrollManager
         }
     }
 
-    private void InitializeScrollViewer()
+    void InitializeScrollViewer()
     {
         _scrollViewer = VisualTreeUtil.FindVisualChildren<ScrollViewer>(_textBox).First();
         var grid = _scrollViewer.Template.FindName("PART_Root", _scrollViewer) as Grid;
@@ -177,7 +173,7 @@ public class ScrollManager
 
     public void HandleSelectionChanged() => ScrollToCaretPosition(false);
 
-    private bool IsAtStartOfLine()
+    bool IsAtStartOfLine()
     {
         if(_textBox.CaretIndex == 0) return true;
         string text = _textBox.Text;
@@ -185,7 +181,7 @@ public class ScrollManager
         return index > 0 && text[index - 1] == '\n';
     }
 
-    private void UpdateScrollBars()
+    void UpdateScrollBars()
     {
         if(_verticalScrollBar != null)
         {
@@ -220,7 +216,7 @@ public class ScrollManager
         }
     }
 
-    private ScrollViewer FindScrollViewer(TextBox textBox)
+    ScrollViewer FindScrollViewer(TextBox textBox)
     {
         if(textBox == null) return null;
 
