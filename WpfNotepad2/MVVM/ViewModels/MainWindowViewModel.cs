@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using NotepadEx.MVVM.Behaviors;
 using NotepadEx.MVVM.Models;
+using NotepadEx.MVVM.View;
 using NotepadEx.Properties;
 using NotepadEx.Services.Interfaces;
 using NotepadEx.Util;
@@ -21,6 +22,7 @@ public class MainWindowViewModel : ViewModelBase
     readonly WindowState prevWindowState;
     readonly IThemeService themeService;
     readonly IFontService fontService;
+    FindAndReplaceWindow findAndReplaceWindow;
     readonly TextBox textBox;
     readonly MenuItem menuItemFileDropdown;
     readonly Action SaveSettings;
@@ -45,6 +47,7 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand ChangeThemeCommand { get; private set; }
     public ICommand OpenThemeEditorCommand { get; private set; }
     public ICommand OpenFontEditorCommand { get; private set; }
+    public ICommand OpenFindReplaceCommand { get; private set; }
     public ICommand InsertTabCommand { get; private set; }
     public ICommand OpenFileLocationCommand { get; private set; }
 
@@ -134,6 +137,7 @@ public class MainWindowViewModel : ViewModelBase
         this.menuItemFileDropdown = menuItemFileDropdown;
         this.textBox = textBox;
         this.SaveSettings = SaveSettings;
+        findAndReplaceWindow = new(textBox);
         document = new Document();
 
         _scrollManager = new ScrollManager(textBox);
@@ -161,6 +165,13 @@ public class MainWindowViewModel : ViewModelBase
 
     void OnOpenFontEditor() => fontService.OpenFontEditor();
 
+    void OnOpenFindReplaceEditor()
+    {
+        findAndReplaceWindow = new(textBox);
+        findAndReplaceWindow.Show();
+    }
+
+
     void InitializeCommands()
     {
         NewCommand = new RelayCommand(NewDocument);
@@ -178,6 +189,7 @@ public class MainWindowViewModel : ViewModelBase
         ChangeThemeCommand = new RelayCommand<ThemeInfo>(OnThemeChange);
         OpenThemeEditorCommand = new RelayCommand(OnOpenThemeEditor);
         OpenFontEditorCommand = new RelayCommand(OnOpenFontEditor);
+        OpenFindReplaceCommand = new RelayCommand(OnOpenFindReplaceEditor);
         InsertTabCommand = new RelayCommand(InsertTab);
         OpenFileLocationCommand = new RelayCommand(OpenFileLocation);
 

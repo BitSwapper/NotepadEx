@@ -89,6 +89,8 @@
                         </MenuItem>
 
                         <MenuItem Header="Edit" Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem Header="Find and Replace..." Command="{Binding OpenFindReplaceCommand}" Foreground="{DynamicResource Color_MenuItemFg}"/>
+
                             <MenuItem Header="Copy" 
                                     Command="{Binding CopyCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
@@ -145,23 +147,23 @@
 
                     <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
                         <TextBox Text="{Binding DocumentContent, UpdateSourceTrigger=PropertyChanged}"
-        Background="Transparent"
-        Foreground="{DynamicResource Color_TextEditorFg}"
-        AcceptsReturn="True"
-        FontFamily="{DynamicResource Font_Family}"
-        FontSize="{DynamicResource Font_Size}"
-        FontStyle="{DynamicResource Font_Style}"
-        FontWeight="{DynamicResource Font_Weight}"
-        TextWrapping="{Binding TextWrappingMode}"
-        TextOptions.TextRenderingMode="ClearType"
-        Margin="2"
-        BorderBrush="Transparent"
-        BorderThickness="0"
-        VerticalScrollBarVisibility="Auto"
-        HorizontalScrollBarVisibility="Auto"
-        CaretBrush="{DynamicResource Color_TextEditorCaret}"
-        SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
-        Name="txtEditor">
+                                 Background="Transparent"
+                                 Foreground="{DynamicResource Color_TextEditorFg}"
+                                 AcceptsReturn="True"
+                                 FontFamily="{DynamicResource Font_Family}"
+                                 FontSize="{DynamicResource Font_Size}"
+                                 FontStyle="{DynamicResource Font_Style}"
+                                 FontWeight="{DynamicResource Font_Weight}"
+                                 TextWrapping="{Binding TextWrappingMode}"
+                                 TextOptions.TextRenderingMode="ClearType"
+                                 Margin="2"
+                                 BorderBrush="Transparent"
+                                 BorderThickness="0"
+                                 VerticalScrollBarVisibility="Auto"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 CaretBrush="{DynamicResource Color_TextEditorCaret}"
+                                 SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
+                                 Name="txtEditor">
 
                             <b:Interaction.Behaviors>
                                 <behaviors:TextBoxSelectionBehavior 

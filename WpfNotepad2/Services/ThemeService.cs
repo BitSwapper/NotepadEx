@@ -81,6 +81,11 @@ public class ThemeService : IThemeService
             ApplyThemeObject(theme.themeObj_MenuItemSelectedBorder, UIConstants.Color_MenuItemSelectedBorder);
             ApplyThemeObject(theme.themeObj_MenuItemHighlightBg, UIConstants.Color_MenuItemHighlightBg);
             ApplyThemeObject(theme.themeObj_MenuItemHighlightBorder, UIConstants.Color_MenuItemHighlightBorder);
+
+            ApplyThemeObject(theme.themeObj_ToolWindowBg, UIConstants.Color_ToolWindowBg);
+            ApplyThemeObject(theme.themeObj_ToolWindowButtonBg, UIConstants.Color_ToolWindowButtonBg);
+            ApplyThemeObject(theme.themeObj_ToolWindowButtonBorder, UIConstants.Color_ToolWindowButtonBorder);
+            ApplyThemeObject(theme.themeObj_ToolWindowFont, UIConstants.Color_ToolWindowFont);
         }
         catch(Exception ex)
         {
