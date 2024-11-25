@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Input;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Services.Interfaces;
@@ -47,6 +49,10 @@ public partial class FontEditorWindow : Window
         };
 
         AvailableFonts = _fontService.AvailableFonts;
+
+        FontSizeTextBox.Text = _workingCopy.FontSize.ToString();
+        FontStyleComboBox.SelectedValue = _workingCopy.FontStyle;
+        FontWeightComboBox.SelectedValue = _workingCopy.FontWeight;
     }
 
     private void ApplyButton_Click(object sender, RoutedEventArgs e)

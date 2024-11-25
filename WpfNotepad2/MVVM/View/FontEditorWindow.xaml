@@ -52,30 +52,15 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
+                    
                     <TextBlock Text="Font Size" 
-                             Foreground="{DynamicResource Color_TextEditorFg}" 
-                             Margin="0,0,0,5"/>
-                    <ComboBox x:Name="FontSizeComboBox"
-                            SelectedValue="{Binding CurrentFont.FontSize}"
-                            Height="30"
-                            Margin="0,0,0,15">
-                        <ComboBoxItem Content="8"/>
-                        <ComboBoxItem Content="9"/>
-                        <ComboBoxItem Content="10"/>
-                        <ComboBoxItem Content="11"/>
-                        <ComboBoxItem Content="12"/>
-                        <ComboBoxItem Content="14"/>
-                        <ComboBoxItem Content="16"/>
-                        <ComboBoxItem Content="18"/>
-                        <ComboBoxItem Content="20"/>
-                        <ComboBoxItem Content="22"/>
-                        <ComboBoxItem Content="24"/>
-                        <ComboBoxItem Content="26"/>
-                        <ComboBoxItem Content="28"/>
-                        <ComboBoxItem Content="36"/>
-                        <ComboBoxItem Content="48"/>
-                        <ComboBoxItem Content="72"/>
-                    </ComboBox>
+                               Foreground="{DynamicResource Color_TextEditorFg}" 
+                               Margin="0,0,0,5"/>
+                    
+                    <TextBox x:Name="FontSizeTextBox"
+                             Text="{Binding CurrentFont.FontSize, UpdateSourceTrigger=PropertyChanged}"
+                             Height="30"
+                             Margin="0,0,0,15"/>
                 </StackPanel>
 
                 <!-- Right Column -->
@@ -84,38 +69,38 @@
                              Foreground="{DynamicResource Color_TextEditorFg}" 
                              Margin="0,0,0,5"/>
                     <ComboBox x:Name="FontStyleComboBox"
-                            SelectedValue="{Binding CurrentFont.FontStyle}"
-                            Height="30"
-                            Margin="0,0,0,15">
-                        <ComboBoxItem Content="Normal"/>
-                        <ComboBoxItem Content="Italic"/>
+                              SelectedValue="{Binding CurrentFont.FontStyle}"
+                              Height="30"
+                              Margin="0,0,0,15">
+                        <FontStyle>Normal</FontStyle>
+                        <FontStyle>Italic</FontStyle>
                     </ComboBox>
 
                     <TextBlock Text="Font Weight" 
                              Foreground="{DynamicResource Color_TextEditorFg}" 
                              Margin="0,0,0,5"/>
                     <ComboBox x:Name="FontWeightComboBox"
-                            SelectedValue="{Binding CurrentFont.FontWeight}"
-                            Height="30"
-                            Margin="0,0,0,15">
-                        <ComboBoxItem Content="Light"/>
-                        <ComboBoxItem Content="Normal"/>
-                        <ComboBoxItem Content="Medium"/>
-                        <ComboBoxItem Content="Bold"/>
+                              SelectedValue="{Binding CurrentFont.FontWeight}"
+                              Height="30"
+                              Margin="0,0,0,15">
+                        <FontWeight>Light</FontWeight>
+                        <FontWeight>Normal</FontWeight>
+                        <FontWeight>Medium</FontWeight>
+                        <FontWeight>Bold</FontWeight>
                     </ComboBox>
                 </StackPanel>
 
                 <!-- Text Decorations -->
                 <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                          Orientation="Horizontal" 
-                          Margin="0,15,0,0">
+                            Orientation="Horizontal" 
+                            Margin="0,15,0,0">
                     <CheckBox Content="Underline" 
-                            IsChecked="{Binding CurrentFont.IsUnderline}"
-                            Foreground="{DynamicResource Color_TextEditorFg}"
-                            Margin="0,0,15,0"/>
+                              IsChecked="{Binding CurrentFont.IsUnderline}"
+                              Foreground="{DynamicResource Color_TextEditorFg}"
+                              Margin="0,0,15,0"/>
                     <CheckBox Content="Strikethrough" 
-                            IsChecked="{Binding CurrentFont.IsStrikethrough}"
-                            Foreground="{DynamicResource Color_TextEditorFg}"/>
+                              IsChecked="{Binding CurrentFont.IsStrikethrough}"
+                              Foreground="{DynamicResource Color_TextEditorFg}"/>
                 </StackPanel>
 
                 <!-- Preview -->
@@ -123,7 +108,7 @@
                         BorderBrush="{DynamicResource Color_BorderColor}"
                         BorderThickness="1"
                         Margin="0,50,0,0">
-                    <TextBlock Text="AaBbCcDdEeFfGg 12345" 
+                    <TextBlock Text="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 1234567890" 
                              Margin="10"
                              FontFamily="{Binding CurrentFont.FontFamily}"
                              FontSize="{Binding CurrentFont.FontSize}"
