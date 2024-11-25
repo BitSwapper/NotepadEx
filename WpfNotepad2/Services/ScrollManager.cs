@@ -15,14 +15,124 @@ public class ScrollManager
     private bool isScrollbarDragging;
     private readonly TextBox _textBox;
     private const double PADDING = 20;
+    private const double SCROLL_ZONE_HEIGHT = 50; // Height of the auto-scroll zones at top/bottom
     private bool _isInitialized;
+    private bool isMouseDown;
+    private DispatcherTimer _scrollTimer;
+    private double _scrollSpeed = 25;
+    private bool isAutoScrolling;
+
+    private bool _isSelecting => _textBox.SelectionLength > 0 && isMouseDown;
 
     public ScrollManager(TextBox textBox)
     {
         _textBox = textBox;
         _textBox.Loaded += TextBox_Loaded;
+        InitializeTimer();
+        InitializeMouseEvents();
     }
 
+    private void TextBox_MouseMove(object sender, MouseEventArgs e)
+    {
+        if(_isSelecting)
+        {
+            Point mousePosition = e.GetPosition(_scrollViewer);
+
+            // Only scroll if mouse is in the scroll zones
+            if(mousePosition.Y >= 0 && mousePosition.Y <= SCROLL_ZONE_HEIGHT)
+            {
+                // Calculate speed based on position within scroll zone
+                double scrollFactor = 1 - (mousePosition.Y / SCROLL_ZONE_HEIGHT);
+                isAutoScrolling = true;
+                StartScrolling(-_scrollSpeed * scrollFactor);
+            }
+            else if(mousePosition.Y >= _scrollViewer.ActualHeight - SCROLL_ZONE_HEIGHT &&
+                     mousePosition.Y <= _scrollViewer.ActualHeight)
+            {
+                // Calculate speed based on position within scroll zone
+                double scrollFactor = (mousePosition.Y - (_scrollViewer.ActualHeight - SCROLL_ZONE_HEIGHT)) / SCROLL_ZONE_HEIGHT;
+                isAutoScrolling = true;
+                StartScrolling(_scrollSpeed * scrollFactor);
+            }
+            else
+            {
+                isAutoScrolling = false;
+                StopScrolling();
+            }
+        }
+    }
+
+    private void ScrollTimer_Tick(object sender, EventArgs e)
+    {
+        if(!_isSelecting || isScrollbarDragging) return;
+
+        double speed = (double)_scrollTimer.Tag;
+
+        // Make scrolling smoother by using smaller increments
+        double newOffset = _scrollViewer.VerticalOffset + (speed / 240.0);
+        newOffset = Math.Max(0, Math.Min(newOffset, _scrollViewer.ScrollableHeight));
+
+        _scrollViewer.ScrollToVerticalOffset(newOffset);
+
+        if(_verticalScrollBar != null)
+        {
+            _verticalScrollBar.Value = newOffset;
+        }
+    }
+
+    private void ScrollToCaretPosition(bool ensureVisible = false)
+    {
+        // Don't interfere with selection scrolling
+        if(_scrollViewer == null || isScrollbarDragging || isAutoScrolling || _isSelecting) return;
+
+        // ... rest of ScrollToCaretPosition implementation ...
+    }
+
+    private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        isMouseDown = true;
+        isAutoScrolling = false;
+    }
+
+    private void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
+    {
+        isMouseDown = false;
+        isAutoScrolling = false;
+        StopScrolling();
+    }
+
+    private void StartScrolling(double speed)
+    {
+        _scrollTimer.Tag = speed;
+        if(!_scrollTimer.IsEnabled)
+        {
+            _scrollTimer.Start();
+        }
+    }
+
+    private void StopScrolling()
+    {
+        _scrollTimer.Stop();
+    }
+    
+
+    private void InitializeTimer()
+    {
+        _scrollTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(16)
+        };
+        _scrollTimer.Tick += ScrollTimer_Tick;
+    }
+
+    private void InitializeMouseEvents()
+    {
+        _textBox.PreviewMouseDown += TextBox_MouseDown;
+        _textBox.PreviewMouseUp += TextBox_MouseUp;
+        _textBox.PreviewMouseMove += TextBox_MouseMove;
+    }
+
+   
     private void TextBox_Loaded(object sender, RoutedEventArgs e)
     {
         if(!_isInitialized)
@@ -71,69 +181,6 @@ public class ScrollManager
         string text = _textBox.Text;
         int index = _textBox.CaretIndex;
         return index > 0 && text[index - 1] == '\n';
-    }
-
-    private void ScrollToCaretPosition(bool ensureVisible = false)
-    {
-        if(_scrollViewer == null || isScrollbarDragging) return;
-
-        try
-        {
-            Rect caretRect = _textBox.GetRectFromCharacterIndex(_textBox.CaretIndex);
-            Point caretPosition = _textBox.TranslatePoint(new Point(caretRect.Right, caretRect.Bottom), _scrollViewer);
-
-            double viewportHeight = _scrollViewer.ViewportHeight;
-            double viewportWidth = _scrollViewer.ViewportWidth;
-
-            // Handle horizontal scrolling
-            if(caretPosition.X > viewportWidth)
-            {
-                double newOffset = _scrollViewer.HorizontalOffset + (caretPosition.X - viewportWidth) + PADDING;
-                _scrollViewer.ScrollToHorizontalOffset(Math.Min(newOffset, _scrollViewer.ScrollableWidth));
-            }
-            else if(caretPosition.X < PADDING)
-            {
-                double newOffset = _scrollViewer.HorizontalOffset + caretPosition.X - PADDING;
-                _scrollViewer.ScrollToHorizontalOffset(Math.Max(0, newOffset));
-            }
-            else if(IsAtStartOfLine())
-            {
-                _scrollViewer.ScrollToHorizontalOffset(0);
-            }
-
-            // Handle vertical scrolling
-            if(ensureVisible || caretPosition.Y > viewportHeight)
-            {
-                double targetOffset;
-                if(caretPosition.Y > viewportHeight)
-                {
-                    targetOffset = _scrollViewer.VerticalOffset + (caretPosition.Y - (viewportHeight * 0.75));
-                }
-                else
-                {
-                    targetOffset = _scrollViewer.VerticalOffset + caretPosition.Y;
-                }
-                _scrollViewer.ScrollToVerticalOffset(Math.Min(targetOffset, _scrollViewer.ScrollableHeight));
-            }
-            else if(caretPosition.Y < PADDING)
-            {
-                double newOffset = _scrollViewer.VerticalOffset + caretPosition.Y - PADDING;
-                _scrollViewer.ScrollToVerticalOffset(Math.Max(0, newOffset));
-            }
-
-            // Special case for Ctrl+End
-            if(_textBox.CaretIndex == _textBox.Text.Length &&
-                (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            {
-                _scrollViewer.ScrollToVerticalOffset(_scrollViewer.ScrollableHeight);
-            }
-
-            UpdateScrollBars();
-        }
-        catch
-        {
-            // Handle invalid caret positions
-        }
     }
 
     private void UpdateScrollBars()

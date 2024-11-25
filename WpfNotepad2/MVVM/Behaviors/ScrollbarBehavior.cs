@@ -17,19 +17,19 @@ public class ScrollBarBehavior
 
     public void StartDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e)
     {
-        //var scrollBar = FindParentScrollBar(rectangle);
-        //if(scrollBar == null) return;
+        var scrollBar = FindParentScrollBar(rectangle);
+        if(scrollBar == null) return;
 
-        //_activeScrollBar = scrollBar;
-        //_isDragging = true;
-        //_lastMousePosition = e.GetPosition(scrollBar);
-        //_textBox = textBox;
+        _activeScrollBar = scrollBar;
+        _isDragging = true;
+        _lastMousePosition = e.GetPosition(scrollBar);
+        _textBox = textBox;
 
-        //UpdateScrollPosition();
+        UpdateScrollPosition();
 
-        //rectangle.MouseMove += Rectangle_MouseMove;
-        //rectangle.MouseUp += Rectangle_MouseUp;
-        //rectangle.CaptureMouse();
+        rectangle.MouseMove += Rectangle_MouseMove;
+        rectangle.MouseUp += Rectangle_MouseUp;
+        rectangle.CaptureMouse();
     }
 
     void UpdateScrollPosition()
