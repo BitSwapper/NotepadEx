@@ -5,10 +5,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Point = System.Windows.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
+using Microsoft.Xaml.Behaviors;
 
 namespace NotepadEx.MVVM.Behaviors;
 
-public class ScrollBarDragBehavior : BehaviorBase<Rectangle>
+public class ScrollBarDragBehavior : Behavior<Rectangle>
 {
     public static readonly DependencyProperty PreviewMouseDownCommandProperty =
             DependencyProperty.Register(

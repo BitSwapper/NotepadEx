@@ -1,9 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using Microsoft.Xaml.Behaviors;
 
 namespace NotepadEx.MVVM.Behaviors;
 
-public class WindowMouseMoveBehavior : BehaviorBase<Window>
+public class WindowMouseMoveBehavior : Behavior<Window>
 {
     public static readonly DependencyProperty MouseMoveCommandProperty =
         DependencyProperty.Register(nameof(MouseMoveCommand), typeof(ICommand),
@@ -31,7 +32,7 @@ public class WindowMouseMoveBehavior : BehaviorBase<Window>
         AssociatedObject.MouseMove += Window_MouseMove;
     }
 
-    protected override void Cleanup()
+    protected void Cleanup()
     {
         if(AssociatedObject != null)
         {
