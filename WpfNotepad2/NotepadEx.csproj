@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Windows\**" />
+    <EmbeddedResource Remove="Windows\**" />
+    <None Remove="Windows\**" />
+    <Page Remove="Windows\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\NotepadEx.ico" />
     <None Remove="Images\NotepadEx.png" />
   </ItemGroup>
@@ -36,10 +43,6 @@
 	    <Generator>SettingsSingleFileGenerator</Generator>
 	    <LastGenOutput>Settings.Designer.cs</LastGenOutput>
 	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Windows\" />
 	</ItemGroup>
 
 	<ItemGroup>

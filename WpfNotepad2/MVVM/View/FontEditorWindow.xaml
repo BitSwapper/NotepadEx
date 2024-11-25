@@ -1,0 +1,27 @@
+﻿<Window x:Class="NotepadEx.MVVM.View.FontEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
+        xmlns:local="clr-namespace:NotepadEx.MVVM.View"
+        mc:Ignorable="d"
+        Title="FontEditorWindow" Height="450" Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Border BorderThickness="2" 
+            BorderBrush="{DynamicResource Color_BorderColor}" 
+            CornerRadius="1" 
+            Background="Transparent">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <UserControls:CustomTitleBar x:Name="ThemeEditorTitleBar" DataContext="{Binding TitleBarViewModel}"></UserControls:CustomTitleBar>
+
+        </Grid>
+    </Border>
+</Window>

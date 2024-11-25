@@ -34,6 +34,14 @@ public static class UIConstants
     public static readonly string Color_ToolWindowButtonBg      = "Color_ToolWindowButtonBg";
     public static readonly string Color_ToolWindowButtonBorder  = "Color_ToolWindowButtonBorder";
 
+    public static readonly string Font_Family  = "Font_Family";
+    public static readonly string Font_Size  = "Font_Size";
+    public static readonly string Font_Style  = "Font_Style";
+    public static readonly string Font_Weight  = "Font_Weight";
+    public static readonly string Font_IsUnderline  = "Font_IsUnderline";
+    public static readonly string Font_IsStrikethrough  = "Font_IsStrikethrough";
+
+
     public static readonly HashSet<string> UIColorKeysMain = new()
     {
         Color_TextEditorBg,

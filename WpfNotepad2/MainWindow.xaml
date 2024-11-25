@@ -26,6 +26,7 @@
 
     <Window.Resources>
         <Converters:StringEqualityMultiConverter x:Key="StringEqualityMultiConverter"/>
+        <Converters:BooleanToTextDecorationConverter x:Key="BooleanToTextDecorationConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -124,15 +125,13 @@
                                 <MenuItem.ItemTemplate>
                                     <DataTemplate>
                                         <MenuItem Header="{Binding Name}"
-                      Command="{Binding DataContext.ChangeThemeCommand, 
-                                RelativeSource={RelativeSource AncestorType=Window}}"
-                      CommandParameter="{Binding}"
-                      Foreground="{DynamicResource Color_MenuItemFg}">
+                                                  Command="{Binding DataContext.ChangeThemeCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                  CommandParameter="{Binding}"
+                                                  Foreground="{DynamicResource Color_MenuItemFg}">
                                             <MenuItem.IsChecked>
                                                 <MultiBinding Converter="{StaticResource StringEqualityMultiConverter}">
                                                     <Binding Path="Name"/>
-                                                    <Binding Path="DataContext.CurrentThemeName" 
-                                RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                                    <Binding Path="DataContext.CurrentThemeName" RelativeSource="{RelativeSource AncestorType=Window}"/>
                                                 </MultiBinding>
                                             </MenuItem.IsChecked>
                                         </MenuItem>
@@ -144,21 +143,23 @@
 
                     <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
                         <TextBox Text="{Binding DocumentContent, UpdateSourceTrigger=PropertyChanged}"
-                                Background="Transparent"
-                                Foreground="{DynamicResource Color_TextEditorFg}"
-                                AcceptsReturn="True"
-                                FontSize="18"
-                                FontFamily="Segoe UI"
-                                TextWrapping="{Binding TextWrappingMode}"
-                                TextOptions.TextRenderingMode="ClearType"
-                                Margin="2"
-                                BorderBrush="Transparent"
-                                BorderThickness="0"
-                                VerticalScrollBarVisibility="Auto"
-                                HorizontalScrollBarVisibility="Auto"
-                                CaretBrush="{DynamicResource Color_TextEditorCaret}"
-                                SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
-                                Name="txtEditor">
+        Background="Transparent"
+        Foreground="{DynamicResource Color_TextEditorFg}"
+        AcceptsReturn="True"
+        FontFamily="{DynamicResource Font_Family}"
+        FontSize="{DynamicResource Font_Size}"
+        FontStyle="{DynamicResource Font_Style}"
+        FontWeight="{DynamicResource Font_Weight}"
+        TextWrapping="{Binding TextWrappingMode}"
+        TextOptions.TextRenderingMode="ClearType"
+        Margin="2"
+        BorderBrush="Transparent"
+        BorderThickness="0"
+        VerticalScrollBarVisibility="Auto"
+        HorizontalScrollBarVisibility="Auto"
+        CaretBrush="{DynamicResource Color_TextEditorCaret}"
+        SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
+        Name="txtEditor">
 
                             <b:Interaction.Behaviors>
                                 <behaviors:TextBoxSelectionBehavior 

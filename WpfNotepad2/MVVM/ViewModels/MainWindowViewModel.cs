@@ -43,6 +43,7 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand PasteCommand { get; private set; }
     public ICommand ChangeThemeCommand { get; private set; }
     public ICommand OpenThemeEditorCommand { get; private set; }
+    public ICommand OpenFontEditorCommand { get; private set; }
     public ICommand InsertTabCommand { get; private set; }
     public ICommand OpenFileLocationCommand { get; private set; }
 
@@ -156,6 +157,11 @@ public class MainWindowViewModel : ViewModelBase
 
     void OnOpenThemeEditor() => themeService.OpenThemeEditor();
 
+    void OnOpenFontEditor()
+    {
+
+    }
+
     void InitializeCommands()
     {
         NewCommand = new RelayCommand(NewDocument);
@@ -172,6 +178,7 @@ public class MainWindowViewModel : ViewModelBase
         PasteCommand = new RelayCommand(Paste);
         ChangeThemeCommand = new RelayCommand<ThemeInfo>(OnThemeChange);
         OpenThemeEditorCommand = new RelayCommand(OnOpenThemeEditor);
+        OpenFontEditorCommand = new RelayCommand(OnOpenFontEditor);
         InsertTabCommand = new RelayCommand(InsertTab);
         OpenFileLocationCommand = new RelayCommand(OpenFileLocation);
 
