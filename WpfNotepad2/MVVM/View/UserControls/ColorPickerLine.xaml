@@ -9,12 +9,7 @@
              mc:Ignorable="d" d:DesignWidth="800" Height="35">
     <UserControl.Resources>
         <Converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
-        
-        <Style TargetType="Button">
-            <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"/>
-            <Setter Property="Background" Value="{DynamicResource Color_ToolWindowButtonBg}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource Color_ToolWindowButtonBorder}"/>
-        </Style>
+       
 
         <Style TargetType="RadioButton">
             <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"/>

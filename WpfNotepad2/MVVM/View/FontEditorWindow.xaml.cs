@@ -33,7 +33,7 @@ public partial class FontEditorWindow : Window
     {
         InitializeComponent();
         DataContext = this;
-        titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Font Settings");
+        titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Font Settings", showMaximize: false);
 
         _fontService = fontService;
 
@@ -44,8 +44,6 @@ public partial class FontEditorWindow : Window
             FontSize = _fontService.CurrentFont.FontSize,
             FontStyle = _fontService.CurrentFont.FontStyle,
             FontWeight = _fontService.CurrentFont.FontWeight,
-            IsUnderline = _fontService.CurrentFont.IsUnderline,
-            IsStrikethrough = _fontService.CurrentFont.IsStrikethrough
         };
 
         AvailableFonts = _fontService.AvailableFonts;

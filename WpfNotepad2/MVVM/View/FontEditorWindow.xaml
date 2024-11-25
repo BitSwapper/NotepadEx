@@ -10,10 +10,15 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent">
+
+   
+
     <Border BorderThickness="2" 
             BorderBrush="{DynamicResource Color_BorderColor}" 
             CornerRadius="1" 
-            Background="{DynamicResource Color_TextEditorBg}">
+            Background="{DynamicResource Color_ToolWindowBg}">
+        
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="24"/>
@@ -38,7 +43,7 @@
                 <!-- Left Column -->
                 <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,10,0">
                     <TextBlock Text="Font Family" 
-                             Foreground="{DynamicResource Color_TextEditorFg}" 
+                             Foreground="{DynamicResource Color_ToolWindowFont}" 
                              Margin="0,0,0,5"/>
                     <ComboBox x:Name="FontFamilyComboBox"
                             ItemsSource="{Binding AvailableFonts}"
@@ -54,7 +59,7 @@
 
                     
                     <TextBlock Text="Font Size" 
-                               Foreground="{DynamicResource Color_TextEditorFg}" 
+                               Foreground="{DynamicResource Color_ToolWindowFont}" 
                                Margin="0,0,0,5"/>
                     
                     <TextBox x:Name="FontSizeTextBox"
@@ -66,7 +71,7 @@
                 <!-- Right Column -->
                 <StackPanel Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
                     <TextBlock Text="Font Style" 
-                             Foreground="{DynamicResource Color_TextEditorFg}" 
+                             Foreground="{DynamicResource Color_ToolWindowFont}" 
                              Margin="0,0,0,5"/>
                     <ComboBox x:Name="FontStyleComboBox"
                               SelectedValue="{Binding CurrentFont.FontStyle}"
@@ -77,7 +82,7 @@
                     </ComboBox>
 
                     <TextBlock Text="Font Weight" 
-                             Foreground="{DynamicResource Color_TextEditorFg}" 
+                             Foreground="{DynamicResource Color_ToolWindowFont}" 
                              Margin="0,0,0,5"/>
                     <ComboBox x:Name="FontWeightComboBox"
                               SelectedValue="{Binding CurrentFont.FontWeight}"
@@ -90,31 +95,20 @@
                     </ComboBox>
                 </StackPanel>
 
-                <!-- Text Decorations -->
-                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                            Orientation="Horizontal" 
-                            Margin="0,15,0,0">
-                    <CheckBox Content="Underline" 
-                              IsChecked="{Binding CurrentFont.IsUnderline}"
-                              Foreground="{DynamicResource Color_TextEditorFg}"
-                              Margin="0,0,15,0"/>
-                    <CheckBox Content="Strikethrough" 
-                              IsChecked="{Binding CurrentFont.IsStrikethrough}"
-                              Foreground="{DynamicResource Color_TextEditorFg}"/>
-                </StackPanel>
+
 
                 <!-- Preview -->
                 <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
                         BorderBrush="{DynamicResource Color_BorderColor}"
                         BorderThickness="1"
-                        Margin="0,50,0,0">
+                        Margin="0,20,0,0">
                     <TextBlock Text="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 1234567890" 
                              Margin="10"
                              FontFamily="{Binding CurrentFont.FontFamily}"
                              FontSize="{Binding CurrentFont.FontSize}"
                              FontStyle="{Binding CurrentFont.FontStyle}"
                              FontWeight="{Binding CurrentFont.FontWeight}"
-                             Foreground="{DynamicResource Color_TextEditorFg}">
+                             Foreground="{DynamicResource Color_ToolWindowFont}">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Style.Triggers>

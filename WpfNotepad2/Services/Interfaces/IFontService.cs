@@ -19,8 +19,6 @@ public class FontSettings
     public double FontSize { get; set; } = 12;
     public FontStyle FontStyle { get; set; } = FontStyles.Normal;
     public FontWeight FontWeight { get; set; } = FontWeights.Normal;
-    public bool IsUnderline { get; set; } = false;
-    public bool IsStrikethrough { get; set; } = false;
 }
 
 public class FontInfo

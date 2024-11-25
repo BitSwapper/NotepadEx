@@ -42,8 +42,6 @@ namespace NotepadEx.Services; public class FontService : IFontService
             FontSize = Settings.Default.FontSize != 0 ? Settings.Default.FontSize : 12,
             FontStyle = ParseFontStyle(Settings.Default.FontStyle),
             FontWeight = ParseFontWeight(Settings.Default.FontWeight),
-            IsUnderline = Settings.Default.Underline,
-            IsStrikethrough = Settings.Default.Strikethrough
         };
 
         ApplyFont(fontSettings);
@@ -60,8 +58,6 @@ namespace NotepadEx.Services; public class FontService : IFontService
             Settings.Default.FontSize = fontSettings.FontSize;
             Settings.Default.FontStyle = fontSettings.FontStyle.ToString();
             Settings.Default.FontWeight = fontSettings.FontWeight.ToString();
-            Settings.Default.Underline = fontSettings.IsUnderline;
-            Settings.Default.Strikethrough = fontSettings.IsStrikethrough;
             Settings.Default.Save();
 
             // Apply font settings to application resources
@@ -69,8 +65,6 @@ namespace NotepadEx.Services; public class FontService : IFontService
             AppResourceUtil<double>.TrySetResource(application, UIConstants.Font_Size, fontSettings.FontSize);
             AppResourceUtil<FontStyle>.TrySetResource(application, UIConstants.Font_Style, fontSettings.FontStyle);
             AppResourceUtil<FontWeight>.TrySetResource(application, UIConstants.Font_Weight, fontSettings.FontWeight);
-            AppResourceUtil<bool>.TrySetResource(application, UIConstants.Font_IsUnderline, fontSettings.IsUnderline);
-            AppResourceUtil<bool>.TrySetResource(application, UIConstants.Font_IsStrikethrough, fontSettings.IsStrikethrough);
         }
         catch(Exception ex)
         {

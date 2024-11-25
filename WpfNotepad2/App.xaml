@@ -342,6 +342,12 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            <Style TargetType="Button">
+                <Setter Property="Foreground" Value="{DynamicResource Color_ToolWindowFont}"/>
+                <Setter Property="Background" Value="{DynamicResource Color_ToolWindowButtonBg}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource Color_ToolWindowButtonBorder}"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
+    
 </Application>
