@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -15,11 +16,11 @@ public class ScrollManager
     private bool isScrollbarDragging;
     private readonly TextBox _textBox;
     private const double PADDING = 20;
-    private const double SCROLL_ZONE_HEIGHT = 50; // Height of the auto-scroll zones at top/bottom
+    private const double SCROLL_ZONE_PERCENTAGE  = 0.25; // Height of the auto-scroll zones at top/bottom
     private bool _isInitialized;
     private bool isMouseDown;
     private DispatcherTimer _scrollTimer;
-    private double _scrollSpeed = 25;
+    private double _scrollSpeed = 5;
     private bool isAutoScrolling;
 
     private bool _isSelecting => _textBox.SelectionLength > 0 && isMouseDown;
@@ -32,44 +33,14 @@ public class ScrollManager
         InitializeMouseEvents();
     }
 
-    private void TextBox_MouseMove(object sender, MouseEventArgs e)
-    {
-        if(_isSelecting)
-        {
-            Point mousePosition = e.GetPosition(_scrollViewer);
-
-            // Only scroll if mouse is in the scroll zones
-            if(mousePosition.Y >= 0 && mousePosition.Y <= SCROLL_ZONE_HEIGHT)
-            {
-                // Calculate speed based on position within scroll zone
-                double scrollFactor = 1 - (mousePosition.Y / SCROLL_ZONE_HEIGHT);
-                isAutoScrolling = true;
-                StartScrolling(-_scrollSpeed * scrollFactor);
-            }
-            else if(mousePosition.Y >= _scrollViewer.ActualHeight - SCROLL_ZONE_HEIGHT &&
-                     mousePosition.Y <= _scrollViewer.ActualHeight)
-            {
-                // Calculate speed based on position within scroll zone
-                double scrollFactor = (mousePosition.Y - (_scrollViewer.ActualHeight - SCROLL_ZONE_HEIGHT)) / SCROLL_ZONE_HEIGHT;
-                isAutoScrolling = true;
-                StartScrolling(_scrollSpeed * scrollFactor);
-            }
-            else
-            {
-                isAutoScrolling = false;
-                StopScrolling();
-            }
-        }
-    }
-
     private void ScrollTimer_Tick(object sender, EventArgs e)
     {
         if(!_isSelecting || isScrollbarDragging) return;
 
         double speed = (double)_scrollTimer.Tag;
 
-        // Make scrolling smoother by using smaller increments
-        double newOffset = _scrollViewer.VerticalOffset + (speed / 240.0);
+        // Make scrolling much more gradual by using a tiny fraction
+        double newOffset = _scrollViewer.VerticalOffset + (speed / 2400.0); // Increased divisor significantly
         newOffset = Math.Max(0, Math.Min(newOffset, _scrollViewer.ScrollableHeight));
 
         _scrollViewer.ScrollToVerticalOffset(newOffset);
@@ -79,6 +50,37 @@ public class ScrollManager
             _verticalScrollBar.Value = newOffset;
         }
     }
+
+    private void TextBox_MouseMove(object sender, MouseEventArgs e)
+    {
+        if(_isSelecting)
+        {
+            Point mousePosition = e.GetPosition(_scrollViewer);
+            double zoneHeight = _scrollViewer.ActualHeight * SCROLL_ZONE_PERCENTAGE;
+
+            // Top scroll zone check
+            if(mousePosition.Y >= 0 && mousePosition.Y <= zoneHeight)
+            {
+                double scrollFactor = 1 - (mousePosition.Y / zoneHeight);
+                isAutoScrolling = true;
+                StartScrolling(-_scrollSpeed * Math.Pow(scrollFactor, 3));
+            }
+            // Bottom scroll zone check
+            else if(mousePosition.Y >= _scrollViewer.ActualHeight - zoneHeight &&
+                    mousePosition.Y <= _scrollViewer.ActualHeight)
+            {
+                double scrollFactor = (mousePosition.Y - (_scrollViewer.ActualHeight - zoneHeight)) / zoneHeight;
+                isAutoScrolling = true;
+                StartScrolling(_scrollSpeed * Math.Pow(scrollFactor, 3));
+            }
+            else
+            {
+                isAutoScrolling = false;
+                StopScrolling();
+            }
+        }
+    }
+
 
     private void ScrollToCaretPosition(bool ensureVisible = false)
     {
@@ -120,7 +122,7 @@ public class ScrollManager
     {
         _scrollTimer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromMilliseconds(16)
+            Interval = TimeSpan.FromMilliseconds(30)
         };
         _scrollTimer.Tick += ScrollTimer_Tick;
     }
