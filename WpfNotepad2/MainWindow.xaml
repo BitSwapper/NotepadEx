@@ -135,28 +135,28 @@
                     <Grid Grid.Row="1" Background="{DynamicResource Color_TextEditorBg}">
 
                         <TextBox Text="{Binding DocumentContent, UpdateSourceTrigger=PropertyChanged}"
-                            Background="Transparent"
-                            Foreground="{DynamicResource Color_TextEditorFg}"
-                            AcceptsReturn="True"
-                            FontSize="18"
-                            FontFamily="Segoe UI"
-                            TextWrapping="{Binding TextWrappingMode}"
-                            TextOptions.TextRenderingMode="ClearType"
-                            Margin="2"
-                            BorderBrush="Transparent"
-                            BorderThickness="0"
-                            VerticalScrollBarVisibility="Auto"
-                            HorizontalScrollBarVisibility="Auto"
-                            CaretBrush="{DynamicResource Color_TextEditorCaret}"
-                            SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
-                            Name="txtEditor"
-                            Loaded="TextBox_Loaded"
-                            PreviewMouseMove="TextBox_MouseMove"
-                            PreviewMouseUp="TextBox_MouseUp"
-                            PreviewMouseDown="TextBox_MouseDown">
+     Background="Transparent"
+     Foreground="{DynamicResource Color_TextEditorFg}"
+     AcceptsReturn="True"
+     FontSize="18"
+     FontFamily="Segoe UI"
+     TextWrapping="{Binding TextWrappingMode}"
+     TextOptions.TextRenderingMode="ClearType"
+     Margin="2"
+     BorderBrush="Transparent"
+     BorderThickness="0"
+     VerticalScrollBarVisibility="Auto"
+     HorizontalScrollBarVisibility="Auto"
+     CaretBrush="{DynamicResource Color_TextEditorCaret}"
+     SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
+     Name="txtEditor"
+     Loaded="TextBox_Loaded"
+     PreviewMouseMove="TextBox_MouseMove"
+     PreviewMouseUp="TextBox_MouseUp"
+     PreviewMouseDown="TextBox_MouseDown">
 
                             <TextBox.Resources>
-                                <!--ScrollViewer Style to remove the white corner-->
+                                <!--ScrollViewer Style to maintain scrolling behavior-->
                                 <Style TargetType="ScrollViewer">
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -171,25 +171,33 @@
                                                         <RowDefinition Height="Auto"/>
                                                     </Grid.RowDefinitions>
 
-                                                    <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="0" Grid.Column="0" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                                    <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" 
+                                                   Grid.Row="0" 
+                                                   Grid.Column="0" 
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   CanContentScroll="True"
+                                                   CanHorizontallyScroll="True"
+                                                   CanVerticallyScroll="True"/>
 
                                                     <ScrollBar x:Name="PART_VerticalScrollBar" 
-                                                        Grid.Row="0" 
-                                                        Grid.Column="1" 
-                                                        Orientation="Vertical" 
-                                                        Maximum="{TemplateBinding ScrollableHeight}" 
-                                                        ViewportSize="{TemplateBinding ViewportHeight}"
-                                                        Value="{TemplateBinding VerticalOffset}" 
-                                                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                                 Grid.Row="0" 
+                                 Grid.Column="1" 
+                                 Orientation="Vertical" 
+                                 Maximum="{TemplateBinding ScrollableHeight}" 
+                                 ViewportSize="{TemplateBinding ViewportHeight}"
+                                 Value="{TemplateBinding VerticalOffset}" 
+                                 Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                 AutomationProperties.AutomationId="VerticalScrollBar"/>
 
                                                     <ScrollBar x:Name="PART_HorizontalScrollBar" 
-                                                        Grid.Row="1" 
-                                                        Grid.Column="0" 
-                                                        Orientation="Horizontal" 
-                                                        Maximum="{TemplateBinding ScrollableWidth}" 
-                                                        ViewportSize="{TemplateBinding ViewportWidth}"
-                                                        Value="{TemplateBinding HorizontalOffset}" 
-                                                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
+                                 Grid.Row="1" 
+                                 Grid.Column="0" 
+                                 Orientation="Horizontal" 
+                                 Maximum="{TemplateBinding ScrollableWidth}" 
+                                 ViewportSize="{TemplateBinding ViewportWidth}"
+                                 Value="{TemplateBinding HorizontalOffset}" 
+                                 Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                 AutomationProperties.AutomationId="HorizontalScrollBar"/>
                                                 </Grid>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -208,7 +216,7 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Track x:Name="PART_Track">
+                                                    <Track x:Name="PART_Track" IsEnabled="True">
                                                         <Track.Thumb>
                                                             <Thumb x:Name="PART_Thumb" Background="{DynamicResource Color_TextEditorScrollBar}">
                                                                 <Thumb.Effect>
@@ -222,12 +230,6 @@
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="Orientation" Value="Vertical">
                                                         <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="True"/>
-                                                        <Setter Property="Grid.Row" Value="0" />
-                                                        <Setter Property="Grid.Column" Value="0" />
-                                                    </Trigger>
-                                                    <Trigger Property="Orientation" Value="Horizontal">
-                                                        <Setter Property="Grid.Row" Value="0" />
-                                                        <Setter Property="Grid.Column" Value="0" />
                                                     </Trigger>
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
@@ -238,6 +240,8 @@
 
                                 <Style TargetType="TextBox">
                                     <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+                                    <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
                                 </Style>
                             </TextBox.Resources>
 

@@ -28,6 +28,7 @@ public class MainWindowViewModel : ViewModelBase
     double menuBarHeight;
     double infoBarHeight;
     bool isMenuBarEnabled;
+    private readonly ScrollManager _scrollManager;
 
     public ICommand NewCommand { get; private set; }
     public ICommand OpenCommand { get; private set; }
@@ -123,6 +124,8 @@ public class MainWindowViewModel : ViewModelBase
         this.textBox = textBox;
         this.SaveSettings = SaveSettings;
         document = new Document();
+
+
 
         InitializeCommands();
         UpdateMenuBarVisibility(Settings.Default.MenuBarAutoHide);
