@@ -101,6 +101,8 @@
                         </MenuItem>
 
                         <MenuItem Header="Preferences" Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem Header="Font Editor..." Command="{Binding OpenFontEditorCommand}" Foreground="{DynamicResource Color_MenuItemFg}"/>
+
                             <MenuItem Header="Toggle Word Wrapping" 
                                     Command="{Binding ToggleWordWrapCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>

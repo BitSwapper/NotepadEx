@@ -20,6 +20,7 @@ public class MainWindowViewModel : ViewModelBase
     readonly IDocumentService documentService;
     readonly WindowState prevWindowState;
     readonly IThemeService themeService;
+    readonly IFontService fontService;
     readonly TextBox textBox;
     readonly MenuItem menuItemFileDropdown;
     readonly Action SaveSettings;
@@ -124,11 +125,12 @@ public class MainWindowViewModel : ViewModelBase
     public bool IsAutoHideMenuBarEnabled => Settings.Default.MenuBarAutoHide;
     public CustomTitleBarViewModel TitleBarViewModel { get; set; }
 
-    public MainWindowViewModel(IWindowService windowService, IDocumentService documentService, IThemeService themeService, MenuItem menuItemFileDropdown, TextBox textBox, Action SaveSettings)
+    public MainWindowViewModel(IWindowService windowService, IDocumentService documentService, IThemeService themeService, IFontService fontService, MenuItem menuItemFileDropdown, TextBox textBox, Action SaveSettings)
     {
         this.windowService = windowService;
         this.documentService = documentService;
         this.themeService = themeService;
+        this.fontService = fontService;
         this.menuItemFileDropdown = menuItemFileDropdown;
         this.textBox = textBox;
         this.SaveSettings = SaveSettings;
@@ -157,10 +159,7 @@ public class MainWindowViewModel : ViewModelBase
 
     void OnOpenThemeEditor() => themeService.OpenThemeEditor();
 
-    void OnOpenFontEditor()
-    {
-
-    }
+    void OnOpenFontEditor() => fontService.OpenFontEditor();
 
     void InitializeCommands()
     {
