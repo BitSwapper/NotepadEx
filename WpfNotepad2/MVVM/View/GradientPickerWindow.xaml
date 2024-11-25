@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NotepadEx.MVVM.View"
         xmlns:UserControls="clr-namespace:NotepadEx.MVVM.View.UserControls"
         mc:Ignorable="d"
-        Title="GradientPickerWindow" Height="650" Width="750"
+        Title="GradientPickerWindow" Height="650" Width="790"
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -105,6 +105,7 @@
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
 
 
@@ -118,7 +119,7 @@
                                 <Button Content="Edit" Grid.Column="3" Margin="5,0,0,0" Click="EditStop_Click"/>
                                 <Button Content="Copy" Grid.Column="4" Margin="5,0,0,0" Click="CopyStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
                                 <Button Content="Paste" Grid.Column="5" Margin="5,0,0,0" Click="PasteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
-                                <Button Content="Delete" Grid.Column="5" Margin="5,0,-0,0" Click="DeleteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
+                                <Button Content="Delete" Grid.Column="6" Margin="5,0,-0,0" Click="DeleteStop_Click" Tag="{Binding ElementName=ColorPreviewForStop}"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

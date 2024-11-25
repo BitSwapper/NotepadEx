@@ -264,6 +264,5 @@ public partial class GradientPickerWindow : Window
             SetStopColor(ColorUtil.GetRandomColorBrush(), stopIndex, selectedStop.Offset);
         }
         UpdateGradientPreview();
-        //OnSelectedColorChanged?.Invoke();
     }
 }
