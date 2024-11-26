@@ -100,24 +100,10 @@ public partial class GradientPickerWindow : Window
         OnSelectedColorChanged?.Invoke();
     }
 
-
-
-
     void PositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if(updatingFromAngle || updatingFromOffset) return;
-
         UpdateGradientPreview();
-
-        //if(StartXSlider != null && StartYSlider != null && EndXSlider != null && EndYSlider != null)
-        //{
-        //    double dx = EndXSlider.Value - StartXSlider.Value;
-        //    double dy = EndYSlider.Value - StartYSlider.Value;
-        //    double angle = Math.Atan2(dy, dx) * 180 / Math.PI;
-        //    angle = (angle + 360) % 360;
-
-        //    SliderAngle.Value = angle;
-        //}
     }
 
     void SliderOffsetX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -155,24 +141,6 @@ public partial class GradientPickerWindow : Window
     }
 
     void StopSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => UpdateGradientPreview();
-
-    //void SliderScaleX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    //{
-    //    if(updatingFromScale) return;
-    //    updatingFromScale = true;
-    //    ScaleX = e.NewValue;
-    //    UpdateGradientPreview();
-    //    updatingFromScale = false;
-    //}
-
-    //void SliderScaleY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    //{
-    //    if(updatingFromScale) return;
-    //    updatingFromScale = true;
-    //    ScaleY = e.NewValue;
-    //    UpdateGradientPreview();
-    //    updatingFromScale = false;
-    //}
 
     void AddStop_Click(object sender, RoutedEventArgs e)
     {

@@ -9,9 +9,8 @@ public class BooleanToTextDecorationConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if(value is bool isDecorated && isDecorated)
-        {
             return TextDecorations.Underline;
-        }
+
         return null;
     }
 

@@ -8,11 +8,10 @@ namespace NotepadEx.MVVM.Behaviors;
 
 public class ScrollViewerBehavior : Behavior<Grid>
 {
-    public static readonly DependencyProperty MouseWheelCommandProperty =
-        DependencyProperty.Register(
-            nameof(MouseWheelCommand),
-            typeof(ICommand),
-            typeof(ScrollViewerBehavior));
+    public static readonly DependencyProperty MouseWheelCommandProperty = DependencyProperty.Register(nameof(MouseWheelCommand), typeof(ICommand), typeof(ScrollViewerBehavior));
+
+    ScrollViewer scrollViewer;
+    ScrollBar verticalScrollBar;
 
     public ICommand MouseWheelCommand
     {
@@ -20,15 +19,10 @@ public class ScrollViewerBehavior : Behavior<Grid>
         set => SetValue(MouseWheelCommandProperty, value);
     }
 
-    ScrollViewer _scrollViewer;
-    ScrollBar _verticalScrollBar;
-
     protected override void OnAttached()
     {
         base.OnAttached();
         AssociatedObject.PreviewMouseWheel += Grid_PreviewMouseWheel;
-
-        // Get reference to parent ScrollViewer and ScrollBar
         InitializeScrollComponents();
     }
 
@@ -38,8 +32,8 @@ public class ScrollViewerBehavior : Behavior<Grid>
         {
             AssociatedObject.PreviewMouseWheel -= Grid_PreviewMouseWheel;
         }
-        _scrollViewer = null;
-        _verticalScrollBar = null;
+        scrollViewer = null;
+        verticalScrollBar = null;
         base.OnDetaching();
     }
 
@@ -47,8 +41,8 @@ public class ScrollViewerBehavior : Behavior<Grid>
     {
         if(AssociatedObject.TemplatedParent is ScrollViewer scrollViewer)
         {
-            _scrollViewer = scrollViewer;
-            _verticalScrollBar = AssociatedObject.FindName("PART_VerticalScrollBar") as ScrollBar;
+            this.scrollViewer = scrollViewer;
+            verticalScrollBar = AssociatedObject.FindName("PART_VerticalScrollBar") as ScrollBar;
         }
     }
 
@@ -56,17 +50,15 @@ public class ScrollViewerBehavior : Behavior<Grid>
     {
         if(MouseWheelCommand?.CanExecute(e) == true)
         {
-            // Execute the command
             MouseWheelCommand.Execute(e);
 
-            // Update scrollbar and offset directly for smoother scrolling
-            if(_scrollViewer != null && _verticalScrollBar != null)
+            if(scrollViewer != null && verticalScrollBar != null)
             {
-                double newOffset = _scrollViewer.VerticalOffset - (e.Delta / 3.0);
-                newOffset = Math.Max(0, Math.Min(newOffset, _scrollViewer.ScrollableHeight));
+                double newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
+                newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
 
-                _scrollViewer.ScrollToVerticalOffset(newOffset);
-                _verticalScrollBar.Value = newOffset;
+                scrollViewer.ScrollToVerticalOffset(newOffset);
+                verticalScrollBar.Value = newOffset;
             }
 
             e.Handled = true;

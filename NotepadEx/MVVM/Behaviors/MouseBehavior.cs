@@ -5,12 +5,7 @@ namespace NotepadEx.MVVM.Behaviors;
 
 public static class MouseBehavior
 {
-    public static readonly DependencyProperty MouseDownCommandProperty =
-        DependencyProperty.RegisterAttached(
-            "MouseDownCommand",
-            typeof(ICommand),
-            typeof(MouseBehavior),
-            new PropertyMetadata(null, OnMouseDownCommandChanged));
+    public static readonly DependencyProperty MouseDownCommandProperty = DependencyProperty.RegisterAttached("MouseDownCommand", typeof(ICommand), typeof(MouseBehavior), new PropertyMetadata(null, OnMouseDownCommandChanged));
 
     public static ICommand GetMouseDownCommand(DependencyObject obj) => (ICommand)obj.GetValue(MouseDownCommandProperty);
 
@@ -21,13 +16,9 @@ public static class MouseBehavior
         if(d is UIElement element)
         {
             if(e.OldValue != null)
-            {
                 element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
-            }
             if(e.NewValue != null)
-            {
                 element.MouseLeftButtonDown += Element_MouseLeftButtonDown;
-            }
         }
     }
 
@@ -37,8 +28,6 @@ public static class MouseBehavior
         var command = GetMouseDownCommand(element);
 
         if(command?.CanExecute(e) == true)
-        {
             command.Execute(e);
-        }
     }
 }

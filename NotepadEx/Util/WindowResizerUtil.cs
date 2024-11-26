@@ -12,14 +12,12 @@ public class WindowResizerUtil
     double oldWidth;
     double oldHeight;
 
-
-
     public void DoWindowMaximizedStateChangeSpecial(Window window, WindowState prevWindowState)
     {
         if(prevWindowState == WindowState.Minimized) return;
         if(!isManuallyMaximized)
         {
-            var screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)window.Left, (int)window.Top)); //get the screen where the window is currently located
+            var screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)window.Left, (int)window.Top));
             var workingArea = screen.WorkingArea;
 
             oldLeft = window.Left;
@@ -48,13 +46,9 @@ public class WindowResizerUtil
     public static void ToggleMaximizeState(Window window)
     {
         if(window.WindowState == WindowState.Maximized)
-        {
             window.WindowState = WindowState.Normal;
-        }
         else
-        {
             window.WindowState = WindowState.Maximized;
-        }
         window.Cursor = Cursors.Arrow;
     }
 
@@ -125,7 +119,6 @@ public class WindowResizerUtil
             {
                 HwndSource hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(window).Handle);
                 SendMessage(hwndSource.Handle, WM_SYSCOMMAND, (IntPtr)(SC_SIZE + (int)direction), IntPtr.Zero);
-
             }
             OnResized?.Invoke();
         }

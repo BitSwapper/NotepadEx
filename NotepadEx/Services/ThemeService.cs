@@ -124,40 +124,31 @@ public class ThemeService : IThemeService
     {
         try
         {
-            // Check if themes directory exists
             if(!Directory.Exists(DirectoryUtil.NotepadExThemesPath))
             {
-                // Create the themes directory if it doesn't exist
                 Directory.CreateDirectory(DirectoryUtil.NotepadExThemesPath);
                 return Enumerable.Empty<FileInfo>();
             }
 
             var directory = new DirectoryInfo(DirectoryUtil.NotepadExThemesPath);
 
-            // Safely get files with error handling
             try
             {
                 return directory.GetFiles()
                               .OrderByDescending(f => f.LastWriteTime)
-                              .ToList(); // Materialize the query to handle any errors immediately
+                              .ToList();
             }
             catch(IOException ex)
             {
-                // Log the error if you have logging
-                // logger.LogError($"Error accessing theme files: {ex.Message}");
                 return Enumerable.Empty<FileInfo>();
             }
             catch(UnauthorizedAccessException ex)
             {
-                // Handle permission issues
-                // logger.LogError($"Permission denied accessing theme files: {ex.Message}");
                 return Enumerable.Empty<FileInfo>();
             }
         }
         catch(Exception ex)
         {
-            // Handle any unexpected errors
-            // logger.LogError($"Unexpected error loading theme files: {ex.Message}");
             return Enumerable.Empty<FileInfo>();
         }
     }

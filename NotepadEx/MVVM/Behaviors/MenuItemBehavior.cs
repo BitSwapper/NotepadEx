@@ -7,11 +7,7 @@ namespace NotepadEx.MVVM.Behaviors;
 
 public class MenuItemBehavior : Behavior<MenuItem>
 {
-    public static readonly DependencyProperty ClickCommandProperty =
-            DependencyProperty.Register(
-                nameof(ClickCommand),
-                typeof(ICommand),
-                typeof(MenuItemBehavior));
+    public static readonly DependencyProperty ClickCommandProperty = DependencyProperty.Register(nameof(ClickCommand), typeof(ICommand), typeof(MenuItemBehavior));
 
     public ICommand ClickCommand
     {
@@ -28,22 +24,14 @@ public class MenuItemBehavior : Behavior<MenuItem>
     protected override void OnDetaching()
     {
         if(AssociatedObject != null)
-        {
             AssociatedObject.Click -= MenuItem_Click;
-        }
+
         base.OnDetaching();
     }
 
     void MenuItem_Click(object sender, RoutedEventArgs e)
     {
-        // Only handle clicks from child menu items (not the parent "Open Recent" item)
-        if(e.OriginalSource is MenuItem menuItem &&
-            menuItem != AssociatedObject &&
-            ClickCommand?.CanExecute(e) == true)
-        {
+        if(e.OriginalSource is MenuItem menuItem && menuItem != AssociatedObject && ClickCommand?.CanExecute(e) == true)
             ClickCommand.Execute(e);
-
-            // Don't mark as handled to allow the menu to close normally
-        }
     }
 }

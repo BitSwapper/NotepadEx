@@ -10,9 +10,7 @@ public class DocumentService : IDocumentService
     public void LoadDocument(string filePath, Document document)
     {
         if(!File.Exists(filePath))
-        {
             throw new FileNotFoundException($"File not found: {filePath}");
-        }
 
         document.Content = File.ReadAllText(filePath);
         document.FilePath = filePath;

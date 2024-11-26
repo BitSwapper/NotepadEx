@@ -11,11 +11,9 @@ namespace NotepadEx.MVVM.Behaviors;
 
 public class ScrollBarDragBehavior : Behavior<Rectangle>
 {
-    public static readonly DependencyProperty PreviewMouseDownCommandProperty =
-            DependencyProperty.Register(
-                nameof(PreviewMouseDownCommand),
-                typeof(ICommand),
-                typeof(ScrollBarDragBehavior));
+    public static readonly DependencyProperty PreviewMouseDownCommandProperty = DependencyProperty.Register(nameof(PreviewMouseDownCommand), typeof(ICommand), typeof(ScrollBarDragBehavior));
+
+    ScrollBar parentScrollBar;
 
     public ICommand PreviewMouseDownCommand
     {
@@ -23,21 +21,18 @@ public class ScrollBarDragBehavior : Behavior<Rectangle>
         set => SetValue(PreviewMouseDownCommandProperty, value);
     }
 
-    ScrollBar _parentScrollBar;
-
     protected override void OnAttached()
     {
         base.OnAttached();
         AssociatedObject.PreviewMouseDown += Rectangle_PreviewMouseDown;
 
-        // Find parent ScrollBar
-        _parentScrollBar = FindParentScrollBar();
+        parentScrollBar = FindParentScrollBar();
     }
 
     protected override void OnDetaching()
     {
         AssociatedObject.PreviewMouseDown -= Rectangle_PreviewMouseDown;
-        _parentScrollBar = null;
+        parentScrollBar = null;
         base.OnDetaching();
     }
 
@@ -45,25 +40,18 @@ public class ScrollBarDragBehavior : Behavior<Rectangle>
     {
         if(PreviewMouseDownCommand?.CanExecute(e) == true)
         {
-            if(e.LeftButton == MouseButtonState.Pressed && _parentScrollBar != null)
+            if(e.LeftButton == MouseButtonState.Pressed && parentScrollBar != null)
             {
-                // Get click position relative to the scrollbar
-                Point clickPoint = e.GetPosition(_parentScrollBar);
+                Point clickPoint = e.GetPosition(parentScrollBar);
 
-                // Calculate new scroll position based on click location
                 double proportion;
-                if(_parentScrollBar.Orientation == Orientation.Vertical)
-                {
-                    proportion = clickPoint.Y / _parentScrollBar.ActualHeight;
-                }
+                if(parentScrollBar.Orientation == Orientation.Vertical)
+                    proportion = clickPoint.Y / parentScrollBar.ActualHeight;
                 else
-                {
-                    proportion = clickPoint.X / _parentScrollBar.ActualWidth;
-                }
+                    proportion = clickPoint.X / parentScrollBar.ActualWidth;
 
-                // Update scrollbar value
-                double newValue = proportion * (_parentScrollBar.Maximum - _parentScrollBar.Minimum) + _parentScrollBar.Minimum;
-                _parentScrollBar.Value = newValue;
+                double newValue = proportion * (parentScrollBar.Maximum - parentScrollBar.Minimum) + parentScrollBar.Minimum;
+                parentScrollBar.Value = newValue;
 
                 PreviewMouseDownCommand.Execute(e);
                 e.Handled = true;
@@ -75,9 +63,8 @@ public class ScrollBarDragBehavior : Behavior<Rectangle>
     {
         DependencyObject current = AssociatedObject;
         while(current != null && !(current is ScrollBar))
-        {
             current = VisualTreeHelper.GetParent(current);
-        }
+
         return current as ScrollBar;
     }
 }

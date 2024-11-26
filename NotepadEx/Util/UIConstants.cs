@@ -3,7 +3,6 @@
 public static class UIConstants
 {
     public static readonly int ResizeBorderWidth = 12;
-    //public static readonly int InfoBarSize = 18;
     public static readonly int InfoBarHeight = 18;
     public static readonly int MenuBarHeight = 18;
 

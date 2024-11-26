@@ -10,16 +10,16 @@ namespace NotepadEx.MVVM.View;
 
 public partial class FontEditorWindow : Window
 {
-    private readonly IFontService _fontService;
-    private FontSettings _workingCopy;
+    readonly IFontService fontService;
+    FontSettings workingCopy;
     CustomTitleBarViewModel titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
     public FontSettings CurrentFont
     {
-        get => _workingCopy;
+        get => workingCopy;
         set
         {
-            _workingCopy = value;
+            workingCopy = value;
             OnPropertyChanged(nameof(CurrentFont));
         }
     }
@@ -32,44 +32,37 @@ public partial class FontEditorWindow : Window
         DataContext = this;
         titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Font Settings", showMaximize: false);
 
-        _fontService = fontService;
+        this.fontService = fontService;
 
-        // Create a working copy of current font settings
-        _workingCopy = new FontSettings
+        workingCopy = new FontSettings
         {
-            FontFamily = _fontService.CurrentFont.FontFamily,
-            FontSize = _fontService.CurrentFont.FontSize,
-            FontStyle = _fontService.CurrentFont.FontStyle,
-            FontWeight = _fontService.CurrentFont.FontWeight,
+            FontFamily = this.fontService.CurrentFont.FontFamily,
+            FontSize = this.fontService.CurrentFont.FontSize,
+            FontStyle = this.fontService.CurrentFont.FontStyle,
+            FontWeight = this.fontService.CurrentFont.FontWeight,
         };
 
-        AvailableFonts = _fontService.AvailableFonts;
-
-
+        AvailableFonts = this.fontService.AvailableFonts;
         FontFamilyComboBox.Loaded += FontFamilyComboBox_Loaded;
-
-        FontSizeTextBox.Text = _workingCopy.FontSize.ToString();
-        FontStyleComboBox.SelectedValue = _workingCopy.FontStyle;
-        FontWeightComboBox.SelectedValue = _workingCopy.FontWeight;
+        FontSizeTextBox.Text = workingCopy.FontSize.ToString();
+        FontStyleComboBox.SelectedValue = workingCopy.FontStyle;
+        FontWeightComboBox.SelectedValue = workingCopy.FontWeight;
     }
 
-    private void FontFamilyComboBox_Loaded(object sender, RoutedEventArgs e)
+    void FontFamilyComboBox_Loaded(object sender, RoutedEventArgs e)
     {
-        // Find the matching FontFamily object from AvailableFonts based on the Source property
-        var matchingFontFamily = AvailableFonts.FirstOrDefault(f => f.Source == _workingCopy.FontFamily);
+        var matchingFontFamily = AvailableFonts.FirstOrDefault(f => f.Source == workingCopy.FontFamily);
         if(matchingFontFamily != null)
-        {
             FontFamilyComboBox.SelectedItem = matchingFontFamily;
-        }
     }
 
-    private void ApplyButton_Click(object sender, RoutedEventArgs e)
+    void ApplyButton_Click(object sender, RoutedEventArgs e)
     {
-        _fontService.ApplyFont(CurrentFont);
+        fontService.ApplyFont(CurrentFont);
         Close();
     }
 
-    private void CancelButton_Click(object sender, RoutedEventArgs e) => Close();
+    void CancelButton_Click(object sender, RoutedEventArgs e) => Close();
 
     public event PropertyChangedEventHandler PropertyChanged;
 

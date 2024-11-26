@@ -8,9 +8,7 @@ public static class DirectoryUtil
     public static readonly string ExecutablePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
     public static readonly string AppName = "NotepadEx";
-    // Get the directory where the executable is located
 
-    // Define paths relative to the executable location
     public static readonly string NotepadExFolderPath = ExecutablePath + Path.DirectorySeparatorChar;
     public static readonly string NotepadExThemesPath = NotepadExFolderPath + "Themes\\";
 

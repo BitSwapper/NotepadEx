@@ -6,8 +6,8 @@ using Application = System.Windows.Application;
 namespace NotepadEx;
 public partial class App : Application
 {
-    private string[] startupArgs;
-    private bool initialized = false;
+    string[] startupArgs;
+    bool initialized = false;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -16,7 +16,7 @@ public partial class App : Application
         this.Activated += App_Activated;
     }
 
-    private async void App_Activated(object sender, EventArgs e)
+    async void App_Activated(object sender, EventArgs e)
     {
         if(initialized) return;
         initialized = true;
@@ -43,7 +43,7 @@ public partial class App : Application
         this.Activated -= App_Activated;
     }
 
-    private async Task OpenFileWithDelay(string filePath)
+    async Task OpenFileWithDelay(string filePath)
     {
         string fileContent = File.ReadAllText(filePath);
         var newWindow = new MainWindow();
@@ -78,6 +78,7 @@ public partial class App : Application
             var lastWindow = Current.Windows[Current.Windows.Count - 1];
             window.Left = lastWindow.Left + 20;
             window.Top = lastWindow.Top + 20;
+
             //Reset position if off screen
             var screen = SystemParameters.WorkArea;
             if(window.Left + window.Width > screen.Right)

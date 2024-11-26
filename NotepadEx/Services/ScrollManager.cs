@@ -15,12 +15,14 @@ public class ScrollManager
     bool isScrollbarDragging;
     readonly TextBox _textBox;
     const double PADDING = 20;
-    const double SCROLL_ZONE_PERCENTAGE  = 0.25; // Height of the auto-scroll zones at top/bottom
+    const double SCROLL_ZONE_PERCENTAGE  = 0.20;
     bool _isInitialized;
     bool isMouseDown;
     DispatcherTimer _scrollTimer;
-    double _scrollSpeed = 5;
+    double _scrollSpeed = 25;
     bool isAutoScrolling;
+
+    //Probably check out this class + TextBoxSelectionBehavior if you want to fix scrolling highlighted text on mouse drag
 
     bool _isSelecting => _textBox.SelectionLength > 0 && isMouseDown;
 
@@ -38,8 +40,7 @@ public class ScrollManager
 
         double speed = (double)_scrollTimer.Tag;
 
-        // Make scrolling much more gradual by using a tiny fraction
-        double newOffset = _scrollViewer.VerticalOffset + (speed / 2400.0); // Increased divisor significantly
+        double newOffset = _scrollViewer.VerticalOffset + (speed / 2400.0);
         newOffset = Math.Max(0, Math.Min(newOffset, _scrollViewer.ScrollableHeight));
 
         _scrollViewer.ScrollToVerticalOffset(newOffset);
@@ -81,13 +82,11 @@ public class ScrollManager
     }
 
 
-    void ScrollToCaretPosition(bool ensureVisible = false)
-    {
-        // Don't interfere with selection scrolling
-        if(_scrollViewer == null || isScrollbarDragging || isAutoScrolling || _isSelecting) return;
+    void ScrollToCaretPosition(bool ensureVisible = false) { }
+    //{
+    //    if(_scrollViewer == null || isScrollbarDragging || isAutoScrolling || _isSelecting) return;
 
-        // ... rest of ScrollToCaretPosition implementation ...
-    }
+    //}
 
     void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
     {
@@ -118,7 +117,7 @@ public class ScrollManager
     {
         _scrollTimer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromMilliseconds(30)
+            Interval = TimeSpan.FromMilliseconds(20)
         };
         _scrollTimer.Tick += ScrollTimer_Tick;
     }
@@ -200,7 +199,6 @@ public class ScrollManager
             var scrollViewer = FindScrollViewer(textBox);
             if(scrollViewer != null)
             {
-                // Find the grid inside ScrollViewer template
                 var grid = scrollViewer.Template.FindName("PART_Root", scrollViewer) as Grid;
                 if(grid != null)
                 {
@@ -219,8 +217,6 @@ public class ScrollManager
     ScrollViewer FindScrollViewer(TextBox textBox)
     {
         if(textBox == null) return null;
-
-        // Try to find ScrollViewer in the visual tree
         return VisualTreeUtil.FindVisualChildren<ScrollViewer>(textBox).FirstOrDefault();
     }
 }

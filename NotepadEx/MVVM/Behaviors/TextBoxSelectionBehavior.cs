@@ -66,7 +66,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
 
         scrollTimer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromMilliseconds(16) // ~60 FPS
+            Interval = TimeSpan.FromMilliseconds(16)
         };
         scrollTimer.Tick += ScrollTimer_Tick;
     }

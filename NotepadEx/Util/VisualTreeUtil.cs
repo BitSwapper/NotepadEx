@@ -13,14 +13,10 @@ public static class VisualTreeUtil
             {
                 DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
                 if(child != null && child is T)
-                {
                     yield return (T)child;
-                }
 
                 foreach(T childOfChild in FindVisualChildren<T>(child))
-                {
                     yield return childOfChild;
-                }
             }
         }
     }

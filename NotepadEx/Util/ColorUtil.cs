@@ -27,9 +27,6 @@ public static class ColorUtil
             gradientStops.Add(new GradientStop(randomColor, offset));
         }
 
-        //foreach(var stop in gradientStops.OrderBy(gs => gs.Offset))    // Sort the gradient stops by offset and add them to the brush
-        //    linearGradientBrush.GradientStops.Add(stop);
-
         foreach(var stop in gradientStops)
             linearGradientBrush.GradientStops.Add(stop);
 
@@ -160,7 +157,7 @@ public static class ColorUtil
                     brush.ColorInterpolationMode = (ColorInterpolationMode)Enum.Parse(typeof(ColorInterpolationMode), keyValue[1]);
                     break;
                 case "GradientStops":
-                    var stopsData = string.Join(":", keyValue.Skip(1));  // Rejoin in case there were colons in the color data
+                    var stopsData = string.Join(":", keyValue.Skip(1));
                     var stops = stopsData.Split('|').Select(stop =>
                     {
                         var stopParts = stop.Split(':');
@@ -171,7 +168,7 @@ public static class ColorUtil
                     if(stops.Count() > 0)
                         wasValid = true;
 
-                    brush.GradientStops = new GradientStopCollection(stops.ToList());  // Convert to List before creating GradientStopCollection
+                    brush.GradientStops = new GradientStopCollection(stops.ToList());
                     break;
             }
         }

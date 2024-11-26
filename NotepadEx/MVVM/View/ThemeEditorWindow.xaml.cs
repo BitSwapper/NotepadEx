@@ -94,8 +94,6 @@ public partial class ThemeEditorWindow : Window
             ColorPickerLine line = new();
             line.ViewModel.SetupThemeObj(themeObj, resourceKey, friendlyThemeName);
 
-            //line.ViewModel.BackgroundColor = ++colorLineCt % 2 == 0 ? brushA : brushB;
-
             if(UIConstants.UIColorKeysMain.Contains(resourceKey))
                 StackPanelMain.Children.Add(line);
 

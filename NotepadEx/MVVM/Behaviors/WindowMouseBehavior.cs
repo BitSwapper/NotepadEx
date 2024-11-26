@@ -35,9 +35,7 @@ public class WindowMouseMoveBehavior : Behavior<Window>
     protected void Cleanup()
     {
         if(AssociatedObject != null)
-        {
             AssociatedObject.MouseMove -= Window_MouseMove;
-        }
     }
 
     void Window_MouseMove(object sender, MouseEventArgs e)
@@ -46,14 +44,9 @@ public class WindowMouseMoveBehavior : Behavior<Window>
         var position = e.GetPosition(window);
 
         if(MouseMoveCommand?.CanExecute(position.Y) == true)
-        {
             MouseMoveCommand.Execute(position.Y);
-        }
 
-        if(window.WindowState == WindowState.Normal &&
-            ResizeCommand?.CanExecute(position) == true)
-        {
+        if(window.WindowState == WindowState.Normal && ResizeCommand?.CanExecute(position) == true)
             ResizeCommand.Execute(position);
-        }
     }
 }

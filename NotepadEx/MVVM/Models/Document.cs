@@ -64,7 +64,7 @@ namespace NotepadEx.MVVM.Models; public class Document
 
     public string GetCurrentLine()
     {
-        int lineNumber = CurrentLineNumber - 1; // Convert to 0-based index
+        int lineNumber = CurrentLineNumber - 1;
         return lineNumber >= 0 && lineNumber < cachedLines.Length
             ? cachedLines[lineNumber]
             : string.Empty;
@@ -90,19 +90,14 @@ namespace NotepadEx.MVVM.Models; public class Document
             if(lineIndex < cachedLines.Length - 1)
                 lineLength += Environment.NewLine.Length;
 
-            // Save current selection
             int originalStart = SelectionStart;
             int originalLength = SelectionLength;
 
-            // Select the line
             textBox.Select(lineStartPosition, lineLength);
 
-            // Copy the selected text and cut it using TextBox
             string lineText = textBox.SelectedText;
             Clipboard.SetText(lineText);
             textBox.SelectedText = "";
-
-            // Selection and content will update through binding
         }
     }
 }

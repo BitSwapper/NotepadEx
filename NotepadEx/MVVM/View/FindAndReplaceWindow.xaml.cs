@@ -7,8 +7,8 @@ namespace NotepadEx.MVVM.View;
 
 public partial class FindAndReplaceWindow : Window
 {
-    private TextBox targetTextBox;
-    private int currentPosition = 0;
+    TextBox targetTextBox;
+    int currentPosition = 0;
 
     CustomTitleBarViewModel titleBarViewModel;
     public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
@@ -22,11 +22,11 @@ public partial class FindAndReplaceWindow : Window
         targetTextBox = textBox;
     }
 
-    private void FindNextButton_Click(object sender, RoutedEventArgs e) => Find(true);
+    void FindNextButton_Click(object sender, RoutedEventArgs e) => Find(true);
 
-    private void FindPreviousButton_Click(object sender, RoutedEventArgs e) => Find(false);
+    void FindPreviousButton_Click(object sender, RoutedEventArgs e) => Find(false);
 
-    private void Find(bool forward)
+    void Find(bool forward)
     {
         string searchText = FindTextBox.Text;
         string content = targetTextBox.Text;
@@ -70,7 +70,7 @@ public partial class FindAndReplaceWindow : Window
         }
     }
 
-    private void ReplaceButton_Click(object sender, RoutedEventArgs e)
+    void ReplaceButton_Click(object sender, RoutedEventArgs e)
     {
         if(targetTextBox.SelectionLength > 0 &&
             targetTextBox.SelectedText.Equals(FindTextBox.Text,
@@ -88,7 +88,7 @@ public partial class FindAndReplaceWindow : Window
         }
     }
 
-    private void ReplaceAllButton_Click(object sender, RoutedEventArgs e)
+    void ReplaceAllButton_Click(object sender, RoutedEventArgs e)
     {
         string searchText = FindTextBox.Text;
         string replaceText = ReplaceTextBox.Text;
@@ -130,7 +130,7 @@ public partial class FindAndReplaceWindow : Window
         }
     }
 
-    private int GetLineIndexFromPosition(TextBox textBox, int position)
+    int GetLineIndexFromPosition(TextBox textBox, int position)
     {
         int lineIndex = 0;
         int currentPos = 0;
