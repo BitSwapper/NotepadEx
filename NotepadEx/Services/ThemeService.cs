@@ -171,4 +171,6 @@ public class ThemeService : IThemeService
         else
             AppResourceUtil<SolidColorBrush>.TrySetResource(application, resourceKey, new SolidColorBrush(themeObj.color.GetValueOrDefault()));
     }
+
+    public void AddEditableColorLinesToWindow() => themeEditorWindow?.AddEditableColorLinesToWindow();
 }

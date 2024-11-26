@@ -13,4 +13,5 @@ public interface IThemeService
     void ApplyTheme(string themeName);
     void OpenThemeEditor();
     void LoadAvailableThemes();
+    void AddEditableColorLinesToWindow();
 }

@@ -39,8 +39,14 @@ public partial class ThemeEditorWindow : Window
         AddEditableColorLinesToWindow();
     }
 
-    void AddEditableColorLinesToWindow()
+    public void AddEditableColorLinesToWindow()
     {
+        StackPanelMain.Children.Clear();
+        StackPanelTitleBar.Children.Clear();
+        StackPanelMenuBar.Children.Clear();
+        StackPanelInfoBar.Children.Clear();
+        StackPanelToolWindow.Children.Clear();
+
         AddNewColorLineSafe(UIConstants.Color_TextEditorBg, "Text Editor Background", ref themeService.CurrentTheme.themeObj_TextEditorBg!);
         AddNewColorLineSafe(UIConstants.Color_TextEditorFg, "Text Editor Font", ref themeService.CurrentTheme.themeObj_TextEditorFg!);
         AddNewColorLineSafe(UIConstants.Color_TextEditorCaret, "Text Editor Caret", ref themeService.CurrentTheme.themeObj_TextEditorCaret!);

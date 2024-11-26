@@ -48,9 +48,22 @@ public partial class FontEditorWindow : Window
 
         AvailableFonts = _fontService.AvailableFonts;
 
+
+        FontFamilyComboBox.Loaded += FontFamilyComboBox_Loaded;
+
         FontSizeTextBox.Text = _workingCopy.FontSize.ToString();
         FontStyleComboBox.SelectedValue = _workingCopy.FontStyle;
         FontWeightComboBox.SelectedValue = _workingCopy.FontWeight;
+    }
+
+    private void FontFamilyComboBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        // Find the matching FontFamily object from AvailableFonts based on the Source property
+        var matchingFontFamily = AvailableFonts.FirstOrDefault(f => f.Source == _workingCopy.FontFamily);
+        if(matchingFontFamily != null)
+        {
+            FontFamilyComboBox.SelectedItem = matchingFontFamily;
+        }
     }
 
     private void ApplyButton_Click(object sender, RoutedEventArgs e)

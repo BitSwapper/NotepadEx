@@ -108,7 +108,8 @@
                              FontSize="{Binding CurrentFont.FontSize}"
                              FontStyle="{Binding CurrentFont.FontStyle}"
                              FontWeight="{Binding CurrentFont.FontWeight}"
-                             Foreground="{DynamicResource Color_ToolWindowFont}">
+                             Foreground="{DynamicResource Color_TextEditorFg}"
+                             TextWrapping="Wrap">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Style.Triggers>

@@ -24,7 +24,7 @@ public partial class MainWindow : Window, IDisposable
         fontService.LoadCurrentFont();
 
         Settings.Default.MenuBarAutoHide = false;
-        Settings.Default.TextWrapping = false;
+        Settings.Default.TextWrapping = true;
 
         DataContext = viewModel = new MainWindowViewModel(windowService, documentService, themeService, fontService, MenuItemFileDropDown, txtEditor, () => SettingsManager.SaveSettings(this, txtEditor, themeService.CurrentThemeName));
         viewModel.TitleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "NotepadEx", onClose: Application.Current.Shutdown);

@@ -210,6 +210,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             themeService.ApplyTheme(theme.Name);
             CurrentThemeName = theme.Name;
+            themeService.AddEditableColorLinesToWindow();
         }
     }
 
