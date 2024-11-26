@@ -108,9 +108,9 @@
                             <MenuItem Header="Toggle Word Wrapping" 
                                     Command="{Binding ToggleWordWrapCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
-                            <MenuItem Header="Auto Hide Menu Bar" 
+                            <!--<MenuItem Header="Auto Hide Menu Bar" 
                                     Command="{Binding ToggleMenuBarCommand}"
-                                    Foreground="{DynamicResource Color_MenuItemFg}"/>
+                                    Foreground="{DynamicResource Color_MenuItemFg}"/>-->
                             <MenuItem Header="Show Info Bar" 
                                     Command="{Binding ToggleInfoBarCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
@@ -161,6 +161,7 @@
                                  BorderThickness="0"
                                  VerticalScrollBarVisibility="Auto"
                                  HorizontalScrollBarVisibility="Auto"
+                                 SpellCheck.IsEnabled="True"
                                  CaretBrush="{DynamicResource Color_TextEditorCaret}"
                                  SelectionBrush="{DynamicResource Color_TextEditorTextHighlight}"
                                  Name="txtEditor">
