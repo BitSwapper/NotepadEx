@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using FontStyle = System.Windows.FontStyle;
 using FontFamily = System.Windows.Media.FontFamily;
+using FontStyle = System.Windows.FontStyle;
 
 namespace NotepadEx.Services.Interfaces;
 public interface IFontService

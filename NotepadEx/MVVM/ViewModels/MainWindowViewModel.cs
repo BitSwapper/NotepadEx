@@ -88,11 +88,8 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    public string DocumentFilePath
-    {
-        get => document.FilePath;
-        set => document.FilePath = value;
-    }
+    public Document Document => document;
+
 
     public int SelectionStart
     {

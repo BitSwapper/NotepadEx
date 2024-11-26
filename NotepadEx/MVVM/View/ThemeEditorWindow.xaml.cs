@@ -10,7 +10,6 @@ using NotepadEx.Services;
 using NotepadEx.Services.Interfaces;
 using NotepadEx.Theme;
 using NotepadEx.Util;
-using Color = System.Windows.Media.Color;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 
 namespace NotepadEx.MVVM.View;

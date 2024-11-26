@@ -1,10 +1,8 @@
-﻿using System.Resources;
-using System.Windows;
+﻿using System.Windows;
 using NotepadEx.MVVM.View.UserControls;
 using NotepadEx.MVVM.ViewModels;
 using NotepadEx.Properties;
 using NotepadEx.Services;
-using NotepadEx.Util;
 
 namespace NotepadEx;
 
@@ -16,7 +14,7 @@ public partial class MainWindow : Window, IDisposable
     {
         InitializeComponent();
 
-        
+
         var windowService = new WindowService(this);
         var documentService = new DocumentService();
         var themeService = new ThemeService(Application.Current);
