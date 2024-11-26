@@ -47,9 +47,9 @@ public partial class App : Application
                     var newWindow = new MainWindow();
                     if(newWindow.DataContext is MainWindowViewModel viewModel)
                     {
-                        viewModel.TitleBarViewModel.TitleText = $"NotepadEx  |  {Path.GetFileName(filePath)}";
                         viewModel.DocumentContent = fileContent;
                         viewModel.DocumentFilePath = filePath;
+                        viewModel.TitleBarViewModel.TitleText = $"NotepadEx  |  {Path.GetFileName(filePath)}";
                     }
                     newWindow.Show();
                 }
