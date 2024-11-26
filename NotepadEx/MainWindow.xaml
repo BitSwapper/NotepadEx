@@ -115,6 +115,7 @@
                                     Command="{Binding ToggleInfoBarCommand}"
                                     Foreground="{DynamicResource Color_MenuItemFg}"/>
                         </MenuItem>
+                        
 
                         <MenuItem Header="Theme" Foreground="{DynamicResource Color_MenuItemFg}">
                             <MenuItem.ItemsPanel>
@@ -142,6 +143,10 @@
                                     </DataTemplate>
                                 </MenuItem.ItemTemplate>
                             </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="About" Foreground="{DynamicResource Color_MenuItemFg}">
+                            <MenuItem Header="Github.com/BitSwapper" Foreground="{DynamicResource Color_MenuItemFg}"/>
+
                         </MenuItem>
                     </Menu>
 
