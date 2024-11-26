@@ -48,16 +48,16 @@
                         <StackPanel Name="StackPanelMain" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
 
+                    <Expander Name="ExpanderMenuItem" Header="Title Bar">
+                        <StackPanel Name="StackPanelTitleBar" HorizontalAlignment="Center"></StackPanel>
+                    </Expander>
+
                     <Expander Name="ExpanderMenuBar" Header="Menu Bar">
                         <StackPanel Name="StackPanelMenuBar" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
 
                     <Expander Name="ExpanderInfoBar" Header="Info Bar">
                         <StackPanel Name="StackPanelInfoBar" HorizontalAlignment="Center"></StackPanel>
-                    </Expander>
-
-                    <Expander Name="ExpanderMenuItem" Header="Menu Item">
-                        <StackPanel Name="StackPanelMenuItem" HorizontalAlignment="Center"></StackPanel>
                     </Expander>
 
                     <Expander Name="ExpanderToolWindow" Header="Tool Windows">

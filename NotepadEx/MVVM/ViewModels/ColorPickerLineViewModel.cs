@@ -15,7 +15,7 @@ public class ColorPickerLineViewModel : ViewModelBase
     ThemeObject themeObj;
     bool isGradient;
     Brush previewImage;
-    Brush backgroundColor;
+    //Brush backgroundColor;
 
     public string ThemeName
     {
@@ -27,15 +27,15 @@ public class ColorPickerLineViewModel : ViewModelBase
         }
     }
 
-    public Brush BackgroundColor
-    {
-        get => backgroundColor;
-        set
-        {
-            backgroundColor = value;
-            OnPropertyChanged();
-        }
-    }
+    //public Brush BackgroundColor
+    //{
+    //    get => backgroundColor;
+    //    set
+    //    {
+    //        backgroundColor = value;
+    //        OnPropertyChanged();
+    //    }
+    //}
 
     public Brush PreviewImage
     {
@@ -96,13 +96,9 @@ public class ColorPickerLineViewModel : ViewModelBase
         if(themeObj == null) return;
 
         if(IsGradient)
-        {
             PreviewImage = themeObj.gradient ?? CreateDefaultGradient();
-        }
         else
-        {
             PreviewImage = new SolidColorBrush(themeObj.color ?? Colors.Gray);
-        }
 
         UpdateResourceBrush();
     }

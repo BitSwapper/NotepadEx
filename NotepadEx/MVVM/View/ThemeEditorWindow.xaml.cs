@@ -24,8 +24,6 @@ public partial class ThemeEditorWindow : Window
     public CustomTitleBarViewModel TitleBarViewModel => titleBarViewModel;
 
     int colorLineCt = 0;
-    SolidColorBrush brushA = new SolidColorBrush(Color.FromArgb(255, 64, 64, 64));
-    SolidColorBrush brushB = new SolidColorBrush(Color.FromArgb(255, 44, 44, 44));
 
     public ThemeEditorWindow(IThemeService themeService)
     {
@@ -34,6 +32,9 @@ public partial class ThemeEditorWindow : Window
         InitializeComponent();
         DataContext = this;
         titleBarViewModel = CustomTitleBar.InitializeTitleBar(this, "Theme Editor", showMinimize: false, showMaximize: false, onClose: Hide);
+
+
+
         this.themeService.LoadCurrentTheme();
         AddEditableColorLinesToWindow();
     }
@@ -73,6 +74,7 @@ public partial class ThemeEditorWindow : Window
 
     void AddNewColorLineSafe(string resourceKey, string friendlyThemeName, ref ThemeObject themeObj)
     {
+        //**Lines MUST be included in UIConstants in one of the lists in order to appear in their correct expander!
         if(themeObj == null)
         {
             var brush = AppResourceUtil<SolidColorBrush>.TryGetResource(Application.Current, resourceKey);
@@ -87,7 +89,7 @@ public partial class ThemeEditorWindow : Window
             ColorPickerLine line = new();
             line.ViewModel.SetupThemeObj(themeObj, resourceKey, friendlyThemeName);
 
-            line.ViewModel.BackgroundColor = ++colorLineCt % 2 == 0 ? brushA : brushB;
+            //line.ViewModel.BackgroundColor = ++colorLineCt % 2 == 0 ? brushA : brushB;
 
             if(UIConstants.UIColorKeysMain.Contains(resourceKey))
                 StackPanelMain.Children.Add(line);
@@ -95,8 +97,8 @@ public partial class ThemeEditorWindow : Window
             else if(UIConstants.UIColorKeysMenuBar.Contains(resourceKey))
                 StackPanelMenuBar.Children.Add(line);
 
-            else if(UIConstants.UIColorKeysMenuItem.Contains(resourceKey))
-                StackPanelMenuItem.Children.Add(line);
+            else if(UIConstants.UIColorKeysTitleBar.Contains(resourceKey))
+                StackPanelTitleBar.Children.Add(line);
 
             else if(UIConstants.UIColorKeysInfoBar.Contains(resourceKey))
                 StackPanelInfoBar.Children.Add(line);

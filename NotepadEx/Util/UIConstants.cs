@@ -49,9 +49,6 @@ public static class UIConstants
         Color_TextEditorCaret,
         Color_TextEditorScrollBar,
         Color_TextEditorTextHighlight,
-        Color_TitleBarBg,
-        Color_TitleBarFont,
-        Color_SystemButtons,
         Color_BorderColor,
     };
 
@@ -59,16 +56,6 @@ public static class UIConstants
     {
         Color_MenuBarBg,
         Color_MenuItemFg,
-    };
-
-    public static readonly HashSet<string> UIColorKeysInfoBar = new()
-    {
-        Color_InfoBarBg,
-        Color_InfoBarFg,
-    };
-
-    public static readonly HashSet<string> UIColorKeysMenuItem = new()
-    {
         Color_MenuBorder,
         Color_MenuBg,
         Color_MenuFg,
@@ -78,6 +65,19 @@ public static class UIConstants
         Color_MenuItemSelectedBorder,
         Color_MenuItemHighlightBg,
         Color_MenuItemHighlightBorder,
+    };
+
+    public static readonly HashSet<string> UIColorKeysInfoBar = new()
+    {
+        Color_InfoBarBg,
+        Color_InfoBarFg,
+    };
+
+    public static readonly HashSet<string> UIColorKeysTitleBar = new()
+    {
+        Color_TitleBarBg,
+        Color_TitleBarFont,
+        Color_SystemButtons,
     };
 
     public static readonly List<string> UIColorKeysToolWindow = new()

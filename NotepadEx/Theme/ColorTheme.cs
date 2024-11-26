@@ -70,6 +70,8 @@ public class ColorThemeSerializable
     [JsonPropertyName("themeObj_ToolWindowFont;")] public ThemeObjectSerializable ThemeObj_ToolWindowFont { get; set; }
     [JsonPropertyName("themeObj_ToolWindowButtonBg;")] public ThemeObjectSerializable ThemeObj_ToolWindowButtonBg { get; set; }
     [JsonPropertyName("themeObj_ToolWindowButtonBorder;")] public ThemeObjectSerializable ThemeObj_ToolWindowButtonBorder { get; set; }
+    [JsonPropertyName("themeObj_ToolWindowElementBackgroundA;")] public ThemeObjectSerializable ThemeObj_ToolWindowElementBackgroundA { get; set; }
+    [JsonPropertyName("themeObj_ToolWindowElementBackgroundB;")] public ThemeObjectSerializable ThemeObj_ToolWindowElementBackgroundB { get; set; }
 
     public ColorThemeSerializable() { } //needs empty constructor
 

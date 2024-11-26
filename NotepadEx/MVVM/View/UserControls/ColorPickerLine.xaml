@@ -49,8 +49,8 @@
         </Style>
     </UserControl.Resources>
     
-    <Border BorderBrush="Transparent" BorderThickness="1">
-        <Grid Background="{Binding BackgroundColor}">
+    <Border BorderBrush="{DynamicResource Color_BorderColor}" BorderThickness="1">
+        <Grid Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
@@ -60,7 +60,7 @@
                 <ColumnDefinition Width="150"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{Binding ThemeName}" Grid.Column="0" VerticalAlignment="Center" Margin="5 0 0 0" FontSize="14" FontFamily="Verdana"/>
+            <TextBlock Text="{Binding ThemeName}" Foreground="{DynamicResource Color_ToolWindowFont}" Grid.Column="0" VerticalAlignment="Center" Margin="5 0 0 0" FontSize="14" FontFamily="Verdana"/>
             <Border BorderBrush="#FF74BEF7" Margin="0 5 0 5" BorderThickness="1" Grid.Column="1">
                 <Grid HorizontalAlignment="Stretch" Background="{Binding PreviewImage}"/>
             </Border>
