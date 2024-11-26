@@ -22,41 +22,39 @@
                 <GradientStop Color="#DFA5547D" Offset="1.0"/>
             </LinearGradientBrush>
 
-            <SolidColorBrush x:Key="Color_TextEditorBg" Color="#ED202020"/>
-            <SolidColorBrush x:Key="Color_TextEditorFg" Color="AliceBlue"/>
-            <SolidColorBrush x:Key="Color_TextEditorCaret" Color="DarkSlateGray"/>
-            <SolidColorBrush x:Key="Color_TextEditorScrollBar" Color="AntiqueWhite"/>
+            <SolidColorBrush x:Key="Color_TextEditorBg" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="Color_TextEditorFg" Color="#FF000000"/>
+            <SolidColorBrush x:Key="Color_TextEditorCaret" Color="#FF2F4F4F"/>
+            <SolidColorBrush x:Key="Color_TextEditorScrollBar" Color="#BA838383"/>
             <SolidColorBrush x:Key="Color_TextEditorTextHighlight" Color="#A379E8E8"/>
 
-            <SolidColorBrush x:Key="Color_TitleBarBg" Color="#F4202222"/>
-            <SolidColorBrush x:Key="Color_TitleBarFont" Color="#FFFBFBFB"/>
-            
-            <SolidColorBrush x:Key="Color_SystemButtons" Color="Cyan"/>
-            <SolidColorBrush x:Key="Color_BorderColor" Color="#92666666"/>
-            
-            <SolidColorBrush x:Key="Color_MenuBarBg" Color="#FA343738"/>
-            <SolidColorBrush x:Key="Color_MenuItemFg" Color="#ADADAD"/>
+            <SolidColorBrush x:Key="Color_TitleBarBg" Color="#FFF8FAFD"/>
+            <SolidColorBrush x:Key="Color_TitleBarFont" Color="#FF151515"/>
 
-            <SolidColorBrush x:Key="Color_InfoBarBg" Color="#FF8A8A5D"/>
-            <SolidColorBrush x:Key="Color_InfoBarFg" Color="White"/>
-            
-            <SolidColorBrush x:Key="Color_MenuBorder" Color="#FF999999"/>
-            <SolidColorBrush x:Key="Color_MenuBg" Color="#BF202020"/>
-            <SolidColorBrush x:Key="Color_MenuFg" Color="#FF00E2FF"/>
-            <SolidColorBrush x:Key="Color_MenuSeperator" Color="#00000000"/>
-            <SolidColorBrush x:Key="Color_MenuDisabledFg" Color="Cyan"/>
-            <SolidColorBrush x:Key="Color_MenuItemSelectedBg" Color="#FF0A0080"/>
-            <SolidColorBrush x:Key="Color_MenuItemSelectedBorder" Color="#FF26A0DA"/>
-            <SolidColorBrush x:Key="Color_MenuItemHighlightBg" Color="#FF333E3C"/>
-            <SolidColorBrush x:Key="Color_MenuItemHighlightBorder" Color="#FFFFE9F6"/>
-            
-            <SolidColorBrush x:Key="Color_ToolWindowBg" Color="#FF323232"/>
-            <SolidColorBrush x:Key="Color_ToolWindowFont" Color="WhiteSmoke"/>
-            <SolidColorBrush x:Key="Color_ToolWindowButtonBg" Color="#FF3C3C3C"/>
-            <SolidColorBrush x:Key="Color_ToolWindowButtonBorder" Color="#FF131313"/>
-            <SolidColorBrush x:Key="Color_ToolWindowElementBackgroundA" Color="#FF212121"/>
-            <SolidColorBrush x:Key="Color_ToolWindowElementBackgroundB" Color="#FF323232"/>
-            
+            <SolidColorBrush x:Key="Color_SystemButtons" Color="#FFC6C6C6"/>
+            <SolidColorBrush x:Key="Color_BorderColor" Color="#92666666"/>
+
+            <SolidColorBrush x:Key="Color_MenuBarBg" Color="#FFF2F2F2"/>
+            <SolidColorBrush x:Key="Color_MenuItemFg" Color="#FF0B0B0B"/>
+
+            <SolidColorBrush x:Key="Color_InfoBarBg" Color="#FFE9E9E9"/>
+            <SolidColorBrush x:Key="Color_InfoBarFg" Color="#FF000000"/>
+
+            <SolidColorBrush x:Key="Color_MenuBorder" Color="#984AACFA"/>
+            <SolidColorBrush x:Key="Color_MenuBg" Color="#FFF2F2F2"/>
+            <SolidColorBrush x:Key="Color_MenuFg" Color="#FFD8CDCD"/>
+            <SolidColorBrush x:Key="Color_MenuSeperator" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="Color_MenuDisabledFg" Color="#982D2C2C"/>
+            <SolidColorBrush x:Key="Color_MenuItemSelectedBg" Color="#982D2C2C"/>
+            <SolidColorBrush x:Key="Color_MenuItemSelectedBorder" Color="#FFCBCBCB"/>
+            <SolidColorBrush x:Key="Color_MenuItemHighlightBg" Color="#FFEAEAE6"/>
+            <SolidColorBrush x:Key="Color_MenuItemHighlightBorder" Color="#984BD0FA"/>
+
+            <SolidColorBrush x:Key="Color_ToolWindowBg" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="Color_ToolWindowFont" Color="#FF000000"/>
+            <SolidColorBrush x:Key="Color_ToolWindowButtonBg" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="Color_ToolWindowButtonBorder" Color="#FF000000"/>
+
             <!--<SolidColorBrush x:Key="Color_MenuBgColor_MenuBg" Color="#C7333B3E"/>-->
             <!--<SolidColorBrush x:Key="Color_MenuItemHighlightDisabledBg" Color="#FF5FB51B"/>
             <SolidColorBrush x:Key="Color_MenuItemHighlightDisabledBorder" Color="#FFFF0FF0"/>-->
