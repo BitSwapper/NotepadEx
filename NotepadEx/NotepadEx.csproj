@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>True</UseWindowsForms>
+    <ApplicationIcon>Images\NotepadEx.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +24,10 @@
 
 	<ItemGroup>
 		<Using Remove="System.Windows.Forms" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Images\NotepadEx.ico" />
 	</ItemGroup>
 
 	<ItemGroup>

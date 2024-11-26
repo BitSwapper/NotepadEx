@@ -88,6 +88,12 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
+    public string DocumentFilePath
+    {
+        get => document.FilePath;
+        set => document.FilePath = value;
+    }
+
     public int SelectionStart
     {
         get => document.SelectionStart;
@@ -259,7 +265,7 @@ public class MainWindowViewModel : ViewModelBase
 
     void UpdateTitle()
     {
-        var title = string.IsNullOrEmpty(document.FileName) ? "NotepadEx" : $"NotepadEx | {document.FileName}{(document.IsModified ? "*" : "")}";
+        var title = string.IsNullOrEmpty(document.FileName) ? "NotepadEx" : $"NotepadEx   |  {document.FileName}{(document.IsModified ? "*" : "")}";
         TitleBarViewModel.TitleText = title;
     }
 
