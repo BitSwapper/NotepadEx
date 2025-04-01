@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -12,6 +12,7 @@ public class ScrollViewerBehavior : Behavior<Grid>
 
     ScrollViewer scrollViewer;
     ScrollBar verticalScrollBar;
+    ScrollBar horizontalScrollBar;
 
     public ICommand MouseWheelCommand
     {
@@ -29,20 +30,24 @@ public class ScrollViewerBehavior : Behavior<Grid>
     protected override void OnDetaching()
     {
         if(AssociatedObject != null)
-        {
             AssociatedObject.PreviewMouseWheel -= Grid_PreviewMouseWheel;
-        }
+        
         scrollViewer = null;
         verticalScrollBar = null;
+        horizontalScrollBar = null;
         base.OnDetaching();
     }
 
     void InitializeScrollComponents()
     {
-        if(AssociatedObject.TemplatedParent is ScrollViewer scrollViewer)
+        // This grid should be the PART_Root from the ScrollViewer template
+        if(AssociatedObject.TemplatedParent is ScrollViewer sv)
         {
-            this.scrollViewer = scrollViewer;
+            scrollViewer = sv;
+            
+            // Find the scrollbars within the template
             verticalScrollBar = AssociatedObject.FindName("PART_VerticalScrollBar") as ScrollBar;
+            horizontalScrollBar = AssociatedObject.FindName("PART_HorizontalScrollBar") as ScrollBar;
         }
     }
 
@@ -54,9 +59,13 @@ public class ScrollViewerBehavior : Behavior<Grid>
 
             if(scrollViewer != null && verticalScrollBar != null)
             {
-                double newOffset = scrollViewer.VerticalOffset - (e.Delta / 3.0);
+                // Calculate new offset with smoother scrolling (delta divided by smaller value for more precision)
+                double newOffset = scrollViewer.VerticalOffset - (e.Delta / 120.0);
+                
+                // Ensure offset stays within bounds
                 newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
 
+                // Update both the scrollviewer and scrollbar to keep them in sync
                 scrollViewer.ScrollToVerticalOffset(newOffset);
                 verticalScrollBar.Value = newOffset;
             }
