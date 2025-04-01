@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -11,13 +11,16 @@ namespace NotepadEx.MVVM.Behaviors;
 
 public class TextBoxSelectionBehavior : Behavior<TextBox>
 {
-    bool isMouseDown = false;
-    bool isScrollbarDragging = false;
+    bool isMouseDown;
+    bool isScrollbarDragging;
     DispatcherTimer scrollTimer;
     const double ScrollSpeed = 75;
     ScrollViewer scrollViewer;
     ScrollBar verticalScrollBar;
     ScrollBar horizontalScrollBar;
+    double verticalOffset;
+    double horizontalOffset;
+    const double SCROLL_ZONE_PERCENTAGE = 0.15;
 
     #region Dependency Properties
     public static readonly DependencyProperty SelectionChangedCommandProperty =
@@ -96,6 +99,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         {
             horizontalScrollBar.PreviewMouseDown -= ScrollBar_PreviewMouseDown;
             horizontalScrollBar.PreviewMouseUp -= ScrollBar_PreviewMouseUp;
+            horizontalScrollBar.ValueChanged -= HorizontalScrollBar_ValueChanged;
         }
 
         scrollTimer?.Stop();
@@ -130,6 +134,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
                 {
                     horizontalScrollBar.PreviewMouseDown += ScrollBar_PreviewMouseDown;
                     horizontalScrollBar.PreviewMouseUp += ScrollBar_PreviewMouseUp;
+                    horizontalScrollBar.ValueChanged += HorizontalScrollBar_ValueChanged;
                 }
             }
         }
@@ -142,27 +147,20 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
     void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
     {
         if(PreviewKeyDownCommand?.CanExecute(e) == true)
-        {
             PreviewKeyDownCommand.Execute(e);
-        }
     }
 
     void TextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         if(TextChangedCommand?.CanExecute(e) == true)
-        {
             TextChangedCommand.Execute(e);
-        }
     }
 
     void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
     {
         isMouseDown = true;
-        if(!scrollTimer.IsEnabled && IsSelecting)
-        {
-            scrollTimer.Tag = ScrollSpeed;
+        if(scrollTimer != null && !scrollTimer.IsEnabled && IsSelecting)
             scrollTimer.Start();
-        }
     }
 
     void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
@@ -176,27 +174,42 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         if(IsSelecting && scrollViewer != null)
         {
             Point mousePosition = e.GetPosition(scrollViewer);
-            if(mousePosition.Y < 0)
+            double zoneHeight = scrollViewer.ActualHeight * SCROLL_ZONE_PERCENTAGE;
+            double zoneWidth = scrollViewer.ActualWidth * SCROLL_ZONE_PERCENTAGE;
+
+            // Top scroll zone
+            if(mousePosition.Y < zoneHeight)
             {
-                StartScrolling(-ScrollSpeed);
+                double factor = 1.0 - (mousePosition.Y / zoneHeight);
+                StartScrolling(-ScrollSpeed * factor * factor, 0);
             }
-            else if(mousePosition.Y > scrollViewer.ActualHeight)
+            // Bottom scroll zone
+            else if(mousePosition.Y > scrollViewer.ActualHeight - zoneHeight)
             {
-                StartScrolling(ScrollSpeed);
+                double factor = (mousePosition.Y - (scrollViewer.ActualHeight - zoneHeight)) / zoneHeight;
+                StartScrolling(ScrollSpeed * factor * factor, 0);
+            }
+            // Left scroll zone
+            else if(mousePosition.X < zoneWidth)
+            {
+                double factor = 1.0 - (mousePosition.X / zoneWidth);
+                StartScrolling(0, -ScrollSpeed * factor * factor);
+            }
+            // Right scroll zone
+            else if(mousePosition.X > scrollViewer.ActualWidth - zoneWidth)
+            {
+                double factor = (mousePosition.X - (scrollViewer.ActualWidth - zoneWidth)) / zoneWidth;
+                StartScrolling(0, ScrollSpeed * factor * factor);
             }
             else
-            {
                 StopScrolling();
-            }
         }
     }
 
     void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
     {
         if(SelectionChangedCommand?.CanExecute(e) == true)
-        {
             SelectionChangedCommand.Execute(e);
-        }
     }
 
     void ScrollBar_PreviewMouseDown(object sender, MouseButtonEventArgs e) => isScrollbarDragging = true;
@@ -205,43 +218,75 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
 
     void VerticalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
+        verticalOffset = e.NewValue;
+        
         if(isScrollbarDragging && scrollViewer != null)
-        {
-            scrollViewer.ScrollToVerticalOffset(e.NewValue);
-        }
+            scrollViewer.ScrollToVerticalOffset(verticalOffset);
+    }
+    
+    void HorizontalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        horizontalOffset = e.NewValue;
+        
+        if(isScrollbarDragging && scrollViewer != null)
+            scrollViewer.ScrollToHorizontalOffset(horizontalOffset);
     }
 
     void ScrollTimer_Tick(object sender, EventArgs e)
     {
         if(!IsSelecting || isScrollbarDragging || scrollViewer == null) return;
 
-        double speed = (double)scrollTimer.Tag;
-        double newOffset = scrollViewer.VerticalOffset + (speed / 3.0);
-
-        // Clamp the new offset
-        newOffset = Math.Max(0, Math.Min(newOffset, scrollViewer.ScrollableHeight));
-
-        // Update the ScrollViewer
-        scrollViewer.ScrollToVerticalOffset(newOffset);
-
-        // Update the vertical scrollbar
-        if(verticalScrollBar != null)
+        // Apply vertical scrolling if needed
+        if(Math.Abs(verticalOffset) > 0.01)
         {
-            verticalScrollBar.Value = newOffset;
+            // Calculate new vertical position
+            double newVerticalOffset = scrollViewer.VerticalOffset + verticalOffset / 120.0;
+            
+            // Ensure it stays within bounds
+            newVerticalOffset = Math.Max(0, Math.Min(newVerticalOffset, scrollViewer.ScrollableHeight));
+            
+            // Update both ScrollViewer and ScrollBar
+            scrollViewer.ScrollToVerticalOffset(newVerticalOffset);
+            
+            if(verticalScrollBar != null)
+                verticalScrollBar.Value = newVerticalOffset;
+        }
+        
+        // Apply horizontal scrolling if needed
+        if(Math.Abs(horizontalOffset) > 0.01)
+        {
+            // Calculate new horizontal position
+            double newHorizontalOffset = scrollViewer.HorizontalOffset + horizontalOffset / 120.0;
+            
+            // Ensure it stays within bounds
+            newHorizontalOffset = Math.Max(0, Math.Min(newHorizontalOffset, scrollViewer.ScrollableWidth));
+            
+            // Update both ScrollViewer and ScrollBar
+            scrollViewer.ScrollToHorizontalOffset(newHorizontalOffset);
+            
+            if(horizontalScrollBar != null)
+                horizontalScrollBar.Value = newHorizontalOffset;
         }
     }
 
-    void StartScrolling(double speed)
+    void StartScrolling(double verticalSpeed, double horizontalSpeed)
     {
-        if(!scrollTimer.IsEnabled)
-        {
-            scrollTimer.Tag = speed;
+        this.verticalOffset = verticalSpeed;
+        this.horizontalOffset = horizontalSpeed;
+        
+        if(scrollTimer != null && !scrollTimer.IsEnabled)
             scrollTimer.Start();
-        }
     }
 
-    void StopScrolling() => scrollTimer?.Stop();
+    void StopScrolling()
+    {
+        if(scrollTimer != null)
+        {
+            scrollTimer.Stop();
+            verticalOffset = 0;
+            horizontalOffset = 0;
+        }
+    }
 
     bool IsSelecting => AssociatedObject.SelectionLength > 0 && isMouseDown;
 }
-
