@@ -90,12 +90,15 @@ public class ScrollManager
 
     void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
     {
+        if(e.LeftButton != MouseButtonState.Pressed) return;
         isMouseDown = true;
         isAutoScrolling = false;
     }
 
     void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
     {
+        if(e.LeftButton != MouseButtonState.Pressed) return;
+
         isMouseDown = false;
         isAutoScrolling = false;
         StopScrolling();
@@ -178,18 +181,6 @@ public class ScrollManager
         string text = _textBox.Text;
         int index = _textBox.CaretIndex;
         return index > 0 && text[index - 1] == '\n';
-    }
-
-    void UpdateScrollBars()
-    {
-        if(_verticalScrollBar != null)
-        {
-            _verticalScrollBar.Value = _scrollViewer.VerticalOffset;
-        }
-        if(_horizontalScrollBar != null)
-        {
-            _horizontalScrollBar.Value = _scrollViewer.HorizontalOffset;
-        }
     }
 
     public void HandleMouseWheel(object sender, MouseWheelEventArgs e)

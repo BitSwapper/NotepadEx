@@ -469,9 +469,9 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e) => scrollBarBehavior.StartDrag(rectangle, textBox, e);
+    //public void HandleScrollBarDrag(Rectangle rectangle, TextBox textBox, MouseButtonEventArgs e) => scrollBarBehavior.StartDrag(rectangle, textBox, e);
 
-    public void HandleMouseScroll(object sender, MouseWheelEventArgs e) => scrollManager.HandleMouseWheel(sender, e);
+    //public void HandleMouseScroll(object sender, MouseWheelEventArgs e) => scrollManager.HandleMouseWheel(sender, e);
 
     void HandleOpenRecent(RoutedEventArgs e)
     {
