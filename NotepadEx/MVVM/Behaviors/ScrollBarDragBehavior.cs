@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -14,6 +14,7 @@ public class ScrollBarDragBehavior : Behavior<Rectangle>
     public static readonly DependencyProperty PreviewMouseDownCommandProperty = DependencyProperty.Register(nameof(PreviewMouseDownCommand), typeof(ICommand), typeof(ScrollBarDragBehavior));
 
     ScrollBar parentScrollBar;
+    TextBox textBox;
 
     public ICommand PreviewMouseDownCommand
     {
@@ -25,14 +26,15 @@ public class ScrollBarDragBehavior : Behavior<Rectangle>
     {
         base.OnAttached();
         AssociatedObject.PreviewMouseDown += Rectangle_PreviewMouseDown;
-
         parentScrollBar = FindParentScrollBar();
+        textBox = FindTextBox();
     }
 
     protected override void OnDetaching()
     {
         AssociatedObject.PreviewMouseDown -= Rectangle_PreviewMouseDown;
         parentScrollBar = null;
+        textBox = null;
         base.OnDetaching();
     }
 
@@ -51,7 +53,18 @@ public class ScrollBarDragBehavior : Behavior<Rectangle>
                     proportion = clickPoint.X / parentScrollBar.ActualWidth;
 
                 double newValue = proportion * (parentScrollBar.Maximum - parentScrollBar.Minimum) + parentScrollBar.Minimum;
+                newValue = Math.Max(parentScrollBar.Minimum, Math.Min(newValue, parentScrollBar.Maximum));
+                
                 parentScrollBar.Value = newValue;
+                
+                // Update the TextBox scroll position directly
+                if(textBox != null)
+                {
+                    if(parentScrollBar.Orientation == Orientation.Vertical)
+                        textBox.ScrollToVerticalOffset(newValue);
+                    else
+                        textBox.ScrollToHorizontalOffset(newValue);
+                }
 
                 PreviewMouseDownCommand.Execute(e);
                 e.Handled = true;
@@ -66,5 +79,34 @@ public class ScrollBarDragBehavior : Behavior<Rectangle>
             current = VisualTreeHelper.GetParent(current);
 
         return current as ScrollBar;
+    }
+    
+    TextBox FindTextBox()
+    {
+        // Traverse up to find ScrollViewer
+        DependencyObject current = AssociatedObject;
+        ScrollViewer scrollViewer = null;
+        
+        while(current != null)
+        {
+            current = VisualTreeHelper.GetParent(current);
+            
+            if(current is ScrollViewer sv)
+            {
+                scrollViewer = sv;
+                break;
+            }
+        }
+        
+        if(scrollViewer == null) return null;
+        
+        // Find the TextBox that owns this ScrollViewer
+        current = scrollViewer;
+        while(current != null && !(current is TextBox))
+        {
+            current = VisualTreeHelper.GetParent(current);
+        }
+        
+        return current as TextBox;
     }
 }
