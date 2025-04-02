@@ -13,6 +13,8 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
 {
     bool isMouseDown;
     bool isScrollbarDragging;
+    bool isContextMenuOpen;
+    double lastVerticalOffset;
     DispatcherTimer scrollTimer;
     const double ScrollSpeed = 75;
     ScrollViewer scrollViewer;
@@ -66,6 +68,9 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         textBox.SelectionChanged += TextBox_SelectionChanged;
         textBox.TextChanged += TextBox_TextChanged;
         textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
+        textBox.ContextMenuOpening += TextBox_ContextMenuOpening;
+        textBox.ContextMenuClosing += TextBox_ContextMenuClosing;
+        textBox.MouseRightButtonUp += TextBox_MouseRightButtonUp;
 
         scrollTimer = new DispatcherTimer
         {
@@ -86,6 +91,9 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
             textBox.SelectionChanged -= TextBox_SelectionChanged;
             textBox.TextChanged -= TextBox_TextChanged;
             textBox.PreviewKeyDown -= TextBox_PreviewKeyDown;
+            textBox.ContextMenuOpening -= TextBox_ContextMenuOpening;
+            textBox.ContextMenuClosing -= TextBox_ContextMenuClosing;
+            textBox.MouseRightButtonUp -= TextBox_MouseRightButtonUp;
         }
 
         if(verticalScrollBar != null)
@@ -144,6 +152,40 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
         }
     }
 
+    void TextBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+    {
+        // Store the current scroll position when context menu opens
+        isContextMenuOpen = true;
+        if(scrollViewer != null)
+            lastVerticalOffset = scrollViewer.VerticalOffset;
+    }
+
+    void TextBox_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+    {
+        // Schedule a restore of the scroll position after the context menu closes
+        if(scrollViewer != null)
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+            {
+                scrollViewer.ScrollToVerticalOffset(lastVerticalOffset);
+                if(verticalScrollBar != null)
+                    verticalScrollBar.Value = lastVerticalOffset;
+                isContextMenuOpen = false;
+            }));
+        }
+    }
+    
+    void TextBox_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        // Additional handling for right click to prevent scroll jumps
+        if(scrollViewer != null && scrollViewer.VerticalOffset != lastVerticalOffset && isContextMenuOpen)
+        {
+            scrollViewer.ScrollToVerticalOffset(lastVerticalOffset);
+            if(verticalScrollBar != null)
+                verticalScrollBar.Value = lastVerticalOffset;
+        }
+    }
+
     void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
     {
         if(PreviewKeyDownCommand?.CanExecute(e) == true)
@@ -171,7 +213,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
 
     void TextBox_MouseMove(object sender, MouseEventArgs e)
     {
-        if(IsSelecting && scrollViewer != null)
+        if(IsSelecting && scrollViewer != null && !isContextMenuOpen)
         {
             Point mousePosition = e.GetPosition(scrollViewer);
             double zoneHeight = scrollViewer.ActualHeight * SCROLL_ZONE_PERCENTAGE;
@@ -234,7 +276,7 @@ public class TextBoxSelectionBehavior : Behavior<TextBox>
 
     void ScrollTimer_Tick(object sender, EventArgs e)
     {
-        if(!IsSelecting || isScrollbarDragging || scrollViewer == null) return;
+        if(!IsSelecting || isScrollbarDragging || scrollViewer == null || isContextMenuOpen) return;
 
         // Apply vertical scrolling if needed
         if(Math.Abs(verticalOffset) > 0.01)
