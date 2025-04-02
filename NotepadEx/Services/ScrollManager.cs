@@ -21,6 +21,9 @@ public class ScrollManager
     DispatcherTimer _scrollTimer;
     double _scrollSpeed = 25;
     bool isAutoScrolling;
+    double scrollPositionBeforeRightClick;
+    bool expectingRightClickScroll;
+    DispatcherTimer _rightClickScrollFixTimer;
 
     bool _isSelecting => _textBox.SelectionLength > 0 && isMouseDown;
 
@@ -45,6 +48,28 @@ public class ScrollManager
 
         if(_verticalScrollBar != null)
             _verticalScrollBar.Value = newOffset;
+    }
+
+    void RightClickScrollFixTimer_Tick(object sender, EventArgs e)
+    {
+        if(!expectingRightClickScroll || _scrollViewer == null)
+        {
+            _rightClickScrollFixTimer?.Stop();
+            return;
+        }
+        
+        double currentPosition = _scrollViewer.VerticalOffset;
+        if(Math.Abs(currentPosition - scrollPositionBeforeRightClick) > 0.1)
+        {
+            // Scroll position changed unexpectedly during right-click - restore it
+            _scrollViewer.ScrollToVerticalOffset(scrollPositionBeforeRightClick);
+            if(_verticalScrollBar != null)
+                _verticalScrollBar.Value = scrollPositionBeforeRightClick;
+            
+            // Stop monitoring now that we've corrected it
+            expectingRightClickScroll = false;
+            _rightClickScrollFixTimer?.Stop();
+        }
     }
 
     void TextBox_MouseMove(object sender, MouseEventArgs e)
@@ -79,7 +104,7 @@ public class ScrollManager
 
     void ScrollToCaretPosition(bool ensureVisible = false)
     {
-        if(_scrollViewer == null || isScrollbarDragging || isAutoScrolling || _isSelecting) return;
+        if(_scrollViewer == null || isScrollbarDragging || isAutoScrolling || _isSelecting || expectingRightClickScroll) return;
         
         try
         {
@@ -129,12 +154,43 @@ public class ScrollManager
 
     void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
     {
+        if(e.RightButton == MouseButtonState.Pressed && _textBox.SelectionLength > 0 && _scrollViewer != null)
+        {
+            // Store scroll position before right-click
+            scrollPositionBeforeRightClick = _scrollViewer.VerticalOffset;
+            expectingRightClickScroll = true;
+            
+            // Start monitoring for scroll changes due to right-click
+            if(_rightClickScrollFixTimer == null)
+            {
+                _rightClickScrollFixTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
+                _rightClickScrollFixTimer.Tick += RightClickScrollFixTimer_Tick;
+            }
+            
+            _rightClickScrollFixTimer.Start();
+            
+            // Schedule a cleanup after a reasonable timeout for context menu operations
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+            {
+                // After 2 seconds, we assume the context menu operation is done
+                expectingRightClickScroll = false;
+                _rightClickScrollFixTimer?.Stop();
+            }));
+        }
+        
         isMouseDown = true;
         isAutoScrolling = false;
     }
 
     void TextBox_MouseUp(object sender, MouseButtonEventArgs e)
     {
+        // If this was the completion of a right-click, don't reset yet
+        if(e.RightButton != MouseButtonState.Pressed)
+        {
+            expectingRightClickScroll = false;
+            _rightClickScrollFixTimer?.Stop();
+        }
+        
         isMouseDown = false;
         isAutoScrolling = false;
         StopScrolling();
@@ -194,6 +250,12 @@ public class ScrollManager
                 {
                     if(isScrollbarDragging && _scrollViewer != null)
                         _scrollViewer.ScrollToVerticalOffset(args.NewValue);
+                    else if(expectingRightClickScroll && Math.Abs(args.NewValue - scrollPositionBeforeRightClick) > 0.1)
+                    {
+                        // This is a right-click induced scroll change - restore the position
+                        _scrollViewer.ScrollToVerticalOffset(scrollPositionBeforeRightClick);
+                        _verticalScrollBar.Value = scrollPositionBeforeRightClick;
+                    }
                 };
             }
 
